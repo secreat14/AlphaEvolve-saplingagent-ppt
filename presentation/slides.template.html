@@ -8,12 +8,12 @@
 <section class="slide cover active" data-title="AI 如何发现更快的矩阵乘法" data-seconds="15">
   <div class="cover-kicker">矩阵运算、GPU 与算法发现</div>
   <h1>AI 如何发现<br><em>更快的矩阵乘法</em></h1>
-  <p class="cover-subtitle">从寄存器与运算电路，到 AI 发现矩阵算法</p>
+  <p class="cover-subtitle">以 AI 算法为主线，实算比较同一组 4×4 矩阵</p>
   <div class="cover-numbers"><div><b>64</b><span>直接算法</span></div><span class="number-separator">/</span><div><b>49</b><span>Strassen</span></div><span class="number-separator">/</span><div><b>47</b><span>AlphaTensor · 模 2</span></div></div>
   <div class="cover-bottom"><span>中文讲解 · 过程动画 · 约 20 分钟</span><span>按 → 开始</span></div>
 </section>
 
-<section class="slide silicon-slide register-physics-slide" data-title="晶体管：电压控制的微型开关" data-seconds="75">
+<section class="slide silicon-slide register-physics-slide" data-title="晶体管：电压控制的微型开关" data-seconds="30">
   <div class="slide-header"><span class="chapter">硬件入门 1 / 6 · 晶体管</span><h2>晶体管，就是一个电控微型开关</h2><p>先认识一个开关，后面用同样的图看它怎样参与存储和加法</p></div>
   <div class="silicon-steps"><button data-physics-level="0">低电平 · 关闭</button><button data-physics-level="1">高电平 · 打开</button></div>
   <div class="physics-layout"><div class="physical-stage" id="physical-stage" role="img" aria-label="nMOS 晶体管剖面与导电通道示意"></div><div class="physics-explanation"><span id="physics-level">晶体管 / TRANSISTOR</span><h3 id="physics-heading"></h3><p id="physics-description"></p><div class="physics-status" id="physics-status"></div><small>栅极像控制按钮，源极和漏极是通道的两端。</small></div></div>
@@ -21,21 +21,21 @@
   <div class="slide-source">平面 nMOS 原理剖面，非芯片版图；发光线路表示电平或信号变化，不表示电子的实际轨迹。来源：MIT 6.004。</div>
 </section>
 
-<section class="slide silicon-slide simple-storage-slide" data-title="存储：晶体管组成的反馈回路" data-seconds="75">
+<section class="slide silicon-slide simple-storage-slide" data-title="存储：晶体管组成的反馈回路" data-seconds="35">
   <div class="slide-header"><span class="chapter">硬件入门 2 / 6 · 怎样存住 0 和 1</span><h2>2组晶体管互相连接，作为一个整体，用于固定一个状态。</h2><p>下面分别展示存储 1、存储 0 时的电路状态。</p></div>
   <div class="physics-layout"><div class="physical-stage" id="storage-stage" role="img" aria-label="两组晶体管和反馈线路保存一位数据"></div><div class="physics-explanation"><span>存储一位 / STORE ONE BIT</span><h3 id="storage-heading"></h3><p id="storage-description"></p><div class="physics-status" id="storage-status"></div><small>这一整体有两个稳定组合，分别表示存储 1 和存储 0。</small></div></div>
   <div class="demo-controls silicon-controls"><button data-play="storage">播放两个案例</button><button data-step="storage">切换案例</button><button data-reset="storage">重置</button><button data-store-bit="1">存储 1</button><button data-store-bit="0">存储 0</button><span id="storage-progress">案例 1 / 2</span></div>
   <div class="slide-source">静态反馈存储原理示意；两个案例展示稳定状态，保持状态需要供电。来源：MIT 存储电路课程。</div>
 </section>
 
-<section class="slide silicon-slide simple-addition-slide" data-title="加法：把存好的数送进加法电路" data-seconds="40">
+<section class="slide silicon-slide simple-addition-slide" data-title="加法：把存好的数送进加法电路" data-seconds="25">
   <div class="slide-header"><span class="chapter">硬件入门 3 / 6 · 怎样把两个数相加</span><h2>寄存器存数，加法电路负责把数加起来</h2><p id="simple-add-inputs">寄存器 A 保存 0011，B 也保存 0011，也就是计算 3 + 3</p></div>
   <div class="physics-layout"><div class="physical-stage" id="addition-stage" role="img" aria-label="两个四位存储组通过线路连接四位加法电路"></div><div class="physics-explanation"><span>读取 → 相加 → 保存结果</span><h3 id="simple-add-heading"></h3><p id="simple-add-description"></p><div class="physics-status" id="simple-add-status"></div><small>每个存储单元由一组晶体管构成；这里的四位是数的位宽，矩阵仍为 4×4。</small></div></div>
   <div class="demo-controls silicon-controls"><button data-play="simple-add">播放加法过程</button><button data-step="simple-add">下一步</button><button data-reset="simple-add">重置</button><button data-add-case="3,3">案例 3 + 3</button><button data-add-case="7,1">案例 7 + 1</button><span id="simple-add-progress">0 / 5 步</span></div>
   <div class="slide-source">按位加法与进位的教学动画，不代表真实指令步数；每个加法单元也是晶体管组成的电路。来源：MIT、UC Berkeley 计算机组成课程。</div>
 </section>
 
-<section class="slide hardware-binary-slide" data-title="硬件入门：为什么加法开销通常更小" data-seconds="55">
+<section class="slide hardware-binary-slide" data-title="硬件入门：为什么加法开销通常更小" data-seconds="35">
   <div class="slide-header"><span class="chapter">硬件入门 4 / 6 · 同位宽整数的硬件开销</span><h2>加法硬件开销通常更小，乘法要处理更多中间数据</h2><p>2 + 2 与 2 × 2 都得到 4，用通用四位电路观察不同的处理结构。</p></div>
   <div class="binary-comparison">
     <div class="binary-panel"><h3>加法：2 + 2 = 4</h3><p>两个输入 → 求和与进位 → 保存结果</p><div class="arithmetic-operands"><span>输入寄存器</span><b>0010</b><i>+</i><b>0010</b></div><div class="arithmetic-workspace"><div class="arithmetic-adder" id="cost-adder-unit"><span>加法电路</span><strong>逐位求和 + 进位</strong><small>直接合成一组结果位</small></div></div><div class="arithmetic-result"><span>结果存储</span><div id="cost-add-bits" class="cost-result-bits"></div><b id="cost-add-answer">等待结果</b></div><div class="arithmetic-resource"><b>通用电路最多 5 位</b><span>加法电路通常更简单</span></div></div>
@@ -45,7 +45,7 @@
   <div class="demo-controls"><button data-play="binary">播放开销对比</button><button data-step="binary">下一步</button><button data-reset="binary">重置</button><span id="binary-cost-caption" aria-live="polite">相同输入、相同结果，观察通用电路内部的不同结构</span></div>
 </section>
 
-<section class="slide" data-title="GPU 的并行计算" data-seconds="35">
+<section class="slide" data-title="GPU 的并行计算" data-seconds="25">
   <div class="slide-header"><span class="chapter">硬件入门 5 / 6 · 让多个运算单元一起工作</span><h2>GPU 把许多计算任务分给小组同时做</h2><p>同一个 4×4 输出矩阵有 16 个格子，把它们看成 16 个独立任务</p></div>
   <div class="parallel-layout"><div><h3>逐个处理 <span id="gpu-serial-label">0 / 16 轮</span></h3><div class="task-board" id="gpu-serial"></div><p>一轮完成一个任务</p></div><div><h3>4 组同时处理 <span id="gpu-parallel-label">0 / 4 轮</span></h3><div class="task-board purple" id="gpu-parallel"></div><p>一轮最多完成四个任务</p></div></div>
   <div class="demo-controls"><button data-play="gpu">播放对比</button><button data-step="gpu">推进一轮</button><button data-reset="gpu">重置</button><span id="gpu-caption" aria-live="polite">并行计算需要足够多、能够分开的任务</span></div>
@@ -60,82 +60,22 @@
   <div class="slide-source">只统计 A 的读取，并假设手边容量足够。B 与输出的开销未计入。这是教学示意，不是 FlashAttention 实测加速比。</div>
 </section>
 
-<section class="slide basic-four-slide" data-title="4×4矩阵乘法的基本动作" data-seconds="60">
+<section class="slide basic-four-slide" data-title="4×4矩阵乘法的基本动作" data-seconds="35">
   <div class="slide-header"><span class="chapter">同一组 4 × 4 矩阵 · 普通算术</span><h2>一行的 4 个数，乘一列的 4 个数</h2><p>每个输出需要 4 次乘法、3 次加法，共有 16 个输出</p></div>
   <div class="big-matrix-equation"><div class="matrix-block"><span>A · 4 × 4</span><div class="matrix basic-four" id="basic-a"></div></div><b class="operator">×</b><div class="matrix-block"><span>B · 4 × 4</span><div class="matrix basic-four" id="basic-b"></div></div><b class="operator">=</b><div class="matrix-block"><span>C · 4 × 4</span><div class="matrix basic-four" id="basic-c"></div></div></div>
   <div class="demo-equation" id="basic-equation"></div><p class="demo-caption" id="basic-caption" aria-live="polite">先看第一行与第一列，得到 C 的左上角</p>
   <div class="demo-controls"><button data-play="basic">播放过程</button><button data-step="basic">下一步</button><button data-reset="basic">重置</button><button id="basic-finish">看完整结果</button><span id="basic-work-count">0 / 64 次乘法，0 / 48 次加法</span></div>
 </section>
 
-<section class="slide partition-slide" data-title="Strassen第一步：定义分块记号" data-seconds="30">
-  <div class="slide-header"><span class="chapter">Strassen 推导 1 / 7 · 先定义记号</span><h2>把同一个 4×4 矩阵分成四块</h2><p>小写字母代表内部的 2×2 块，原题仍是两个 4×4 矩阵相乘</p></div>
-  <div class="partition-inputs"><div><h3>A 的四个块</h3><div class="partition-matrix" id="partition-a"></div><div class="block-notation">A = [a, b; c, d]</div></div><span class="partition-times">×</span><div><h3>B 的四个块</h3><div class="partition-matrix" id="partition-b"></div><div class="block-notation">B = [e, f; g, h]</div></div></div>
-  <div class="wide-takeaway compact">例如 ae 表示“a 这块矩阵乘 e 这块矩阵”，不是两个单独数字相乘</div>
+<section class="slide classic-summary-slide" data-title="传统算法基线：64次与49次" data-seconds="45">
+  <div class="slide-header"><span class="chapter">传统算法 · 只保留比较基线</span><h2>同一个 4×4 任务：64 次可以降到 49 次</h2><p>Strassen 先组合输入，再复用中间乘积；接下来由 AI 继续寻找更短的配方</p></div>
+  <div class="classic-summary"><div><span>直接行乘列</span><strong>16 × 4 = 64</strong><p>16 个输出格子<br>每格需要 4 次乘法</p></div><b>→</b><div><span>Strassen 递归</span><strong>7 × 7 = 49</strong><p>外层 7 组块乘法<br>每组内部再用 7 次乘法</p></div></div>
+  <div class="classic-reuse"><b>减少 15 次乘法</b><span>通过加减法组合与复用乘积，恢复相同的 4×4 输出</span></div>
+  <div class="wide-takeaway compact">AI 要继续寻找：能否用少于 49 次乘法，仍然得到正确答案？</div>
+  <div class="slide-source">内部块只是 4×4 的拆分。Strassen 完整公式与验证保留在本页演讲备注中。</div>
 </section>
 
-<section class="slide direct-block-slide" data-title="Strassen第二步：普通分块公式" data-seconds="30">
-  <div class="slide-header"><span class="chapter">Strassen 推导 2 / 7 · 先看原来的计算</span><h2>四个输出块，原本需要 8 次块乘法</h2><p>输出也分成四块：C = [r, s; t, u]，每块仍然是 2×2</p></div>
-  <div class="direct-block-layout"><div><h3>同一个 4×4 输出 C</h3><div class="partition-matrix" id="partition-c"></div></div><div class="block-equations"><div><b>r</b><span>= <em>ae</em> + <em>bg</em></span><small>左上</small></div><div><b>s</b><span>= <em>af</em> + <em>bh</em></span><small>右上</small></div><div><b>t</b><span>= <em>ce</em> + <em>dg</em></span><small>左下</small></div><div><b>u</b><span>= <em>cf</em> + <em>dh</em></span><small>右下</small></div></div></div>
-  <div class="wide-takeaway compact">4 个输出块 × 每块 2 个乘积 = 8 次块乘法，继续直接算块内部就是 8 × 8 = 64 次标量乘法</div>
-</section>
-
-<section class="slide seed-slide" data-title="Strassen第三步：构造可复用的乘积" data-seconds="35">
-  <div class="slide-header"><span class="chapter">Strassen 推导 3 / 7 · 构造思路</span><h2>先让一个乘积包含两处需要的项</h2><p>r 需要 ae，u 需要 dh。尝试把它们放进同一个中间乘积。</p></div>
-  <div class="seed-expression">M₁ = (a + d)(e + h)</div>
-  <div class="seed-expansion" id="seed-expansion"><span>=</span><b class="wanted">ae</b><span>+</span><b class="extra">ah</b><span>+</span><b class="extra">de</b><span>+</span><b class="wanted">dh</b></div>
-  <div class="seed-targets" id="seed-targets"><div><strong>ae：r 会用到</strong><span>r 的目标是 ae + bg</span></div><div><strong>dh：u 会用到</strong><span>u 的目标是 cf + dh</span></div></div>
-  <p class="seed-caption" id="seed-caption" aria-live="polite">点击下一步，用分配律展开。始终保持矩阵乘法的左右顺序。</p>
-  <div class="demo-controls"><button data-play="seed">播放构造思路</button><button data-step="seed">下一步</button><button data-reset="seed">重置</button><span>先复用，再补齐缺项、抵消多余项</span></div>
-  <div class="slide-source">M₁ 还不是任何一个完整输出：r 还缺 bg，u 还缺 cf，每个输出的多余项也需要分别抵消。</div>
-</section>
-
-<section class="slide definitions-slide" data-title="Strassen第四步：七个中间乘积公式" data-seconds="45">
-  <div class="slide-header"><span class="chapter">Strassen 推导 4 / 7 · 完整构造</span><h2>七个中间乘积的公式</h2><p>每条公式只有 1 次块乘法，括号内部先做加减法</p></div>
-  <div class="seven-definitions" id="seven-definitions"></div>
-  <div class="definition-expansion" id="definition-expansion" aria-live="polite">接下来逐条展开，观察哪些项能相互抵消。</div>
-  <div class="demo-controls"><button data-play="definitions">逐条展开</button><button data-step="definitions">下一条</button><button data-reset="definitions">重置</button><span>a…h 沿用前面的块记号</span></div>
-  <div class="slide-source">来源：Strassen 经典恒等式。这里只使用分配律与加减法，不交换矩阵乘法的左右顺序。</div>
-</section>
-
-<section class="slide simple-proof-slide" data-title="Strassen第五步：验证右上与左下输出" data-seconds="45">
-  <div class="slide-header"><span class="chapter">Strassen 推导 5 / 7 · 先验证两处简单的输出</span><h2>多出来的项，可以成对抵消</h2><p>先看右上块 s 和左下块 t，分别只需要组合两个中间乘积</p></div>
-  <div class="simple-proofs"><div><h3>右上块 s</h3><div class="proof-line">s = M₃ + M₅</div><div class="proof-line reveal-simple" data-proof-level="1">= a(f − h) + (a + b)h</div><div class="proof-line reveal-simple" data-proof-level="2">= af <s>− ah + ah</s> + bh</div><div class="proof-line proof-result reveal-simple" data-proof-level="3">= af + bh ✓</div></div><div><h3>左下块 t</h3><div class="proof-line">t = M₂ + M₄</div><div class="proof-line reveal-simple" data-proof-level="1">= (c + d)e + d(g − e)</div><div class="proof-line reveal-simple" data-proof-level="2">= ce <s>+ de − de</s> + dg</div><div class="proof-line proof-result reveal-simple" data-proof-level="3">= ce + dg ✓</div></div></div>
-  <p class="proof-caption" id="simple-proof-caption" aria-live="polite">点击下一步，先代入定义，再展开，最后消去相反项。</p>
-  <div class="demo-controls"><button data-play="simple-proof">播放两处验证</button><button data-step="simple-proof">下一步</button><button data-reset="simple-proof">重置</button><span>结果恰好回到普通分块乘法的公式</span></div>
-</section>
-
-<section class="slide cancellation-slide" data-title="Strassen第六步：推导左上输出块" data-seconds="50">
-  <div class="slide-header"><span class="chapter">Strassen 推导 6 / 7 · 验证左上块</span><h2>r = M₁ + M₄ − M₅ + M₇</h2><p>把四个中间乘积展开，多余项逐对抵消，留下 ae + bg</p></div>
-  <div class="cancellation-layout"><div class="cancellation-workbench" id="proof-r-workbench"></div><div class="cancellation-pairs"><h3>本次抵消</h3><strong id="proof-r-pair">等待第一对</strong><p id="proof-r-explain">有正项也有负项时，可以按加法把它们放在一起抵消。</p><div class="final-block-result" id="proof-r-result">r = ae + bg ✓</div></div></div>
-  <div class="demo-controls"><button data-play="proof-r">播放抵消</button><button data-step="proof-r">消去下一对</button><button data-reset="proof-r">重置</button><span id="proof-r-progress">0 / 5 对</span></div>
-  <div class="slide-source">a…h 是原 4×4 矩阵的内部块。这里重排的是加法项，乘积 ae、ah 等的左右顺序始终不变。</div>
-</section>
-
-<section class="slide cancellation-slide" data-title="Strassen第七步：推导右下并完成验证" data-seconds="50">
-  <div class="slide-header"><span class="chapter">Strassen 推导 7 / 7 · 验证右下块</span><h2>u = M₁ − M₂ + M₃ + M₆</h2><p>同样展开并抵消，留下 cf + dh，四个输出公式就都验证完成了</p></div>
-  <div class="cancellation-layout"><div class="cancellation-workbench" id="proof-u-workbench"></div><div class="cancellation-pairs"><h3>本次抵消</h3><strong id="proof-u-pair">等待第一对</strong><p id="proof-u-explain">这次也复用了 M₁，但按右下输出的目标抵消不同的多余项。</p><div class="final-block-result" id="proof-u-result">u = cf + dh ✓</div></div></div>
-  <div class="verified-blocks reconstruction-summary" id="verified-blocks"><span>r = M₁ + M₄ − M₅ + M₇</span><span>s = M₃ + M₅</span><span>t = M₂ + M₄</span><span>u = M₁ − M₂ + M₃ + M₆</span></div>
-  <div class="demo-controls"><button data-play="proof-u">播放抵消</button><button data-step="proof-u">消去下一对</button><button data-reset="proof-u">重置</button><span id="proof-u-progress">0 / 5 对</span></div>
-</section>
-
-<section class="slide strassen-four-slide" data-title="4×4矩阵的Strassen算法" data-seconds="50">
-  <div class="slide-header"><span class="chapter">沿用同一组 4 × 4 输入</span><h2>Strassen 用 49 次乘法还原相同的结果</h2><p>把 4×4 分成四个内部块，组合输入并复用中间乘积</p></div>
-  <div class="strassen-four-layout"><div><div class="strassen-route">7 组块乘法 × 每组 7 次 = <b>49</b></div><div class="strassen-groups" id="strassen-products"></div><div class="demo-equation" id="strassen-product-equation">等待第一项</div><p id="strassen-caption" class="strassen-four-caption" aria-live="polite">高亮表示正在计算哪一组，每组包含 7 次标量乘法</p></div><div class="strassen-output-block"><span id="strassen-output-label">C 的过程累计 · 4 × 4</span><div class="matrix basic-four" id="strassen-output"></div><strong id="strassen-answer">0 / 49 次乘法</strong><small>完成后与前面的直接算法核对</small></div></div>
-  <div class="demo-controls"><button data-play="strassen">播放 49 步</button><button data-step="strassen">下一步</button><button data-reset="strassen">重置</button><button id="strassen-finish">看完整结果</button><span>经典两层递归实现使用 198 次加减法</span></div>
-  <div class="slide-source">2×2 只作为 4×4 的内部块。乘积动画展示分解贡献，198 是经典递归实现的加减法计数。来源：Strassen 与大学课程讲义。</div>
-</section>
-
-<section class="slide tradeoff-slide" data-title="为什么增加加法减少乘法" data-seconds="50">
-  <div class="slide-header"><span class="chapter">仍然计算同一个 4 × 4 乘积</span><h2>多做加减法，是为了复用更少的乘积</h2><p>是否划算，要看省下的乘法成本能否覆盖新增的加法</p></div>
-  <table class="tradeoff-table"><thead><tr><th>4×4 算法</th><th>乘法次数</th><th>加减法次数</th></tr></thead><tbody><tr><td>直接行乘列</td><td>64</td><td>48</td></tr><tr><td>经典 Strassen 递归</td><td class="purple-text">49</td><td>198</td></tr></tbody></table>
-  <div class="tradeoff-saving">少做 <b>15</b> 次乘法，代价是多做 <b>150</b> 次加减法</div>
-  <div class="cost-slider"><label for="multiply-cost">教学假设：加法成本为 1，一次乘法成本为 <b id="multiply-cost-label">1</b></label><input id="multiply-cost" type="range" min="1" max="30" step="1" value="1"><div><button data-cost="1">乘法成本 1</button><button data-cost="10">成本 10</button><button data-cost="20">成本 20</button></div></div>
-  <div class="weighted-costs"><div><span>直接算法</span><div><i id="direct-cost-bar"></i></div><strong id="direct-cost-value">112 单位</strong></div><div><span>Strassen</span><div><i id="strassen-cost-bar"></i></div><strong id="strassen-cost-value">247 单位</strong></div></div>
-  <p class="cost-model-caption" id="cost-model-caption" aria-live="polite"></p>
-  <div class="slide-source">教学成本模型，忽略访存，不是实测时间。计数针对经典递归到标量的实现，尚未做额外消元或共享表达式优化。</div>
-</section>
-
-<section class="slide dark" data-title="AlphaTensor 的算法发现" data-seconds="45">
+<section class="slide dark" data-title="AlphaTensor 的算法发现" data-seconds="60">
   <div class="slide-header"><span class="chapter">AlphaTensor · Nature 2022</span><h2>AI 开始参与寻找计算算法</h2><p>在大量计算路径中，寻找正确、乘法次数更少的方案</p></div>
   <div class="discovery-flow"><div><span>01</span><h3>选择输入组合</h3><p>先用加减法组合输入<br>再把组合后的数相乘</p></div><div><span>02</span><h3>安排输出贡献</h3><p>一个中间乘积<br>可以用于哪些输出？</p></div><div><span>03</span><h3>检查与改进</h3><p>算法必须正确<br>同时尽量减少乘法</p></div></div>
   <div class="dark-statement">搜索目标是计算路径<br><strong>找到的算法可以处理适用范围内的新矩阵</strong></div>
@@ -149,7 +89,23 @@
   <div class="wide-takeaway">接下来的三种算法，都在同一个模 2 规则下计算</div>
 </section>
 
-<section class="slide comparison-slide" data-title="四阶矩阵三算法动画对比" data-seconds="100">
+<section class="slide ai-recipe-slide" data-title="AI算法实算：一个乘积怎样复用" data-seconds="100">
+  <div class="slide-header"><span class="chapter">AlphaTensor 的公开 47 步方案 · 模 2</span><h2>先组合输入，一次乘法可以服务多个输出</h2><p id="ai-recipe-intro">逐步查看作者公开方案中的真实步骤</p></div>
+  <div class="ai-matrix-triplet"><div><span>A · 4×4</span><div id="ai-recipe-a" class="ai-matrix"></div></div><b>×</b><div><span>B · 4×4</span><div id="ai-recipe-b" class="ai-matrix"></div></div><b>→</b><div><span>本步贡献 ΔC · 4×4</span><div id="ai-recipe-delta" class="ai-matrix"></div></div></div>
+  <div class="ai-recipe-formulas"><div id="ai-left-expression"></div><div id="ai-right-expression"></div><div id="ai-product-expression"></div></div>
+  <div class="demo-controls"><button data-play="ai-recipe">播放一个 AI 步骤</button><button data-step="ai-recipe">下一步</button><button data-reset="ai-recipe">重置</button><button data-ai-term="0">第 1 步：复用</button><button data-ai-term="1">第 2 步：组合与复用</button><span id="ai-recipe-progress">0 / 4</span></div>
+  <div class="slide-source">这是公开分解的实际项，ΔC 只表示本步贡献。所有 47 项相加后才是完整答案；输入组合与输出累加均按模 2 进行。</div>
+</section>
+
+<section class="slide dark ai-search-slide" data-title="AI怎样找到47步方案" data-seconds="75">
+  <div class="slide-header"><span class="chapter">AlphaTensor · 强化学习发现算法</span><h2>AI 搜索的是整套计算配方</h2><p>每次提出输入组合与输出分配，目标是正确完成乘法，并尽量减少步数</p></div>
+  <div class="ai-search-flow" id="ai-search-flow"><div><b>01</b><h3>给定目标</h3><p>两个 4×4 矩阵的<br>全部正确乘法关系</p></div><span>→</span><div><b>02</b><h3>选择动作</h3><p>怎样组合 A、B？<br>乘积送到哪些输出？</p></div><span>→</span><div><b>03</b><h3>更新状态</h3><p>扣除这一步的贡献<br>继续处理剩余关系</p></div><span>→</span><div><b>04</b><h3>评估路径</h3><p>关系全部吻合<br>并尽量缩短配方</p></div></div>
+  <div class="ai-search-caption" id="ai-search-caption" aria-live="polite">先定义什么才是正确的矩阵乘法，再搜索实现它的计算路径。</div>
+  <div class="demo-controls"><button data-play="ai-search">播放搜索思路</button><button data-step="ai-search">下一步</button><button data-reset="ai-search">重置</button></div>
+  <div class="slide-source">搜索原理示意，浏览器演示公开方案，没有现场训练模型。来源：AlphaTensor 论文与作者开源仓库。</div>
+</section>
+
+<section class="slide comparison-slide" data-title="四阶矩阵三算法动画对比" data-seconds="120">
   <div class="slide-header"><span class="chapter">同一组 4 × 4 输入</span><h2>三条路径，最后得到同一个答案</h2><p>每拍展示一次标量乘法。输入高亮表示取数，橙色表示输出贡献。</p></div>
   <div class="talk-comparison" id="talk-comparison"></div>
   <div class="comparison-status" id="comparison-status" aria-live="polite">统一采用模 2 运算。每列内部使用相同的 A 与 B。</div>
@@ -157,47 +113,64 @@
   <div class="slide-source">实际执行作者公开的 rank-47 分解。动画结束先后表示乘法次数差异，不等于真实运行时间比。</div>
 </section>
 
-<section class="slide tensor-four-slide" data-title="4×4算法正确性的检查" data-seconds="35">
+<section class="slide ai-numeric-slide" data-title="计算核对：三种算法的同一个4×4答案" data-seconds="70">
+  <div class="slide-header"><span class="chapter">把比较落实到数字 · 统一模 2</span><h2>三种算法，16 个输出格子全部相同</h2><p>沿用动画中的同一组输入，先手算一个格子，再核对完整结果</p></div>
+  <div class="ai-matrix-triplet"><div><span>A · 4×4</span><div id="ai-numeric-a" class="ai-matrix"></div></div><b>×</b><div><span>B · 4×4</span><div id="ai-numeric-b" class="ai-matrix"></div></div><b>=</b><div><span>共同结果 C · 4×4</span><div id="ai-numeric-c" class="ai-matrix"></div></div></div>
+  <div class="ai-numeric-equation" id="ai-numeric-equation"></div>
+  <div class="ai-checks" id="ai-numeric-checks"></div>
+  <div class="demo-controls"><button data-check-cell="0">手算 C₁₁</button><button data-check-cell="3">手算 C₁₄</button><button data-check-cell="all">核对全部 16 格</button><span>对比页“换一题”后，这里的输入和结果会同步更新</span></div>
+</section>
+
+<section class="slide tensor-four-slide" data-title="4×4算法正确性的检查" data-seconds="55">
   <div class="slide-header"><span class="chapter">验证作者公开的 4 × 4、47 次方案</span><h2>16 个输出格子，都必须符合矩阵乘法</h2><p>下面是 4×4 输出的关系检查表，每格显示该输出还有多少条计算关系未吻合</p></div>
   <div class="tensor-four-layout"><div class="tensor-four-grid" id="talk-tensor"></div><div class="tensor-info"><div><span>已加入的中间乘积</span><strong id="tensor-count">0 / 47</strong></div><div><span>未吻合的关系总数</span><strong id="tensor-remaining">64</strong></div><p id="tensor-caption" aria-live="polite">一个组合乘积可能影响多个输出，最终所有关系必须归零。</p></div></div>
   <div class="demo-controls"><button data-play="tensor">播放验证</button><button data-step="tensor">下一步</button><button data-reset="tensor">重置</button><button id="tensor-finish">看验证终点</button><span>格内是关系条数，不是矩阵计算结果</span></div>
   <div class="slide-source">每个输出对应 16×16 种输入元素乘积，共检查 4096 个系数。按已知 47 步路径验证，不在浏览器训练或搜索 AlphaTensor。</div>
 </section>
 
-<section class="slide" data-title="同一4×4矩阵的三种乘法次数" data-seconds="40">
-  <div class="slide-header"><span class="chapter">论文成果 · 统一 4 × 4、模 2 条件</span><h2>同一个 4×4 任务，可以有不同计算路径</h2><p>输入尺寸、运算规则与结果都相同，乘法次数不同</p></div>
-  <table class="results-table"><thead><tr><th>算法</th><th>输入与输出尺寸</th><th>运算规则</th><th>乘法次数</th></tr></thead><tbody><tr><td>直接行乘列</td><td>A、B、C 都是 4×4</td><td>模 2</td><td><strong>64</strong></td></tr><tr><td>Strassen 两层递归</td><td>A、B、C 都是 4×4</td><td>模 2</td><td><strong>49</strong></td></tr><tr><td>AlphaTensor</td><td>A、B、C 都是 4×4</td><td>模 2</td><td><strong class="purple-text">47</strong></td></tr></tbody></table>
-  <div class="wide-takeaway compact">47 次属于模 2 条件，不能直接套到任意实数矩阵</div>
-  <div class="slide-source">来源：Fawzi 等，Nature 610，47–53，2022。这里比较乘法次数，仍需另行衡量加法、访存与硬件性能。</div>
+<section class="slide ai-savings-slide" data-title="计算对比：AI究竟少算了多少" data-seconds="70">
+  <div class="slide-header"><span class="chapter">同一个 4×4、模 2 任务 · 只比较乘法次数</span><h2>64 → 47：少 17 次，减少 26.56%</h2><p>以直接算法的 64 次为分母；与 Strassen 比，则以 49 次为分母</p></div>
+  <div class="ai-savings-bars" id="ai-savings-bars"></div>
+  <div class="ai-saving-equations"><div><span>相比直接算法</span><b>(64 − 47) ÷ 64 = 26.56%</b></div><div><span>相比 Strassen</span><b>(49 − 47) ÷ 49 = 4.08%</b></div></div>
+  <div class="ai-repeat-control"><label for="ai-repeat-count">重复做同样的 4×4 任务 <b id="ai-repeat-label">10,000</b> 次</label><input id="ai-repeat-count" type="range" min="1" max="100000" step="1" value="10000"></div><div id="ai-repeat-summary" class="ai-repeat-summary"></div>
+  <div class="slide-source">这里统计标量乘法次数；26.56% 不是实际耗时减少比例，加法、访存与硬件实现仍需计入。</div>
 </section>
 
-<section class="slide" data-title="AlphaEvolve 的后续进展" data-seconds="30">
+<section class="slide ai-operation-cost-slide" data-title="计算对比：少乘法与多加法的代价" data-seconds="90">
+  <div class="slide-header"><span class="chapter">把加法的代价也算进去 · 模 2</span><h2>少了乘法，还要检查增加了多少加法</h2><p>统一采用逐项线性组合的直接展开实现，不共享额外的加法中间项</p></div>
+  <table class="ai-cost-table"><thead><tr><th>4×4 方案</th><th>乘法</th><th>输入组合 XOR</th><th>输出合并 XOR</th><th>总 XOR</th></tr></thead><tbody id="ai-cost-table-body"></tbody></table>
+  <div class="ai-cost-control"><label for="ai-multiply-cost">教学假设：一次 XOR 成本为 1，乘法成本为 <b id="ai-cost-weight">20</b></label><input id="ai-multiply-cost" type="range" min="1" max="50" value="20"><div><button data-ai-cost="1">成本 1</button><button data-ai-cost="20">成本 20</button><button data-ai-cost="50">成本 50</button></div></div>
+  <div class="ai-weighted-costs" id="ai-weighted-costs"></div><p id="ai-cost-verdict" class="ai-cost-verdict" aria-live="polite"></p>
+  <div class="slide-source">次数由本页执行的分解自动统计，XOR 是模 2 加法。Strassen 展平计数与经典递归的 198 次不同；模型忽略访存，不是实测速度。</div>
+</section>
+
+<section class="slide" data-title="AlphaEvolve 的后续进展" data-seconds="75">
   <div class="slide-header"><span class="chapter">后续进展 · 2025</span><h2>AlphaEvolve 把搜索扩展到代码优化</h2><p>大语言模型提出代码，自动评估器检查，再保留更好的版本</p></div>
-  <div class="evolve-layout"><div><h3>矩阵算法</h3><strong class="evolve-big">49 <span>到</span> 48</strong><p>4 × 4 复数矩阵<br>标量乘法次数</p><small>与模 2 下的 47 次属于不同设定</small></div><div><h3>同样是 4×4，仍要看运算规则</h3><div class="evolve-measure"><strong>47 次</strong><span>AlphaTensor 的模 2 方案</span></div><div class="evolve-measure"><strong>48 次</strong><span>AlphaEvolve 的复数方案</span></div><p class="evolve-bottom">两种规则不同，不能只凭 47 与 48 判断哪种更好</p></div></div>
+  <div class="evolve-layout"><div><h3>矩阵算法</h3><strong class="evolve-big">49 <span>到</span> 48</strong><p>4 × 4 复数矩阵<br>标量乘法次数</p><small>与模 2 下的 47 次属于不同设定</small></div><div><h3>同样是 4×4，仍要看运算规则</h3><div class="evolve-measure"><strong>47 次</strong><span>AlphaTensor 的模 2 方案</span></div><div class="evolve-measure"><strong>48 次</strong><span>AlphaEvolve 的复数方案</span></div><p class="evolve-bottom">复数任务：49 → 48，乘法次数减少约 2.04%</p></div></div>
   <div class="slide-source">来源：Novikov 等，AlphaEvolve 白皮书，2025。此页仅比较 4×4 矩阵算法的设定。</div>
 </section>
 
-<section class="slide" data-title="乘法次数与运行时间" data-seconds="40">
-  <div class="slide-header"><span class="chapter">理解成果的边界</span><h2>乘法更少，仍需要测量实际速度</h2><p>矩阵乘法包含更多内部运算，因此值得研究如何减少块乘法，但实际速度还取决于实现</p></div>
-  <div class="cost-comparison"><div><span>两个 4×4 矩阵相加</span><h3>对应格子各加一次</h3><strong>16 次加法</strong></div><div><span>两个 4×4 矩阵直接相乘</span><h3>每格都要做一组行乘列</h3><strong class="multiply-work">64 乘 + 48 加</strong></div></div>
+<section class="slide" data-title="乘法次数与运行时间" data-seconds="50">
+  <div class="slide-header"><span class="chapter">理解成果的边界</span><h2>乘法更少，仍需要测量实际速度</h2><p>26.56% 是乘法次数的减少比例；耗时变化要在目标硬件上测量。</p></div>
+  <div class="cost-comparison"><div><span>算法层面 · 同一 4×4、模 2 任务</span><h3>AI 减少了标量乘法次数</h3><strong>64 → 47</strong></div><div><span>硬件层面 · 真实程序运行</span><h3>XOR、访存和指令同样影响耗时</h3><strong class="multiply-work">仍需实测</strong></div></div>
   <div class="cost-factors"><div><strong>额外运算</strong><span>加减法与中间结果</span></div><div><strong>数据搬运</strong><span>存储容量与读写开销</span></div><div><strong>硬件与精度</strong><span>矩阵形状、并行利用率、数值误差</span></div></div>
 </section>
 
-<section class="slide closing" data-title="演讲结论与讨论" data-seconds="25">
+<section class="slide closing" data-title="演讲结论与讨论" data-seconds="40">
   <span class="chapter">结论与讨论</span><h2>AI 已经开始<br><em>参与算法发现</em></h2><div class="closing-lines"><div><b>少算</b><span>重新组合计算步骤</span></div><div><b>一起算</b><span>把独立任务并行执行</span></div><div><b>少搬</b><span>让数据在手边重复使用</span></div></div><p class="closing-question">你会怎样衡量一种计算方法“更好”？</p>
 </section>
 
-<section class="slide sources-slide" data-title="参考资料" data-seconds="20">
+<section class="slide sources-slide" data-title="参考资料" data-seconds="25">
   <div class="slide-header"><span class="chapter">参考资料</span><h2>论文与官方技术资料</h2><p>链接可点击，详细引用也保存在各页演讲备注中</p></div>
-  <ol class="source-links"><li><a href="https://doi.org/10.1038/s41586-022-05172-4" target="_blank" rel="noopener noreferrer"><b>AlphaTensor · Nature 2022</b><span>Fawzi 等，Discovering faster matrix multiplication algorithms with reinforcement learning</span></a></li><li><a href="https://link.springer.com/article/10.1007/BF02165411" target="_blank" rel="noopener noreferrer"><b>Strassen · 1969</b><span>Gaussian elimination is not optimal</span></a></li><li><a href="https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/" target="_blank" rel="noopener noreferrer"><b>NVIDIA GPU 与矩阵乘法指南</b><span>矩阵分块、并行计算、计算与访存瓶颈</span></a></li><li><a href="https://arxiv.org/abs/2205.14135" target="_blank" rel="noopener noreferrer"><b>FlashAttention · 2022</b><span>Dao 等，Fast and Memory-Efficient Exact Attention with IO-Awareness</span></a></li><li><a href="https://arxiv.org/abs/2506.13131" target="_blank" rel="noopener noreferrer"><b>AlphaEvolve · 2025</b><span>Novikov 等，A coding agent for scientific and algorithmic discovery</span></a></li><li><a href="https://homepage.cs.uiowa.edu/~dwjones/assem/summer18/notes/09muldiv.shtml" target="_blank" rel="noopener noreferrer"><b>硬件基础 · 大学课程与 CUDA 官方指南</b><span>晶体管、触发器、寄存器、二进制运算与 GPU；各页备注附详细链接</span></a></li></ol>
+  <ol class="source-links"><li><a href="https://doi.org/10.1038/s41586-022-05172-4" target="_blank" rel="noopener noreferrer"><b>AlphaTensor · Nature 2022</b><span>Fawzi 等，Discovering faster matrix multiplication algorithms with reinforcement learning</span></a></li><li><a href="https://link.springer.com/article/10.1007/BF02165411" target="_blank" rel="noopener noreferrer"><b>Strassen · 1969</b><span>Gaussian elimination is not optimal</span></a></li><li><a href="https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/" target="_blank" rel="noopener noreferrer"><b>NVIDIA GPU 与矩阵乘法指南</b><span>矩阵分块、并行计算、计算与访存瓶颈</span></a></li><li><a href="https://arxiv.org/abs/2205.14135" target="_blank" rel="noopener noreferrer"><b>FlashAttention · 2022</b><span>Dao 等，Fast and Memory-Efficient Exact Attention with IO-Awareness</span></a></li><li><a href="https://arxiv.org/abs/2506.13131" target="_blank" rel="noopener noreferrer"><b>AlphaEvolve · 2025</b><span>Novikov 等，A coding agent for scientific and algorithmic discovery</span></a></li><li><a href="https://homepage.cs.uiowa.edu/~dwjones/assem/summer18/notes/09muldiv.shtml" target="_blank" rel="noopener noreferrer"><b>硬件基础 · 大学课程与 CUDA 官方指南</b><span>晶体管、静态存储、寄存器、二进制运算与 GPU；各页备注附详细链接</span></a></li></ol>
   <div class="slide-source">AlphaTensor 47 次方案来自作者开源仓库，使用 Apache 2.0 许可。来源版本与许可全文嵌入此 HTML。</div>
 </section>
 
 </div></main>
 <aside id="notes-panel" hidden aria-label="演讲备注"><div class="notes-heading"><strong>演讲备注</strong><button id="notes-close" aria-label="关闭演讲备注">×</button></div><div id="notes-content"></div></aside>
-<footer class="navigation"><button id="previous" aria-label="上一页">← 上一页</button><span id="slide-count">01 / 26</span><span id="slide-title">AI 如何发现更快的矩阵乘法</span><div class="nav-right"><button id="timer-button" title="开始或暂停计时 T">计时 <span id="elapsed">00:00</span></button><button id="timer-reset" title="重置计时" aria-label="重置演讲计时">↺</button><button id="next" aria-label="下一页">下一页 →</button></div></footer>
+<footer class="navigation"><button id="previous" aria-label="上一页">← 上一页</button><span id="slide-count">01 / 22</span><span id="slide-title">AI 如何发现更快的矩阵乘法</span><div class="nav-right"><button id="timer-button" title="开始或暂停计时 T">计时 <span id="elapsed">00:00</span></button><button id="timer-reset" title="重置计时" aria-label="重置演讲计时">↺</button><button id="next" aria-label="下一页">下一页 →</button></div></footer>
 <div class="deck-progress" aria-hidden="true"><span id="deck-progress"></span></div>
-<dialog id="overview-dialog"><div class="dialog-header"><h2>演讲目录</h2><button data-close="overview-dialog" aria-label="关闭目录">×</button></div><p>26 页，建议讲解时间共 20 分钟。点击任意一页跳转。</p><div id="overview-grid"></div></dialog>
+<dialog id="overview-dialog"><div class="dialog-header"><h2>演讲目录</h2><button data-close="overview-dialog" aria-label="关闭目录">×</button></div><p>22 页，建议讲解时间共 20 分钟。点击任意一页跳转。</p><div id="overview-grid"></div></dialog>
 <dialog id="help-dialog"><div class="dialog-header"><h2>演示快捷键</h2><button data-close="help-dialog" aria-label="关闭快捷键">×</button></div><dl class="shortcut-list"><dt>→ / ↓ / 空格 / Page Down</dt><dd>下一页</dd><dt>← / ↑ / Page Up</dt><dd>上一页</dd><dt>Home / End</dt><dd>第一页 / 最后一页</dd><dt>F</dt><dd>进入或退出全屏</dd><dt>N</dt><dd>显示或隐藏本页演讲备注</dd><dt>O</dt><dd>打开目录</dd><dt>B</dt><dd>黑屏 / 恢复画面</dd><dt>T</dt><dd>开始或暂停演讲计时</dd><dt>R</dt><dd>重置当前页动画</dd></dl><p>动画由页面中的播放按钮控制。翻页会暂停动画。按 Esc 关闭目录或备注。备注会显示在当前屏幕上。</p></dialog>
 <div id="blackout" hidden><span>按 B 或点击恢复</span></div><button id="exit-cinema" aria-label="退出全屏演示">退出全屏 F</button><div class="sr-only" id="announcement" aria-live="polite"></div>
 <script>/*__DATA__*/
@@ -206,6 +179,8 @@
 /*__HARDWARE__*/
 /*__PHYSICS__*/
 /*__REGISTER_VISUALS__*/
+/*__AI_MODEL__*/
+/*__AI_VISUALS__*/
 /*__APP__*/</script>
 <!--__LICENSE__-->
 </body></html>

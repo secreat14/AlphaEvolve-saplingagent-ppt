@@ -13,9 +13,11 @@ html=html.replace('/*__CSS__*/',()=>read('presentation/slides.css'))
   .replace('/*__HARDWARE__*/',()=>escapeScript(read('presentation/hardware-lesson.js')))
   .replace('/*__PHYSICS__*/',()=>escapeScript(read('presentation/register-physics.js')))
   .replace('/*__REGISTER_VISUALS__*/',()=>escapeScript(read('presentation/register-visuals.js')))
+  .replace('/*__AI_MODEL__*/',()=>escapeScript(read('presentation/ai-focus-model.js')))
+  .replace('/*__AI_VISUALS__*/',()=>escapeScript(read('presentation/ai-focus-visuals.js')))
   .replace('/*__APP__*/',()=>escapeScript(read('presentation/slides.js')))
   .replace('<!--__LICENSE__-->',()=>`<!-- AlphaTensor public factorization data: Apache License 2.0.\n${read('dist/alphatensor-LICENSE.txt').replace(/-->/g,'-- >')}\n-->`);
-if(/\/\*__(?:CSS|DATA|MATH|DERIVATION|HARDWARE|PHYSICS|REGISTER_VISUALS|APP)__\*\//.test(html))throw new Error('Unreplaced inline content marker');
+if(/\/\*__(?:CSS|DATA|MATH|DERIVATION|HARDWARE|PHYSICS|REGISTER_VISUALS|AI_MODEL|AI_VISUALS|APP)__\*\//.test(html))throw new Error('Unreplaced inline content marker');
 const output=path.join(root,'dist/slides.html');
 fs.writeFileSync(output,html);
 console.log(output);
