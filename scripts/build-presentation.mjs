@@ -20,4 +20,7 @@ html=html.replace('/*__CSS__*/',()=>read('presentation/slides.css'))
 if(/\/\*__(?:CSS|DATA|MATH|DERIVATION|HARDWARE|PHYSICS|REGISTER_VISUALS|AI_MODEL|AI_VISUALS|APP)__\*\//.test(html))throw new Error('Unreplaced inline content marker');
 const output=path.join(root,'dist/slides.html');
 fs.writeFileSync(output,html);
+const standalone=path.join(root,'矩阵与AI-20分钟演讲.html');
+fs.writeFileSync(standalone,html);
 console.log(output);
+console.log(standalone);
