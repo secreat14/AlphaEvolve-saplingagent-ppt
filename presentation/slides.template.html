@@ -36,14 +36,14 @@
 </section>
 
 <section class="slide hardware-binary-slide" data-title="硬件入门：为什么加法开销通常更小" data-seconds="55">
-  <div class="slide-header"><span class="chapter">硬件入门 4 / 7 · 同位宽整数的硬件开销</span><h2>加法硬件开销通常更小，乘法要处理更多中间数据</h2><p>寄存器负责存数，运算单元负责计算。乘法需要更复杂的内部数据通路。</p></div>
+  <div class="slide-header"><span class="chapter">硬件入门 4 / 7 · 同位宽整数的硬件开销</span><h2>加法硬件开销通常更小，乘法要处理更多中间数据</h2><p>2 + 2 与 2 × 2 都得到 4，用通用四位电路观察不同的处理结构。</p></div>
   <div class="binary-comparison">
-    <div class="binary-panel"><h3>加法：15 + 15</h3><p>两个输入 → 求和与进位 → 保存结果</p><div class="arithmetic-operands"><span>输入寄存器</span><b>1111</b><i>+</i><b>1111</b></div><div class="arithmetic-workspace"><div class="arithmetic-adder" id="cost-adder-unit"><span>加法电路</span><strong>逐位求和 + 进位</strong><small>直接合成一组结果位</small></div></div><div class="arithmetic-result"><span>结果存储</span><div id="cost-add-bits" class="cost-result-bits"></div><b id="cost-add-answer">等待结果</b></div><div class="arithmetic-resource"><b>最多 5 位结果</b><span>加法电路通常更简单</span></div></div>
-    <div class="binary-panel"><h3>乘法：15 × 15</h3><p>两个输入 → 多行部分积 → 对齐、合并 → 保存结果</p><div class="arithmetic-operands"><span>输入寄存器</span><b>1111</b><i>×</i><b>1111</b></div><div class="arithmetic-workspace"><div class="partial-table" id="partial-table"></div><div class="cost-merge" id="cost-merge-unit">↓ 移位对齐，再用加法电路合并</div></div><div class="arithmetic-result"><span>结果存储</span><div id="cost-multiply-bits" class="cost-result-bits"></div><b id="cost-multiply-answer">等待结果</b></div><div class="arithmetic-resource"><b>最多 8 位结果</b><span>部分积与合并网络增加电路开销</span></div></div>
+    <div class="binary-panel"><h3>加法：2 + 2 = 4</h3><p>两个输入 → 求和与进位 → 保存结果</p><div class="arithmetic-operands"><span>输入寄存器</span><b>0010</b><i>+</i><b>0010</b></div><div class="arithmetic-workspace"><div class="arithmetic-adder" id="cost-adder-unit"><span>加法电路</span><strong>逐位求和 + 进位</strong><small>直接合成一组结果位</small></div></div><div class="arithmetic-result"><span>结果存储</span><div id="cost-add-bits" class="cost-result-bits"></div><b id="cost-add-answer">等待结果</b></div><div class="arithmetic-resource"><b>通用电路最多 5 位</b><span>加法电路通常更简单</span></div></div>
+    <div class="binary-panel"><h3>乘法：2 × 2 = 4</h3><p>两个输入 → 多行部分积 → 对齐、合并 → 保存结果</p><div class="arithmetic-operands"><span>输入寄存器</span><b>0010</b><i>×</i><b>0010</b></div><div class="arithmetic-workspace"><div class="partial-table" id="partial-table"></div><div class="cost-merge" id="cost-merge-unit">↓ 移位对齐，再用加法电路合并</div></div><div class="arithmetic-result"><span>结果存储</span><div id="cost-multiply-bits" class="cost-result-bits"></div><b id="cost-multiply-answer">等待结果</b></div><div class="arithmetic-resource"><b>通用电路最多 8 位</b><span>部分积与合并网络增加电路开销</span></div></div>
   </div>
-  <p class="binary-conclusion">同位宽下，整数加法通常使用更少电路资源 → 可以尝试用加法换取更少的乘法</p>
-  <div class="demo-controls"><button data-play="binary">播放开销对比</button><button data-step="binary">下一步</button><button data-reset="binary">重置</button><span id="binary-cost-caption" aria-live="polite">相同四位输入，观察内部处理与结果位宽</span></div>
-  <div class="slide-source">部分积是内部数据示意，不代表必须占用四个程序寄存器。动画不表示耗时比；现代 GPU 浮点乘加还需看专用硬件。来源：大学讲义、NVIDIA。</div>
+  <p class="binary-conclusion">结果同为 4，通用电路的开销可以不同 → 用较低开销的加法，换取更少的乘法</p>
+  <div class="demo-controls"><button data-play="binary">播放开销对比</button><button data-step="binary">下一步</button><button data-reset="binary">重置</button><span id="binary-cost-caption" aria-live="polite">相同输入、相同结果，观察通用电路内部的不同结构</span></div>
+  <div class="slide-source">通用电路结构示意；常量 2×2 可被优化，不能据此认定该算式实测更慢。部分积不等于程序寄存器。来源：大学讲义、NVIDIA。</div>
 </section>
 
 <section class="slide" data-title="GPU 的并行计算" data-seconds="35">

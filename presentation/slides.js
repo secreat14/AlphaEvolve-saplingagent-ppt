@@ -42,8 +42,8 @@
     ]
   },
   {
-    "text": "这一页的重点是硬件开销，先不逐位讲二进制算术。寄存器保存输入和结果，运算单元执行加法或乘法。固定同样的四位无符号整数输入，默认都是1111，即15。\n加法15+15=30，完整结果是11110，共五位。一般两个四位整数相加，保留进位最多需要五位。加法电路主要进行求和与进位，数据通路相对简单。\n乘法15×15=225，完整结果是11100001，共八位。普通长乘法展开的四行部分积为00001111、00011110、00111100、01111000，再对齐相加得到结果。一般两个四位整数相乘，完整结果最多需要八位。部分积生成、对齐及合并需要额外电路与内部数据处理。这些数据可在乘法器的线路、压缩网络或内部存储中处理，不代表程序必须额外占用四个寄存器。\n因此，在同位宽和相近设计目标下，通用整数加法通常比乘法需要更少电路资源。这为后面的多做加法、少做乘法建立动机。这里不规定每次乘法固定比加法慢多少倍；动画的播放顺序不表示真实耗时。现代GPU浮点乘加可有相同吞吐量，实际算法效果仍取决于规模、精度、硬件与数据搬运。",
-    "action": "先指出两边输入寄存器相同，再播放部分积与结果位宽。最后用一句话过渡：能否多做较便宜的加法，减少较昂贵的乘法？",
+    "text": "这页用2+2=4和2×2=4，让听众先看见输入相同、最终数值结果也相同，再对比通用电路的内部结构。输入2按四位写为0010。寄存器负责存数，运算单元负责计算。\n通用四位加法电路求和与进位，结果完整保留进位时最多五位；本题结果显示00100，即4。通用四位乘法电路可展开为四行部分积：00000000、00000100、00000000、00000000，移位对齐合并后显示00000100，同样是4。最多五位与最多八位描述通用电路的结果宽度，不表示数值4本身需要五位或八位。\n教学重点是：相同的数值答案，不要求相同的计算结构。在同位宽和相近设计目标下，通用整数加法通常使用更少电路资源，因而值得研究用一些加法换取更少乘法。部分积属于内部数据，不一定占用多个程序寄存器。\n这个例子展示通用电路结构，不能证明固定算式2×2实际耗时更长。编译器可能直接把常量算式求值为4，或者把乘2转成移位。现代GPU的浮点乘加还有专用硬件，真实速度需要结合实现测量。",
+    "action": "先指出两边都得到4，再播放数据路径。总结：结果相同，通用电路结构与资源开销仍可能不同。",
     "sources": [
       "https://homepage.cs.uiowa.edu/~dwjones/assem/summer18/notes/09muldiv.shtml",
       "https://courses.csail.mit.edu/6.896/spring04/handouts/arithmetic-ckts.pdf",
@@ -268,7 +268,7 @@
   const sampleB=[1,1,0,1,0,1,1,0,1,0,1,1,1,0,0,1];
   const sampleC=math.multiplyOrdinary(sampleA,sampleB);
   const hardware=globalThis.HardwareLesson;
-  const costOperand=15,partials=hardware.multiplicationPartials(costOperand,costOperand,4);
+  const costOperand=2,partials=hardware.multiplicationPartials(costOperand,costOperand,4);
   const additionResult=hardware.additionTrace(costOperand,costOperand,4).at(-1).result;
   const multiplicationResult=partials.reduce((sum,value)=>sum+value,0);
   const resultBits=(value,width,ready)=>Array.from({length:width},(_,i)=>`<span class="${ready?'result-ready':''}">${ready?(value>>(width-1-i))&1:'?'}</span>`).join('');
@@ -279,7 +279,7 @@
     $('#cost-add-answer').textContent=additionReady?`= ${additionResult}`:'等待结果';$('#cost-multiply-answer').textContent=multiplicationReady?`= ${multiplicationResult}`:'等待结果';
     $('#partial-table').innerHTML=partials.map((value,i)=>`<div class="partial-row ${i<n?'partial-visible':''} ${i===n-1?'partial-current':''}"><span>部分积 ${i+1} · 移 ${i} 位</span><b>${value.toString(2).padStart(8,'0')}</b></div>`).join('');
     $('#cost-merge-unit').classList.toggle('merge-active',multiplicationReady);
-    $('#binary-cost-caption').textContent=n===0?'相同四位输入，观察内部处理与结果位宽':n===1?'加法电路求和与进位；乘法开始生成内部部分积':n<5?'乘法还要处理更多部分积与对齐线路；这是结构讲解，不是计时':'乘法需要部分积与合并网络。加法通常开销更小，因此值得研究以加法换乘法。';
+    $('#binary-cost-caption').textContent=n===0?'相同输入、相同结果，观察通用电路内部的不同结构':n===1?'加法电路求和与进位；乘法开始生成内部部分积':n<5?'乘法还要处理更多部分积与对齐线路；这是结构讲解，不是计时':'两边都得到 4；通用乘法电路包含部分积与合并网络，因此值得研究以加法换乘法。';
   },1400);
   const lesson=globalThis.StrassenLesson;
   function partitionMarkup(values,labels){
