@@ -38,3 +38,24 @@ for(let trial=0;trial<1000;trial++){
   }
 }
 console.log('PASS: 64/49/47 multiplication counts; all 4096 tensor coefficients for each algorithm; 1000 seeded random 4x4 input pairs.');
+
+// Ordinary arithmetic retains signs rather than reducing factors modulo two.
+const ordinaryTerms=math.strassenTerms(true);
+for(let trial=0;trial<1000;trial++){
+  const a=Array.from({length:16},()=>Math.floor(random()*9)-4);
+  const b=Array.from({length:16},()=>Math.floor(random()*9)-4);
+  const expected=Array(16).fill(0);
+  for(let row=0;row<4;row++)for(let col=0;col<4;col++)for(let k=0;k<4;k++)expected[row*4+col]+=a[row*4+k]*b[k*4+col];
+  const recursive=math.strassenRecursive4(a,b);
+  // Mathematical zero is identical whether JavaScript represents it as +0 or -0.
+  assert.ok(recursive.result.every((x,i)=>x===expected[i]));
+  assert.ok(math.multiplyOrdinary(a,b).every((x,i)=>x===expected[i]));
+  assert.ok(math.traceOrdinary(ordinaryTerms,a,b).at(-1).accumulator.every((x,i)=>x===expected[i]));
+  assert.equal(recursive.multiplications,49);
+  assert.equal(recursive.additions,198);
+}
+const residuals=math.residualFrames(context.ALPHATENSOR_47.terms);
+assert.equal(residuals.length,48);
+assert.equal(residuals[0].reduce((sum,x)=>sum+x),64);
+assert.equal(residuals.at(-1).reduce((sum,x)=>sum+x),0);
+console.log('PASS: 1000 signed ordinary 4x4 cases; classic Strassen 49 multiplications and 198 additions; 47-step residual verification.');

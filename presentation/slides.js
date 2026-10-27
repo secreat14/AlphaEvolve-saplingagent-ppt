@@ -12,18 +12,18 @@
   const notes=[
     {text:'开场可以问：同一道矩阵乘法，答案已经确定，计算过程还有没有改进空间？\n今天从大家熟悉的行乘列出发，介绍经典算法、GPU 的执行方式，以及 AI 参与算法发现的例子。封面上的 64、49、47 都是后面同一道 4×4 题目所需的标量乘法次数。47 次有模 2 条件，后面单独解释。',action:'停留约 30 秒，介绍主题后翻页。',sources:[paper]},
     {text:'矩阵可以表示图像中的像素、图形中的坐标，也可以表示神经网络的输入和权重。科学计算还经常需要求解线性方程组。\n这里的关键是：矩阵计算属于基础操作，会在许多任务中反复出现。因此，一个底层操作的改进可能影响很多上层应用。后面会区分数学上少做运算和机器实际跑得快。',action:'用听众熟悉的图像或神经网络举一个例子即可。',sources:[paper,nvidia]},
-    {text:'先请大家看 A 的第一行与 B 的第一列。1 乘 5 得到 5，2 乘 7 得到 14，再相加得到 19。输出矩阵里的每一个格子都用同样的方法。\n这里共有 4 个输出格子，每个需要 2 次乘法，所以是 8 次乘法。另外需要 4 次加法。我们先关注乘法次数，因为接下来会看到算法如何重新组织这些乘法。',action:'点击播放。建议在第一格完成后暂停，再说明其他格子重复相同动作。',sources:[nvidia]},
-    {text:'Strassen 在 1969 年发现，两个 2×2 矩阵相乘只需要 7 次标量乘法。关键是先对输入做加减法，计算 7 个中间乘积，再把这些乘积加减组合成最终答案。\n这里展示实际数值，例如第一项先算 1+4 和 5+8，再相乘得到 65。某些中间结果会在多个输出中复用。这个经典版本需要 18 次加减法，因此小矩阵上不一定更快，优势要结合递归与实现来看。',action:'播放七步。强调无需现场背完七条公式，只需理解中间结果可以复用。',sources:[strassenPaper,paper]},
-    {text:'把 4×4 矩阵切成四个 2×2 小块，外层可以像处理一个 2×2 矩阵那样，用 7 次块乘法来计算。每次 2×2 块乘法又可以用 7 次标量乘法完成。\n所以两层一共是 7 乘 7，得到 49 次。直接算法有 16 个输出，每个 4 次乘法，所以需要 64 次。这里比较的是标量乘法次数，额外加减法没有消失。',action:'指着不同颜色的四块解释外层，再指着块里的数字解释内层。',sources:[strassenPaper,paper]},
-    {text:'GPU 是图形处理器，现在也广泛用于适合并行的数值计算。大矩阵可以切成小块，交给很多小组同时处理。\n这个演示把 16 个独立任务交给一个小组，或者四个小组。理想情况下，四组在 4 轮完成，而逐个处理需要 16 轮。现实中还存在调度和通信，CPU 也能并行。GPU 的优势需要足够多且适合拆开的任务。Tensor Cores 可以理解为专门处理矩阵块乘法与累加的计算单元。',action:'播放后，在右边 4 轮完成时短暂停顿。说明这不是实际硬件测速。',sources:[gpuSource,nvidia]},
-    {text:'计算也会等待数据。可以用做菜的调料来类比：如果调料在远处，每次用都去取，会浪费很多搬运。先拿到手边，再重复使用，通常更高效。\n本例有 8 份数据，每份用 4 次。反复取是 32 趟，每份只取一次是 8 趟。FlashAttention 把注意力计算分块，减少 GPU 显存和片上存储之间的读写。这里的 32 和 8 是教学假设，不是论文的实测加速比。',action:'播放搬运。提示观众观察右边的计数在 8 停下，数据继续在手边复用。',sources:[flash,nvidia]},
+    {"text":"全场矩阵案例统一使用 4×4。这里 A 和 B 都只含 0 和 1，但这一页先按普通算术相乘，不取模。第一行与第一列计算为 1×1+0×0+1×1+1×1=3。四个乘积只需要三次加法合并。\n输出有 16 格，每格 4 次乘法、3 次加法，所以总计 64 次乘法和 48 次加法。后面 Strassen 使用同一组输入并还原同一结果。再往后改为模 2 运算时，规则变化会明确说明。","action":"先单步五下，解释左上角的四次乘法与三次加法。随后播放，或点看完整结果。","sources":["https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"]},
+    {"text":"这一页仍计算上一页的 4×4 乘积。Strassen 把整张矩阵切成四个内部块。外层做七组块乘法，每组再递归为七次标量乘法，所以总计 49 次。内部块只是拆解步骤，没有换成另一道输入题。\n算法先用加减法组合输入，再复用中间乘积来还原输出。右边显示当前乘积贡献的累计结果，最后必须与上一页完全一致。\n经典递归到标量的实现需要 198 次加减法：外层预处理 40 次、七组内部计算共 126 次、外层合并 32 次。动画将乘积贡献展开显示，198 指经典递归执行的计数，不是逐项展开后重新计算所有线性组合的计数。","action":"单步观察组号和输出贡献，然后看完整结果。强调减少乘法有增加加法的代价。","sources":["https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html","https://cs-web.bu.edu/faculty/homer/630f21/hw/hw1-ans.pdf","https://doi.org/10.1038/s41586-022-05172-4"]},
+    {"text":"为什么要增加加法？因为可以用加减法先组合输入，让一个中间乘积服务多个输出，从而少做一些乘法。这里仍以同一 4×4 为例，直接法为 64 乘和 48 加，经典 Strassen 为 49 乘和 198 加减。\n它省下 15 次乘法，但多了 150 次加减法。若假设每次乘法与加法成本相同，直接法 112 单位、Strassen 247 单位，优化并不划算。若假设乘法成本为加法的 10 倍，两者恰好打平。乘法成本为 20 时，直接法 1328、Strassen 1178 单位。\n这些是教学成本单位，不是现代 CPU 或 GPU 的实测结果，也不表示标量乘法总比加法贵。块乘法内部包含很多标量运算，矩阵规模增长时，减少块乘法可能更有价值。真实效果还要计入访存、融合指令和数值误差。","action":"依次点成本 1、10、20，让听众看到取舍。提问：更少的乘法一定代表更快吗？","sources":["https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html","https://cs-web.bu.edu/faculty/homer/630f21/hw/hw1-ans.pdf","https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"]},
+    {"text":"继续使用 4×4 输出的 16 个格子作为任务。每格需要计算一组行乘列，这 16 个输出可以分工。一个小组逐格做需要 16 轮，四组同时做理想情况下需要四轮。\n这是等耗时独立任务的教学模型，没有统计调度、通信和数据访问，不能当作 CPU 与 GPU 的真实测速。CPU 也可以并行。GPU 的收益需要合适的任务规模与分工方式。","action":"播放后，在右边四轮完成时暂停，指出任务格子是 C11 到 C44。","sources":["https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/","https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html"]},
+    {"text":"4×4 的 A 有 16 个元素。计算 A 乘 B 时，A 的每个元素需要参与四个输出列，所以会被使用四次。\n如果每次使用都从远处取，读取 A 共 64 趟。如果先将 A 的 16 个元素拿到手边，并且容量足够，就可以重复使用，只读取 16 趟。这里仅统计 A，不包括 B、输出和其他开销。\nFlashAttention 使用分块减少显存与片上存储之间的读写，但这张 4×4 教学图不是该论文的实测性能。","action":"播放搬运。观察右边在 16 趟停止，而左边继续到 64。","sources":["https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/","https://arxiv.org/abs/2205.14135"]},
     {text:'前面的 Strassen 是人设计的算法。AlphaTensor 尝试用强化学习帮助搜索新的矩阵乘法算法，论文发表于 2022 年 Nature。\n寻找算法时，需要决定怎样线性组合输入、让组合后的数相乘，以及把中间乘积加到哪些输出。最终必须与矩阵乘法完全一致，同时希望乘法更少。可以把它理解成：神经网络判断哪些动作更有希望，树搜索往前探索，再用反馈不断改进选择。发现出来的是适用范围内通用的计算规则。',action:'按从左到右的顺序解释三步，不需要介绍寄存器或神经网络结构。',sources:[paper]},
     {text:'在比较 47 次方案前，需要统一运算规则。模 2 只保留除以 2 的余数，结果是 0 或 1。例如 1+1=2，2 除以 2 的余数是 0，所以模 2 中写成 1+1=0。\nAlphaTensor 的 4×4、47 次结果属于这个规则。它不能直接拿来计算任意实数 4×4 矩阵。接下来三种算法都使用相同的模 2 规则，因此最终答案可以公平比较。',action:'可以问听众 1+1+1 在模 2 下是多少，答案是 1。',sources:[paper]},
     {text:'这是同一道 4×4 题目，三列都使用相同的输入 A 和 B。紫色与绿色标出本步从 A 和 B 选取的数字，橙色标出本步贡献到哪些输出。每拍展示一次标量乘法。\n直接算法按行乘列，逐项累加。Strassen 对输入进行分块组合，用两层递归完成 49 次乘法。AI 列实际使用作者公开的 47 项模 2 分解，将若干输入先按模 2 相加，再相乘，并把结果复用到不同输出。\n动画到 47 步时 AI 路径结束，到 49 步时 Strassen 结束，到 64 步时直接算法结束。最后三种结果必须一致。加法、搬运与硬件开销没有按时间计入，所以不能把动画的结束先后当成实测运行速度。',action:'先单步两三次，解释输入高亮与输出贡献。再选快速播放到终点。可用范围菜单单独演示 AI 路径，或换一道题核对结果。建议留 3 分钟。',sources:[paper,'https://github.com/google-deepmind/alphatensor/tree/'+globalThis.ALPHATENSOR_47.commit+'/algorithms']},
-    {text:'真实 AlphaTensor 使用矩阵乘法张量来描述算法发现问题。为了直观，可以把它看成一张记录剩余计算关系的表。\n每加入一个中间乘积，就从目标计算关系里扣掉它的贡献。某一步可能同时解决一些关系，也引入需要抵消的贡献，因此中途未归零的数量可能增加。只有最后所有关系都归零，算法才完整正确。\n本页使用已知的七步 Strassen 路径讲解原理，没有运行 AlphaTensor，也不表示真实搜索只尝试了七步。',action:'单步第一步，指出非零格子可能变多。然后播放到全部归零。',sources:[paper]},
-    {text:'表里有两个不同的成果。第一行是 4×4 模 2 矩阵，比较基线是 Strassen 两层递归的 49 次，AlphaTensor 找到 47 次。\n第二行是 4×5 与 5×5 在普通实数下相乘。直接方法需要 100 次乘法，但此前更好的算法已经降到 80 次，AlphaTensor 进一步达到 76 次。讲论文时必须把输入尺寸、运算规则和比较基线一起说明。',action:'强调 80 是已经优化过的基线，避免说成直接算法只有 80 次。',sources:[paper]},
-    {text:'2025 年的 AlphaEvolve 把大语言模型提出代码、自动验证与进化搜索结合起来。数学方面，团队找到 4×4 复数矩阵用 48 次标量乘法的算法。这个复数设定与模 2 下的 47 次不同，不能只比较数字大小。\n工程方面，团队报告某个矩阵乘法内核提速 23%，对应整体 Gemini 训练时间减少约 1%。这个例子说明，局部计算更快，整体收益还取决于这部分原先占用了多少时间。',action:'分别指出左边是数学运算次数，右边是工程中的局部与整体性能。',sources:[evolve,evolveBlog]},
-    {text:'到这里需要区分两个问题。算法研究可能关注尽量减少标量乘法次数，工程研究则需要测量给定硬件和输入下真正用了多少时间。\n额外的加减法、临时结果、显存读写、并行利用率，以及数值误差，都会影响实际效果。所以发现更少乘法的算法很有价值，但是否更适合某个应用，还要做正确性和性能评估。',action:'可问观众：如果少两次乘法，却多搬很多数据，是否仍然划算？',sources:[nvidia,paper]},
+    {"text":"这一页验证作者公开的 4×4、47 次模 2 方案。输出 C 有 16 格，每格可能涉及 A 的 16 个元素与 B 的 16 个元素之间的 256 种乘积关系，所以整个恒等式有 4096 个系数。\n我们把每个输出的 256 个系数压缩成一个统计数，表示还有多少条关系未吻合。初始每格需要四项，16 格共 64 条。逐步加入公开的 47 个组合乘积后，所有 4096 个系数必须吻合。中途关系数可能增加，因为新的贡献还需要被后面的乘积抵消。\n最终全部归零，说明这个恒等式对适用范围内所有输入成立。这是在验证一条已知路径，不是在浏览器训练或运行 AlphaTensor 搜索。","action":"单步一次，解释关系计数可以增加。然后播放或看验证终点，确认总数归零。","sources":["https://doi.org/10.1038/s41586-022-05172-4"]},
+    {"text":"表里统一为 A、B、C 都是 4×4，并统一采用模 2 运算。直接算法需要 64 次乘法，Strassen 两层递归需要 49 次，AlphaTensor 的公开方案需要 47 次。\n这里比较乘法次数，同时保持输入尺寸与运算规则一致。47 次的结果不能直接套到任意普通实数矩阵。加法和访存没有包含在这列数字里，实际速度仍然需要测试。","action":"提醒听众检查表头与条件，避免只记住 47 这个数字。","sources":["https://doi.org/10.1038/s41586-022-05172-4"]},
+    {"text":"AlphaEvolve 在 2025 年把大语言模型提出代码、自动评估与进化搜索结合起来。这里仍只看 4×4 矩阵：团队找到复数设定下 48 次标量乘法的方案，改进了该设定的 49 次基线。\nAlphaTensor 的 47 次方案属于模 2，AlphaEvolve 的 48 次属于复数。两种运算规则不同，不能仅凭 47 小于 48 就判断哪个成果更好。","action":"先指左边的复数条件，再对照右边的模 2 条件。","sources":["https://arxiv.org/abs/2506.13131","https://doi.org/10.1038/s41586-022-05172-4"]},
+    {"text":"为什么研究者愿意用更多矩阵加法换取更少矩阵乘法？用 4×4 就能看到差别：矩阵相加逐格做，一共 16 次标量加法；直接矩阵相乘需要 64 次标量乘法和 48 次加法。一个块乘法内部包含整组行乘列，工作量比一次块相加更多。\n因此减少某些块乘法、用较多块加法做输入组合与结果复用，可能值得。可是经典 Strassen 在这个小尺寸上共需要 198 次加减法，若按等成本计数，反而多做了工作。\n现代硬件可能融合乘加，也会受数据搬运、并行利用率和数值误差影响。应分别说明数学上的运算计数和工程上的实测时间。","action":"把第 5 页的成本模型和这里的块计算逻辑联系起来。","sources":["https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html","https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"]},
     {text:'回到开场问题：同一道计算题，即使答案固定，计算路径仍然可能改进。Strassen 和 AlphaTensor 展示了重新组合步骤来减少乘法，GPU 展示并行执行，FlashAttention 展示减少数据搬运。\n今天最重要的结论是，AI 已经可以参与基础算法的发现与优化，而评价一种方法还需要明确适用条件和衡量标准。可以在这一页接受提问。',action:'总结后停顿，邀请听众讨论怎样定义计算方法更好。',sources:[paper,flash]},
     {text:'这些是本次演讲的主要来源，均为原论文或官方资料。可点击标题打开原文。AlphaTensor 47 次方案使用作者开源仓库的数据，来源提交版本及 Apache 2.0 许可已嵌入 HTML。\n如果听众希望继续阅读，先看 AlphaTensor 团队的图文介绍，再读原论文和 NVIDIA 矩阵乘法指南。',action:'参考资料页可以留在屏幕上，便于问答时查阅。',sources:[paper,strassenPaper,nvidia,gpuSource,flash,evolve,evolveBlog]}
   ];
@@ -44,37 +44,54 @@
     play.addEventListener('click',()=>object.play());$(`[data-step="${id}"]`).addEventListener('click',()=>object.next());$(`[data-reset="${id}"]`).addEventListener('click',()=>object.reset());
     demos.set(id,object);object.paint();return object;
   }
-  const a2=[1,2,3,4],b2=[5,6,7,8],c2=[19,22,43,50];
-  $('#basic-a').innerHTML=cells(a2);$('#basic-b').innerHTML=cells(b2);$('#basic-c').innerHTML=cells(['?','?','?','?']);
-  demo('basic',12,n=>{
-    const out=n?Math.floor((n-1)/3):0,row=Math.floor(out/2),col=out%2,phase=n?(n-1)%3:0;
-    $$('#basic-a .cell').forEach((e,i)=>{e.classList.toggle('a-lit',n>0&&Math.floor(i/2)===row);e.classList.toggle('active',n>0&&i===row*2+Math.min(phase,1));});
-    $$('#basic-b .cell').forEach((e,i)=>{e.classList.toggle('b-lit',n>0&&i%2===col);e.classList.toggle('active',n>0&&i===Math.min(phase,1)*2+col);});
-    $$('#basic-c .cell').forEach((e,i)=>{e.textContent=n>=(i+1)*3?c2[i]:'?';e.classList.toggle('output-lit',n>0&&i===out);});
-    const first=a2[row*2]*b2[col],second=a2[row*2+1]*b2[2+col];
-    $('#basic-equation').textContent=n===0?'1 × 5 + 2 × 7 = 19':phase===0?`${a2[row*2]} × ${b2[col]} = ${first}`:phase===1?`${a2[row*2+1]} × ${b2[2+col]} = ${second}`:`${first} + ${second} = ${c2[out]}`;
-    $('#basic-caption').textContent=n===0?'动画会依次突出用到的那一行与那一列':phase===2?`得到 C 的第 ${row+1} 行第 ${col+1} 列${n===12?'，全部完成':''}`:`第 ${row+1} 行与第 ${col+1} 列，先计算第 ${phase+1} 对数字`;
-  },1000);
-  const strassenTerms=[['(1+4)(5+8)',65],['(3+4) × 5',35],['1 × (6−8)',-2],['4 × (7−5)',8],['(1+2) × 8',24],['(3−1)(5+6)',22],['(2−4)(7+8)',-30]];
-  $('#strassen-products').innerHTML=strassenTerms.map((x,i)=>`<div class="strassen-product"><span>M${i+1}</span><p>${x[0]}</p><b>?</b></div>`).join('');
-  demo('strassen',7,n=>{
-    $$('.strassen-product').forEach((e,i)=>{e.classList.toggle('current',n===i+1);e.querySelector('b').textContent=n>i?strassenTerms[i][1]:'?';});
-    $('#strassen-answer').textContent=n===7?'[19, 22; 43, 50]':`已计算 ${n} / 7 项`;
-    $('#strassen-caption').textContent=n===7?'C₁₁ = M₁ + M₄ − M₅ + M₇ = 19，其他格子也可用这些中间乘积还原。':'M 表示可复用的中间结果。这里沿用上一页的 A 与 B。';
-  },850);
-  $('#block-matrix').innerHTML=Array.from({length:16},(_,i)=>`<span class="cell block-${Math.floor(i/8)*2+Math.floor(i%4/2)}">${i+1}</span>`).join('');
-  for(const id of ['gpu-serial','gpu-parallel'])$('#'+id).innerHTML=Array.from({length:16},(_,i)=>`<span>${String(i+1).padStart(2,'0')}</span>`).join('');
+  const math=globalThis.MatrixCompareMath;
+  const sampleA=[1,0,1,1,0,1,1,0,1,1,0,1,0,0,1,1];
+  const sampleB=[1,1,0,1,0,1,1,0,1,0,1,1,1,0,0,1];
+  const sampleC=math.multiplyOrdinary(sampleA,sampleB);
+  $('#basic-a').innerHTML=cells(sampleA);$('#basic-b').innerHTML=cells(sampleB);$('#basic-c').innerHTML=cells(Array(16).fill('?'));
+  const basic=demo('basic',80,n=>{
+    const out=n?Math.floor((n-1)/5):0,row=Math.floor(out/4),col=out%4,phase=n?(n-1)%5:0;
+    $$('#basic-a .cell').forEach((e,i)=>{e.classList.toggle('a-lit',n>0&&Math.floor(i/4)===row);e.classList.toggle('active',n>0&&phase<4&&i===row*4+phase);});
+    $$('#basic-b .cell').forEach((e,i)=>{e.classList.toggle('b-lit',n>0&&i%4===col);e.classList.toggle('active',n>0&&phase<4&&i===phase*4+col);});
+    $$('#basic-c .cell').forEach((e,i)=>{e.textContent=n>=(i+1)*5?sampleC[i]:'?';e.classList.toggle('output-lit',n>0&&i===out);});
+    const products=Array.from({length:4},(_,k)=>sampleA[row*4+k]*sampleB[k*4+col]);
+    $('#basic-equation').textContent=n===0?'1 × 1 + 0 × 0 + 1 × 1 + 1 × 1 = 3':phase<4?`${sampleA[row*4+phase]} × ${sampleB[phase*4+col]} = ${products[phase]}`:`${products.join(' + ')} = ${sampleC[out]}`;
+    $('#basic-caption').textContent=n===0?'先看第一行与第一列，得到 C 的左上角':phase===4?`4 个乘积用 3 次加法合并，填入 C[${row+1},${col+1}]${n===80?'，16 格全部完成':''}`:`第 ${row+1} 行与第 ${col+1} 列，计算第 ${phase+1} 对数字`;
+    const completed=Math.floor(n/5);$('#basic-work-count').textContent=`${completed*4+Math.min(n%5,4)} / 64 次乘法，${completed*3} / 48 次加法`;
+  },350);
+  $('#basic-finish').addEventListener('click',()=>basic.finish());
+  const realTerms=math.strassenTerms(true),realTrace=math.traceOrdinary(realTerms,sampleA,sampleB);
+  const realReference=math.strassenRecursive4(sampleA,sampleB);
+  $('#strassen-products').innerHTML=Array.from({length:7},(_,i)=>`<div class="strassen-group"><span>第 ${i+1} 组</span><strong>0 / 7</strong></div>`).join('');
+  $('#strassen-output').innerHTML=cells(Array(16).fill(0));
+  const strassenDemo=demo('strassen',49,n=>{
+    $$('.strassen-group').forEach((e,i)=>{e.classList.toggle('current',n>i*7&&n<=(i+1)*7);e.querySelector('strong').textContent=`${Math.max(0,Math.min(7,n-i*7))} / 7`;});
+    const step=n?realTrace[n-1]:null;
+    $$('#strassen-output .cell').forEach((e,i)=>{e.textContent=step?step.accumulator[i]:0;e.classList.toggle('output-lit',n>0&&!!realTerms[n-1].w[i]);});
+    $('#strassen-product-equation').textContent=step?`${step.left<0?'('+step.left+')':step.left} × ${step.right<0?'('+step.right+')':step.right} = ${step.product}`:'先组合输入，再做一次乘法';
+    $('#strassen-answer').textContent=n===49?'结果与直接算法一致':`${n} / 49 次乘法`;
+    $('#strassen-output-label').textContent=n===49?'最终答案 C · 4 × 4':'C 的过程累计 · 4 × 4';
+    $('#strassen-caption').textContent=n===49?`同一组 4×4 输入得到相同 C。经典递归实际计数为 ${realReference.multiplications} 次乘法、${realReference.additions} 次加减法。`:n?`外层第 ${realTerms[n-1].outer+1} 组，内层第 ${realTerms[n-1].inner+1} 次乘法，乘积贡献可分配到多个输出。`:'高亮表示正在计算哪一组，每组包含 7 次标量乘法';
+  },260);
+  $('#strassen-finish').addEventListener('click',()=>strassenDemo.finish());
+  function updateCost(){
+    const m=Number($('#multiply-cost').value),direct=64*m+48,optimized=49*m+198,largest=Math.max(direct,optimized);
+    $('#multiply-cost-label').textContent=m;$('#direct-cost-value').textContent=`${direct} 单位`;$('#strassen-cost-value').textContent=`${optimized} 单位`;
+    $('#direct-cost-bar').style.width=`${100*direct/largest}%`;$('#strassen-cost-bar').style.width=`${100*optimized/largest}%`;
+    $('#cost-model-caption').textContent=m<10?`新增的加法成本超过省下的乘法成本，Strassen 多用 ${optimized-direct} 单位。4×4 并不一定更快。`:m===10?'假设乘法成本为加法的 10 倍时，省下 15 次乘法恰好抵消新增 150 次加法。':`在这个假设下，省下的乘法更值钱：Strassen 少用 ${direct-optimized} 单位。这是成本示意，仍需真实测量。`;
+  }
+  $('#multiply-cost').addEventListener('input',updateCost);$$('[data-cost]').forEach(button=>button.addEventListener('click',()=>{$('#multiply-cost').value=button.dataset.cost;updateCost();}));updateCost();
+  for(const id of ['gpu-serial','gpu-parallel'])$('#'+id).innerHTML=Array.from({length:16},(_,i)=>`<span>C${Math.floor(i/4)+1}${i%4+1}</span>`).join('');
   demo('gpu',16,n=>{
     $$('#gpu-serial>span').forEach((e,i)=>{e.classList.toggle('done',i<n);e.classList.toggle('current',n>0&&i===n-1);});
     $$('#gpu-parallel>span').forEach((e,i)=>{e.classList.toggle('done',i<Math.min(16,n*4));e.classList.toggle('current',n>0&&n<=4&&i>=(n-1)*4&&i<n*4);});
     $('#gpu-serial-label').textContent=`${n} / 16 轮`;$('#gpu-parallel-label').textContent=`${Math.min(n,4)} / 4 轮`;
     $('#gpu-caption').textContent=n>=4?'右边在第 4 轮完成，左边需要 16 轮完成':'并行计算需要足够多、能够分开的任务';
   },450);
-  demo('memory',32,n=>{
-    $('#memory-naive').textContent=n;$('#memory-reuse').textContent=Math.min(n,8);
-    for(const [id,moving] of [['package-naive',n>0],['package-reuse',n>0&&n<=8]]){const e=$('#'+id);e.classList.remove('travel');if(moving){void e.offsetWidth;e.classList.add('travel');}}
+  demo('memory',64,n=>{
+    $('#memory-naive').textContent=n;$('#memory-reuse').textContent=Math.min(n,16);
+    for(const [id,moving] of [['package-naive',n>0],['package-reuse',n>0&&n<=16]]){const e=$('#'+id);e.classList.remove('travel');if(moving){void e.offsetWidth;e.classList.add('travel');}}
   },300);
-  const math=globalThis.MatrixCompareMath;
   const methods=[{id:'direct',name:'直接行乘列',total:64,terms:math.directTerms()},{id:'strassen',name:'Strassen 两层分块',total:49,terms:math.strassenTerms()},{id:'alpha',name:'AlphaTensor 优化',total:47,terms:globalThis.ALPHATENSOR_47.terms}];
   let a4=[1,0,1,1,0,1,1,0,1,1,0,1,0,0,1,1],b4=[1,1,0,1,0,1,1,0,1,0,1,1,1,0,0,1],mode='all';
   const traces={};
@@ -104,18 +121,15 @@
   $('#compare-tempo').addEventListener('change',e=>{const playing=!!comparison.timer;comparison.stop();comparison.interval=Number(e.target.value);if(playing)comparison.play();});
   $('#compare-finish').addEventListener('click',()=>comparison.finish());
   $('#compare-random').addEventListener('click',()=>{a4=Array.from({length:16},()=>Math.round(Math.random()));b4=Array.from({length:16},()=>Math.round(Math.random()));rebuild();comparison.reset();});
-  const factor2=[[[1,0,0,1],[1,0,0,1],[1,0,0,1]],[[0,0,1,1],[1,0,0,0],[0,0,1,-1]],[[1,0,0,0],[0,1,0,-1],[0,1,0,1]],[[0,0,0,1],[-1,0,1,0],[1,0,1,0]],[[1,1,0,0],[0,0,0,1],[-1,1,0,0]],[[-1,0,1,0],[1,1,0,0],[0,0,0,1]],[[0,1,0,-1],[0,0,1,1],[1,0,0,0]]];
-  $('#talk-tensor').innerHTML=Array.from({length:4},(_,i)=>`<div><h3>输出 C${Math.floor(i/2)+1}${i%2+1}</h3><div class="tensor-grid">${Array(16).fill('<span>0</span>').join('')}</div></div>`).join('');
-  demo('tensor',7,n=>{
-    const residual=Array(64).fill(0);
-    for(let o=0;o<4;o++)for(let k=0;k<2;k++)residual[o*16+(Math.floor(o/2)*2+k)*4+k*2+o%2]=1;
-    for(let s=0;s<n;s++)for(let o=0;o<4;o++)for(let a=0;a<4;a++)for(let b=0;b<4;b++)residual[o*16+a*4+b]-=factor2[s][0][a]*factor2[s][1][b]*factor2[s][2][o];
-    const remaining=residual.filter(x=>x!==0).length;
-    $$('.tensor-grid>span').forEach((e,i)=>{e.textContent=residual[i];e.classList.toggle('positive',residual[i]>0);e.classList.toggle('negative',residual[i]<0);});
-    $$('.tensor-grid').forEach(e=>e.classList.toggle('done',remaining===0));
-    $('#tensor-count').textContent=`${n} / 7`;$('#tensor-remaining').textContent=remaining;
-    $('#tensor-caption').textContent=remaining===0?'所有关系归零，七个中间乘积恰好重建矩阵乘法。':'中途可能出现更多非零格子，最终必须全部归零。';
-  },1200);
+  const residualFrames=math.residualFrames(globalThis.ALPHATENSOR_47.terms);
+  $('#talk-tensor').innerHTML=Array.from({length:16},(_,i)=>`<div><span>C${Math.floor(i/4)+1}${i%4+1}</span><strong>4</strong></div>`).join('');
+  const tensorDemo=demo('tensor',47,n=>{
+    const perOutput=residualFrames[n],remaining=perOutput.reduce((sum,x)=>sum+x,0);
+    $$('#talk-tensor>div').forEach((e,i)=>{e.querySelector('strong').textContent=perOutput[i];e.classList.toggle('aligned',perOutput[i]===0);e.classList.toggle('contributed',n>0&&!!globalThis.ALPHATENSOR_47.terms[n-1].w[i]);});
+    $('#tensor-count').textContent=`${n} / 47`;$('#tensor-remaining').textContent=remaining;
+    $('#tensor-caption').textContent=remaining===0?'4096 个系数全部吻合，公开的 47 项分解通过完整恒等式验证。':'格内数字统计该输出尚未吻合的关系，可能先增后减，最终必须全部归零。';
+  },180);
+  $('#tensor-finish').addEventListener('click',()=>tensorDemo.finish());
 
   function resize(){
     const notesVisible=!$('#notes-panel').hidden&&innerWidth>750;

@@ -4,3 +4,59 @@
 /* Keep the complete three-way animation and its controls on one 16:9 slide. */
 .comparison-slide .method-counter b{font-size:43px}.comparison-slide .method-progress{margin:8px 0 11px}.comparison-slide .small-matrix{gap:3px;padding:3px 6px}.comparison-slide .small-matrix>span{height:20px;font-size:17px}.comparison-slide .method-equation{font-size:27px;margin:12px 0 6px}.comparison-slide .method-caption{font-size:17px;line-height:1.5;min-height:48px;margin-bottom:8px}.comparison-slide .method-output>p{font-size:17px;line-height:1.7}.comparison-slide .comparison-status{font-size:18px;padding-top:10px;margin-top:12px}.comparison-slide .comparison-controls{padding-top:10px}
 #exit-cinema{display:none;position:fixed;right:13px;top:12px;z-index:75;padding:8px 12px;background:#26392ab3;border:1px solid #c7d1bb66;color:#e4ebdb;border-radius:6px;font-size:11px;opacity:.3}#exit-cinema:hover,#exit-cinema:focus-visible{opacity:1}.cinema .app-bar,.cinema .navigation,.cinema .deck-progress{display:none}.cinema #viewport{inset:0}.cinema #exit-cinema{display:block}.cinema #notes-panel{top:0;bottom:0}@media print{#exit-cinema{display:none!important}}
+/* One consistent 4x4 case across the introduction, algorithms and validation. */
+.basic-four{grid-template-columns:repeat(4,55px);gap:6px;padding:7px 10px}
+.matrix.basic-four .cell{height:46px;font-size:27px}
+.basic-four-slide .big-matrix-equation{gap:31px;margin:0 0 18px}
+.basic-four-slide .demo-equation{font-size:34px;margin:7px 0}
+.basic-four-slide .demo-caption{font-size:22px;margin:7px 0 10px}
+.basic-four-slide .demo-controls>span{font-size:18px}
+.strassen-four-layout{display:grid;grid-template-columns:1.65fr 1fr;gap:75px;align-items:center;margin-top:8px}
+.strassen-route{font-size:29px;color:#82956d;margin-bottom:24px}
+.strassen-route>b{font:43px var(--mono);color:var(--purple);font-weight:500}
+.strassen-groups{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.strassen-group{padding:14px 17px;border-top:2px solid #d4dec7;background:#edf1e4;min-height:83px}
+.strassen-group.current{border-color:#9b8bd6;background:#eae6fa}
+.strassen-group>span{display:block;font-size:17px;color:#9dac8c}
+.strassen-group>strong{display:block;font:26px var(--mono);font-weight:400;margin-top:9px;color:#8d80bd}
+.strassen-four-layout .demo-equation{font-size:34px;margin:20px 0 12px;text-align:left}
+.strassen-four-caption{font-size:22px;line-height:1.75;color:#879c72;min-height:79px;margin:0}
+.strassen-output-block{text-align:center;display:flex;align-items:center;flex-direction:column}
+.strassen-output-block>span{font-size:22px;color:#97a98a;display:block;margin-bottom:17px}
+.strassen-output-block>strong{font-size:23px;font-weight:500;color:var(--purple);margin-top:23px}
+.strassen-output-block>small{font-size:18px;color:#9aaa8b;margin-top:13px}
+.tradeoff-slide .slide-header{margin-bottom:15px}
+.tradeoff-table{width:100%;border-collapse:collapse;margin:0 0 14px}
+.tradeoff-table th{font-size:19px;font-weight:500;color:#9aaa8b;text-align:left;padding:8px 15px;border-bottom:1px solid var(--line)}
+.tradeoff-table td{padding:12px 15px;border-bottom:1px solid var(--line);font-size:27px;color:#7b9168}
+.tradeoff-table td:not(:first-child){font:34px var(--mono)}
+.tradeoff-saving{font-size:25px;color:#8b9c7a;margin:6px 0 18px}
+.tradeoff-saving b{font-weight:600;color:var(--purple)}
+.cost-slider{display:flex;gap:20px;align-items:center;margin:0 0 18px;flex-wrap:wrap}
+.cost-slider label{font-size:19px;color:#8a9c77;min-width:440px}
+.cost-slider label b{color:var(--purple);font:25px var(--mono)}
+.cost-slider input{accent-color:var(--purple);width:220px;cursor:pointer}
+.cost-slider>div{display:flex;gap:8px}
+.cost-slider button{font-size:16px;color:#8a9b77;background:#e8edde;border:1px solid #dbe3d0;padding:7px 10px;border-radius:5px}
+.weighted-costs{display:flex;flex-direction:column;gap:11px}
+.weighted-costs>div{display:flex;align-items:center;gap:19px}
+.weighted-costs>div>span{font-size:20px;color:#95a584;width:115px;flex-shrink:0}
+.weighted-costs>div>div{flex:1;height:18px;background:#e7ecdc}
+.weighted-costs i{height:100%;display:block;background:#9bb184;transition:width .2s}
+.weighted-costs>div+div i{background:#9e8dd6}
+.weighted-costs strong{font:25px var(--mono);font-weight:400;color:#839970;min-width:180px}
+.cost-model-caption{font-size:22px;color:#859c70;line-height:1.8;margin:17px 0 0;min-height:76px}
+.tensor-four-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:center;margin:8px 0 15px}
+.tensor-four-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
+.tensor-four-grid>div{background:#e6e1f5;padding:10px 9px;border:1px solid #d5cdea;text-align:center;min-height:83px;transition:background .15s,border-color .15s}
+.tensor-four-grid>div>span{display:block;font:16px var(--mono);color:#aa9ec5;margin-bottom:6px}
+.tensor-four-grid strong{font:32px var(--mono);color:#9582bf;font-weight:400}
+.tensor-four-grid>div.contributed{border-color:#a493d0;box-shadow:inset 0 0 0 1px #b4a3dc}
+.tensor-four-grid>div.aligned{background:#e4edd9;border-color:#cbdaba;box-shadow:none}
+.tensor-four-grid>div.aligned strong{color:#92ac76}
+.tensor-four-layout .tensor-info{display:flex;flex-wrap:wrap;border-top:0;padding-top:0;gap:35px 45px}
+.tensor-four-layout .tensor-info>div>span{font-size:20px}
+.tensor-four-layout .tensor-info strong{font-size:45px}
+.tensor-four-layout .tensor-info>p{flex-basis:100%;font-size:24px;line-height:1.9;margin-top:2px}
+.results-table td{padding:17px 15px}
+.multiply-work{font-size:44px!important}
