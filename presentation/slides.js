@@ -18,31 +18,27 @@
     ]
   },
   {
-    "text": "先从平面 nMOS 的简化剖面看起：栅极与硅之间有绝缘氧化层，栅极电压通过电场影响源漏之间的通道，栅极不与通道直接短接。画面从低电平的关断状态变为高电平下形成导电通道。这里只用平面结构解释原理，现代工艺还有 FinFET、GAA 等不同结构。\n下一层是 CMOS 反相器：一个 pMOS 接电源、一个 nMOS 接地，它们的栅极共用输入。输入低时，pMOS 导通、nMOS 关断，输出被拉高；输入高时相反，输出被拉低。这里画的是电路原理图，不是晶体管的几何版图。\n两个反相器加上受控输入与反馈开关，可构成静态 D 锁存器。输入开关打开时数据进入；输入关闭、反馈打开后，两个反相器循环恢复原有状态，因此输入变了也能保持。每个传输开关可以由一对 nMOS/pMOS 实现。静态保持需要持续供电，断电不会自动记住。\n最后用主、从两个互补时钟控制的锁存器构成正沿 D 触发器。CLK=0 时主级跟随输入、从级保持；CLK 从0变1时，主级关闭、从级打开，把刚才采集的值送到 Q。之后输入再变，Q 会保持到下一个有效上升沿。这是理想数字示意，真实电路还要求建立时间、保持时间，并存在传播延迟。大型寄存器文件也可采用 SRAM 单元阵列，不能说每个真实寄存器都恰好由图中的触发器组成。",
-    "action": "依次单步九个画面，重点停在反馈保持与时钟上升沿。若赶时间，顶部四个层级按钮可以直接跳转。",
+    "text": "只解释晶体管这个电控开关。图中保留栅极、绝缘层、源漏和硅衬底。输入低电平时，nMOS 导电通道未形成；输入提高到足够高的电平时，栅极电场让下方形成通道。栅极与硅之间有绝缘层，不能把栅极画成直接往通道灌电的导线。\n这是平面 nMOS 的简化剖面。发光表示电平或信号变化，不是电子轨迹，也不是工艺版图。后面仍用这种物理剖面小图，加上实际的连接线路来解释存储与加法。",
+    "action": "点切换开关，观察通道从断开到导通。只需记住：电压可以控制一个微型开关。",
+    "sources": [
+      "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c3/c3s1/"
+    ]
+  },
+  {
+    "text": "这页只回答怎样存住一个比特。左边画两组由 pMOS 和 nMOS 组成的互补晶体管电路，每组使输入和输出呈相反电平。第一组输出给第二组输入，第二组输出再反馈到第一组输入。于是高、低两个相反电平可以彼此维持。\n点击存入1时，简化写入通路把两边指定为1和0。撤去写入后，反馈仍让第一边保持1、另一边保持0。点击存入0则换成另一个稳定状态，再撤去写入也保持。图上的p管低输入导通，n管高输入导通。输入开关和写驱动在教学图中折叠为按钮，不展开读写控制细节。\n一组静态反馈电路可以保存一位，多组并排便可保存多位数。状态保持需要持续供电；单个晶体管开关本身不是一个完整寄存器。现实芯片的单元与组织方式依设计而异，这里只建立存储的直觉。",
+    "action": "先点存入1，再点撤去写入，问听众保存的值有没有变；再用存入0重复一次。",
     "sources": [
       "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c3/c3s1/",
-      "https://computationstructures.org/notes/sequential_logic/notes.html",
-      "https://tams-www.informatik.uni-hamburg.de/applets/hades/webdemos/05-switched/40-cmos/dff_print.html",
-      "https://research.nvidia.com/sites/default/files/pubs/2011-06_Energy-efficient-Mechanisms-for/2011_06_NVIDIA_ISCA.pdf"
+      "https://computationstructures.org/notes/sequential_logic/notes.html"
     ]
   },
   {
-    "text": "寄存器保存的是一组二进制位。这里用四个正沿 D 触发器组成四位教学寄存器，矩阵案例依旧是4×4，位宽和矩阵行列数是两回事。四个单元共享 CLK，但各自保存一位。使能 EN 通过数据多路选择器实现：EN=1 选择外部 D，EN=0 选择本位旧 Q。图中没有直接用 EN 门控时钟。\n自动案例从 Q=0000、D=0011、CLK=0 开始。第一次上升沿写入3。将输入改为1100时，时钟仍高，所以 Q 保持3。下降沿也不更新。EN=0 时的下一个上升沿仍保持3；再打开 EN，在下个上升沿写入12。输入改成0101时，Q继续保持12；读出得到12，而且不清空 Q。初始零是演示预设，真实芯片需要复位或初始化，不默认上电为零。\n可点击四个输入位、使能、时钟和读出按钮亲自测试。时钟按钮交替产生上升沿和下降沿。时序图以各次交互事件为横轴，只解释状态先后，不表示真实纳秒时间。门控和锁存的动画是教学理想模型，省略建立/保持时间与传播延迟。",
-    "action": "先播放完整案例，再让听众预测：只改输入会不会改 Q？关掉 EN 后再产生上升沿会怎样？",
+    "text": "先区分两个职责：寄存器用存储电路保存操作数，运算单元里的加法电路执行运算。动画中A和B各保存四位，默认都为0011，也就是十进制3。存储单元仍画为多组晶体管，连接线把它们的输出送到下面的加法单元。\n先把两个数送入电路，再从最低位往高位解释：1+1+0=2，当前位写0，向左进1；下一位1+1+1=3，写1进1；再下一位0+0+1=1，写1不进位；最高位写0。四位结果为0110，也就是6。动画最后会亮起保存结果的存储组。读出操作数不会把原寄存器清空。\n可切换7+1，观察连续进位得到1000，也就是8。逐位顺序只用于解释进位，不是现代处理器实际必须执行这些独立指令。图中加法单元用晶体管小图加功能框表示，省略全部器件接法；框外显示数据与进位的真实功能连接，实际器件数量和版图取决于实现。位宽四位与矩阵4×4的尺寸是不同概念。",
+    "action": "播放一次3+3，重点指出右侧最低位的0与向左的进位；再按需要切换7+1。",
     "sources": [
-      "https://www.ti.com/product/SN74AUC2G79",
-      "https://computationstructures.org/notes/sequential_logic/notes.html",
-      "https://tams-www.informatik.uni-hamburg.de/applets/hades/webdemos/05-switched/40-cmos/dff_print.html",
-      "https://research.nvidia.com/sites/default/files/pubs/2011-06_Energy-efficient-Mechanisms-for/2011_06_NVIDIA_ISCA.pdf"
-    ]
-  },
-  {
-    "text": "先用仓库、小格子、工具三个角色建立直觉。内存或 GPU 显存保存矩阵；寄存器是处理器内部容量很小、靠近运算单元的存储；实际加法和乘法由运算单元执行。寄存器本身不执行算术。\n动画沿用后面同一组 4×4 的 A 与 B，只跟踪 C11。累加寄存器 S 从零开始，每次把 A 第一行与 B 第一列的一对元素读进 Ra、Rb，计算乘积并加到 S，四对完成后把 3 写回 C11。这是教学数据路径，实际机器可能融合乘加，内存访问还会经过缓存等层次。\n缓存、GPU 共享内存和寄存器都是不同的存储资源。寄存器通常供线程保存正在用的局部数据，共享内存供线程组协作；本图省略这些中间层，不暗示寄存器容量无限。",
-    "action": "先点两下，分别解释取数与运算；继续到第九步，指出最后才把 C11 写回。",
-    "sources": [
-      "https://docs.nvidia.com/cuda/archive/13.0.1/cuda-c-best-practices-guide/index.html#registers",
-      "https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html"
+      "https://notes.cs61c.org/content/sds-blocks/adder-subtractor/",
+      "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c8/c8s1/",
+      "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c3/c3s1/"
     ]
   },
   {
@@ -243,8 +239,8 @@
       "https://docs.nvidia.com/cuda/archive/12.8.0/cuda-c-programming-guide/index.html#arithmetic-instructions",
       "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c3/c3s1/",
       "https://computationstructures.org/notes/sequential_logic/notes.html",
-      "https://tams-www.informatik.uni-hamburg.de/applets/hades/webdemos/05-switched/40-cmos/dff_print.html",
-      "https://research.nvidia.com/sites/default/files/pubs/2011-06_Energy-efficient-Mechanisms-for/2011_06_NVIDIA_ISCA.pdf"
+      "https://research.nvidia.com/sites/default/files/pubs/2011-06_Energy-efficient-Mechanisms-for/2011_06_NVIDIA_ISCA.pdf",
+      "https://notes.cs61c.org/content/sds-blocks/adder-subtractor/"
     ]
   }
 ];
@@ -271,19 +267,6 @@
   const sampleB=[1,1,0,1,0,1,1,0,1,0,1,1,1,0,0,1];
   const sampleC=math.multiplyOrdinary(sampleA,sampleB);
   const hardware=globalThis.HardwareLesson;
-  $('#hardware-a').innerHTML=cells(sampleA);$('#hardware-b').innerHTML=cells(sampleB);
-  const registerFrames=hardware.registerTrace(sampleA,sampleB);
-  demo('register',9,n=>{
-    const frame=registerFrames[n],active=n>0&&n<9;
-    $$('#hardware-a .cell').forEach((cell,i)=>cell.classList.toggle('hardware-lit',active&&i===frame.k));
-    $$('#hardware-b .cell').forEach((cell,i)=>cell.classList.toggle('hardware-lit',active&&i===frame.k*4));
-    $('#register-a').textContent=frame.left??'?';$('#register-b').textContent=frame.right??'?';
-    $('#register-sum').textContent=frame.sum;$('#register-output').textContent=frame.stored?frame.sum:'?';
-    $('#register-operation').textContent=frame.phase==='compute'?`${frame.left} × ${frame.right} → S`:frame.phase==='load'?'数据已就位':frame.stored?'四对元素已累加':'等待取数';
-    $('#register-progress').textContent=`${n} / 9 步`;
-    for(const [id,lit] of [['hw-memory',frame.phase==='load'],['hw-load-arrow',frame.phase==='load'],['hw-registers',frame.phase==='load'],['hw-alu',frame.phase==='compute'],['hw-accumulator',frame.phase==='compute'],['hw-store-arrow',frame.stored],['hw-output',frame.stored]])$('#'+id).classList.toggle('hardware-active',lit);
-    $('#register-caption').textContent=frame.phase==='ready'?'先让 S = 0，再依次读取四对元素。寄存器负责存，运算单元负责算。':frame.phase==='load'?`第 ${frame.k+1} 对：把 A₁${frame.k+1} = ${frame.left}、B${frame.k+1}₁ = ${frame.right} 读入寄存器。`:frame.phase==='compute'?`运算单元计算 ${frame.left} × ${frame.right} = ${frame.product}，累加后 S = ${frame.sum}。`: `四对元素处理完毕，把寄存器里的 ${frame.sum} 写回 C₁₁。其他 15 格也可按同样规则计算。`;
-  },1100);
   const addFrames=hardware.additionTrace(3,3,4),partials=hardware.multiplicationPartials(3,3,4);
   const bitRow=(label,values,current=-1,extra='')=>`<span class="bit-row-label">${label}</span>${values.map((v,i)=>`<b class="bit-digit ${i===current?'current-bit':''} ${extra}">${v}</b>`).join('')}`;
   demo('binary',5,n=>{

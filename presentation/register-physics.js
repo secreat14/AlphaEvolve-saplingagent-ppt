@@ -1,33 +1,20 @@
 "use strict";
 (() => {
-  // Ideal digital model: setup/hold time and propagation delay are discussed
-  // in the speaker notes. EN is implemented with a data mux, not a gated clock.
-  const initial=()=>({d:3,q:0,clock:0,enable:1,read:null,captured:false,event:'ready'});
+  // Ideal static storage: the write button abstracts the write-driver circuitry.
+  const initial=()=>({q:0,input:null,writing:false});
   function transition(state,event){
-    const next={...state,captured:false,event:event.type};
-    if(event.type==='data')next.d=event.value&15;
-    if(event.type==='enable')next.enable=event.value?1:0;
-    if(event.type==='clock'){
-      next.clock=event.value?1:0;
-      if(state.clock===0&&next.clock===1&&state.enable){next.q=state.d;next.captured=true;}
-    }
-    if(event.type==='read')next.read=state.q;
-    return next;
+    if(event.type==='write')return {q:event.value?1:0,input:event.value?1:0,writing:true};
+    if(event.type==='hold')return {...state,input:null,writing:false};
+    return {...state};
   }
-  const script=[
-    [{type:'clock',value:1}],
-    [{type:'data',value:12}],
-    [{type:'clock',value:0}],
-    [{type:'enable',value:0},{type:'clock',value:1}],
-    [{type:'clock',value:0},{type:'enable',value:1}],
-    [{type:'clock',value:1}],
-    [{type:'data',value:5}],
-    [{type:'read'}]
-  ];
-  function scriptedFrames(){
+  function storageFrames(){
     let state=initial();const frames=[state];
-    for(const events of script){for(const event of events)state=transition(state,event);frames.push(state);}
+    for(const event of [{type:'write',value:1},{type:'hold'},{type:'write',value:0},{type:'hold'}]){state=transition(state,event);frames.push(state);}
     return frames;
   }
-  globalThis.RegisterPhysics={initial,transition,scriptedFrames};
+  function additionFrames(a,b){
+    const trace=globalThis.HardwareLesson.additionTrace(a,b,4);
+    return [...trace.map((frame,i)=>({...frame,a,b,phase:i?'add':'stored',processed:i})),{...trace.at(-1),a,b,phase:'saved',processed:4}];
+  }
+  globalThis.RegisterPhysics={initial,transition,storageFrames,additionFrames};
 })();

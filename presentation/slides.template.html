@@ -13,29 +13,26 @@
   <div class="cover-bottom"><span>中文讲解 · 过程动画 · 约 20 分钟</span><span>按 → 开始</span></div>
 </section>
 
-<section class="slide silicon-slide register-physics-slide" data-title="寄存器物理结构：从晶体管到一位存储" data-seconds="75">
-  <div class="slide-header"><span class="chapter">硬件入门 1 / 7 · 放大芯片内部</span><h2>寄存器里的 0 和 1，是电路的稳定状态</h2><p>从一个电控开关开始，逐层看到“一位数据”怎样被保存</p></div>
-  <div class="silicon-steps"><button data-physics-level="0">01 晶体管</button><span>→</span><button data-physics-level="2">02 反相器</button><span>→</span><button data-physics-level="4">03 反馈存储</button><span>→</span><button data-physics-level="7">04 时钟采样</button></div>
-  <div class="physics-layout"><div class="physical-stage" id="physical-stage" role="img" aria-label="寄存器物理结构分层示意图"></div><div class="physics-explanation"><span id="physics-level">晶体管 / TRANSISTOR</span><h3 id="physics-heading">栅极电压，控制导电通道</h3><p id="physics-description"></p><div class="physics-status" id="physics-status"></div><small>1 表示高电平，0 表示低电平；电路通电时保存状态。</small></div></div>
-  <div class="demo-controls silicon-controls"><button data-play="physics">播放结构动画</button><button data-step="physics">下一步</button><button data-reset="physics">重置</button><span id="physics-progress">1 / 9 个画面</span></div>
-  <div class="slide-source">一种平面 CMOS 与主从触发器的原理示意，非芯片照片或工艺版图；光点表示信号变化。来源：MIT 6.004、汉堡大学数字电路演示。</div>
+<section class="slide silicon-slide register-physics-slide" data-title="晶体管：电压控制的微型开关" data-seconds="75">
+  <div class="slide-header"><span class="chapter">硬件入门 1 / 7 · 晶体管</span><h2>晶体管，就是一个电控微型开关</h2><p>先认识一个开关，后面用同样的图看它怎样参与存储和加法</p></div>
+  <div class="silicon-steps"><button data-physics-level="0">低电平 · 关闭</button><button data-physics-level="1">高电平 · 打开</button></div>
+  <div class="physics-layout"><div class="physical-stage" id="physical-stage" role="img" aria-label="nMOS 晶体管剖面与导电通道示意"></div><div class="physics-explanation"><span id="physics-level">晶体管 / TRANSISTOR</span><h3 id="physics-heading"></h3><p id="physics-description"></p><div class="physics-status" id="physics-status"></div><small>栅极像控制按钮，源极和漏极是通道的两端。</small></div></div>
+  <div class="demo-controls silicon-controls"><button data-play="physics">播放开关变化</button><button data-step="physics">切换开关</button><button data-reset="physics">重置</button><span id="physics-progress">1 / 2 个画面</span></div>
+  <div class="slide-source">平面 nMOS 原理剖面，非芯片版图；发光线路表示电平或信号变化，不表示电子的实际轨迹。来源：MIT 6.004。</div>
 </section>
 
-<section class="slide silicon-slide register-chip-slide" data-title="寄存器案例：四位数据的写入、保持与读出" data-seconds="75">
-  <div class="slide-header"><span class="chapter">硬件入门 2 / 7 · 亲手操作一个寄存器</span><h2>四个存储单元，共用同一个时钟</h2><p>先改输入 D，再给时钟一个上升沿；允许写入时，四位数据一起更新</p></div>
-  <div class="register-lab"><div class="chip-input-panel"><span class="silicon-label">输入数据 D · 点击改位</span><div class="input-bit-switches" id="chip-input-bits"></div><strong id="chip-input-value">0011₂ = 3</strong><button id="chip-enable" aria-pressed="true">允许写入 EN = 1</button><small>EN = 0 时，输入端选择旧 Q，继续保存原值。</small></div><div class="chip-lab-center"><div id="register-chip-diagram" class="register-chip-diagram" role="img" aria-label="四位寄存器内部触发器、使能反馈与共用时钟线路"></div><div class="chip-live-status"><span>CLK <b id="chip-clock-value">0</b></span><span>已存数据 Q <b id="chip-stored-value">0000₂ = 0</b></span><span class="chip-mode" id="chip-mode">等待上升沿</span></div></div><div class="chip-read-panel"><span class="silicon-label">最近一次读出 · 运算单元</span><strong id="chip-read-value">尚未读出</strong><div class="chip-alu-icon">ALU</div><small>读出只是把电平提供给下一级，不会清空寄存器。</small><button id="chip-read">读出当前 Q</button></div></div>
-  <div class="register-timing" id="register-timing" role="img" aria-label="CLK、输入 D 与输出 Q 的时序图"></div>
-  <p class="chip-caption" id="chip-caption" aria-live="polite"></p>
-  <div class="demo-controls silicon-controls"><button data-play="register-chip">播放完整案例</button><button data-step="register-chip">案例下一步</button><button data-reset="register-chip">重置</button><button id="chip-clock">时钟 0 → 1</button><span id="chip-case-progress">0 / 8 步</span></div>
-  <div class="slide-source">4 位是数的位宽，矩阵仍为 4×4。这是触发器式教学寄存器；大型寄存器文件也可用 SRAM 阵列。初始清零为演示设定。</div>
+<section class="slide silicon-slide simple-storage-slide" data-title="存储：晶体管组成的反馈回路" data-seconds="75">
+  <div class="slide-header"><span class="chapter">硬件入门 2 / 7 · 怎样存住 0 和 1</span><h2>让两组晶体管互相连接，保住一个状态</h2><p>先写入 1 或 0，再撤去写入信号，观察电路仍然保存原值</p></div>
+  <div class="physics-layout"><div class="physical-stage" id="storage-stage" role="img" aria-label="两组晶体管和反馈线路保存一位数据"></div><div class="physics-explanation"><span>存储一位 / STORE ONE BIT</span><h3 id="storage-heading"></h3><p id="storage-description"></p><div class="physics-status" id="storage-status"></div><small>1 是高电平，0 是低电平；并排放多组这样的电路，就能保存一个数。</small></div></div>
+  <div class="demo-controls silicon-controls"><button data-play="storage">播放存储过程</button><button data-step="storage">下一步</button><button data-reset="storage">重置</button><button data-store-bit="1">存入 1</button><button data-store-bit="0">存入 0</button><button id="storage-hold">撤去写入</button><span id="storage-progress">0 / 4 步</span></div>
+  <div class="slide-source">静态反馈存储原理，写入通路作了简化；保持状态需要供电。一个晶体管开关本身不等于完整存储单元。来源：MIT 存储电路课程。</div>
 </section>
 
-<section class="slide hardware-register-slide" data-title="硬件入门：内存、寄存器与运算单元" data-seconds="40">
-  <div class="slide-header"><span class="chapter">硬件入门 3 / 7 · 先认识三个角色</span><h2>数据先拿到手边，运算单元再计算</h2><p>内存 / 显存像仓库，寄存器像手边的小格子，运算单元像计算工具</p></div>
-  <div class="register-layout"><div class="hardware-memory" id="hw-memory"><h3>内存 / 显存中的 A、B</h3><div class="hardware-inputs"><div><span>A · 4×4</span><div class="hardware-matrix" id="hardware-a"></div></div><div><span>B · 4×4</span><div class="hardware-matrix" id="hardware-b"></div></div></div><p>只放大第一行 × 第一列<br>得到左上角 C₁₁</p></div><span class="hardware-arrow" id="hw-load-arrow">→<small>读取</small></span><div class="hardware-processor"><span class="processor-label">处理器内部 · CPU / GPU 的简化示意</span><div class="hardware-registers" id="hw-registers"><h3>寄存器 · 暂存操作数</h3><div><span>Rₐ <b id="register-a">?</b></span><span>Rᵦ <b id="register-b">?</b></span></div></div><div class="hardware-alu" id="hw-alu"><span>↓</span><h3>运算单元 · 做乘法与加法</h3><strong id="register-operation">等待取数</strong></div><div class="hardware-accumulator" id="hw-accumulator"><span>累加结果也放在寄存器</span><strong>S = <b id="register-sum">0</b></strong></div></div><span class="hardware-arrow" id="hw-store-arrow">→<small>写回</small></span><div class="hardware-output" id="hw-output"><span>内存 / 显存</span><strong>C₁₁ = <b id="register-output">?</b></strong></div></div>
-  <p class="hardware-caption" id="register-caption" aria-live="polite">先让 S = 0，再依次读取四对元素。寄存器负责存，运算单元负责算。</p>
-  <div class="demo-controls"><button data-play="register">播放取数与计算</button><button data-step="register">下一步</button><button data-reset="register">重置</button><span id="register-progress">0 / 9 步</span></div>
-  <div class="slide-source">省略指令译码、缓存等细节。寄存器容量有限；GPU 共享内存与缓存属于其他片上存储。来源：NVIDIA CUDA 官方指南。</div>
+<section class="slide silicon-slide simple-addition-slide" data-title="加法：把存好的数送进加法电路" data-seconds="40">
+  <div class="slide-header"><span class="chapter">硬件入门 3 / 7 · 怎样把两个数相加</span><h2>寄存器存数，加法电路负责把数加起来</h2><p id="simple-add-inputs">寄存器 A 保存 0011，B 也保存 0011，也就是计算 3 + 3</p></div>
+  <div class="physics-layout"><div class="physical-stage" id="addition-stage" role="img" aria-label="两个四位存储组通过线路连接四位加法电路"></div><div class="physics-explanation"><span>读取 → 相加 → 保存结果</span><h3 id="simple-add-heading"></h3><p id="simple-add-description"></p><div class="physics-status" id="simple-add-status"></div><small>每个存储单元由一组晶体管构成；这里的四位是数的位宽，矩阵仍为 4×4。</small></div></div>
+  <div class="demo-controls silicon-controls"><button data-play="simple-add">播放加法过程</button><button data-step="simple-add">下一步</button><button data-reset="simple-add">重置</button><button data-add-case="3,3">案例 3 + 3</button><button data-add-case="7,1">案例 7 + 1</button><span id="simple-add-progress">0 / 5 步</span></div>
+  <div class="slide-source">按位加法与进位的教学动画，不代表真实指令步数；每个加法单元也是晶体管组成的电路。来源：MIT、UC Berkeley 计算机组成课程。</div>
 </section>
 
 <section class="slide hardware-binary-slide" data-title="硬件入门：为什么加法电路更简单" data-seconds="55">

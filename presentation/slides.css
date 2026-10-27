@@ -116,39 +116,6 @@
 .reconstruction-summary{display:grid;grid-template-columns:1fr 1fr;gap:3px 30px;font-size:22px;padding-top:10px;border-top:1px solid var(--line)}
 
 /* Opening hardware chapter: the arithmetic unit, storage and binary circuits. */
-.hardware-register-slide .slide-header,.hardware-binary-slide .slide-header{margin-bottom:22px}
-.register-layout{display:grid;grid-template-columns:350px 70px 1fr 70px 170px;align-items:center;gap:13px;min-height:326px}
-.hardware-memory{padding:17px 12px;border:2px solid var(--line);border-radius:9px;transition:background .2s,border-color .2s}
-.hardware-memory h3{font-size:23px;margin-bottom:15px}
-.hardware-inputs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.hardware-inputs>div>span{display:block;text-align:center;color:var(--muted);font:17px var(--mono);margin-bottom:8px}
-.hardware-matrix{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;border-left:2px solid #adb69d;border-right:2px solid #adb69d;padding:3px 6px}
-.hardware-matrix .cell{font:24px var(--mono);text-align:center;line-height:31px;background:#e9eddf;border-radius:3px;color:#748268;transition:background .2s,color .2s}
-.hardware-matrix .hardware-lit{background:#dcd8fc;color:var(--purple)}
-.hardware-memory>p{font-size:18px;line-height:1.6;color:#849275;margin:12px 0 0;text-align:center}
-.hardware-arrow{font:50px var(--mono);text-align:center;color:#b9c2aa;transition:color .2s}
-.hardware-arrow small{display:block;font:18px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;margin-top:5px}
-.hardware-processor{border:2px solid #c9cfbf;border-radius:10px;padding:16px 18px;min-height:316px;background:#f1f3e9}
-.processor-label{display:block;color:#89977b;font-size:17px;margin-bottom:14px;text-align:center}
-.hardware-registers{border:2px solid #d7d3ee;border-radius:7px;padding:12px;transition:background .2s,border-color .2s}
-.hardware-registers h3{font-size:21px;color:#8d84b8;margin:0 0 10px;text-align:center}
-.hardware-registers>div{display:flex;justify-content:center;gap:25px}
-.hardware-registers>div>span{font:21px var(--mono);color:#8d84b8}
-.hardware-registers b{display:inline-grid;place-items:center;min-width:45px;font:30px var(--mono);color:var(--purple);background:#e8e4fa;border-radius:4px;padding:2px 5px}
-.hardware-alu{text-align:center;border:2px solid transparent;border-radius:6px;padding:3px 0 8px;transition:background .2s,border-color .2s}
-.hardware-alu>span{font:25px var(--mono);color:#a2ad92}
-.hardware-alu h3{font-size:20px;margin:0 0 7px;color:#7e8d6e}
-.hardware-alu strong{font:27px var(--mono);color:#809168}
-.hardware-accumulator{display:flex;align-items:center;justify-content:center;gap:18px;border-top:1px solid var(--line);padding-top:10px;border-radius:4px}
-.hardware-accumulator>span{font-size:16px;max-width:140px;color:#8b977e;line-height:1.5}
-.hardware-accumulator strong{font:26px var(--mono);color:var(--purple);white-space:nowrap}
-.hardware-output{text-align:center;border:2px solid var(--line);padding:22px 8px;border-radius:9px;transition:background .2s,border-color .2s}
-.hardware-output>span{display:block;font-size:18px;color:#89957c;margin-bottom:18px}
-.hardware-output strong{font:26px var(--mono);white-space:nowrap;color:#8b81b9}
-.hardware-active{border-color:#9287d7;background:#eeebfc}
-.hardware-arrow.hardware-active{color:var(--purple)}
-.hardware-caption{font-size:23px;line-height:1.7;color:#7e8e6e;min-height:78px;margin:18px 0 0}
-.hardware-register-slide .demo-controls,.hardware-binary-slide .demo-controls{padding-top:8px;margin-bottom:18px}
 .binary-comparison{display:grid;grid-template-columns:1fr 1fr;gap:55px}
 .binary-panel{border-top:2px solid var(--line);padding-top:12px;min-height:320px}
 .binary-panel h3{font-size:28px;margin:0 0 10px}
@@ -217,10 +184,6 @@
 .metal-gate.gate-on{fill:#267d97;stroke:#99f3ff;filter:drop-shadow(0 0 10px #58d8f566)}
 .conducting-channel{fill:#5ee7ef99;filter:drop-shadow(0 0 7px #58d8f5)}
 .electric-field{fill:none;stroke:#e7c47e;stroke-width:2;stroke-dasharray:4 3}
-.mos-switch,.transmission-gate,.latch-block{fill:#16253f;stroke:#526a91;stroke-width:2;transition:fill .3s,stroke .3s}
-.mos-switch.switch-on,.transmission-gate.switch-on,.latch-block.switch-on{fill:#113d4c;stroke:#72e8ed;filter:drop-shadow(0 0 6px #4dcbd32b)}
-.logic-symbol,.gate-bubble{fill:#1e2d48;stroke:#b0b6ed;stroke-width:2}
-.rising-edge-mark{fill:none;stroke:#f1c46b;stroke-width:5;filter:drop-shadow(0 0 7px #ffd06777)}
 .physics-explanation>span{font:15px var(--mono);color:#87c8e2;letter-spacing:1px}
 .silicon-slide .physics-explanation h3{font-size:28px;color:#e7f5ff;line-height:1.5;margin:18px 0 16px;letter-spacing:0}
 .physics-explanation p{font-size:22px;line-height:1.85;color:#b1c2d8;margin:0 0 20px;min-height:150px}
@@ -230,39 +193,19 @@
 .silicon-controls button{background:#122d48;color:#b7d4ec;border:1px solid #315578;border-radius:5px;font-size:18px}
 .silicon-controls button[data-play]{background:#15465c;border-color:#59cee7;color:#baf7ff;box-shadow:0 0 15px #55d2ec20}
 .silicon-controls>span{color:#89a6c4;font-size:17px}
-.register-lab{display:grid;grid-template-columns:215px 1fr 190px;gap:24px;align-items:center;min-height:300px}
-.silicon-label{color:#8aabc9;font-size:16px;line-height:1.6}
-.chip-input-panel>strong,.chip-read-panel>strong{display:block;font:23px var(--mono);color:#9ceefa;margin:16px 0;white-space:nowrap}
-.input-bit-switches{display:flex;gap:7px;margin-top:15px}
-.input-bit-switches>button{background:#112840;border:1px solid #3c617f;color:#7ca0c0;border-radius:5px;width:46px;padding:7px 3px;transition:background .2s,box-shadow .2s}
-.input-bit-switches>button[aria-pressed=true]{background:#184553;border-color:#6be5ee;box-shadow:0 0 13px #61dbe535;color:#a3f1fa}
-.input-bit-switches small{display:block;font:12px var(--mono);margin-bottom:8px;color:#8cafc5}
-.input-bit-switches b{font:30px var(--mono)}
-.chip-input-panel>button,.chip-read-panel>button{background:#17324d;border:1px solid #466c95;border-radius:5px;color:#c0d9ed;font-size:17px;padding:10px 12px;width:100%}
-.chip-input-panel>button[aria-pressed=false]{border-color:#d2a064;color:#edc48b;background:#322a29}
-.chip-input-panel>small,.chip-read-panel>small{display:block;color:#809db8;font-size:16px;line-height:1.75;margin-top:12px}
-.register-chip-diagram{border:1px solid #355677;background:radial-gradient(ellipse,#1c3155bb,#091a2e);border-radius:11px;box-shadow:inset 0 0 30px #214d6e55,0 0 22px #080a1488;height:267px}
-.register-chip-diagram>svg{display:block;width:100%;height:100%}
-.register-bit-cell{fill:#0c2038;stroke:#3e6f96;stroke-width:2}
-.register-bit-cell.capture-flash{stroke:#74edff;fill:#154359;filter:drop-shadow(0 0 7px #56ddeb66);animation:capture-glow .65s ease-out}
-@keyframes capture-glow{from{fill:#2a8191}to{fill:#154359}}
-.mini-latch{fill:#1e2c49;stroke:#556890;stroke-width:1.5}
-.mini-latch.mini-open{fill:#1c4f5e;stroke:#64dbe7}
-.data-mux{fill:#392d54;stroke:#b09bdf;stroke-width:1.5}
-.clock-triangle{fill:#12253e;stroke:#8ad9f4;stroke-width:2}
-.silicon-slide svg .stored-bit{font:27px var(--mono);fill:#b7a9fa}
-.chip-live-status{display:flex;justify-content:space-between;gap:10px;color:#8faac7;font-size:16px;margin-top:12px;align-items:center}
-.chip-live-status b{font:19px var(--mono);color:#7edff6}
-.chip-mode{font-size:14px;color:#c3b2ef;background:#1a2945;padding:6px 9px;border-radius:4px}
-.chip-alu-icon{display:grid;place-items:center;width:90px;height:48px;border:1px solid #615b8f;background:#252343;color:#b6a8f0;font:23px var(--mono);clip-path:polygon(0 0,100% 0,82% 100%,18% 100%);margin:14px auto}
-.chip-read-panel{text-align:center;padding:16px 10px;border:1px solid #30415c;border-radius:8px;transition:border .2s,box-shadow .2s}
-.chip-read-panel>strong{font-size:21px}
-.chip-read-panel>small{margin:5px 0 15px}
-.chip-read-panel.read-active{border-color:#76d8f2;box-shadow:0 0 25px #52cef53b}
-.register-timing{height:86px;border-top:1px solid #294761;border-bottom:1px solid #294761;padding:5px 8px;margin-top:16px;background:#07172688}
-.register-timing svg{display:block;width:100%;height:100%}
-.timing-q{fill:#182b4c;stroke:#344b71;stroke-width:1}
-.timing-q.timing-capture{fill:#1c535e;stroke:#61cadc}
-.timing-edge{stroke:#caaa6a;stroke-width:1.5;stroke-dasharray:4 4;opacity:.8}
-.chip-caption{font-size:21px;line-height:1.65;color:#a9c3db;min-height:44px;margin:13px 0 0}
-.register-chip-slide .silicon-controls{padding-top:9px}
+.storage-group-outline{fill:#14263b;stroke:#345371;stroke-width:1.5}
+.doped-region.p-region{fill:#4c426c;stroke:#b49bdb}
+.write-switch{fill:#18243b;stroke:#596c86;stroke-width:2}
+.write-switch.write-open{fill:#184451;stroke:#7de6e9}
+.small-memory-cell{fill:#10253b;stroke:#3b6284;stroke-width:1.5}
+.small-memory-cell.memory-cell-active{fill:#174052;stroke:#84e7ed;filter:drop-shadow(0 0 5px #54c6dc55)}
+.silicon-slide svg .memory-digit{font:27px var(--mono);fill:#b6e8f6}
+.addition-unit{fill:#172540;stroke:#6a6595;stroke-width:1.5}
+.addition-unit.addition-unit-active{fill:#2a345a;stroke:#b7a1ec;filter:drop-shadow(0 0 6px #af9ae84d)}
+.carry-arrow{fill:none;stroke:#dcb575;stroke-width:2}
+.result-memory{fill:#102339;stroke:#355476;stroke-width:1.5}
+.result-memory.result-saved{fill:#164453;stroke:#81e6f2;filter:drop-shadow(0 0 7px #68d6ed55)}
+.simple-storage-slide .physical-stage,.simple-addition-slide .physical-stage{height:370px}
+.simple-storage-slide .physics-layout,.simple-addition-slide .physics-layout{min-height:385px;margin-top:12px}
+.simple-storage-slide .silicon-controls,.simple-addition-slide .silicon-controls{gap:9px}
+.simple-storage-slide .silicon-controls button,.simple-addition-slide .silicon-controls button{padding:11px 15px}

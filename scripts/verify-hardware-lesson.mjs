@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 
 const context=vm.createContext({});
 vm.runInContext(fs.readFileSync('presentation/hardware-lesson.js','utf8'),context);
-const {registerTrace,additionTrace,multiplicationPartials}=context.HardwareLesson;
+const {additionTrace,multiplicationPartials}=context.HardwareLesson;
 for(let a=0;a<16;a++)for(let b=0;b<16;b++){
   const trace=additionTrace(a,b,4);
   assert.equal(trace.at(-1).result,a+b);
@@ -15,19 +15,6 @@ for(let a=0;a<16;a++)for(let b=0;b<16;b++){
   }
   assert.equal(multiplicationPartials(a,b,4).reduce((sum,x)=>sum+x,0),a*b);
 }
-const a=[1,0,1,1,0,1,1,0,1,1,0,1,0,0,1,1];
-const b=[1,1,0,1,0,1,1,0,1,0,1,1,1,0,0,1];
-const frames=registerTrace(a,b);
-assert.equal(frames.length,10);
-assert.equal(frames.at(-1).sum,3);
-assert.equal(frames.at(-1).stored,true);
-for(let k=0;k<4;k++){
-  assert.equal(frames[2*k+1].phase,'load');
-  assert.equal(frames[2*k+1].left,a[k]);
-  assert.equal(frames[2*k+1].right,b[k*4]);
-  assert.equal(frames[2*k+2].phase,'compute');
-  assert.equal(frames[2*k+2].sum,frames[2*k+1].sum+a[k]*b[k*4]);
-}
 const js=fs.readFileSync('presentation/slides.js','utf8');
 const notes=JSON.parse(js.match(/const notes=(\[.*?\n\]);/s)[1]);
 const html=fs.readFileSync('presentation/slides.template.html','utf8');
@@ -37,5 +24,8 @@ assert.equal(sections.length,28);
 for(let i=1;i<=7;i++)assert.ok(sections[i].includes(`硬件入门 ${i} / 7`));
 assert.ok(sections[9].includes('4×4矩阵乘法的基本动作'));
 assert.ok(sections[10].includes('Strassen第一步'));
-assert.equal(notes[3].sources.some(s=>s.includes('registers')),true);
-console.log('PASS: all 256 four-bit addition/multiplication pairs, register data path, hardware-first slide order, 28 matching speaker notes.');
+assert.ok(sections[1].includes('晶体管：电压控制'));
+assert.ok(sections[2].includes('存储：晶体管'));
+assert.ok(sections[3].includes('加法：把存好的数'));
+assert.equal(/时钟|CLK|锁存|触发器|上升沿/.test(sections.slice(1,4).join('')+notes.slice(1,4).map(x=>x.text).join('')),false);
+console.log('PASS: all 256 four-bit addition/multiplication pairs, simple storage/addition lesson, hardware-first slide order, 28 matching speaker notes.');
