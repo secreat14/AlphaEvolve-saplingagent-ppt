@@ -30,6 +30,6 @@ for(const [name,output] of Object.entries(outputs)){
 }
 const html=fs.readFileSync('presentation/slides.template.html','utf8');
 const timing=[...html.matchAll(/data-seconds="(\d+)"/g)].map(match=>Number(match[1]));
-assert.equal(timing.length,23);
+assert.equal(timing.length,26);
 assert.equal(timing.reduce((sum,x)=>sum+x),1200);
-console.log('PASS: seven product expansions, four reconstruction identities, all cancellation pairs, 23 slides / 20 minutes.');
+console.log('PASS: seven product expansions, four reconstruction identities, all cancellation pairs, 26 slides / 20 minutes.');

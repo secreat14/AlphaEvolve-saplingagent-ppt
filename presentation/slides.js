@@ -11,10 +11,51 @@
   const evolveBlog='https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/';
   const notes=[
   {
-    "text": "开场可以问：同一道矩阵乘法，答案已经确定，计算过程还有没有改进空间？\n今天从大家熟悉的行乘列出发，介绍经典算法、GPU 的执行方式，以及 AI 参与算法发现的例子。封面上的 64、49、47 都是后面同一道 4×4 题目所需的标量乘法次数。47 次有模 2 条件，后面单独解释。",
+    "text": "开场可以问：同一道矩阵乘法，答案已经确定，计算过程还有没有改进空间？\n今天先用五页解释寄存器、加法电路、GPU 并行和数据搬运，再从行乘列进入经典算法与 AI 发现算法。封面上的 64、49、47 都是后面同一道 4×4 题目所需的标量乘法次数。47 次有模 2 条件，后面单独解释。",
     "action": "约15秒介绍主题后翻页。",
     "sources": [
       "https://doi.org/10.1038/s41586-022-05172-4"
+    ]
+  },
+  {
+    "text": "先用仓库、小格子、工具三个角色建立直觉。内存或 GPU 显存保存矩阵；寄存器是处理器内部容量很小、靠近运算单元的存储；实际加法和乘法由运算单元执行。寄存器本身不执行算术。\n动画沿用后面同一组 4×4 的 A 与 B，只跟踪 C11。累加寄存器 S 从零开始，每次把 A 第一行与 B 第一列的一对元素读进 Ra、Rb，计算乘积并加到 S，四对完成后把 3 写回 C11。这是教学数据路径，实际机器可能融合乘加，内存访问还会经过缓存等层次。\n缓存、GPU 共享内存和寄存器都是不同的存储资源。寄存器通常供线程保存正在用的局部数据，共享内存供线程组协作；本图省略这些中间层，不暗示寄存器容量无限。",
+    "action": "先点两下，分别解释取数与运算；继续到第九步，指出最后才把 C11 写回。",
+    "sources": [
+      "https://docs.nvidia.com/cuda/archive/13.0.1/cuda-c-best-practices-guide/index.html#registers",
+      "https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html"
+    ]
+  },
+  {
+    "text": "电脑用二进制表示数。这里放大一个标量的四位整数电路，矩阵尺寸仍统一为 4×4。十进制 3 写成 0011。加法从最低位开始：1+1 得到二进制 10，当前位写 0，向下一位进 1；下一位 1+1+1 得到 11，写 1 再进 1；最终得到 00110，即 6。\n乘法要产生部分积。0011 乘 0011 的四行分别是 00000011、00000110、00000000、00000000；左移一位相当于乘以 2，相加得到 00001001，即 9。右侧动画逐行展开是讲解顺序，不是实际乘法器必须按四个时钟周期运行。现代乘法器可以同时生成部分积，并用树形电路合并。\n在同样位宽与相近实现目标下，通用整数乘法通常需要比加法更多电路资源。减法可以通过补码变成 x 加上 y 的按位取反再加 1，因此加法器是基础构件。不能由此推断每种芯片上的每种加法都比其他操作快，尤其浮点加法还涉及对齐、规格化和舍入。",
+    "action": "推进五步，指出进位、部分积、移位、最终合并。强调动画不是硬件测速。",
+    "sources": [
+      "https://homepage.cs.uiowa.edu/~dwjones/assem/summer18/notes/09muldiv.shtml",
+      "https://courses.csail.mit.edu/6.896/spring04/handouts/arithmetic-ckts.pdf"
+    ]
+  },
+  {
+    "text": "继续使用 4×4 输出的 16 个格子作为任务。每格需要计算一组行乘列，这 16 个输出可以分工。一个小组逐格做需要 16 轮，四组同时做理想情况下需要四轮。\n这是等耗时独立任务的教学模型，没有统计调度、通信和数据访问，不能当作 CPU 与 GPU 的真实测速。CPU 也可以并行。GPU 的收益需要合适的任务规模与分工方式。",
+    "action": "播放后，在右边四轮完成时暂停，指出任务格子是 C11 到 C44。",
+    "sources": [
+      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/",
+      "https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html"
+    ]
+  },
+  {
+    "text": "4×4 的 A 有 16 个元素。计算 A 乘 B 时，A 的每个元素需要参与四个输出列，所以会被使用四次。\n如果每次使用都从远处取，读取 A 共 64 趟。如果先将 A 的 16 个元素拿到手边，并且容量足够，就可以重复使用，只读取 16 趟。这里仅统计 A，不包括 B、输出和其他开销。\nFlashAttention 使用分块减少显存与片上存储之间的读写，但这张 4×4 教学图不是该论文的实测性能。\n片上存储包含寄存器和共享内存等不同资源；这里只表达从显存暂存后复用的原则，不给它们相同容量或访问特性。",
+    "action": "播放搬运。观察右边在 16 趟停止，而左边继续到 64。",
+    "sources": [
+      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/",
+      "https://arxiv.org/abs/2205.14135"
+    ]
+  },
+  {
+    "text": "现在区分三个层面。第一，电路层：整数乘法通常形成和合并多组部分积，所以同位宽下比整数加法需要更多电路。第二，指令层：现代芯片用专用乘法器、流水线、向量单元等实现很高吞吐量。NVIDIA 官方表将多种架构的浮点加法、乘法、乘加列在同一吞吐量项中，不能声称标量乘法固定比加法慢十倍。吞吐量表示一段时间内可完成多少操作，延迟表示单次结果要等多久，两者不同。\nFMA 把 a×b+S 融合为一条指令并只做一次最终舍入；Tensor Core 提供专用矩阵乘加路径。第三，存储层：读写、中间结果和寄存器占用都会影响实际表现。因此后面以加减法换乘法是一种算法上的取舍，是否提速必须结合规模、精度、硬件和实测。更大矩阵里，一次块乘法本身包含很多标量操作，减少它更有研究价值。",
+    "action": "用一句话过渡：先理解机器成本，再看 Strassen 怎样通过加减法复用乘积。",
+    "sources": [
+      "https://docs.nvidia.com/cuda/archive/12.8.0/cuda-c-programming-guide/index.html#arithmetic-instructions",
+      "https://docs.nvidia.com/cuda/archive/13.0.1/cuda-c-best-practices-guide/index.html#registers",
+      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"
     ]
   },
   {
@@ -89,7 +130,7 @@
     ]
   },
   {
-    "text": "这一页仍计算上一页的 4×4 乘积。Strassen 把整张矩阵切成四个内部块。外层做七组块乘法，每组再递归为七次标量乘法，所以总计 49 次。内部块只是拆解步骤，没有换成另一道输入题。\n算法先用加减法组合输入，再复用中间乘积来还原输出。右边显示当前乘积贡献的累计结果，最后必须与上一页完全一致。\n经典递归到标量的实现需要 198 次加减法：外层预处理 40 次、七组内部计算共 126 次、外层合并 32 次。动画将乘积贡献展开显示，198 指经典递归执行的计数，不是逐项展开后重新计算所有线性组合的计数。",
+    "text": "这一页仍计算前面直接算法的同一个 4×4 乘积。Strassen 把整张矩阵切成四个内部块。外层做七组块乘法，每组再递归为七次标量乘法，所以总计 49 次。内部块只是拆解步骤，没有换成另一道输入题。\n算法先用加减法组合输入，再复用中间乘积来还原输出。右边显示当前乘积贡献的累计结果，最后必须与前面的直接算法完全一致。\n经典递归到标量的实现需要 198 次加减法：外层预处理 40 次、七组内部计算共 126 次、外层合并 32 次。动画将乘积贡献展开显示，198 指经典递归执行的计数，不是逐项展开后重新计算所有线性组合的计数。",
     "action": "单步观察组号和输出贡献，然后看完整结果。强调减少乘法有增加加法的代价。",
     "sources": [
       "https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html",
@@ -104,22 +145,6 @@
       "https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html",
       "https://cs-web.bu.edu/faculty/homer/630f21/hw/hw1-ans.pdf",
       "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"
-    ]
-  },
-  {
-    "text": "继续使用 4×4 输出的 16 个格子作为任务。每格需要计算一组行乘列，这 16 个输出可以分工。一个小组逐格做需要 16 轮，四组同时做理想情况下需要四轮。\n这是等耗时独立任务的教学模型，没有统计调度、通信和数据访问，不能当作 CPU 与 GPU 的真实测速。CPU 也可以并行。GPU 的收益需要合适的任务规模与分工方式。",
-    "action": "播放后，在右边四轮完成时暂停，指出任务格子是 C11 到 C44。",
-    "sources": [
-      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/",
-      "https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html"
-    ]
-  },
-  {
-    "text": "4×4 的 A 有 16 个元素。计算 A 乘 B 时，A 的每个元素需要参与四个输出列，所以会被使用四次。\n如果每次使用都从远处取，读取 A 共 64 趟。如果先将 A 的 16 个元素拿到手边，并且容量足够，就可以重复使用，只读取 16 趟。这里仅统计 A，不包括 B、输出和其他开销。\nFlashAttention 使用分块减少显存与片上存储之间的读写，但这张 4×4 教学图不是该论文的实测性能。",
-    "action": "播放搬运。观察右边在 16 趟停止，而左边继续到 64。",
-    "sources": [
-      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/",
-      "https://arxiv.org/abs/2205.14135"
     ]
   },
   {
@@ -192,7 +217,10 @@
       "https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html",
       "https://arxiv.org/abs/2205.14135",
       "https://arxiv.org/abs/2506.13131",
-      "https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/"
+      "https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/",
+      "https://homepage.cs.uiowa.edu/~dwjones/assem/summer18/notes/09muldiv.shtml",
+      "https://docs.nvidia.com/cuda/archive/13.0.1/cuda-c-best-practices-guide/index.html#registers",
+      "https://docs.nvidia.com/cuda/archive/12.8.0/cuda-c-programming-guide/index.html#arithmetic-instructions"
     ]
   }
 ];
@@ -217,6 +245,33 @@
   const sampleA=[1,0,1,1,0,1,1,0,1,1,0,1,0,0,1,1];
   const sampleB=[1,1,0,1,0,1,1,0,1,0,1,1,1,0,0,1];
   const sampleC=math.multiplyOrdinary(sampleA,sampleB);
+  const hardware=globalThis.HardwareLesson;
+  $('#hardware-a').innerHTML=cells(sampleA);$('#hardware-b').innerHTML=cells(sampleB);
+  const registerFrames=hardware.registerTrace(sampleA,sampleB);
+  demo('register',9,n=>{
+    const frame=registerFrames[n],active=n>0&&n<9;
+    $$('#hardware-a .cell').forEach((cell,i)=>cell.classList.toggle('hardware-lit',active&&i===frame.k));
+    $$('#hardware-b .cell').forEach((cell,i)=>cell.classList.toggle('hardware-lit',active&&i===frame.k*4));
+    $('#register-a').textContent=frame.left??'?';$('#register-b').textContent=frame.right??'?';
+    $('#register-sum').textContent=frame.sum;$('#register-output').textContent=frame.stored?frame.sum:'?';
+    $('#register-operation').textContent=frame.phase==='compute'?`${frame.left} × ${frame.right} → S`:frame.phase==='load'?'数据已就位':frame.stored?'四对元素已累加':'等待取数';
+    $('#register-progress').textContent=`${n} / 9 步`;
+    for(const [id,lit] of [['hw-memory',frame.phase==='load'],['hw-load-arrow',frame.phase==='load'],['hw-registers',frame.phase==='load'],['hw-alu',frame.phase==='compute'],['hw-accumulator',frame.phase==='compute'],['hw-store-arrow',frame.stored],['hw-output',frame.stored]])$('#'+id).classList.toggle('hardware-active',lit);
+    $('#register-caption').textContent=frame.phase==='ready'?'先让 S = 0，再依次读取四对元素。寄存器负责存，运算单元负责算。':frame.phase==='load'?`第 ${frame.k+1} 对：把 A₁${frame.k+1} = ${frame.left}、B${frame.k+1}₁ = ${frame.right} 读入寄存器。`:frame.phase==='compute'?`运算单元计算 ${frame.left} × ${frame.right} = ${frame.product}，累加后 S = ${frame.sum}。`: `四对元素处理完毕，把寄存器里的 ${frame.sum} 写回 C₁₁。其他 15 格也可按同样规则计算。`;
+  },1100);
+  const addFrames=hardware.additionTrace(3,3,4),partials=hardware.multiplicationPartials(3,3,4);
+  const bitRow=(label,values,current=-1,extra='')=>`<span class="bit-row-label">${label}</span>${values.map((v,i)=>`<b class="bit-digit ${i===current?'current-bit':''} ${extra}">${v}</b>`).join('')}`;
+  demo('binary',5,n=>{
+    const progress=Math.min(n,4),frame=addFrames[progress],column=progress?4-frame.column:-1;
+    const carryValues=Array.from({length:5},(_,i)=>{const bit=4-i;if(bit===0)return '0';return bit<=progress?addFrames[bit].carryOut:'·';});
+    const resultValues=Array.from({length:5},(_,i)=>{const bit=4-i;return bit<progress||(progress===4&&bit===4)?(frame.result>>bit)&1:'?';});
+    $('#adder-table').innerHTML=bitRow('位权',[16,8,4,2,1],-1,'bit-weight')+bitRow('进位',carryValues,column,'carry-bit')+bitRow('输入 3','00011'.split(''),column)+bitRow('+ 输入 3','00011'.split(''),column)+bitRow('结果',resultValues,column,'sum-bit');
+    $('#adder-detail').textContent=progress?`位权 ${2**frame.column}：${frame.left} + ${frame.right} + 进位 ${frame.carryIn} = ${frame.left+frame.right+frame.carryIn}；本位写 ${(frame.result>>frame.column)&1}，向左进 ${frame.carryOut}。`:'最右位：1 + 1 = 二进制 10，要向左进 1。';
+    $('#adder-answer').textContent=progress===4?'00110₂ = 6₁₀':'结果：'+resultValues.join('');
+    $('#partial-table').innerHTML=`<div class="partial-header"><span>部分积</span><b>0011 × 0011</b></div>`+partials.map((v,i)=>`<div class="partial-row ${i<n?'partial-visible':''} ${i===n-1?'partial-current':''}"><span>第 ${i+1} 位 · 移 ${i} 位</span><b>${v.toString(2).padStart(8,'0')}</b></div>`).join('');
+    $('#multiplier-detail').textContent=n===5?'把四行部分积相加：3 + 6 + 0 + 0 = 9。':n?`乘数第 ${n} 位为 ${(3>>(n-1))&1}，产生第 ${n} 行部分积。`:'乘数的某一位为 1，就取被乘数；为 0，就取 0。';
+    $('#multiplier-answer').textContent=n===5?'00001001₂ = 9₁₀':'结果：????????';
+  },1400);
   const lesson=globalThis.StrassenLesson;
   function partitionMarkup(values,labels){
     return labels.map((label,q)=>`<div class="partition-piece piece-${q}"><span>${label}</span><div>${Array.from({length:4},(_,i)=>{const row=Math.floor(q/2)*2+Math.floor(i/2),col=(q%2)*2+i%2;return `<b>${values[row*4+col]}</b>`;}).join('')}</div></div>`).join('');

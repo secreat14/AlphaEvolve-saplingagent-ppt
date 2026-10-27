@@ -116,6 +116,76 @@
 .final-block-result{font:33px var(--mono);color:var(--purple);white-space:nowrap}
 .verified-blocks{font:23px var(--mono);color:#8c7ec4;line-height:1.7;margin-top:12px}
 .reconstruction-summary{display:grid;grid-template-columns:1fr 1fr;gap:3px 30px;font-size:22px;padding-top:10px;border-top:1px solid var(--line)}
+
+/* Opening hardware chapter: the arithmetic unit, storage and binary circuits. */
+.hardware-register-slide .slide-header,.hardware-binary-slide .slide-header{margin-bottom:22px}
+.register-layout{display:grid;grid-template-columns:350px 70px 1fr 70px 170px;align-items:center;gap:13px;min-height:326px}
+.hardware-memory{padding:17px 12px;border:2px solid var(--line);border-radius:9px;transition:background .2s,border-color .2s}
+.hardware-memory h3{font-size:23px;margin-bottom:15px}
+.hardware-inputs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.hardware-inputs>div>span{display:block;text-align:center;color:var(--muted);font:17px var(--mono);margin-bottom:8px}
+.hardware-matrix{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;border-left:2px solid #adb69d;border-right:2px solid #adb69d;padding:3px 6px}
+.hardware-matrix .cell{font:24px var(--mono);text-align:center;line-height:31px;background:#e9eddf;border-radius:3px;color:#748268;transition:background .2s,color .2s}
+.hardware-matrix .hardware-lit{background:#dcd8fc;color:var(--purple)}
+.hardware-memory>p{font-size:18px;line-height:1.6;color:#849275;margin:12px 0 0;text-align:center}
+.hardware-arrow{font:50px var(--mono);text-align:center;color:#b9c2aa;transition:color .2s}
+.hardware-arrow small{display:block;font:18px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;margin-top:5px}
+.hardware-processor{border:2px solid #c9cfbf;border-radius:10px;padding:16px 18px;min-height:316px;background:#f1f3e9}
+.processor-label{display:block;color:#89977b;font-size:17px;margin-bottom:14px;text-align:center}
+.hardware-registers{border:2px solid #d7d3ee;border-radius:7px;padding:12px;transition:background .2s,border-color .2s}
+.hardware-registers h3{font-size:21px;color:#8d84b8;margin:0 0 10px;text-align:center}
+.hardware-registers>div{display:flex;justify-content:center;gap:25px}
+.hardware-registers>div>span{font:21px var(--mono);color:#8d84b8}
+.hardware-registers b{display:inline-grid;place-items:center;min-width:45px;font:30px var(--mono);color:var(--purple);background:#e8e4fa;border-radius:4px;padding:2px 5px}
+.hardware-alu{text-align:center;border:2px solid transparent;border-radius:6px;padding:3px 0 8px;transition:background .2s,border-color .2s}
+.hardware-alu>span{font:25px var(--mono);color:#a2ad92}
+.hardware-alu h3{font-size:20px;margin:0 0 7px;color:#7e8d6e}
+.hardware-alu strong{font:27px var(--mono);color:#809168}
+.hardware-accumulator{display:flex;align-items:center;justify-content:center;gap:18px;border-top:1px solid var(--line);padding-top:10px;border-radius:4px}
+.hardware-accumulator>span{font-size:16px;max-width:140px;color:#8b977e;line-height:1.5}
+.hardware-accumulator strong{font:26px var(--mono);color:var(--purple);white-space:nowrap}
+.hardware-output{text-align:center;border:2px solid var(--line);padding:22px 8px;border-radius:9px;transition:background .2s,border-color .2s}
+.hardware-output>span{display:block;font-size:18px;color:#89957c;margin-bottom:18px}
+.hardware-output strong{font:26px var(--mono);white-space:nowrap;color:#8b81b9}
+.hardware-active{border-color:#9287d7;background:#eeebfc}
+.hardware-arrow.hardware-active{color:var(--purple)}
+.hardware-caption{font-size:23px;line-height:1.7;color:#7e8e6e;min-height:78px;margin:18px 0 0}
+.hardware-register-slide .demo-controls,.hardware-binary-slide .demo-controls{padding-top:8px;margin-bottom:18px}
+.binary-comparison{display:grid;grid-template-columns:1fr 1fr;gap:55px}
+.binary-panel{border-top:2px solid var(--line);padding-top:12px;min-height:320px}
+.binary-panel h3{font-size:28px;margin:0 0 10px}
+.binary-panel>p{font-size:20px;color:#8d9a7c;margin:0 0 8px}
+.adder-table{display:grid;grid-template-columns:120px repeat(5,48px);align-items:center;justify-content:center;row-gap:2px;min-height:155px}
+.bit-row-label{font-size:18px;color:#99a58a}
+.bit-digit{font:27px var(--mono);text-align:center;color:#8b84b7;line-height:28px;border-radius:4px;transition:background .2s,color .2s}
+.bit-digit.bit-weight{font-size:17px;color:#a3ae96}
+.bit-digit.carry-bit{font-size:22px;color:#b68d5c}
+.bit-digit.sum-bit{color:var(--purple);background:#ece9fa}
+.bit-digit.current-bit{background:#ddd7fa;color:var(--purple);box-shadow:inset 0 0 0 1px #b2a7e4}
+.binary-step-detail{font-size:19px;color:#8b9a7b;line-height:1.6;min-height:56px;margin-top:8px}
+.binary-answer{font:26px var(--mono);color:var(--purple);margin-top:4px;min-height:32px}
+.partial-header,.partial-row{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:31px;padding:0 10px}
+.partial-header{border-bottom:1px solid var(--line);color:#9aa78c}
+.partial-header>span,.partial-row>span{font-size:17px}
+.partial-header>b,.partial-row>b{font:26px var(--mono);letter-spacing:6px;font-weight:400}
+.partial-row{color:#b7beae;transition:color .2s,background .2s;border-radius:4px}
+.partial-row>b{visibility:hidden}
+.partial-row.partial-visible{color:#8a80b9}
+.partial-row.partial-visible>b{visibility:visible}
+.partial-row.partial-current{background:#eae6fb;color:var(--purple)}
+.binary-conclusion{font-size:23px;line-height:1.6;color:#7e8e6e;margin:16px 0 0;padding-top:12px;border-top:1px solid var(--line)}
+.hardware-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin:20px 0 28px}
+.hardware-facts>div{border-top:2px solid var(--line);padding-top:20px}
+.hardware-facts>div>span{font-size:18px;color:#a1ab94}
+.hardware-facts h3{font-size:29px;margin:22px 0 15px}
+.hardware-facts p{font-size:24px;line-height:1.8;color:#8a987b;margin:0}
+.fma-callout{display:grid;grid-template-columns:190px 350px 1fr;align-items:center;gap:28px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;margin-top:4px}
+.fma-callout>span{font-size:20px;line-height:1.7;color:#9aa58c}
+.fma-callout>strong{font:35px var(--mono);color:var(--purple);font-weight:500}
+.hardware-cost-slide .wide-takeaway{border-top:0;margin-bottom:30px;font-size:26px}
+.sources-slide .source-links li{padding:8px 0 8px 13px}
+.sources-slide .source-links b{font-size:20px;line-height:1.4}
+.sources-slide .source-links span{font-size:17px;line-height:1.4;margin-top:3px}
 </style></head>
 <body>
 <header class="app-bar"><a class="app-brand" href="#slide=1">[·] 矩阵与 AI</a><span class="app-description">20 分钟演讲版</span><div class="app-tools"><button id="overview-button" title="目录 O">目录 <kbd>O</kbd></button><button id="notes-button" aria-pressed="false" title="演讲备注 N">备注 <kbd>N</kbd></button><button id="fullscreen-button" title="全屏 F">全屏 <kbd>F</kbd></button><button id="help-button" aria-label="查看快捷键">?</button></div></header>
@@ -124,9 +194,48 @@
 <section class="slide cover active" data-title="AI 如何发现更快的矩阵乘法" data-seconds="15">
   <div class="cover-kicker">矩阵运算、GPU 与算法发现</div>
   <h1>AI 如何发现<br><em>更快的矩阵乘法</em></h1>
-  <p class="cover-subtitle">从一次行乘列，看懂 AlphaTensor 的计算路径</p>
+  <p class="cover-subtitle">从寄存器与运算电路，到 AI 发现矩阵算法</p>
   <div class="cover-numbers"><div><b>64</b><span>直接算法</span></div><span class="number-separator">/</span><div><b>49</b><span>Strassen</span></div><span class="number-separator">/</span><div><b>47</b><span>AlphaTensor · 模 2</span></div></div>
   <div class="cover-bottom"><span>中文讲解 · 过程动画 · 约 20 分钟</span><span>按 → 开始</span></div>
+</section>
+
+<section class="slide hardware-register-slide" data-title="硬件入门：内存、寄存器与运算单元" data-seconds="60">
+  <div class="slide-header"><span class="chapter">硬件入门 1 / 5 · 先认识三个角色</span><h2>数据先拿到手边，运算单元再计算</h2><p>内存 / 显存像仓库，寄存器像手边的小格子，运算单元像计算工具</p></div>
+  <div class="register-layout"><div class="hardware-memory" id="hw-memory"><h3>内存 / 显存中的 A、B</h3><div class="hardware-inputs"><div><span>A · 4×4</span><div class="hardware-matrix" id="hardware-a"></div></div><div><span>B · 4×4</span><div class="hardware-matrix" id="hardware-b"></div></div></div><p>只放大第一行 × 第一列<br>得到左上角 C₁₁</p></div><span class="hardware-arrow" id="hw-load-arrow">→<small>读取</small></span><div class="hardware-processor"><span class="processor-label">处理器内部 · CPU / GPU 的简化示意</span><div class="hardware-registers" id="hw-registers"><h3>寄存器 · 暂存操作数</h3><div><span>Rₐ <b id="register-a">?</b></span><span>Rᵦ <b id="register-b">?</b></span></div></div><div class="hardware-alu" id="hw-alu"><span>↓</span><h3>运算单元 · 做乘法与加法</h3><strong id="register-operation">等待取数</strong></div><div class="hardware-accumulator" id="hw-accumulator"><span>累加结果也放在寄存器</span><strong>S = <b id="register-sum">0</b></strong></div></div><span class="hardware-arrow" id="hw-store-arrow">→<small>写回</small></span><div class="hardware-output" id="hw-output"><span>内存 / 显存</span><strong>C₁₁ = <b id="register-output">?</b></strong></div></div>
+  <p class="hardware-caption" id="register-caption" aria-live="polite">先让 S = 0，再依次读取四对元素。寄存器负责存，运算单元负责算。</p>
+  <div class="demo-controls"><button data-play="register">播放取数与计算</button><button data-step="register">下一步</button><button data-reset="register">重置</button><span id="register-progress">0 / 9 步</span></div>
+  <div class="slide-source">省略指令译码、缓存等细节。寄存器容量有限；GPU 共享内存与缓存属于其他片上存储。来源：NVIDIA CUDA 官方指南。</div>
+</section>
+
+<section class="slide hardware-binary-slide" data-title="硬件入门：为什么加法电路更简单" data-seconds="75">
+  <div class="slide-header"><span class="chapter">硬件入门 2 / 5 · 放大一个数的内部计算</span><h2>加法处理进位，乘法还要合并部分积</h2><p>矩阵里的数用二进制存储：例如十进制的 3，写成四位二进制就是 0011</p></div>
+  <div class="binary-comparison"><div class="binary-panel"><h3>加法：3 + 3 = 6</h3><p>从右向左，每位加上两个输入和进位</p><div class="adder-table" id="adder-table"></div><div class="binary-step-detail" id="adder-detail">最右位：1 + 1 = 二进制 10，要向左进 1。</div><div class="binary-answer" id="adder-answer">结果：?????</div></div><div class="binary-panel"><h3>乘法：3 × 3 = 9</h3><p>逐位产生部分积，移位后再相加</p><div class="partial-table" id="partial-table"></div><div class="binary-step-detail" id="multiplier-detail">乘数的某一位为 1，就取被乘数；为 0，就取 0。</div><div class="binary-answer" id="multiplier-answer">结果：????????</div></div></div>
+  <p class="binary-conclusion">同样位宽下，通用整数乘法通常需要更多组合与加法电路；减法也可用补码交给加法器。</p>
+  <div class="demo-controls"><button data-play="binary">播放电路思路</button><button data-step="binary">下一步</button><button data-reset="binary">重置</button><span>按位展开是解释原理，动画步数不代表时钟周期</span></div>
+  <div class="slide-source">这里的“四位”是单个数的位宽，矩阵案例始终为 4×4。现代乘法器会并行合并部分积。来源：大学计算机组成课程讲义。</div>
+</section>
+
+<section class="slide" data-title="GPU 的并行计算" data-seconds="45">
+  <div class="slide-header"><span class="chapter">硬件入门 3 / 5 · 让多个运算单元一起工作</span><h2>GPU 把许多计算任务分给小组同时做</h2><p>同一个 4×4 输出矩阵有 16 个格子，把它们看成 16 个独立任务</p></div>
+  <div class="parallel-layout"><div><h3>逐个处理 <span id="gpu-serial-label">0 / 16 轮</span></h3><div class="task-board" id="gpu-serial"></div><p>一轮完成一个任务</p></div><div><h3>4 组同时处理 <span id="gpu-parallel-label">0 / 4 轮</span></h3><div class="task-board purple" id="gpu-parallel"></div><p>一轮最多完成四个任务</p></div></div>
+  <div class="demo-controls"><button data-play="gpu">播放对比</button><button data-step="gpu">推进一轮</button><button data-reset="gpu">重置</button><span id="gpu-caption" aria-live="polite">并行计算需要足够多、能够分开的任务</span></div>
+  <div class="slide-source">原理示意，忽略通信与调度。CPU 也可以并行，这里不是硬件测速。来源：NVIDIA GPU 基础</div>
+</section>
+
+<section class="slide" data-title="数据复用与访存开销" data-seconds="45">
+  <div class="slide-header"><span class="chapter">硬件入门 4 / 5 · 减少数据搬运</span><h2>减少数据搬运，也能让计算更快</h2><p>4×4 的 A 有 16 个元素，每个元素都参与 4 个输出列的计算</p></div>
+  <div class="memory-layout"><div><h3>每次使用都去拿</h3><div class="trip-number"><b id="memory-naive">0</b><span>/ 64 趟</span></div><div class="transport"><span>显存</span><div class="transport-line"><i id="package-naive"></i></div><span>运算单元</span></div><p>16 份 × 4 次，共取 64 趟</p></div><div><h3>暂存到片上，重复使用</h3><div class="trip-number purple-text"><b id="memory-reuse">0</b><span>/ 16 趟</span></div><div class="transport"><span>显存</span><div class="transport-line"><i id="package-reuse"></i></div><span>片上存储</span></div><p>每份取一次，共取 16 趟</p></div></div>
+  <div class="memory-connection"><strong>寄存器 / 共享内存</strong><span>都在芯片上，容量有限；共享内存可供线程组协作复用。FlashAttention 也利用分块减少显存读写。</span></div>
+  <div class="demo-controls"><button data-play="memory">播放搬运</button><button data-step="memory">下一步</button><button data-reset="memory">重置</button></div>
+  <div class="slide-source">只统计 A 的读取，并假设手边容量足够。B 与输出的开销未计入。这是教学示意，不是 FlashAttention 实测加速比。</div>
+</section>
+
+<section class="slide hardware-cost-slide" data-title="硬件入门：电路复杂度与实际速度" data-seconds="45">
+  <div class="slide-header"><span class="chapter">硬件入门 5 / 5 · 把直觉用对地方</span><h2>加法是基础积木，实际速度还要看机器</h2><p>“电路更简单”能解释优化动机；运行时间需要结合指令与数据搬运来判断</p></div>
+  <div class="hardware-facts"><div><span>01 · 电路</span><h3>整数加法比较基础</h3><p>同样位宽下，乘法通常要形成并合并多组部分积，使用更多电路资源。</p></div><div><span>02 · 指令</span><h3>现代硬件很擅长乘加</h3><p>GPU 的浮点加法与乘法可以有相同吞吐量；一条 FMA 指令能融合乘法与加法。</p></div><div><span>03 · 数据</span><h3>等待数据也要时间</h3><p>寄存器有限，中间结果太多会增加存储压力。少算、并行、少搬都可能带来收益。</p></div></div>
+  <div class="fma-callout"><span>FMA · 融合乘加</span><strong>S ← a × b + S</strong><span>一条指令完成融合乘加；Tensor Core 还提供专用矩阵乘加能力</span></div>
+  <div class="wide-takeaway compact">接下来研究：能否多做一些加减法，换掉成本更高的矩阵块乘法？</div>
+  <div class="slide-source">吞吐量是单位时间能完成多少操作，和单次等待时间不同。这里不给加法与乘法规定固定速度比。来源：NVIDIA 指令吞吐量表与最佳实践指南。</div>
 </section>
 
 <section class="slide" data-title="矩阵与现代计算" data-seconds="30">
@@ -136,26 +245,26 @@
   <div class="slide-source">来源：AlphaTensor 团队介绍，NVIDIA 矩阵乘法指南</div>
 </section>
 
-<section class="slide basic-four-slide" data-title="4×4矩阵乘法的基本动作" data-seconds="80">
+<section class="slide basic-four-slide" data-title="4×4矩阵乘法的基本动作" data-seconds="60">
   <div class="slide-header"><span class="chapter">同一组 4 × 4 矩阵 · 普通算术</span><h2>一行的 4 个数，乘一列的 4 个数</h2><p>每个输出需要 4 次乘法、3 次加法，共有 16 个输出</p></div>
   <div class="big-matrix-equation"><div class="matrix-block"><span>A · 4 × 4</span><div class="matrix basic-four" id="basic-a"></div></div><b class="operator">×</b><div class="matrix-block"><span>B · 4 × 4</span><div class="matrix basic-four" id="basic-b"></div></div><b class="operator">=</b><div class="matrix-block"><span>C · 4 × 4</span><div class="matrix basic-four" id="basic-c"></div></div></div>
   <div class="demo-equation" id="basic-equation"></div><p class="demo-caption" id="basic-caption" aria-live="polite">先看第一行与第一列，得到 C 的左上角</p>
   <div class="demo-controls"><button data-play="basic">播放过程</button><button data-step="basic">下一步</button><button data-reset="basic">重置</button><button id="basic-finish">看完整结果</button><span id="basic-work-count">0 / 64 次乘法，0 / 48 次加法</span></div>
 </section>
 
-<section class="slide partition-slide" data-title="Strassen第一步：定义分块记号" data-seconds="35">
+<section class="slide partition-slide" data-title="Strassen第一步：定义分块记号" data-seconds="30">
   <div class="slide-header"><span class="chapter">Strassen 推导 1 / 7 · 先定义记号</span><h2>把同一个 4×4 矩阵分成四块</h2><p>小写字母代表内部的 2×2 块，原题仍是两个 4×4 矩阵相乘</p></div>
   <div class="partition-inputs"><div><h3>A 的四个块</h3><div class="partition-matrix" id="partition-a"></div><div class="block-notation">A = [a, b; c, d]</div></div><span class="partition-times">×</span><div><h3>B 的四个块</h3><div class="partition-matrix" id="partition-b"></div><div class="block-notation">B = [e, f; g, h]</div></div></div>
   <div class="wide-takeaway compact">例如 ae 表示“a 这块矩阵乘 e 这块矩阵”，不是两个单独数字相乘</div>
 </section>
 
-<section class="slide direct-block-slide" data-title="Strassen第二步：普通分块公式" data-seconds="35">
+<section class="slide direct-block-slide" data-title="Strassen第二步：普通分块公式" data-seconds="30">
   <div class="slide-header"><span class="chapter">Strassen 推导 2 / 7 · 先看原来的计算</span><h2>四个输出块，原本需要 8 次块乘法</h2><p>输出也分成四块：C = [r, s; t, u]，每块仍然是 2×2</p></div>
   <div class="direct-block-layout"><div><h3>同一个 4×4 输出 C</h3><div class="partition-matrix" id="partition-c"></div></div><div class="block-equations"><div><b>r</b><span>= <em>ae</em> + <em>bg</em></span><small>左上</small></div><div><b>s</b><span>= <em>af</em> + <em>bh</em></span><small>右上</small></div><div><b>t</b><span>= <em>ce</em> + <em>dg</em></span><small>左下</small></div><div><b>u</b><span>= <em>cf</em> + <em>dh</em></span><small>右下</small></div></div></div>
   <div class="wide-takeaway compact">4 个输出块 × 每块 2 个乘积 = 8 次块乘法，继续直接算块内部就是 8 × 8 = 64 次标量乘法</div>
 </section>
 
-<section class="slide seed-slide" data-title="Strassen第三步：构造可复用的乘积" data-seconds="45">
+<section class="slide seed-slide" data-title="Strassen第三步：构造可复用的乘积" data-seconds="40">
   <div class="slide-header"><span class="chapter">Strassen 推导 3 / 7 · 构造思路</span><h2>先让一个乘积包含两处需要的项</h2><p>r 需要 ae，u 需要 dh。尝试把它们放进同一个中间乘积。</p></div>
   <div class="seed-expression">M₁ = (a + d)(e + h)</div>
   <div class="seed-expansion" id="seed-expansion"><span>=</span><b class="wanted">ae</b><span>+</span><b class="extra">ah</b><span>+</span><b class="extra">de</b><span>+</span><b class="wanted">dh</b></div>
@@ -165,7 +274,7 @@
   <div class="slide-source">M₁ 还不是任何一个完整输出：r 还缺 bg，u 还缺 cf，每个输出的多余项也需要分别抵消。</div>
 </section>
 
-<section class="slide definitions-slide" data-title="Strassen第四步：七个中间乘积公式" data-seconds="60">
+<section class="slide definitions-slide" data-title="Strassen第四步：七个中间乘积公式" data-seconds="50">
   <div class="slide-header"><span class="chapter">Strassen 推导 4 / 7 · 完整构造</span><h2>七个中间乘积的公式</h2><p>每条公式只有 1 次块乘法，括号内部先做加减法</p></div>
   <div class="seven-definitions" id="seven-definitions"></div>
   <div class="definition-expansion" id="definition-expansion" aria-live="polite">接下来逐条展开，观察哪些项能相互抵消。</div>
@@ -173,14 +282,14 @@
   <div class="slide-source">来源：Strassen 经典恒等式。这里只使用分配律与加减法，不交换矩阵乘法的左右顺序。</div>
 </section>
 
-<section class="slide simple-proof-slide" data-title="Strassen第五步：验证右上与左下输出" data-seconds="60">
+<section class="slide simple-proof-slide" data-title="Strassen第五步：验证右上与左下输出" data-seconds="50">
   <div class="slide-header"><span class="chapter">Strassen 推导 5 / 7 · 先验证两处简单的输出</span><h2>多出来的项，可以成对抵消</h2><p>先看右上块 s 和左下块 t，分别只需要组合两个中间乘积</p></div>
   <div class="simple-proofs"><div><h3>右上块 s</h3><div class="proof-line">s = M₃ + M₅</div><div class="proof-line reveal-simple" data-proof-level="1">= a(f − h) + (a + b)h</div><div class="proof-line reveal-simple" data-proof-level="2">= af <s>− ah + ah</s> + bh</div><div class="proof-line proof-result reveal-simple" data-proof-level="3">= af + bh ✓</div></div><div><h3>左下块 t</h3><div class="proof-line">t = M₂ + M₄</div><div class="proof-line reveal-simple" data-proof-level="1">= (c + d)e + d(g − e)</div><div class="proof-line reveal-simple" data-proof-level="2">= ce <s>+ de − de</s> + dg</div><div class="proof-line proof-result reveal-simple" data-proof-level="3">= ce + dg ✓</div></div></div>
   <p class="proof-caption" id="simple-proof-caption" aria-live="polite">点击下一步，先代入定义，再展开，最后消去相反项。</p>
   <div class="demo-controls"><button data-play="simple-proof">播放两处验证</button><button data-step="simple-proof">下一步</button><button data-reset="simple-proof">重置</button><span>结果恰好回到普通分块乘法的公式</span></div>
 </section>
 
-<section class="slide cancellation-slide" data-title="Strassen第六步：推导左上输出块" data-seconds="60">
+<section class="slide cancellation-slide" data-title="Strassen第六步：推导左上输出块" data-seconds="55">
   <div class="slide-header"><span class="chapter">Strassen 推导 6 / 7 · 验证左上块</span><h2>r = M₁ + M₄ − M₅ + M₇</h2><p>把四个中间乘积展开，多余项逐对抵消，留下 ae + bg</p></div>
   <div class="cancellation-layout"><div class="cancellation-workbench" id="proof-r-workbench"></div><div class="cancellation-pairs"><h3>本次抵消</h3><strong id="proof-r-pair">等待第一对</strong><p id="proof-r-explain">有正项也有负项时，可以按加法把它们放在一起抵消。</p><div class="final-block-result" id="proof-r-result">r = ae + bg ✓</div></div></div>
   <div class="demo-controls"><button data-play="proof-r">播放抵消</button><button data-step="proof-r">消去下一对</button><button data-reset="proof-r">重置</button><span id="proof-r-progress">0 / 5 对</span></div>
@@ -196,12 +305,12 @@
 
 <section class="slide strassen-four-slide" data-title="4×4矩阵的Strassen算法" data-seconds="60">
   <div class="slide-header"><span class="chapter">沿用同一组 4 × 4 输入</span><h2>Strassen 用 49 次乘法还原相同的结果</h2><p>把 4×4 分成四个内部块，组合输入并复用中间乘积</p></div>
-  <div class="strassen-four-layout"><div><div class="strassen-route">7 组块乘法 × 每组 7 次 = <b>49</b></div><div class="strassen-groups" id="strassen-products"></div><div class="demo-equation" id="strassen-product-equation">等待第一项</div><p id="strassen-caption" class="strassen-four-caption" aria-live="polite">高亮表示正在计算哪一组，每组包含 7 次标量乘法</p></div><div class="strassen-output-block"><span id="strassen-output-label">C 的过程累计 · 4 × 4</span><div class="matrix basic-four" id="strassen-output"></div><strong id="strassen-answer">0 / 49 次乘法</strong><small>完成后与上一页的结果核对</small></div></div>
+  <div class="strassen-four-layout"><div><div class="strassen-route">7 组块乘法 × 每组 7 次 = <b>49</b></div><div class="strassen-groups" id="strassen-products"></div><div class="demo-equation" id="strassen-product-equation">等待第一项</div><p id="strassen-caption" class="strassen-four-caption" aria-live="polite">高亮表示正在计算哪一组，每组包含 7 次标量乘法</p></div><div class="strassen-output-block"><span id="strassen-output-label">C 的过程累计 · 4 × 4</span><div class="matrix basic-four" id="strassen-output"></div><strong id="strassen-answer">0 / 49 次乘法</strong><small>完成后与前面的直接算法核对</small></div></div>
   <div class="demo-controls"><button data-play="strassen">播放 49 步</button><button data-step="strassen">下一步</button><button data-reset="strassen">重置</button><button id="strassen-finish">看完整结果</button><span>经典两层递归实现使用 198 次加减法</span></div>
   <div class="slide-source">2×2 只作为 4×4 的内部块。乘积动画展示分解贡献，198 是经典递归实现的加减法计数。来源：Strassen 与大学课程讲义。</div>
 </section>
 
-<section class="slide tradeoff-slide" data-title="为什么增加加法减少乘法" data-seconds="90">
+<section class="slide tradeoff-slide" data-title="为什么增加加法减少乘法" data-seconds="60">
   <div class="slide-header"><span class="chapter">仍然计算同一个 4 × 4 乘积</span><h2>多做加减法，是为了复用更少的乘积</h2><p>是否划算，要看省下的乘法成本能否覆盖新增的加法</p></div>
   <table class="tradeoff-table"><thead><tr><th>4×4 算法</th><th>乘法次数</th><th>加减法次数</th></tr></thead><tbody><tr><td>直接行乘列</td><td>64</td><td>48</td></tr><tr><td>经典 Strassen 递归</td><td class="purple-text">49</td><td>198</td></tr></tbody></table>
   <div class="tradeoff-saving">少做 <b>15</b> 次乘法，代价是多做 <b>150</b> 次加减法</div>
@@ -211,36 +320,21 @@
   <div class="slide-source">教学成本模型，忽略访存，不是实测时间。计数针对经典递归到标量的实现，尚未做额外消元或共享表达式优化。</div>
 </section>
 
-<section class="slide" data-title="GPU 的并行计算" data-seconds="45">
-  <div class="slide-header"><span class="chapter">硬件如何帮忙</span><h2>GPU 把许多计算任务分给小组同时做</h2><p>同一个 4×4 输出矩阵有 16 个格子，把它们看成 16 个独立任务</p></div>
-  <div class="parallel-layout"><div><h3>逐个处理 <span id="gpu-serial-label">0 / 16 轮</span></h3><div class="task-board" id="gpu-serial"></div><p>一轮完成一个任务</p></div><div><h3>4 组同时处理 <span id="gpu-parallel-label">0 / 4 轮</span></h3><div class="task-board purple" id="gpu-parallel"></div><p>一轮最多完成四个任务</p></div></div>
-  <div class="demo-controls"><button data-play="gpu">播放对比</button><button data-step="gpu">推进一轮</button><button data-reset="gpu">重置</button><span id="gpu-caption" aria-live="polite">并行计算需要足够多、能够分开的任务</span></div>
-  <div class="slide-source">原理示意，忽略通信与调度。CPU 也可以并行，这里不是硬件测速。来源：NVIDIA GPU 基础</div>
-</section>
-
-<section class="slide" data-title="数据复用与访存开销" data-seconds="45">
-  <div class="slide-header"><span class="chapter">计算之外的成本</span><h2>减少数据搬运，也能让计算更快</h2><p>4×4 的 A 有 16 个元素，每个元素都参与 4 个输出列的计算</p></div>
-  <div class="memory-layout"><div><h3>每次使用都去拿</h3><div class="trip-number"><b id="memory-naive">0</b><span>/ 64 趟</span></div><div class="transport"><span>远处仓库</span><div class="transport-line"><i id="package-naive"></i></div><span>计算位置</span></div><p>16 份 × 4 次，共取 64 趟</p></div><div><h3>拿到手边，重复使用</h3><div class="trip-number purple-text"><b id="memory-reuse">0</b><span>/ 16 趟</span></div><div class="transport"><span>远处仓库</span><div class="transport-line"><i id="package-reuse"></i></div><span>手边存储</span></div><p>每份取一次，共取 16 趟</p></div></div>
-  <div class="memory-connection"><strong>FlashAttention</strong><span>通过分块，减少 GPU 显存与片上存储之间的读写</span></div>
-  <div class="demo-controls"><button data-play="memory">播放搬运</button><button data-step="memory">下一步</button><button data-reset="memory">重置</button></div>
-  <div class="slide-source">只统计 A 的读取，并假设手边容量足够。B 与输出的开销未计入。这是教学示意，不是 FlashAttention 实测加速比。</div>
-</section>
-
-<section class="slide dark" data-title="AlphaTensor 的算法发现" data-seconds="60">
+<section class="slide dark" data-title="AlphaTensor 的算法发现" data-seconds="45">
   <div class="slide-header"><span class="chapter">AlphaTensor · Nature 2022</span><h2>AI 开始参与寻找计算算法</h2><p>在大量计算路径中，寻找正确、乘法次数更少的方案</p></div>
   <div class="discovery-flow"><div><span>01</span><h3>选择输入组合</h3><p>先用加减法组合输入<br>再把组合后的数相乘</p></div><div><span>02</span><h3>安排输出贡献</h3><p>一个中间乘积<br>可以用于哪些输出？</p></div><div><span>03</span><h3>检查与改进</h3><p>算法必须正确<br>同时尽量减少乘法</p></div></div>
   <div class="dark-statement">搜索目标是计算路径<br><strong>找到的算法可以处理适用范围内的新矩阵</strong></div>
   <div class="slide-source">来源：Fawzi 等，Discovering faster matrix multiplication algorithms with reinforcement learning</div>
 </section>
 
-<section class="slide" data-title="模二运算的规则" data-seconds="45">
+<section class="slide" data-title="模二运算的规则" data-seconds="35">
   <div class="slide-header"><span class="chapter">对比前统一规则</span><h2>47 次乘法的结果有一个条件：模 2</h2><p>只有 0 与 1，相加后保留除以 2 的余数</p></div>
   <div class="domain-comparison"><div><span>普通实数运算</span><strong>1 + 1 = <b>2</b></strong><p>我们熟悉的加法</p></div><div><span>模 2 运算</span><strong>1 + 1 = <b>0</b></strong><p>2 ÷ 2 = 1，余数为 0</p></div></div>
   <div class="domain-rules"><span>0 + 0 = 0</span><span>0 + 1 = 1</span><span>1 + 1 = 0</span><span>1 × 1 = 1</span></div>
   <div class="wide-takeaway">接下来的三种算法，都在同一个模 2 规则下计算</div>
 </section>
 
-<section class="slide comparison-slide" data-title="四阶矩阵三算法动画对比" data-seconds="150">
+<section class="slide comparison-slide" data-title="四阶矩阵三算法动画对比" data-seconds="110">
   <div class="slide-header"><span class="chapter">同一组 4 × 4 输入</span><h2>三条路径，最后得到同一个答案</h2><p>每拍展示一次标量乘法。输入高亮表示取数，橙色表示输出贡献。</p></div>
   <div class="talk-comparison" id="talk-comparison"></div>
   <div class="comparison-status" id="comparison-status" aria-live="polite">统一采用模 2 运算。每列内部使用相同的 A 与 B。</div>
@@ -248,7 +342,7 @@
   <div class="slide-source">实际执行作者公开的 rank-47 分解。动画结束先后表示乘法次数差异，不等于真实运行时间比。</div>
 </section>
 
-<section class="slide tensor-four-slide" data-title="4×4算法正确性的检查" data-seconds="60">
+<section class="slide tensor-four-slide" data-title="4×4算法正确性的检查" data-seconds="45">
   <div class="slide-header"><span class="chapter">验证作者公开的 4 × 4、47 次方案</span><h2>16 个输出格子，都必须符合矩阵乘法</h2><p>下面是 4×4 输出的关系检查表，每格显示该输出还有多少条计算关系未吻合</p></div>
   <div class="tensor-four-layout"><div class="tensor-four-grid" id="talk-tensor"></div><div class="tensor-info"><div><span>已加入的中间乘积</span><strong id="tensor-count">0 / 47</strong></div><div><span>未吻合的关系总数</span><strong id="tensor-remaining">64</strong></div><p id="tensor-caption" aria-live="polite">一个组合乘积可能影响多个输出，最终所有关系必须归零。</p></div></div>
   <div class="demo-controls"><button data-play="tensor">播放验证</button><button data-step="tensor">下一步</button><button data-reset="tensor">重置</button><button id="tensor-finish">看验证终点</button><span>格内是关系条数，不是矩阵计算结果</span></div>
@@ -262,7 +356,7 @@
   <div class="slide-source">来源：Fawzi 等，Nature 610，47–53，2022。这里比较乘法次数，仍需另行衡量加法、访存与硬件性能。</div>
 </section>
 
-<section class="slide" data-title="AlphaEvolve 的后续进展" data-seconds="40">
+<section class="slide" data-title="AlphaEvolve 的后续进展" data-seconds="30">
   <div class="slide-header"><span class="chapter">后续进展 · 2025</span><h2>AlphaEvolve 把搜索扩展到代码优化</h2><p>大语言模型提出代码，自动评估器检查，再保留更好的版本</p></div>
   <div class="evolve-layout"><div><h3>矩阵算法</h3><strong class="evolve-big">49 <span>到</span> 48</strong><p>4 × 4 复数矩阵<br>标量乘法次数</p><small>与模 2 下的 47 次属于不同设定</small></div><div><h3>同样是 4×4，仍要看运算规则</h3><div class="evolve-measure"><strong>47 次</strong><span>AlphaTensor 的模 2 方案</span></div><div class="evolve-measure"><strong>48 次</strong><span>AlphaEvolve 的复数方案</span></div><p class="evolve-bottom">两种规则不同，不能只凭 47 与 48 判断哪种更好</p></div></div>
   <div class="slide-source">来源：Novikov 等，AlphaEvolve 白皮书，2025。此页仅比较 4×4 矩阵算法的设定。</div>
@@ -280,15 +374,15 @@
 
 <section class="slide sources-slide" data-title="参考资料" data-seconds="20">
   <div class="slide-header"><span class="chapter">参考资料</span><h2>论文与官方技术资料</h2><p>链接可点击，详细引用也保存在各页演讲备注中</p></div>
-  <ol class="source-links"><li><a href="https://doi.org/10.1038/s41586-022-05172-4" target="_blank" rel="noopener noreferrer"><b>AlphaTensor · Nature 2022</b><span>Fawzi 等，Discovering faster matrix multiplication algorithms with reinforcement learning</span></a></li><li><a href="https://link.springer.com/article/10.1007/BF02165411" target="_blank" rel="noopener noreferrer"><b>Strassen · 1969</b><span>Gaussian elimination is not optimal</span></a></li><li><a href="https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/" target="_blank" rel="noopener noreferrer"><b>NVIDIA GPU 与矩阵乘法指南</b><span>矩阵分块、并行计算、计算与访存瓶颈</span></a></li><li><a href="https://arxiv.org/abs/2205.14135" target="_blank" rel="noopener noreferrer"><b>FlashAttention · 2022</b><span>Dao 等，Fast and Memory-Efficient Exact Attention with IO-Awareness</span></a></li><li><a href="https://arxiv.org/abs/2506.13131" target="_blank" rel="noopener noreferrer"><b>AlphaEvolve · 2025</b><span>Novikov 等，A coding agent for scientific and algorithmic discovery</span></a></li></ol>
+  <ol class="source-links"><li><a href="https://doi.org/10.1038/s41586-022-05172-4" target="_blank" rel="noopener noreferrer"><b>AlphaTensor · Nature 2022</b><span>Fawzi 等，Discovering faster matrix multiplication algorithms with reinforcement learning</span></a></li><li><a href="https://link.springer.com/article/10.1007/BF02165411" target="_blank" rel="noopener noreferrer"><b>Strassen · 1969</b><span>Gaussian elimination is not optimal</span></a></li><li><a href="https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/" target="_blank" rel="noopener noreferrer"><b>NVIDIA GPU 与矩阵乘法指南</b><span>矩阵分块、并行计算、计算与访存瓶颈</span></a></li><li><a href="https://arxiv.org/abs/2205.14135" target="_blank" rel="noopener noreferrer"><b>FlashAttention · 2022</b><span>Dao 等，Fast and Memory-Efficient Exact Attention with IO-Awareness</span></a></li><li><a href="https://arxiv.org/abs/2506.13131" target="_blank" rel="noopener noreferrer"><b>AlphaEvolve · 2025</b><span>Novikov 等，A coding agent for scientific and algorithmic discovery</span></a></li><li><a href="https://homepage.cs.uiowa.edu/~dwjones/assem/summer18/notes/09muldiv.shtml" target="_blank" rel="noopener noreferrer"><b>硬件基础 · 大学课程与 CUDA 官方指南</b><span>二进制部分积、寄存器、片上存储与指令吞吐量；各页备注附详细链接</span></a></li></ol>
   <div class="slide-source">AlphaTensor 47 次方案来自作者开源仓库，使用 Apache 2.0 许可。来源版本与许可全文嵌入此 HTML。</div>
 </section>
 
 </div></main>
 <aside id="notes-panel" hidden aria-label="演讲备注"><div class="notes-heading"><strong>演讲备注</strong><button id="notes-close" aria-label="关闭演讲备注">×</button></div><div id="notes-content"></div></aside>
-<footer class="navigation"><button id="previous" aria-label="上一页">← 上一页</button><span id="slide-count">01 / 23</span><span id="slide-title">AI 如何发现更快的矩阵乘法</span><div class="nav-right"><button id="timer-button" title="开始或暂停计时 T">计时 <span id="elapsed">00:00</span></button><button id="timer-reset" title="重置计时" aria-label="重置演讲计时">↺</button><button id="next" aria-label="下一页">下一页 →</button></div></footer>
+<footer class="navigation"><button id="previous" aria-label="上一页">← 上一页</button><span id="slide-count">01 / 26</span><span id="slide-title">AI 如何发现更快的矩阵乘法</span><div class="nav-right"><button id="timer-button" title="开始或暂停计时 T">计时 <span id="elapsed">00:00</span></button><button id="timer-reset" title="重置计时" aria-label="重置演讲计时">↺</button><button id="next" aria-label="下一页">下一页 →</button></div></footer>
 <div class="deck-progress" aria-hidden="true"><span id="deck-progress"></span></div>
-<dialog id="overview-dialog"><div class="dialog-header"><h2>演讲目录</h2><button data-close="overview-dialog" aria-label="关闭目录">×</button></div><p>23 页，建议讲解时间共 20 分钟。点击任意一页跳转。</p><div id="overview-grid"></div></dialog>
+<dialog id="overview-dialog"><div class="dialog-header"><h2>演讲目录</h2><button data-close="overview-dialog" aria-label="关闭目录">×</button></div><p>26 页，建议讲解时间共 20 分钟。点击任意一页跳转。</p><div id="overview-grid"></div></dialog>
 <dialog id="help-dialog"><div class="dialog-header"><h2>演示快捷键</h2><button data-close="help-dialog" aria-label="关闭快捷键">×</button></div><dl class="shortcut-list"><dt>→ / ↓ / 空格 / Page Down</dt><dd>下一页</dd><dt>← / ↑ / Page Up</dt><dd>上一页</dd><dt>Home / End</dt><dd>第一页 / 最后一页</dd><dt>F</dt><dd>进入或退出全屏</dd><dt>N</dt><dd>显示或隐藏本页演讲备注</dd><dt>O</dt><dd>打开目录</dd><dt>B</dt><dd>黑屏 / 恢复画面</dd><dt>T</dt><dd>开始或暂停演讲计时</dd><dt>R</dt><dd>重置当前页动画</dd></dl><p>动画由页面中的播放按钮控制。翻页会暂停动画。按 Esc 关闭目录或备注。备注会显示在当前屏幕上。</p></dialog>
 <div id="blackout" hidden><span>按 B 或点击恢复</span></div><button id="exit-cinema" aria-label="退出全屏演示">退出全屏 F</button><div class="sr-only" id="announcement" aria-live="polite"></div>
 <script>// AlphaTensor authors' published rank-47 factorization; output factor transposed to row-major C.
@@ -414,6 +508,34 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
 
 "use strict";
 (() => {
+  function registerTrace(a,b){
+    const frames=[{phase:'ready',k:0,left:null,right:null,product:null,sum:0,stored:false}];
+    let sum=0;
+    for(let k=0;k<4;k++){
+      const left=a[k],right=b[k*4];
+      frames.push({phase:'load',k,left,right,product:null,sum,stored:false});
+      const product=left*right;sum+=product;
+      frames.push({phase:'compute',k,left,right,product,sum,stored:false});
+    }
+    frames.push({...frames.at(-1),phase:'store',stored:true});
+    return frames;
+  }
+  function additionTrace(a,b,width=4){
+    let carry=0,result=0;
+    const frames=[{column:-1,carryIn:0,carryOut:0,result:0,complete:false}];
+    for(let column=0;column<width;column++){
+      const carryIn=carry,left=(a>>column)&1,right=(b>>column)&1,total=left+right+carryIn;
+      carry=total>>1;result|=(total&1)<<column;
+      frames.push({column,left,right,carryIn,carryOut:carry,result:result+(column===width-1?carry*2**width:0),complete:column===width-1});
+    }
+    return frames;
+  }
+  const multiplicationPartials=(a,b,width=4)=>Array.from({length:width},(_,i)=>((b>>i)&1)*a*2**i);
+  globalThis.HardwareLesson={registerTrace,additionTrace,multiplicationPartials};
+})();
+
+"use strict";
+(() => {
   const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
   const slides=$$('.slide');
   const paper='https://doi.org/10.1038/s41586-022-05172-4';
@@ -425,10 +547,51 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
   const evolveBlog='https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/';
   const notes=[
   {
-    "text": "开场可以问：同一道矩阵乘法，答案已经确定，计算过程还有没有改进空间？\n今天从大家熟悉的行乘列出发，介绍经典算法、GPU 的执行方式，以及 AI 参与算法发现的例子。封面上的 64、49、47 都是后面同一道 4×4 题目所需的标量乘法次数。47 次有模 2 条件，后面单独解释。",
+    "text": "开场可以问：同一道矩阵乘法，答案已经确定，计算过程还有没有改进空间？\n今天先用五页解释寄存器、加法电路、GPU 并行和数据搬运，再从行乘列进入经典算法与 AI 发现算法。封面上的 64、49、47 都是后面同一道 4×4 题目所需的标量乘法次数。47 次有模 2 条件，后面单独解释。",
     "action": "约15秒介绍主题后翻页。",
     "sources": [
       "https://doi.org/10.1038/s41586-022-05172-4"
+    ]
+  },
+  {
+    "text": "先用仓库、小格子、工具三个角色建立直觉。内存或 GPU 显存保存矩阵；寄存器是处理器内部容量很小、靠近运算单元的存储；实际加法和乘法由运算单元执行。寄存器本身不执行算术。\n动画沿用后面同一组 4×4 的 A 与 B，只跟踪 C11。累加寄存器 S 从零开始，每次把 A 第一行与 B 第一列的一对元素读进 Ra、Rb，计算乘积并加到 S，四对完成后把 3 写回 C11。这是教学数据路径，实际机器可能融合乘加，内存访问还会经过缓存等层次。\n缓存、GPU 共享内存和寄存器都是不同的存储资源。寄存器通常供线程保存正在用的局部数据，共享内存供线程组协作；本图省略这些中间层，不暗示寄存器容量无限。",
+    "action": "先点两下，分别解释取数与运算；继续到第九步，指出最后才把 C11 写回。",
+    "sources": [
+      "https://docs.nvidia.com/cuda/archive/13.0.1/cuda-c-best-practices-guide/index.html#registers",
+      "https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html"
+    ]
+  },
+  {
+    "text": "电脑用二进制表示数。这里放大一个标量的四位整数电路，矩阵尺寸仍统一为 4×4。十进制 3 写成 0011。加法从最低位开始：1+1 得到二进制 10，当前位写 0，向下一位进 1；下一位 1+1+1 得到 11，写 1 再进 1；最终得到 00110，即 6。\n乘法要产生部分积。0011 乘 0011 的四行分别是 00000011、00000110、00000000、00000000；左移一位相当于乘以 2，相加得到 00001001，即 9。右侧动画逐行展开是讲解顺序，不是实际乘法器必须按四个时钟周期运行。现代乘法器可以同时生成部分积，并用树形电路合并。\n在同样位宽与相近实现目标下，通用整数乘法通常需要比加法更多电路资源。减法可以通过补码变成 x 加上 y 的按位取反再加 1，因此加法器是基础构件。不能由此推断每种芯片上的每种加法都比其他操作快，尤其浮点加法还涉及对齐、规格化和舍入。",
+    "action": "推进五步，指出进位、部分积、移位、最终合并。强调动画不是硬件测速。",
+    "sources": [
+      "https://homepage.cs.uiowa.edu/~dwjones/assem/summer18/notes/09muldiv.shtml",
+      "https://courses.csail.mit.edu/6.896/spring04/handouts/arithmetic-ckts.pdf"
+    ]
+  },
+  {
+    "text": "继续使用 4×4 输出的 16 个格子作为任务。每格需要计算一组行乘列，这 16 个输出可以分工。一个小组逐格做需要 16 轮，四组同时做理想情况下需要四轮。\n这是等耗时独立任务的教学模型，没有统计调度、通信和数据访问，不能当作 CPU 与 GPU 的真实测速。CPU 也可以并行。GPU 的收益需要合适的任务规模与分工方式。",
+    "action": "播放后，在右边四轮完成时暂停，指出任务格子是 C11 到 C44。",
+    "sources": [
+      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/",
+      "https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html"
+    ]
+  },
+  {
+    "text": "4×4 的 A 有 16 个元素。计算 A 乘 B 时，A 的每个元素需要参与四个输出列，所以会被使用四次。\n如果每次使用都从远处取，读取 A 共 64 趟。如果先将 A 的 16 个元素拿到手边，并且容量足够，就可以重复使用，只读取 16 趟。这里仅统计 A，不包括 B、输出和其他开销。\nFlashAttention 使用分块减少显存与片上存储之间的读写，但这张 4×4 教学图不是该论文的实测性能。\n片上存储包含寄存器和共享内存等不同资源；这里只表达从显存暂存后复用的原则，不给它们相同容量或访问特性。",
+    "action": "播放搬运。观察右边在 16 趟停止，而左边继续到 64。",
+    "sources": [
+      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/",
+      "https://arxiv.org/abs/2205.14135"
+    ]
+  },
+  {
+    "text": "现在区分三个层面。第一，电路层：整数乘法通常形成和合并多组部分积，所以同位宽下比整数加法需要更多电路。第二，指令层：现代芯片用专用乘法器、流水线、向量单元等实现很高吞吐量。NVIDIA 官方表将多种架构的浮点加法、乘法、乘加列在同一吞吐量项中，不能声称标量乘法固定比加法慢十倍。吞吐量表示一段时间内可完成多少操作，延迟表示单次结果要等多久，两者不同。\nFMA 把 a×b+S 融合为一条指令并只做一次最终舍入；Tensor Core 提供专用矩阵乘加路径。第三，存储层：读写、中间结果和寄存器占用都会影响实际表现。因此后面以加减法换乘法是一种算法上的取舍，是否提速必须结合规模、精度、硬件和实测。更大矩阵里，一次块乘法本身包含很多标量操作，减少它更有研究价值。",
+    "action": "用一句话过渡：先理解机器成本，再看 Strassen 怎样通过加减法复用乘积。",
+    "sources": [
+      "https://docs.nvidia.com/cuda/archive/12.8.0/cuda-c-programming-guide/index.html#arithmetic-instructions",
+      "https://docs.nvidia.com/cuda/archive/13.0.1/cuda-c-best-practices-guide/index.html#registers",
+      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"
     ]
   },
   {
@@ -503,7 +666,7 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
     ]
   },
   {
-    "text": "这一页仍计算上一页的 4×4 乘积。Strassen 把整张矩阵切成四个内部块。外层做七组块乘法，每组再递归为七次标量乘法，所以总计 49 次。内部块只是拆解步骤，没有换成另一道输入题。\n算法先用加减法组合输入，再复用中间乘积来还原输出。右边显示当前乘积贡献的累计结果，最后必须与上一页完全一致。\n经典递归到标量的实现需要 198 次加减法：外层预处理 40 次、七组内部计算共 126 次、外层合并 32 次。动画将乘积贡献展开显示，198 指经典递归执行的计数，不是逐项展开后重新计算所有线性组合的计数。",
+    "text": "这一页仍计算前面直接算法的同一个 4×4 乘积。Strassen 把整张矩阵切成四个内部块。外层做七组块乘法，每组再递归为七次标量乘法，所以总计 49 次。内部块只是拆解步骤，没有换成另一道输入题。\n算法先用加减法组合输入，再复用中间乘积来还原输出。右边显示当前乘积贡献的累计结果，最后必须与前面的直接算法完全一致。\n经典递归到标量的实现需要 198 次加减法：外层预处理 40 次、七组内部计算共 126 次、外层合并 32 次。动画将乘积贡献展开显示，198 指经典递归执行的计数，不是逐项展开后重新计算所有线性组合的计数。",
     "action": "单步观察组号和输出贡献，然后看完整结果。强调减少乘法有增加加法的代价。",
     "sources": [
       "https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html",
@@ -518,22 +681,6 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
       "https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html",
       "https://cs-web.bu.edu/faculty/homer/630f21/hw/hw1-ans.pdf",
       "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"
-    ]
-  },
-  {
-    "text": "继续使用 4×4 输出的 16 个格子作为任务。每格需要计算一组行乘列，这 16 个输出可以分工。一个小组逐格做需要 16 轮，四组同时做理想情况下需要四轮。\n这是等耗时独立任务的教学模型，没有统计调度、通信和数据访问，不能当作 CPU 与 GPU 的真实测速。CPU 也可以并行。GPU 的收益需要合适的任务规模与分工方式。",
-    "action": "播放后，在右边四轮完成时暂停，指出任务格子是 C11 到 C44。",
-    "sources": [
-      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/",
-      "https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html"
-    ]
-  },
-  {
-    "text": "4×4 的 A 有 16 个元素。计算 A 乘 B 时，A 的每个元素需要参与四个输出列，所以会被使用四次。\n如果每次使用都从远处取，读取 A 共 64 趟。如果先将 A 的 16 个元素拿到手边，并且容量足够，就可以重复使用，只读取 16 趟。这里仅统计 A，不包括 B、输出和其他开销。\nFlashAttention 使用分块减少显存与片上存储之间的读写，但这张 4×4 教学图不是该论文的实测性能。",
-    "action": "播放搬运。观察右边在 16 趟停止，而左边继续到 64。",
-    "sources": [
-      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/",
-      "https://arxiv.org/abs/2205.14135"
     ]
   },
   {
@@ -606,7 +753,10 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
       "https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html",
       "https://arxiv.org/abs/2205.14135",
       "https://arxiv.org/abs/2506.13131",
-      "https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/"
+      "https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/",
+      "https://homepage.cs.uiowa.edu/~dwjones/assem/summer18/notes/09muldiv.shtml",
+      "https://docs.nvidia.com/cuda/archive/13.0.1/cuda-c-best-practices-guide/index.html#registers",
+      "https://docs.nvidia.com/cuda/archive/12.8.0/cuda-c-programming-guide/index.html#arithmetic-instructions"
     ]
   }
 ];
@@ -631,6 +781,33 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
   const sampleA=[1,0,1,1,0,1,1,0,1,1,0,1,0,0,1,1];
   const sampleB=[1,1,0,1,0,1,1,0,1,0,1,1,1,0,0,1];
   const sampleC=math.multiplyOrdinary(sampleA,sampleB);
+  const hardware=globalThis.HardwareLesson;
+  $('#hardware-a').innerHTML=cells(sampleA);$('#hardware-b').innerHTML=cells(sampleB);
+  const registerFrames=hardware.registerTrace(sampleA,sampleB);
+  demo('register',9,n=>{
+    const frame=registerFrames[n],active=n>0&&n<9;
+    $$('#hardware-a .cell').forEach((cell,i)=>cell.classList.toggle('hardware-lit',active&&i===frame.k));
+    $$('#hardware-b .cell').forEach((cell,i)=>cell.classList.toggle('hardware-lit',active&&i===frame.k*4));
+    $('#register-a').textContent=frame.left??'?';$('#register-b').textContent=frame.right??'?';
+    $('#register-sum').textContent=frame.sum;$('#register-output').textContent=frame.stored?frame.sum:'?';
+    $('#register-operation').textContent=frame.phase==='compute'?`${frame.left} × ${frame.right} → S`:frame.phase==='load'?'数据已就位':frame.stored?'四对元素已累加':'等待取数';
+    $('#register-progress').textContent=`${n} / 9 步`;
+    for(const [id,lit] of [['hw-memory',frame.phase==='load'],['hw-load-arrow',frame.phase==='load'],['hw-registers',frame.phase==='load'],['hw-alu',frame.phase==='compute'],['hw-accumulator',frame.phase==='compute'],['hw-store-arrow',frame.stored],['hw-output',frame.stored]])$('#'+id).classList.toggle('hardware-active',lit);
+    $('#register-caption').textContent=frame.phase==='ready'?'先让 S = 0，再依次读取四对元素。寄存器负责存，运算单元负责算。':frame.phase==='load'?`第 ${frame.k+1} 对：把 A₁${frame.k+1} = ${frame.left}、B${frame.k+1}₁ = ${frame.right} 读入寄存器。`:frame.phase==='compute'?`运算单元计算 ${frame.left} × ${frame.right} = ${frame.product}，累加后 S = ${frame.sum}。`: `四对元素处理完毕，把寄存器里的 ${frame.sum} 写回 C₁₁。其他 15 格也可按同样规则计算。`;
+  },1100);
+  const addFrames=hardware.additionTrace(3,3,4),partials=hardware.multiplicationPartials(3,3,4);
+  const bitRow=(label,values,current=-1,extra='')=>`<span class="bit-row-label">${label}</span>${values.map((v,i)=>`<b class="bit-digit ${i===current?'current-bit':''} ${extra}">${v}</b>`).join('')}`;
+  demo('binary',5,n=>{
+    const progress=Math.min(n,4),frame=addFrames[progress],column=progress?4-frame.column:-1;
+    const carryValues=Array.from({length:5},(_,i)=>{const bit=4-i;if(bit===0)return '0';return bit<=progress?addFrames[bit].carryOut:'·';});
+    const resultValues=Array.from({length:5},(_,i)=>{const bit=4-i;return bit<progress||(progress===4&&bit===4)?(frame.result>>bit)&1:'?';});
+    $('#adder-table').innerHTML=bitRow('位权',[16,8,4,2,1],-1,'bit-weight')+bitRow('进位',carryValues,column,'carry-bit')+bitRow('输入 3','00011'.split(''),column)+bitRow('+ 输入 3','00011'.split(''),column)+bitRow('结果',resultValues,column,'sum-bit');
+    $('#adder-detail').textContent=progress?`位权 ${2**frame.column}：${frame.left} + ${frame.right} + 进位 ${frame.carryIn} = ${frame.left+frame.right+frame.carryIn}；本位写 ${(frame.result>>frame.column)&1}，向左进 ${frame.carryOut}。`:'最右位：1 + 1 = 二进制 10，要向左进 1。';
+    $('#adder-answer').textContent=progress===4?'00110₂ = 6₁₀':'结果：'+resultValues.join('');
+    $('#partial-table').innerHTML=`<div class="partial-header"><span>部分积</span><b>0011 × 0011</b></div>`+partials.map((v,i)=>`<div class="partial-row ${i<n?'partial-visible':''} ${i===n-1?'partial-current':''}"><span>第 ${i+1} 位 · 移 ${i} 位</span><b>${v.toString(2).padStart(8,'0')}</b></div>`).join('');
+    $('#multiplier-detail').textContent=n===5?'把四行部分积相加：3 + 6 + 0 + 0 = 9。':n?`乘数第 ${n} 位为 ${(3>>(n-1))&1}，产生第 ${n} 行部分积。`:'乘数的某一位为 1，就取被乘数；为 0，就取 0。';
+    $('#multiplier-answer').textContent=n===5?'00001001₂ = 9₁₀':'结果：????????';
+  },1400);
   const lesson=globalThis.StrassenLesson;
   function partitionMarkup(values,labels){
     return labels.map((label,q)=>`<div class="partition-piece piece-${q}"><span>${label}</span><div>${Array.from({length:4},(_,i)=>{const row=Math.floor(q/2)*2+Math.floor(i/2),col=(q%2)*2+i%2;return `<b>${values[row*4+col]}</b>`;}).join('')}</div></div>`).join('');
