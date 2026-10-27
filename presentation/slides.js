@@ -10,23 +10,192 @@
   const evolve='https://arxiv.org/abs/2506.13131';
   const evolveBlog='https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/';
   const notes=[
-    {text:'开场可以问：同一道矩阵乘法，答案已经确定，计算过程还有没有改进空间？\n今天从大家熟悉的行乘列出发，介绍经典算法、GPU 的执行方式，以及 AI 参与算法发现的例子。封面上的 64、49、47 都是后面同一道 4×4 题目所需的标量乘法次数。47 次有模 2 条件，后面单独解释。',action:'停留约 30 秒，介绍主题后翻页。',sources:[paper]},
-    {text:'矩阵可以表示图像中的像素、图形中的坐标，也可以表示神经网络的输入和权重。科学计算还经常需要求解线性方程组。\n这里的关键是：矩阵计算属于基础操作，会在许多任务中反复出现。因此，一个底层操作的改进可能影响很多上层应用。后面会区分数学上少做运算和机器实际跑得快。',action:'用听众熟悉的图像或神经网络举一个例子即可。',sources:[paper,nvidia]},
-    {"text":"全场矩阵案例统一使用 4×4。这里 A 和 B 都只含 0 和 1，但这一页先按普通算术相乘，不取模。第一行与第一列计算为 1×1+0×0+1×1+1×1=3。四个乘积只需要三次加法合并。\n输出有 16 格，每格 4 次乘法、3 次加法，所以总计 64 次乘法和 48 次加法。后面 Strassen 使用同一组输入并还原同一结果。再往后改为模 2 运算时，规则变化会明确说明。","action":"先单步五下，解释左上角的四次乘法与三次加法。随后播放，或点看完整结果。","sources":["https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"]},
-    {"text":"这一页仍计算上一页的 4×4 乘积。Strassen 把整张矩阵切成四个内部块。外层做七组块乘法，每组再递归为七次标量乘法，所以总计 49 次。内部块只是拆解步骤，没有换成另一道输入题。\n算法先用加减法组合输入，再复用中间乘积来还原输出。右边显示当前乘积贡献的累计结果，最后必须与上一页完全一致。\n经典递归到标量的实现需要 198 次加减法：外层预处理 40 次、七组内部计算共 126 次、外层合并 32 次。动画将乘积贡献展开显示，198 指经典递归执行的计数，不是逐项展开后重新计算所有线性组合的计数。","action":"单步观察组号和输出贡献，然后看完整结果。强调减少乘法有增加加法的代价。","sources":["https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html","https://cs-web.bu.edu/faculty/homer/630f21/hw/hw1-ans.pdf","https://doi.org/10.1038/s41586-022-05172-4"]},
-    {"text":"为什么要增加加法？因为可以用加减法先组合输入，让一个中间乘积服务多个输出，从而少做一些乘法。这里仍以同一 4×4 为例，直接法为 64 乘和 48 加，经典 Strassen 为 49 乘和 198 加减。\n它省下 15 次乘法，但多了 150 次加减法。若假设每次乘法与加法成本相同，直接法 112 单位、Strassen 247 单位，优化并不划算。若假设乘法成本为加法的 10 倍，两者恰好打平。乘法成本为 20 时，直接法 1328、Strassen 1178 单位。\n这些是教学成本单位，不是现代 CPU 或 GPU 的实测结果，也不表示标量乘法总比加法贵。块乘法内部包含很多标量运算，矩阵规模增长时，减少块乘法可能更有价值。真实效果还要计入访存、融合指令和数值误差。","action":"依次点成本 1、10、20，让听众看到取舍。提问：更少的乘法一定代表更快吗？","sources":["https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html","https://cs-web.bu.edu/faculty/homer/630f21/hw/hw1-ans.pdf","https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"]},
-    {"text":"继续使用 4×4 输出的 16 个格子作为任务。每格需要计算一组行乘列，这 16 个输出可以分工。一个小组逐格做需要 16 轮，四组同时做理想情况下需要四轮。\n这是等耗时独立任务的教学模型，没有统计调度、通信和数据访问，不能当作 CPU 与 GPU 的真实测速。CPU 也可以并行。GPU 的收益需要合适的任务规模与分工方式。","action":"播放后，在右边四轮完成时暂停，指出任务格子是 C11 到 C44。","sources":["https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/","https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html"]},
-    {"text":"4×4 的 A 有 16 个元素。计算 A 乘 B 时，A 的每个元素需要参与四个输出列，所以会被使用四次。\n如果每次使用都从远处取，读取 A 共 64 趟。如果先将 A 的 16 个元素拿到手边，并且容量足够，就可以重复使用，只读取 16 趟。这里仅统计 A，不包括 B、输出和其他开销。\nFlashAttention 使用分块减少显存与片上存储之间的读写，但这张 4×4 教学图不是该论文的实测性能。","action":"播放搬运。观察右边在 16 趟停止，而左边继续到 64。","sources":["https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/","https://arxiv.org/abs/2205.14135"]},
-    {text:'前面的 Strassen 是人设计的算法。AlphaTensor 尝试用强化学习帮助搜索新的矩阵乘法算法，论文发表于 2022 年 Nature。\n寻找算法时，需要决定怎样线性组合输入、让组合后的数相乘，以及把中间乘积加到哪些输出。最终必须与矩阵乘法完全一致，同时希望乘法更少。可以把它理解成：神经网络判断哪些动作更有希望，树搜索往前探索，再用反馈不断改进选择。发现出来的是适用范围内通用的计算规则。',action:'按从左到右的顺序解释三步，不需要介绍寄存器或神经网络结构。',sources:[paper]},
-    {text:'在比较 47 次方案前，需要统一运算规则。模 2 只保留除以 2 的余数，结果是 0 或 1。例如 1+1=2，2 除以 2 的余数是 0，所以模 2 中写成 1+1=0。\nAlphaTensor 的 4×4、47 次结果属于这个规则。它不能直接拿来计算任意实数 4×4 矩阵。接下来三种算法都使用相同的模 2 规则，因此最终答案可以公平比较。',action:'可以问听众 1+1+1 在模 2 下是多少，答案是 1。',sources:[paper]},
-    {text:'这是同一道 4×4 题目，三列都使用相同的输入 A 和 B。紫色与绿色标出本步从 A 和 B 选取的数字，橙色标出本步贡献到哪些输出。每拍展示一次标量乘法。\n直接算法按行乘列，逐项累加。Strassen 对输入进行分块组合，用两层递归完成 49 次乘法。AI 列实际使用作者公开的 47 项模 2 分解，将若干输入先按模 2 相加，再相乘，并把结果复用到不同输出。\n动画到 47 步时 AI 路径结束，到 49 步时 Strassen 结束，到 64 步时直接算法结束。最后三种结果必须一致。加法、搬运与硬件开销没有按时间计入，所以不能把动画的结束先后当成实测运行速度。',action:'先单步两三次，解释输入高亮与输出贡献。再选快速播放到终点。可用范围菜单单独演示 AI 路径，或换一道题核对结果。建议留 3 分钟。',sources:[paper,'https://github.com/google-deepmind/alphatensor/tree/'+globalThis.ALPHATENSOR_47.commit+'/algorithms']},
-    {"text":"这一页验证作者公开的 4×4、47 次模 2 方案。输出 C 有 16 格，每格可能涉及 A 的 16 个元素与 B 的 16 个元素之间的 256 种乘积关系，所以整个恒等式有 4096 个系数。\n我们把每个输出的 256 个系数压缩成一个统计数，表示还有多少条关系未吻合。初始每格需要四项，16 格共 64 条。逐步加入公开的 47 个组合乘积后，所有 4096 个系数必须吻合。中途关系数可能增加，因为新的贡献还需要被后面的乘积抵消。\n最终全部归零，说明这个恒等式对适用范围内所有输入成立。这是在验证一条已知路径，不是在浏览器训练或运行 AlphaTensor 搜索。","action":"单步一次，解释关系计数可以增加。然后播放或看验证终点，确认总数归零。","sources":["https://doi.org/10.1038/s41586-022-05172-4"]},
-    {"text":"表里统一为 A、B、C 都是 4×4，并统一采用模 2 运算。直接算法需要 64 次乘法，Strassen 两层递归需要 49 次，AlphaTensor 的公开方案需要 47 次。\n这里比较乘法次数，同时保持输入尺寸与运算规则一致。47 次的结果不能直接套到任意普通实数矩阵。加法和访存没有包含在这列数字里，实际速度仍然需要测试。","action":"提醒听众检查表头与条件，避免只记住 47 这个数字。","sources":["https://doi.org/10.1038/s41586-022-05172-4"]},
-    {"text":"AlphaEvolve 在 2025 年把大语言模型提出代码、自动评估与进化搜索结合起来。这里仍只看 4×4 矩阵：团队找到复数设定下 48 次标量乘法的方案，改进了该设定的 49 次基线。\nAlphaTensor 的 47 次方案属于模 2，AlphaEvolve 的 48 次属于复数。两种运算规则不同，不能仅凭 47 小于 48 就判断哪个成果更好。","action":"先指左边的复数条件，再对照右边的模 2 条件。","sources":["https://arxiv.org/abs/2506.13131","https://doi.org/10.1038/s41586-022-05172-4"]},
-    {"text":"为什么研究者愿意用更多矩阵加法换取更少矩阵乘法？用 4×4 就能看到差别：矩阵相加逐格做，一共 16 次标量加法；直接矩阵相乘需要 64 次标量乘法和 48 次加法。一个块乘法内部包含整组行乘列，工作量比一次块相加更多。\n因此减少某些块乘法、用较多块加法做输入组合与结果复用，可能值得。可是经典 Strassen 在这个小尺寸上共需要 198 次加减法，若按等成本计数，反而多做了工作。\n现代硬件可能融合乘加，也会受数据搬运、并行利用率和数值误差影响。应分别说明数学上的运算计数和工程上的实测时间。","action":"把第 5 页的成本模型和这里的块计算逻辑联系起来。","sources":["https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html","https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"]},
-    {text:'回到开场问题：同一道计算题，即使答案固定，计算路径仍然可能改进。Strassen 和 AlphaTensor 展示了重新组合步骤来减少乘法，GPU 展示并行执行，FlashAttention 展示减少数据搬运。\n今天最重要的结论是，AI 已经可以参与基础算法的发现与优化，而评价一种方法还需要明确适用条件和衡量标准。可以在这一页接受提问。',action:'总结后停顿，邀请听众讨论怎样定义计算方法更好。',sources:[paper,flash]},
-    {text:'这些是本次演讲的主要来源，均为原论文或官方资料。可点击标题打开原文。AlphaTensor 47 次方案使用作者开源仓库的数据，来源提交版本及 Apache 2.0 许可已嵌入 HTML。\n如果听众希望继续阅读，先看 AlphaTensor 团队的图文介绍，再读原论文和 NVIDIA 矩阵乘法指南。',action:'参考资料页可以留在屏幕上，便于问答时查阅。',sources:[paper,strassenPaper,nvidia,gpuSource,flash,evolve,evolveBlog]}
-  ];
+  {
+    "text": "开场可以问：同一道矩阵乘法，答案已经确定，计算过程还有没有改进空间？\n今天从大家熟悉的行乘列出发，介绍经典算法、GPU 的执行方式，以及 AI 参与算法发现的例子。封面上的 64、49、47 都是后面同一道 4×4 题目所需的标量乘法次数。47 次有模 2 条件，后面单独解释。",
+    "action": "约15秒介绍主题后翻页。",
+    "sources": [
+      "https://doi.org/10.1038/s41586-022-05172-4"
+    ]
+  },
+  {
+    "text": "矩阵可以表示图像中的像素、图形中的坐标，也可以表示神经网络的输入和权重。科学计算还经常需要求解线性方程组。\n这里的关键是：矩阵计算属于基础操作，会在许多任务中反复出现。因此，一个底层操作的改进可能影响很多上层应用。后面会区分数学上少做运算和机器实际跑得快。",
+    "action": "用听众熟悉的图像或神经网络举一个例子即可。",
+    "sources": [
+      "https://doi.org/10.1038/s41586-022-05172-4",
+      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"
+    ]
+  },
+  {
+    "text": "全场矩阵案例统一使用 4×4。这里 A 和 B 都只含 0 和 1，但这一页先按普通算术相乘，不取模。第一行与第一列计算为 1×1+0×0+1×1+1×1=3。四个乘积只需要三次加法合并。\n输出有 16 格，每格 4 次乘法、3 次加法，所以总计 64 次乘法和 48 次加法。后面 Strassen 使用同一组输入并还原同一结果。再往后改为模 2 运算时，规则变化会明确说明。",
+    "action": "先单步五下，解释左上角的四次乘法与三次加法。随后播放，或点看完整结果。",
+    "sources": [
+      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"
+    ]
+  },
+  {
+    "text": "先定义符号，再讲算法。我们没有换题，仍然使用前面的 4×4 输入 A 与 B。把 A 的左上、右上、左下、右下四块分别命名为 a、b、c、d，把 B 的四块命名为 e、f、g、h。每个字母代表一个内部的 2×2 矩阵块。\n因此 ae 不是两个单独数字相乘，而是两个块相乘。把块看成整体以后，普通的行乘列规则仍然成立。接下来的所有公式都在这一组记号下展开。",
+    "action": "依次指出 a、b、c、d 的位置，再指出 e、f、g、h。提醒听众字母代表块。",
+    "sources": [
+      "https://link.springer.com/article/10.1007/BF02165411",
+      "https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html"
+    ]
+  },
+  {
+    "text": "输出 C 也分为四块，分别叫 r、s、t、u，避免把块的编号和单个格子的编号混淆。r 用 A 上面两个块与 B 左边两个块相乘后相加，得到 ae+bg。其余同理，s=af+bh，t=ce+dg，u=cf+dh。\n这里总共出现八次块乘法。每次内部块乘法如果继续直接算，需要八次标量乘法，所以总数仍是 64 次，与前面的逐格计算一致。这个页面建立的是待优化的原始目标。",
+    "action": "先讲 r 的行乘列，再请听众观察其他三行。区分八次块乘法与六十四次标量乘法。",
+    "sources": [
+      "https://link.springer.com/article/10.1007/BF02165411",
+      "https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html"
+    ]
+  },
+  {
+    "text": "构造的思路是让一个乘积覆盖多个输出会用到的项。左上块 r 需要 ae，右下块 u 需要 dh，因此可以尝试 M1=(a+d)(e+h)。用分配律展开得到 ae+ah+de+dh。\n这一次块乘法产生了两处会用到的项，但也带进其他项。M1 不能直接当作任何一个完整输出：r 还缺 bg，而且必须消去 ah、de、dh；u 还缺 cf，而且必须消去 ae、ah、de。我们会为各个输出分别安排补项与抵消。\n这里介绍的是已知 Strassen 构造的动机与验证，不声称这一猜法能唯一推出整个算法。",
+    "action": "逐步展开 M1，再指出 ae 与 dh 的复用价值，以及还没解决的缺项和多余项。",
+    "sources": [
+      "https://link.springer.com/article/10.1007/BF02165411",
+      "https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html"
+    ]
+  },
+  {
+    "text": "这里给出完整的七个中间乘积。每条公式只有一次块乘法，括号内先做加减法。M1 同时包含对角输出会用到的项。M3 与 M5 都涉及 ah，之后相加时能够抵消。M2 与 M4 都涉及 de，也可以抵消。M6 与 M7 则帮助把剩余的对角输出补齐。\n先不要求听众记住七条式子。接下来验证四个输出，便能看见每条式子为什么有用。展开时始终保持左矩阵的块在左、右矩阵的块在右。矩阵乘法一般不能交换顺序。",
+    "action": "至少展开 M1、M3、M5 三条。其他公式可以停留供查看，随后进入验证。",
+    "sources": [
+      "https://link.springer.com/article/10.1007/BF02165411",
+      "https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html"
+    ]
+  },
+  {
+    "text": "先验证最短的两条。s=M3+M5=a(f-h)+(a+b)h，展开后是 af-ah+ah+bh，其中 -ah 与 +ah 抵消，留下 af+bh，恰好是原来右上输出的目标。\nt=M2+M4=(c+d)e+d(g-e)，展开后 ce+de+dg-de，其中 +de 与 -de 抵消，留下 ce+dg，恰好是原来左下输出的目标。\n这说明额外加减法并非无意义的工作，它帮助我们组合可复用的乘积，再去掉多余贡献。",
+    "action": "按下一步依次展示代入、分配律展开和最终抵消。让听众先认出两对相反项。",
+    "sources": [
+      "https://link.springer.com/article/10.1007/BF02165411",
+      "https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html"
+    ]
+  },
+  {
+    "text": "左上块用 r=M1+M4-M5+M7。把每项展开时，注意 -M5 作用于整个乘积，因此展开是 -ah-bh。四行总和包含 ae+ah+de+dh+dg-de-ah-bh+bg+bh-dg-dh。\n依次抵消 ah、de、dh、dg、bh 的正负项，最终只剩 ae+bg，正好等于原来的左上输出。这里重排的是矩阵加法的项，没有把 ae 换成 ea，也没有交换任何乘法顺序。",
+    "action": "逐对抵消。如果时间紧，可自动播放五对，最后指着剩余 ae 与 bg 总结。",
+    "sources": [
+      "https://link.springer.com/article/10.1007/BF02165411",
+      "https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html"
+    ]
+  },
+  {
+    "text": "右下块用 u=M1-M2+M3+M6。展开后，M1 给出 ae+ah+de+dh，-M2 给出 -ce-de，M3 给出 af-ah，M6 给出 ce+cf-ae-af。\n抵消 ae、ah、de、ce、af 五对相反项，剩下 dh+cf。矩阵加法可以交换次序，所以写成 cf+dh，正好是原来的右下目标。至此 r、s、t、u 四个输出都验证了。\n七个乘积可以通过加减法重建完整输出。接下来再把每个内部块递归计算，就能解释 4×4 为什么需要 7×7=49 次标量乘法。",
+    "action": "完成五对抵消后，展示页面底部的四条重建公式，再进入49步数值动画。",
+    "sources": [
+      "https://link.springer.com/article/10.1007/BF02165411",
+      "https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html"
+    ]
+  },
+  {
+    "text": "这一页仍计算上一页的 4×4 乘积。Strassen 把整张矩阵切成四个内部块。外层做七组块乘法，每组再递归为七次标量乘法，所以总计 49 次。内部块只是拆解步骤，没有换成另一道输入题。\n算法先用加减法组合输入，再复用中间乘积来还原输出。右边显示当前乘积贡献的累计结果，最后必须与上一页完全一致。\n经典递归到标量的实现需要 198 次加减法：外层预处理 40 次、七组内部计算共 126 次、外层合并 32 次。动画将乘积贡献展开显示，198 指经典递归执行的计数，不是逐项展开后重新计算所有线性组合的计数。",
+    "action": "单步观察组号和输出贡献，然后看完整结果。强调减少乘法有增加加法的代价。",
+    "sources": [
+      "https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html",
+      "https://cs-web.bu.edu/faculty/homer/630f21/hw/hw1-ans.pdf",
+      "https://doi.org/10.1038/s41586-022-05172-4"
+    ]
+  },
+  {
+    "text": "为什么要增加加法？因为可以用加减法先组合输入，让一个中间乘积服务多个输出，从而少做一些乘法。这里仍以同一 4×4 为例，直接法为 64 乘和 48 加，经典 Strassen 为 49 乘和 198 加减。\n它省下 15 次乘法，但多了 150 次加减法。若假设每次乘法与加法成本相同，直接法 112 单位、Strassen 247 单位，优化并不划算。若假设乘法成本为加法的 10 倍，两者恰好打平。乘法成本为 20 时，直接法 1328、Strassen 1178 单位。\n这些是教学成本单位，不是现代 CPU 或 GPU 的实测结果，也不表示标量乘法总比加法贵。块乘法内部包含很多标量运算，矩阵规模增长时，减少块乘法可能更有价值。真实效果还要计入访存、融合指令和数值误差。",
+    "action": "依次点成本 1、10、20，让听众看到取舍。提问：更少的乘法一定代表更快吗？",
+    "sources": [
+      "https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html",
+      "https://cs-web.bu.edu/faculty/homer/630f21/hw/hw1-ans.pdf",
+      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"
+    ]
+  },
+  {
+    "text": "继续使用 4×4 输出的 16 个格子作为任务。每格需要计算一组行乘列，这 16 个输出可以分工。一个小组逐格做需要 16 轮，四组同时做理想情况下需要四轮。\n这是等耗时独立任务的教学模型，没有统计调度、通信和数据访问，不能当作 CPU 与 GPU 的真实测速。CPU 也可以并行。GPU 的收益需要合适的任务规模与分工方式。",
+    "action": "播放后，在右边四轮完成时暂停，指出任务格子是 C11 到 C44。",
+    "sources": [
+      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/",
+      "https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html"
+    ]
+  },
+  {
+    "text": "4×4 的 A 有 16 个元素。计算 A 乘 B 时，A 的每个元素需要参与四个输出列，所以会被使用四次。\n如果每次使用都从远处取，读取 A 共 64 趟。如果先将 A 的 16 个元素拿到手边，并且容量足够，就可以重复使用，只读取 16 趟。这里仅统计 A，不包括 B、输出和其他开销。\nFlashAttention 使用分块减少显存与片上存储之间的读写，但这张 4×4 教学图不是该论文的实测性能。",
+    "action": "播放搬运。观察右边在 16 趟停止，而左边继续到 64。",
+    "sources": [
+      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/",
+      "https://arxiv.org/abs/2205.14135"
+    ]
+  },
+  {
+    "text": "前面的 Strassen 是人设计的算法。AlphaTensor 尝试用强化学习帮助搜索新的矩阵乘法算法，论文发表于 2022 年 Nature。\n寻找算法时，需要决定怎样线性组合输入、让组合后的数相乘，以及把中间乘积加到哪些输出。最终必须与矩阵乘法完全一致，同时希望乘法更少。可以把它理解成：神经网络判断哪些动作更有希望，树搜索往前探索，再用反馈不断改进选择。发现出来的是适用范围内通用的计算规则。",
+    "action": "按从左到右的顺序解释三步，不需要介绍寄存器或神经网络结构。",
+    "sources": [
+      "https://doi.org/10.1038/s41586-022-05172-4"
+    ]
+  },
+  {
+    "text": "在比较 47 次方案前，需要统一运算规则。模 2 只保留除以 2 的余数，结果是 0 或 1。例如 1+1=2，2 除以 2 的余数是 0，所以模 2 中写成 1+1=0。\nAlphaTensor 的 4×4、47 次结果属于这个规则。它不能直接拿来计算任意实数 4×4 矩阵。接下来三种算法都使用相同的模 2 规则，因此最终答案可以公平比较。",
+    "action": "可以问听众 1+1+1 在模 2 下是多少，答案是 1。",
+    "sources": [
+      "https://doi.org/10.1038/s41586-022-05172-4"
+    ]
+  },
+  {
+    "text": "这是同一道 4×4 题目，三列都使用相同的输入 A 和 B。紫色与绿色标出本步从 A 和 B 选取的数字，橙色标出本步贡献到哪些输出。每拍展示一次标量乘法。\n直接算法按行乘列，逐项累加。Strassen 对输入进行分块组合，用两层递归完成 49 次乘法。AI 列实际使用作者公开的 47 项模 2 分解，将若干输入先按模 2 相加，再相乘，并把结果复用到不同输出。\n动画到 47 步时 AI 路径结束，到 49 步时 Strassen 结束，到 64 步时直接算法结束。最后三种结果必须一致。加法、搬运与硬件开销没有按时间计入，所以不能把动画的结束先后当成实测运行速度。",
+    "action": "先单步两三次，解释输入高亮与输出贡献，再快速播放到终点。建议留约两分半。",
+    "sources": [
+      "https://doi.org/10.1038/s41586-022-05172-4",
+      "https://github.com/google-deepmind/alphatensor/tree/1949163da3bef7e3eb268a3ac015fd1c2dbfc767/algorithms"
+    ]
+  },
+  {
+    "text": "这一页验证作者公开的 4×4、47 次模 2 方案。输出 C 有 16 格，每格可能涉及 A 的 16 个元素与 B 的 16 个元素之间的 256 种乘积关系，所以整个恒等式有 4096 个系数。\n我们把每个输出的 256 个系数压缩成一个统计数，表示还有多少条关系未吻合。初始每格需要四项，16 格共 64 条。逐步加入公开的 47 个组合乘积后，所有 4096 个系数必须吻合。中途关系数可能增加，因为新的贡献还需要被后面的乘积抵消。\n最终全部归零，说明这个恒等式对适用范围内所有输入成立。这是在验证一条已知路径，不是在浏览器训练或运行 AlphaTensor 搜索。",
+    "action": "单步一次，解释关系计数可以增加。然后播放或看验证终点，确认总数归零。",
+    "sources": [
+      "https://doi.org/10.1038/s41586-022-05172-4"
+    ]
+  },
+  {
+    "text": "表里统一为 A、B、C 都是 4×4，并统一采用模 2 运算。直接算法需要 64 次乘法，Strassen 两层递归需要 49 次，AlphaTensor 的公开方案需要 47 次。\n这里比较乘法次数，同时保持输入尺寸与运算规则一致。47 次的结果不能直接套到任意普通实数矩阵。加法和访存没有包含在这列数字里，实际速度仍然需要测试。",
+    "action": "提醒听众检查表头与条件，避免只记住 47 这个数字。",
+    "sources": [
+      "https://doi.org/10.1038/s41586-022-05172-4"
+    ]
+  },
+  {
+    "text": "AlphaEvolve 在 2025 年把大语言模型提出代码、自动评估与进化搜索结合起来。这里仍只看 4×4 矩阵：团队找到复数设定下 48 次标量乘法的方案，改进了该设定的 49 次基线。\nAlphaTensor 的 47 次方案属于模 2，AlphaEvolve 的 48 次属于复数。两种运算规则不同，不能仅凭 47 小于 48 就判断哪个成果更好。",
+    "action": "先指左边的复数条件，再对照右边的模 2 条件。",
+    "sources": [
+      "https://arxiv.org/abs/2506.13131",
+      "https://doi.org/10.1038/s41586-022-05172-4"
+    ]
+  },
+  {
+    "text": "为什么研究者愿意用更多矩阵加法换取更少矩阵乘法？用 4×4 就能看到差别：矩阵相加逐格做，一共 16 次标量加法；直接矩阵相乘需要 64 次标量乘法和 48 次加法。一个块乘法内部包含整组行乘列，工作量比一次块相加更多。\n因此减少某些块乘法、用较多块加法做输入组合与结果复用，可能值得。可是经典 Strassen 在这个小尺寸上共需要 198 次加减法，若按等成本计数，反而多做了工作。\n现代硬件可能融合乘加，也会受数据搬运、并行利用率和数值误差影响。应分别说明数学上的运算计数和工程上的实测时间。",
+    "action": "把前面的成本模型与这里的块计算逻辑联系起来。",
+    "sources": [
+      "https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html",
+      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"
+    ]
+  },
+  {
+    "text": "回到开场问题：同一道计算题，即使答案固定，计算路径仍然可能改进。Strassen 和 AlphaTensor 展示了重新组合步骤来减少乘法，GPU 展示并行执行，FlashAttention 展示减少数据搬运。\n今天最重要的结论是，AI 已经可以参与基础算法的发现与优化，而评价一种方法还需要明确适用条件和衡量标准。可以在这一页接受提问。",
+    "action": "总结后停顿，邀请听众讨论怎样定义计算方法更好。",
+    "sources": [
+      "https://doi.org/10.1038/s41586-022-05172-4",
+      "https://arxiv.org/abs/2205.14135"
+    ]
+  },
+  {
+    "text": "这些是本次演讲的主要来源，均为原论文或官方资料。可点击标题打开原文。AlphaTensor 47 次方案使用作者开源仓库的数据，来源提交版本及 Apache 2.0 许可已嵌入 HTML。\n如果听众希望继续阅读，先看 AlphaTensor 团队的图文介绍，再读原论文和 NVIDIA 矩阵乘法指南。",
+    "action": "参考资料页可以留在屏幕上，便于问答时查阅。",
+    "sources": [
+      "https://doi.org/10.1038/s41586-022-05172-4",
+      "https://link.springer.com/article/10.1007/BF02165411",
+      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/",
+      "https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html",
+      "https://arxiv.org/abs/2205.14135",
+      "https://arxiv.org/abs/2506.13131",
+      "https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/"
+    ]
+  }
+];
   let current=0;
   const demos=new Map();
   const cells=(values)=>values.map(v=>`<span class="cell">${v}</span>`).join('');
@@ -48,6 +217,44 @@
   const sampleA=[1,0,1,1,0,1,1,0,1,1,0,1,0,0,1,1];
   const sampleB=[1,1,0,1,0,1,1,0,1,0,1,1,1,0,0,1];
   const sampleC=math.multiplyOrdinary(sampleA,sampleB);
+  const lesson=globalThis.StrassenLesson;
+  function partitionMarkup(values,labels){
+    return labels.map((label,q)=>`<div class="partition-piece piece-${q}"><span>${label}</span><div>${Array.from({length:4},(_,i)=>{const row=Math.floor(q/2)*2+Math.floor(i/2),col=(q%2)*2+i%2;return `<b>${values[row*4+col]}</b>`;}).join('')}</div></div>`).join('');
+  }
+  $('#partition-a').innerHTML=partitionMarkup(sampleA,['a','b','c','d']);
+  $('#partition-b').innerHTML=partitionMarkup(sampleB,['e','f','g','h']);
+  $('#partition-c').innerHTML=partitionMarkup(sampleC,['r','s','t','u']);
+  demo('seed',3,n=>{
+    $('#seed-expansion').classList.toggle('is-revealed',n>=1);$('#seed-targets').classList.toggle('is-revealed',n>=2);
+    $('#seed-caption').textContent=n===0?'点击下一步，用分配律展开。始终保持矩阵乘法的左右顺序。':n===1?'一次块乘法同时产生 ae、ah、de、dh 四项。它们还不能直接当作任何一个完整输出。':n===2?'ae 是 r 需要的项，dh 是 u 需要的项。因此 M₁ 值得在两个输出中复用。':'对每个输出分别补缺项、消去多余项，接下来给出完整的七个乘积构造。';
+  },1500);
+  function formatExpansion(terms){return terms.map(([term,sign],i)=>`${sign<0?'− ':i===0?'':'+ '}${term}`).join(' ');}
+  $('#seven-definitions').innerHTML=lesson.products.map((p,i)=>`<div class="definition-row" data-product="${i}"><b>${p.label}</b><span>= ${p.formula}</span></div>`).join('');
+  demo('definitions',7,n=>{
+    $$('.definition-row').forEach((e,i)=>e.classList.toggle('current',n===i+1));
+    $('#definition-expansion').textContent=n===0?'接下来逐条展开，观察哪些项能相互抵消。':`${lesson.products[n-1].label} = ${formatExpansion(lesson.products[n-1].expansion)}`;
+  },1300);
+  demo('simple-proof',3,n=>{
+    $$('.reveal-simple').forEach(e=>e.classList.toggle('is-revealed',Number(e.dataset.proofLevel)<=n));
+    $('#simple-proof-caption').textContent=n===0?'点击下一步，先代入定义，再展开，最后消去相反项。':n===1?'把 M₂、M₃、M₄、M₅ 的定义代入，暂时不改变任何乘法顺序。':n===2?'分配律展开后，−ah 与 +ah、+de 与 −de 分别抵消。':'留下 s = af + bh、t = ce + dg，正好等于普通分块算法的两个输出。';
+  },1600);
+  for(const name of ['r','u']){
+    const proof=lesson.outputs[name];
+    $(`#proof-${name}-workbench`).innerHTML=proof.combination.map(([index,sign],row)=>{
+      const product=lesson.products[index];
+      return `<div class="contribution-row"><strong>${sign<0?'−':row>0?'+':''}${product.label} =</strong><div>${product.expansion.map(([term,coefficient])=>`<span class="algebra-term" data-term="${term}">${coefficient*sign>0?'+':'−'}${term}</span>`).join('')}</div></div>`;
+    }).join('');
+    demo(`proof-${name}`,5,n=>{
+      const cancelled=proof.cancellations.slice(0,n);
+      $$(`#proof-${name}-workbench .algebra-term`).forEach(e=>e.classList.toggle('cancelled',cancelled.includes(e.dataset.term)));
+      $(`#proof-${name}-pair`).textContent=n===0?'等待第一对':`+${proof.cancellations[n-1]} − ${proof.cancellations[n-1]} = 0`;
+      $(`#proof-${name}-explain`).textContent=n===5?'五对多余项全部抵消，只剩目标公式中的两项。':n===0?'有正项也有负项时，可以按加法把它们放在一起抵消。':`已抵消 ${n} 对额外项。留下的正项与负项还会继续配对消去。`;
+      $(`#proof-${name}-progress`).textContent=`${n} / 5 对`;
+      $(`#proof-${name}-result`).classList.toggle('is-revealed',n===5);
+      if(name==='u')$('#verified-blocks').classList.toggle('is-revealed',n===5);
+    },1400);
+  }
+
   $('#basic-a').innerHTML=cells(sampleA);$('#basic-b').innerHTML=cells(sampleB);$('#basic-c').innerHTML=cells(Array(16).fill('?'));
   const basic=demo('basic',80,n=>{
     const out=n?Math.floor((n-1)/5):0,row=Math.floor(out/4),col=out%4,phase=n?(n-1)%5:0;
