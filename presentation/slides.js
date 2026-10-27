@@ -42,11 +42,12 @@
     ]
   },
   {
-    "text": "电脑用二进制表示数。这里放大一个标量的四位整数电路，矩阵尺寸仍统一为 4×4。十进制 3 写成 0011。加法从最低位开始：1+1 得到二进制 10，当前位写 0，向下一位进 1；下一位 1+1+1 得到 11，写 1 再进 1；最终得到 00110，即 6。\n乘法要产生部分积。0011 乘 0011 的四行分别是 00000011、00000110、00000000、00000000；左移一位相当于乘以 2，相加得到 00001001，即 9。右侧动画逐行展开是讲解顺序，不是实际乘法器必须按四个时钟周期运行。现代乘法器可以同时生成部分积，并用树形电路合并。\n在同样位宽与相近实现目标下，通用整数乘法通常需要比加法更多电路资源。减法可以通过补码变成 x 加上 y 的按位取反再加 1，因此加法器是基础构件。不能由此推断每种芯片上的每种加法都比其他操作快，尤其浮点加法还涉及对齐、规格化和舍入。",
-    "action": "推进五步，指出进位、部分积、移位、最终合并。强调动画不是硬件测速。",
+    "text": "这一页的重点是硬件开销，先不逐位讲二进制算术。寄存器保存输入和结果，运算单元执行加法或乘法。固定同样的四位无符号整数输入，默认都是1111，即15。\n加法15+15=30，完整结果是11110，共五位。一般两个四位整数相加，保留进位最多需要五位。加法电路主要进行求和与进位，数据通路相对简单。\n乘法15×15=225，完整结果是11100001，共八位。普通长乘法展开的四行部分积为00001111、00011110、00111100、01111000，再对齐相加得到结果。一般两个四位整数相乘，完整结果最多需要八位。部分积生成、对齐及合并需要额外电路与内部数据处理。这些数据可在乘法器的线路、压缩网络或内部存储中处理，不代表程序必须额外占用四个寄存器。\n因此，在同位宽和相近设计目标下，通用整数加法通常比乘法需要更少电路资源。这为后面的多做加法、少做乘法建立动机。这里不规定每次乘法固定比加法慢多少倍；动画的播放顺序不表示真实耗时。现代GPU浮点乘加可有相同吞吐量，实际算法效果仍取决于规模、精度、硬件与数据搬运。",
+    "action": "先指出两边输入寄存器相同，再播放部分积与结果位宽。最后用一句话过渡：能否多做较便宜的加法，减少较昂贵的乘法？",
     "sources": [
       "https://homepage.cs.uiowa.edu/~dwjones/assem/summer18/notes/09muldiv.shtml",
-      "https://courses.csail.mit.edu/6.896/spring04/handouts/arithmetic-ckts.pdf"
+      "https://courses.csail.mit.edu/6.896/spring04/handouts/arithmetic-ckts.pdf",
+      "https://docs.nvidia.com/cuda/archive/12.8.0/cuda-c-programming-guide/index.html#arithmetic-instructions"
     ]
   },
   {
@@ -267,18 +268,18 @@
   const sampleB=[1,1,0,1,0,1,1,0,1,0,1,1,1,0,0,1];
   const sampleC=math.multiplyOrdinary(sampleA,sampleB);
   const hardware=globalThis.HardwareLesson;
-  const addFrames=hardware.additionTrace(3,3,4),partials=hardware.multiplicationPartials(3,3,4);
-  const bitRow=(label,values,current=-1,extra='')=>`<span class="bit-row-label">${label}</span>${values.map((v,i)=>`<b class="bit-digit ${i===current?'current-bit':''} ${extra}">${v}</b>`).join('')}`;
+  const costOperand=15,partials=hardware.multiplicationPartials(costOperand,costOperand,4);
+  const additionResult=hardware.additionTrace(costOperand,costOperand,4).at(-1).result;
+  const multiplicationResult=partials.reduce((sum,value)=>sum+value,0);
+  const resultBits=(value,width,ready)=>Array.from({length:width},(_,i)=>`<span class="${ready?'result-ready':''}">${ready?(value>>(width-1-i))&1:'?'}</span>`).join('');
   demo('binary',5,n=>{
-    const progress=Math.min(n,4),frame=addFrames[progress],column=progress?4-frame.column:-1;
-    const carryValues=Array.from({length:5},(_,i)=>{const bit=4-i;if(bit===0)return '0';return bit<=progress?addFrames[bit].carryOut:'·';});
-    const resultValues=Array.from({length:5},(_,i)=>{const bit=4-i;return bit<progress||(progress===4&&bit===4)?(frame.result>>bit)&1:'?';});
-    $('#adder-table').innerHTML=bitRow('位权',[16,8,4,2,1],-1,'bit-weight')+bitRow('进位',carryValues,column,'carry-bit')+bitRow('输入 3','00011'.split(''),column)+bitRow('+ 输入 3','00011'.split(''),column)+bitRow('结果',resultValues,column,'sum-bit');
-    $('#adder-detail').textContent=progress?`位权 ${2**frame.column}：${frame.left} + ${frame.right} + 进位 ${frame.carryIn} = ${frame.left+frame.right+frame.carryIn}；本位写 ${(frame.result>>frame.column)&1}，向左进 ${frame.carryOut}。`:'最右位：1 + 1 = 二进制 10，要向左进 1。';
-    $('#adder-answer').textContent=progress===4?'00110₂ = 6₁₀':'结果：'+resultValues.join('');
-    $('#partial-table').innerHTML=`<div class="partial-header"><span>部分积</span><b>0011 × 0011</b></div>`+partials.map((v,i)=>`<div class="partial-row ${i<n?'partial-visible':''} ${i===n-1?'partial-current':''}"><span>第 ${i+1} 位 · 移 ${i} 位</span><b>${v.toString(2).padStart(8,'0')}</b></div>`).join('');
-    $('#multiplier-detail').textContent=n===5?'把四行部分积相加：3 + 6 + 0 + 0 = 9。':n?`乘数第 ${n} 位为 ${(3>>(n-1))&1}，产生第 ${n} 行部分积。`:'乘数的某一位为 1，就取被乘数；为 0，就取 0。';
-    $('#multiplier-answer').textContent=n===5?'00001001₂ = 9₁₀':'结果：????????';
+    const additionReady=n>=2,multiplicationReady=n===5;
+    $('#cost-adder-unit').classList.toggle('unit-working',n===1);$('#cost-adder-unit').classList.toggle('unit-complete',additionReady);
+    $('#cost-add-bits').innerHTML=resultBits(additionResult,5,additionReady);$('#cost-multiply-bits').innerHTML=resultBits(multiplicationResult,8,multiplicationReady);
+    $('#cost-add-answer').textContent=additionReady?`= ${additionResult}`:'等待结果';$('#cost-multiply-answer').textContent=multiplicationReady?`= ${multiplicationResult}`:'等待结果';
+    $('#partial-table').innerHTML=partials.map((value,i)=>`<div class="partial-row ${i<n?'partial-visible':''} ${i===n-1?'partial-current':''}"><span>部分积 ${i+1} · 移 ${i} 位</span><b>${value.toString(2).padStart(8,'0')}</b></div>`).join('');
+    $('#cost-merge-unit').classList.toggle('merge-active',multiplicationReady);
+    $('#binary-cost-caption').textContent=n===0?'相同四位输入，观察内部处理与结果位宽':n===1?'加法电路求和与进位；乘法开始生成内部部分积':n<5?'乘法还要处理更多部分积与对齐线路；这是结构讲解，不是计时':'乘法需要部分积与合并网络。加法通常开销更小，因此值得研究以加法换乘法。';
   },1400);
   const lesson=globalThis.StrassenLesson;
   function partitionMarkup(values,labels){

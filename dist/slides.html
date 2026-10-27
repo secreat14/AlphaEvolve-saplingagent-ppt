@@ -122,15 +122,6 @@
 .binary-panel{border-top:2px solid var(--line);padding-top:12px;min-height:320px}
 .binary-panel h3{font-size:28px;margin:0 0 10px}
 .binary-panel>p{font-size:20px;color:#8d9a7c;margin:0 0 8px}
-.adder-table{display:grid;grid-template-columns:120px repeat(5,48px);align-items:center;justify-content:center;row-gap:2px;min-height:155px}
-.bit-row-label{font-size:18px;color:#99a58a}
-.bit-digit{font:27px var(--mono);text-align:center;color:#8b84b7;line-height:28px;border-radius:4px;transition:background .2s,color .2s}
-.bit-digit.bit-weight{font-size:17px;color:#a3ae96}
-.bit-digit.carry-bit{font-size:22px;color:#b68d5c}
-.bit-digit.sum-bit{color:var(--purple);background:#ece9fa}
-.bit-digit.current-bit{background:#ddd7fa;color:var(--purple);box-shadow:inset 0 0 0 1px #b2a7e4}
-.binary-step-detail{font-size:19px;color:#8b9a7b;line-height:1.6;min-height:56px;margin-top:8px}
-.binary-answer{font:26px var(--mono);color:var(--purple);margin-top:4px;min-height:32px}
 .partial-header,.partial-row{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:31px;padding:0 10px}
 .partial-header{border-bottom:1px solid var(--line);color:#9aa78c}
 .partial-header>span,.partial-row>span{font-size:17px}
@@ -211,6 +202,42 @@
 .simple-storage-slide .silicon-controls button,.simple-addition-slide .silicon-controls button{padding:11px 15px}
 
 .simple-storage-slide [data-store-bit].selected{color:#baf7ff;border-color:#73d9ed;background:#16465a;box-shadow:0 0 12px #55d2ec25}
+
+/* Equal-width integer arithmetic: make circuit and data costs visible. */
+.hardware-binary-slide h2{font-size:43px;letter-spacing:-1px}
+.hardware-binary-slide .slide-header{margin-bottom:18px}
+.hardware-binary-slide .slide-header>p{font-size:24px}
+.hardware-binary-slide .binary-panel{min-height:350px;padding-top:10px}
+.hardware-binary-slide .binary-panel h3{font-size:28px;margin-bottom:7px}
+.hardware-binary-slide .binary-panel>p{font-size:19px;margin-bottom:13px}
+.arithmetic-operands{display:flex;align-items:center;gap:14px;height:42px}
+.arithmetic-operands>span{font-size:17px;color:#99a58b;margin-right:6px}
+.arithmetic-operands>b{font:26px var(--mono);letter-spacing:7px;padding:6px 10px 6px 16px;color:#8278b8;background:#eeebfa;border:1px solid #d7d1ee;border-radius:5px;font-weight:400}
+.arithmetic-operands>i{font:25px var(--mono);font-style:normal;color:#a0aa94}
+.arithmetic-workspace{height:128px;display:flex;flex-direction:column;justify-content:center;margin:8px 0 12px}
+.arithmetic-adder{border:2px solid #d9dfcd;background:#eef1e5;border-radius:8px;padding:12px 20px;text-align:center;transition:background .25s,border-color .25s}
+.arithmetic-adder>span{font-size:18px;color:#93a27f;display:block;margin-bottom:8px}
+.arithmetic-adder>strong{font-size:26px;font-weight:500;color:#7c8d67;display:block}
+.arithmetic-adder>small{font-size:17px;color:#98a48c;display:block;margin-top:8px}
+.arithmetic-adder.unit-working{border-color:#aca1df;background:#eeeafa;box-shadow:0 0 14px #aaa0dd20}
+.arithmetic-adder.unit-complete{border-color:#b2c69f;background:#e7eedd}
+.cost-merge{font-size:17px;text-align:center;color:#9ea78f;margin-top:4px;border-top:1px solid var(--line);padding:4px 0;transition:background .2s,color .2s}
+.cost-merge.merge-active{color:var(--purple);background:#ece8fa;border-radius:5px}
+.hardware-binary-slide .partial-row{min-height:23px;line-height:22px}
+.hardware-binary-slide .partial-row>b{font-size:20px;line-height:22px;letter-spacing:5px}
+.arithmetic-result{display:flex;align-items:center;gap:12px;min-height:40px}
+.arithmetic-result>span{font-size:17px;color:#99a58b;white-space:nowrap}
+.cost-result-bits{display:flex;gap:5px}
+.cost-result-bits>span{display:grid;place-items:center;width:29px;height:34px;border:1px solid #d5dcc9;border-radius:4px;background:#eef0e7;color:#a0a994;font:23px var(--mono)}
+.cost-result-bits>span.result-ready{background:#e8e3fa;color:#7162bd;border-color:#cbc2ed}
+.arithmetic-result>b{font:20px var(--mono);color:#8174b4;font-weight:400;white-space:nowrap}
+.arithmetic-resource{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:10px;margin-top:12px;align-items:center}
+.arithmetic-resource>b{font-size:21px;font-weight:500;color:#718661}
+.arithmetic-resource>span{font-size:18px;color:#91a07f}
+.hardware-binary-slide .binary-conclusion{font-size:24px;color:var(--purple);margin-top:17px;padding-top:14px}
+.hardware-binary-slide .demo-controls{padding-top:10px;margin-bottom:15px}
+.hardware-binary-slide .demo-controls>span{font-size:17px}
+.hardware-binary-slide .slide-source{font-size:14px}
 </style></head>
 <body>
 <header class="app-bar"><a class="app-brand" href="#slide=1">[·] 矩阵与 AI</a><span class="app-description">20 分钟演讲版</span><div class="app-tools"><button id="overview-button" title="目录 O">目录 <kbd>O</kbd></button><button id="notes-button" aria-pressed="false" title="演讲备注 N">备注 <kbd>N</kbd></button><button id="fullscreen-button" title="全屏 F">全屏 <kbd>F</kbd></button><button id="help-button" aria-label="查看快捷键">?</button></div></header>
@@ -246,12 +273,15 @@
   <div class="slide-source">按位加法与进位的教学动画，不代表真实指令步数；每个加法单元也是晶体管组成的电路。来源：MIT、UC Berkeley 计算机组成课程。</div>
 </section>
 
-<section class="slide hardware-binary-slide" data-title="硬件入门：为什么加法电路更简单" data-seconds="55">
-  <div class="slide-header"><span class="chapter">硬件入门 4 / 7 · 放大一个数的内部计算</span><h2>加法处理进位，乘法还要合并部分积</h2><p>矩阵里的数用二进制存储：例如十进制的 3，写成四位二进制就是 0011</p></div>
-  <div class="binary-comparison"><div class="binary-panel"><h3>加法：3 + 3 = 6</h3><p>从右向左，每位加上两个输入和进位</p><div class="adder-table" id="adder-table"></div><div class="binary-step-detail" id="adder-detail">最右位：1 + 1 = 二进制 10，要向左进 1。</div><div class="binary-answer" id="adder-answer">结果：?????</div></div><div class="binary-panel"><h3>乘法：3 × 3 = 9</h3><p>逐位产生部分积，移位后再相加</p><div class="partial-table" id="partial-table"></div><div class="binary-step-detail" id="multiplier-detail">乘数的某一位为 1，就取被乘数；为 0，就取 0。</div><div class="binary-answer" id="multiplier-answer">结果：????????</div></div></div>
-  <p class="binary-conclusion">同样位宽下，通用整数乘法通常需要更多组合与加法电路；减法也可用补码交给加法器。</p>
-  <div class="demo-controls"><button data-play="binary">播放电路思路</button><button data-step="binary">下一步</button><button data-reset="binary">重置</button><span>按位展开是解释原理，动画步数不代表时钟周期</span></div>
-  <div class="slide-source">这里的“四位”是单个数的位宽，矩阵案例始终为 4×4。现代乘法器会并行合并部分积。来源：大学计算机组成课程讲义。</div>
+<section class="slide hardware-binary-slide" data-title="硬件入门：为什么加法开销通常更小" data-seconds="55">
+  <div class="slide-header"><span class="chapter">硬件入门 4 / 7 · 同位宽整数的硬件开销</span><h2>加法硬件开销通常更小，乘法要处理更多中间数据</h2><p>寄存器负责存数，运算单元负责计算。乘法需要更复杂的内部数据通路。</p></div>
+  <div class="binary-comparison">
+    <div class="binary-panel"><h3>加法：15 + 15</h3><p>两个输入 → 求和与进位 → 保存结果</p><div class="arithmetic-operands"><span>输入寄存器</span><b>1111</b><i>+</i><b>1111</b></div><div class="arithmetic-workspace"><div class="arithmetic-adder" id="cost-adder-unit"><span>加法电路</span><strong>逐位求和 + 进位</strong><small>直接合成一组结果位</small></div></div><div class="arithmetic-result"><span>结果存储</span><div id="cost-add-bits" class="cost-result-bits"></div><b id="cost-add-answer">等待结果</b></div><div class="arithmetic-resource"><b>最多 5 位结果</b><span>加法电路通常更简单</span></div></div>
+    <div class="binary-panel"><h3>乘法：15 × 15</h3><p>两个输入 → 多行部分积 → 对齐、合并 → 保存结果</p><div class="arithmetic-operands"><span>输入寄存器</span><b>1111</b><i>×</i><b>1111</b></div><div class="arithmetic-workspace"><div class="partial-table" id="partial-table"></div><div class="cost-merge" id="cost-merge-unit">↓ 移位对齐，再用加法电路合并</div></div><div class="arithmetic-result"><span>结果存储</span><div id="cost-multiply-bits" class="cost-result-bits"></div><b id="cost-multiply-answer">等待结果</b></div><div class="arithmetic-resource"><b>最多 8 位结果</b><span>部分积与合并网络增加电路开销</span></div></div>
+  </div>
+  <p class="binary-conclusion">同位宽下，整数加法通常使用更少电路资源 → 可以尝试用加法换取更少的乘法</p>
+  <div class="demo-controls"><button data-play="binary">播放开销对比</button><button data-step="binary">下一步</button><button data-reset="binary">重置</button><span id="binary-cost-caption" aria-live="polite">相同四位输入，观察内部处理与结果位宽</span></div>
+  <div class="slide-source">部分积是内部数据示意，不代表必须占用四个程序寄存器。动画不表示耗时比；现代 GPU 浮点乘加还需看专用硬件。来源：大学讲义、NVIDIA。</div>
 </section>
 
 <section class="slide" data-title="GPU 的并行计算" data-seconds="35">
@@ -710,11 +740,12 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
     ]
   },
   {
-    "text": "电脑用二进制表示数。这里放大一个标量的四位整数电路，矩阵尺寸仍统一为 4×4。十进制 3 写成 0011。加法从最低位开始：1+1 得到二进制 10，当前位写 0，向下一位进 1；下一位 1+1+1 得到 11，写 1 再进 1；最终得到 00110，即 6。\n乘法要产生部分积。0011 乘 0011 的四行分别是 00000011、00000110、00000000、00000000；左移一位相当于乘以 2，相加得到 00001001，即 9。右侧动画逐行展开是讲解顺序，不是实际乘法器必须按四个时钟周期运行。现代乘法器可以同时生成部分积，并用树形电路合并。\n在同样位宽与相近实现目标下，通用整数乘法通常需要比加法更多电路资源。减法可以通过补码变成 x 加上 y 的按位取反再加 1，因此加法器是基础构件。不能由此推断每种芯片上的每种加法都比其他操作快，尤其浮点加法还涉及对齐、规格化和舍入。",
-    "action": "推进五步，指出进位、部分积、移位、最终合并。强调动画不是硬件测速。",
+    "text": "这一页的重点是硬件开销，先不逐位讲二进制算术。寄存器保存输入和结果，运算单元执行加法或乘法。固定同样的四位无符号整数输入，默认都是1111，即15。\n加法15+15=30，完整结果是11110，共五位。一般两个四位整数相加，保留进位最多需要五位。加法电路主要进行求和与进位，数据通路相对简单。\n乘法15×15=225，完整结果是11100001，共八位。普通长乘法展开的四行部分积为00001111、00011110、00111100、01111000，再对齐相加得到结果。一般两个四位整数相乘，完整结果最多需要八位。部分积生成、对齐及合并需要额外电路与内部数据处理。这些数据可在乘法器的线路、压缩网络或内部存储中处理，不代表程序必须额外占用四个寄存器。\n因此，在同位宽和相近设计目标下，通用整数加法通常比乘法需要更少电路资源。这为后面的多做加法、少做乘法建立动机。这里不规定每次乘法固定比加法慢多少倍；动画的播放顺序不表示真实耗时。现代GPU浮点乘加可有相同吞吐量，实际算法效果仍取决于规模、精度、硬件与数据搬运。",
+    "action": "先指出两边输入寄存器相同，再播放部分积与结果位宽。最后用一句话过渡：能否多做较便宜的加法，减少较昂贵的乘法？",
     "sources": [
       "https://homepage.cs.uiowa.edu/~dwjones/assem/summer18/notes/09muldiv.shtml",
-      "https://courses.csail.mit.edu/6.896/spring04/handouts/arithmetic-ckts.pdf"
+      "https://courses.csail.mit.edu/6.896/spring04/handouts/arithmetic-ckts.pdf",
+      "https://docs.nvidia.com/cuda/archive/12.8.0/cuda-c-programming-guide/index.html#arithmetic-instructions"
     ]
   },
   {
@@ -935,18 +966,18 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
   const sampleB=[1,1,0,1,0,1,1,0,1,0,1,1,1,0,0,1];
   const sampleC=math.multiplyOrdinary(sampleA,sampleB);
   const hardware=globalThis.HardwareLesson;
-  const addFrames=hardware.additionTrace(3,3,4),partials=hardware.multiplicationPartials(3,3,4);
-  const bitRow=(label,values,current=-1,extra='')=>`<span class="bit-row-label">${label}</span>${values.map((v,i)=>`<b class="bit-digit ${i===current?'current-bit':''} ${extra}">${v}</b>`).join('')}`;
+  const costOperand=15,partials=hardware.multiplicationPartials(costOperand,costOperand,4);
+  const additionResult=hardware.additionTrace(costOperand,costOperand,4).at(-1).result;
+  const multiplicationResult=partials.reduce((sum,value)=>sum+value,0);
+  const resultBits=(value,width,ready)=>Array.from({length:width},(_,i)=>`<span class="${ready?'result-ready':''}">${ready?(value>>(width-1-i))&1:'?'}</span>`).join('');
   demo('binary',5,n=>{
-    const progress=Math.min(n,4),frame=addFrames[progress],column=progress?4-frame.column:-1;
-    const carryValues=Array.from({length:5},(_,i)=>{const bit=4-i;if(bit===0)return '0';return bit<=progress?addFrames[bit].carryOut:'·';});
-    const resultValues=Array.from({length:5},(_,i)=>{const bit=4-i;return bit<progress||(progress===4&&bit===4)?(frame.result>>bit)&1:'?';});
-    $('#adder-table').innerHTML=bitRow('位权',[16,8,4,2,1],-1,'bit-weight')+bitRow('进位',carryValues,column,'carry-bit')+bitRow('输入 3','00011'.split(''),column)+bitRow('+ 输入 3','00011'.split(''),column)+bitRow('结果',resultValues,column,'sum-bit');
-    $('#adder-detail').textContent=progress?`位权 ${2**frame.column}：${frame.left} + ${frame.right} + 进位 ${frame.carryIn} = ${frame.left+frame.right+frame.carryIn}；本位写 ${(frame.result>>frame.column)&1}，向左进 ${frame.carryOut}。`:'最右位：1 + 1 = 二进制 10，要向左进 1。';
-    $('#adder-answer').textContent=progress===4?'00110₂ = 6₁₀':'结果：'+resultValues.join('');
-    $('#partial-table').innerHTML=`<div class="partial-header"><span>部分积</span><b>0011 × 0011</b></div>`+partials.map((v,i)=>`<div class="partial-row ${i<n?'partial-visible':''} ${i===n-1?'partial-current':''}"><span>第 ${i+1} 位 · 移 ${i} 位</span><b>${v.toString(2).padStart(8,'0')}</b></div>`).join('');
-    $('#multiplier-detail').textContent=n===5?'把四行部分积相加：3 + 6 + 0 + 0 = 9。':n?`乘数第 ${n} 位为 ${(3>>(n-1))&1}，产生第 ${n} 行部分积。`:'乘数的某一位为 1，就取被乘数；为 0，就取 0。';
-    $('#multiplier-answer').textContent=n===5?'00001001₂ = 9₁₀':'结果：????????';
+    const additionReady=n>=2,multiplicationReady=n===5;
+    $('#cost-adder-unit').classList.toggle('unit-working',n===1);$('#cost-adder-unit').classList.toggle('unit-complete',additionReady);
+    $('#cost-add-bits').innerHTML=resultBits(additionResult,5,additionReady);$('#cost-multiply-bits').innerHTML=resultBits(multiplicationResult,8,multiplicationReady);
+    $('#cost-add-answer').textContent=additionReady?`= ${additionResult}`:'等待结果';$('#cost-multiply-answer').textContent=multiplicationReady?`= ${multiplicationResult}`:'等待结果';
+    $('#partial-table').innerHTML=partials.map((value,i)=>`<div class="partial-row ${i<n?'partial-visible':''} ${i===n-1?'partial-current':''}"><span>部分积 ${i+1} · 移 ${i} 位</span><b>${value.toString(2).padStart(8,'0')}</b></div>`).join('');
+    $('#cost-merge-unit').classList.toggle('merge-active',multiplicationReady);
+    $('#binary-cost-caption').textContent=n===0?'相同四位输入，观察内部处理与结果位宽':n===1?'加法电路求和与进位；乘法开始生成内部部分积':n<5?'乘法还要处理更多部分积与对齐线路；这是结构讲解，不是计时':'乘法需要部分积与合并网络。加法通常开销更小，因此值得研究以加法换乘法。';
   },1400);
   const lesson=globalThis.StrassenLesson;
   function partitionMarkup(values,labels){

@@ -120,15 +120,6 @@
 .binary-panel{border-top:2px solid var(--line);padding-top:12px;min-height:320px}
 .binary-panel h3{font-size:28px;margin:0 0 10px}
 .binary-panel>p{font-size:20px;color:#8d9a7c;margin:0 0 8px}
-.adder-table{display:grid;grid-template-columns:120px repeat(5,48px);align-items:center;justify-content:center;row-gap:2px;min-height:155px}
-.bit-row-label{font-size:18px;color:#99a58a}
-.bit-digit{font:27px var(--mono);text-align:center;color:#8b84b7;line-height:28px;border-radius:4px;transition:background .2s,color .2s}
-.bit-digit.bit-weight{font-size:17px;color:#a3ae96}
-.bit-digit.carry-bit{font-size:22px;color:#b68d5c}
-.bit-digit.sum-bit{color:var(--purple);background:#ece9fa}
-.bit-digit.current-bit{background:#ddd7fa;color:var(--purple);box-shadow:inset 0 0 0 1px #b2a7e4}
-.binary-step-detail{font-size:19px;color:#8b9a7b;line-height:1.6;min-height:56px;margin-top:8px}
-.binary-answer{font:26px var(--mono);color:var(--purple);margin-top:4px;min-height:32px}
 .partial-header,.partial-row{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:31px;padding:0 10px}
 .partial-header{border-bottom:1px solid var(--line);color:#9aa78c}
 .partial-header>span,.partial-row>span{font-size:17px}
@@ -209,3 +200,39 @@
 .simple-storage-slide .silicon-controls button,.simple-addition-slide .silicon-controls button{padding:11px 15px}
 
 .simple-storage-slide [data-store-bit].selected{color:#baf7ff;border-color:#73d9ed;background:#16465a;box-shadow:0 0 12px #55d2ec25}
+
+/* Equal-width integer arithmetic: make circuit and data costs visible. */
+.hardware-binary-slide h2{font-size:43px;letter-spacing:-1px}
+.hardware-binary-slide .slide-header{margin-bottom:18px}
+.hardware-binary-slide .slide-header>p{font-size:24px}
+.hardware-binary-slide .binary-panel{min-height:350px;padding-top:10px}
+.hardware-binary-slide .binary-panel h3{font-size:28px;margin-bottom:7px}
+.hardware-binary-slide .binary-panel>p{font-size:19px;margin-bottom:13px}
+.arithmetic-operands{display:flex;align-items:center;gap:14px;height:42px}
+.arithmetic-operands>span{font-size:17px;color:#99a58b;margin-right:6px}
+.arithmetic-operands>b{font:26px var(--mono);letter-spacing:7px;padding:6px 10px 6px 16px;color:#8278b8;background:#eeebfa;border:1px solid #d7d1ee;border-radius:5px;font-weight:400}
+.arithmetic-operands>i{font:25px var(--mono);font-style:normal;color:#a0aa94}
+.arithmetic-workspace{height:128px;display:flex;flex-direction:column;justify-content:center;margin:8px 0 12px}
+.arithmetic-adder{border:2px solid #d9dfcd;background:#eef1e5;border-radius:8px;padding:12px 20px;text-align:center;transition:background .25s,border-color .25s}
+.arithmetic-adder>span{font-size:18px;color:#93a27f;display:block;margin-bottom:8px}
+.arithmetic-adder>strong{font-size:26px;font-weight:500;color:#7c8d67;display:block}
+.arithmetic-adder>small{font-size:17px;color:#98a48c;display:block;margin-top:8px}
+.arithmetic-adder.unit-working{border-color:#aca1df;background:#eeeafa;box-shadow:0 0 14px #aaa0dd20}
+.arithmetic-adder.unit-complete{border-color:#b2c69f;background:#e7eedd}
+.cost-merge{font-size:17px;text-align:center;color:#9ea78f;margin-top:4px;border-top:1px solid var(--line);padding:4px 0;transition:background .2s,color .2s}
+.cost-merge.merge-active{color:var(--purple);background:#ece8fa;border-radius:5px}
+.hardware-binary-slide .partial-row{min-height:23px;line-height:22px}
+.hardware-binary-slide .partial-row>b{font-size:20px;line-height:22px;letter-spacing:5px}
+.arithmetic-result{display:flex;align-items:center;gap:12px;min-height:40px}
+.arithmetic-result>span{font-size:17px;color:#99a58b;white-space:nowrap}
+.cost-result-bits{display:flex;gap:5px}
+.cost-result-bits>span{display:grid;place-items:center;width:29px;height:34px;border:1px solid #d5dcc9;border-radius:4px;background:#eef0e7;color:#a0a994;font:23px var(--mono)}
+.cost-result-bits>span.result-ready{background:#e8e3fa;color:#7162bd;border-color:#cbc2ed}
+.arithmetic-result>b{font:20px var(--mono);color:#8174b4;font-weight:400;white-space:nowrap}
+.arithmetic-resource{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:10px;margin-top:12px;align-items:center}
+.arithmetic-resource>b{font-size:21px;font-weight:500;color:#718661}
+.arithmetic-resource>span{font-size:18px;color:#91a07f}
+.hardware-binary-slide .binary-conclusion{font-size:24px;color:var(--purple);margin-top:17px;padding-top:14px}
+.hardware-binary-slide .demo-controls{padding-top:10px;margin-bottom:15px}
+.hardware-binary-slide .demo-controls>span{font-size:17px}
+.hardware-binary-slide .slide-source{font-size:14px}
