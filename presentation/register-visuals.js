@@ -15,12 +15,9 @@
     const output=1-input;
     return `<g><rect x="${x-35}" y="${y-35}" width="235" height="240" rx="12" class="storage-group-outline"/>${text(x+80,y-49,label,'svg-center svg-small')}${mosTile(x,y,true,!input)}${mosTile(x,y+90,false,!!input)}${path(`M${x+32} ${y+30} V${y-17} H${x+135}`,!input)}${text(x+135,y-22,'电源 1','svg-center svg-tiny')}${path(`M${x+32} ${y+120} V${y+190} H${x+105}`,!!input)}${text(x+135,y+196,'地 0','svg-center svg-tiny')}${path(`M${x+128} ${y+30} H${x+175} V${y+120} H${x+128}`,!!output)}${path(`M${x+175} ${y+95} H${x+200}`,!!output)}${path(`M${x-25} ${y+95} H${x-15} V${y+8} H${x+80}`,!!input)}${path(`M${x-15} ${y+95} V${y+98} H${x+80}`,!!input)}</g>`;
   }
-  function writeSwitch(x,y,writing){
-    return `<rect x="${x-29}" y="${y}" width="58" height="34" rx="5" class="write-switch ${writing?'write-open':''}"/>${path(writing?`M${x} ${y+3} V${y+31}`:`M${x} ${y+3} L${x+17} ${y+26}`,writing,writing)}`;
-  }
   function storageDiagram(state){
     const q=state.q,other=1-q;
-    return svg(`${transistorGroup(215,70,other,'晶体管组 A')}${transistorGroup(600,70,q,'晶体管组 B')}${path('M415 165 H575',!!q,state.writing)}${path('M800 165 H850 V318 H158 V165 H190',!!other,state.writing)}${text(480,205,`保存 ${q}`,'svg-center signal-label')}${text(830,205,`另一边 ${other}`,'svg-center svg-small')}${path('M480 24 V55',state.writing&&!!q)}${writeSwitch(480,55,state.writing)}${path('M480 89 V165',!!q,state.writing)}${path('M850 24 V55',state.writing&&!!other)}${writeSwitch(850,55,state.writing)}${path('M850 89 V165',!!other,state.writing)}${text(480,16,state.writing?`写入 ${q}`:'写入已撤去','svg-center svg-small')}${text(820,16,state.writing?`配对 ${other}`:'写入已撤去','svg-center svg-small')}${text(465,350,state.writing?'写入通路打开，指定两边的状态':'反馈线路：一边的输出，回到另一边的输入','svg-center svg-small')}`);
+    return svg(`${transistorGroup(215,70,other,'晶体管组 A')}${transistorGroup(600,70,q,'晶体管组 B')}${path('M415 165 H575',!!q)}${path('M800 165 H850 V318 H158 V165 H190',!!other)}${text(480,205,`A 侧 ${q}`,'svg-center signal-label')}${text(830,205,`B 侧 ${other}`,'svg-center svg-small')}${text(485,38,`存储 ${q}`,'svg-center signal-label')}${text(465,350,'两组互相连接，作为一个整体固定状态','svg-center svg-small')}`);
   }
   function memoryCell(x,y,value,highlight){
     return `<g><rect x="${x}" y="${y}" width="67" height="84" rx="8" class="small-memory-cell ${highlight?'memory-cell-active':''}"/><g transform="translate(${x+6} ${y+7}) scale(.15)">${mosTile(0,0,true,value===1)}${mosTile(0,85,false,value===0)}${mosTile(170,0,true,value===0)}${mosTile(170,85,false,value===1)}${path('M160 60 H170 M330 140 V190 H0 V80')}</g>${text(x+33,y+73,String(value),'svg-center memory-digit')}</g>`;
@@ -60,19 +57,19 @@
       $$('[data-physics-level]').forEach(button=>{const selected=Number(button.dataset.physicsLevel)===n;button.classList.toggle('selected',selected);button.setAttribute('aria-pressed',String(selected));});
     },1600);
     $$('[data-physics-level]').forEach(button=>button.addEventListener('click',()=>{physicsDemo.stop();physicsDemo.cursor=Number(button.dataset.physicsLevel);physicsDemo.paint();}));
-    const model=globalThis.RegisterPhysics,storageFrames=model.storageFrames();let stored=model.initial();
-    function paintStorage(manual=false){
+    const model=globalThis.RegisterPhysics;
+    const storageCases=[1,0].map(value=>model.transition(model.transition(model.initial(),{type:'write',value}),{type:'hold'}));
+    const storageDemo=demo('storage',1,n=>{
+      const stored=storageCases[n];
       $('#storage-stage').innerHTML=storageDiagram(stored);
-      $('#storage-stage').setAttribute('aria-label',`晶体管反馈电路，保存 ${stored.q}，${stored.writing?'正在写入':'写入通路已关闭'}`);
-      $('#storage-heading').textContent=stored.writing?`把 ${stored.q} 写入这组电路`:`撤去写入，仍然保存 ${stored.q}`;
-      $('#storage-description').textContent=stored.writing?'写入通路把两边设成相反电平。亮起的晶体管与线路，表示现在参与维持状态的部分。':'两边的输出互相反馈，让高、低电平彼此维持。只要持续供电，撤去写入信号也能保住原值。';
-      $('#storage-status').textContent=`已保存：${stored.q} · ${stored.writing?'写入中':'保持中'}`;
-      if(manual)$('#storage-progress').textContent='手动操作';
-    }
-    const storageDemo=demo('storage',4,n=>{stored={...storageFrames[n]};paintStorage();$('#storage-progress').textContent=`${n} / 4 步`;},2000);
-    function store(event){storageDemo.stop();storageDemo.cursor=0;stored=model.transition(stored,event);paintStorage(true);}
-    $$('[data-store-bit]').forEach(button=>button.addEventListener('click',()=>store({type:'write',value:Number(button.dataset.storeBit)})));
-    $('#storage-hold').addEventListener('click',()=>store({type:'hold'}));
+      $('#storage-stage').setAttribute('aria-label',`存储 ${stored.q}：晶体管组 A 为 ${stored.q}，晶体管组 B 为 ${1-stored.q}，两组作为一个整体固定状态。`);
+      $('#storage-heading').textContent=`存储 ${stored.q}`;
+      $('#storage-description').textContent=`A 侧为 ${stored.q}，B 侧为 ${1-stored.q}。两组互相连接，作为一个整体保持这一组合，表示存储 ${stored.q}。持续供电时，这个状态保持不变。`;
+      $('#storage-status').textContent=`整体保存：${stored.q}`;
+      $('#storage-progress').textContent=`案例 ${n+1} / 2`;
+      $$('[data-store-bit]').forEach(button=>{const selected=Number(button.dataset.storeBit)===stored.q;button.classList.toggle('selected',selected);button.setAttribute('aria-pressed',String(selected));});
+    },2000);
+    $$('[data-store-bit]').forEach(button=>button.addEventListener('click',()=>{storageDemo.stop();storageDemo.cursor=Number(button.dataset.storeBit)===1?0:1;storageDemo.paint();}));
     let addA=3,addB=3,frames=model.additionFrames(addA,addB);
     const additionDemo=demo('simple-add',5,n=>{
       const frame=frames[n];$('#addition-stage').innerHTML=additionDiagram(frame);$('#simple-add-inputs').textContent=`寄存器 A 保存 ${bits(addA)}，B 保存 ${bits(addB)}，也就是计算 ${addA} + ${addB}`;

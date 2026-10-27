@@ -195,8 +195,6 @@
 .silicon-controls>span{color:#89a6c4;font-size:17px}
 .storage-group-outline{fill:#14263b;stroke:#345371;stroke-width:1.5}
 .doped-region.p-region{fill:#4c426c;stroke:#b49bdb}
-.write-switch{fill:#18243b;stroke:#596c86;stroke-width:2}
-.write-switch.write-open{fill:#184451;stroke:#7de6e9}
 .small-memory-cell{fill:#10253b;stroke:#3b6284;stroke-width:1.5}
 .small-memory-cell.memory-cell-active{fill:#174052;stroke:#84e7ed;filter:drop-shadow(0 0 5px #54c6dc55)}
 .silicon-slide svg .memory-digit{font:27px var(--mono);fill:#b6e8f6}
@@ -209,3 +207,5 @@
 .simple-storage-slide .physics-layout,.simple-addition-slide .physics-layout{min-height:385px;margin-top:12px}
 .simple-storage-slide .silicon-controls,.simple-addition-slide .silicon-controls{gap:9px}
 .simple-storage-slide .silicon-controls button,.simple-addition-slide .silicon-controls button{padding:11px 15px}
+
+.simple-storage-slide [data-store-bit].selected{color:#baf7ff;border-color:#73d9ed;background:#16465a;box-shadow:0 0 12px #55d2ec25}
