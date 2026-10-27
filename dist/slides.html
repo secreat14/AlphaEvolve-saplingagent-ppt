@@ -252,7 +252,7 @@
 </section>
 
 <section class="slide silicon-slide register-physics-slide" data-title="晶体管：电压控制的微型开关" data-seconds="75">
-  <div class="slide-header"><span class="chapter">硬件入门 1 / 7 · 晶体管</span><h2>晶体管，就是一个电控微型开关</h2><p>先认识一个开关，后面用同样的图看它怎样参与存储和加法</p></div>
+  <div class="slide-header"><span class="chapter">硬件入门 1 / 6 · 晶体管</span><h2>晶体管，就是一个电控微型开关</h2><p>先认识一个开关，后面用同样的图看它怎样参与存储和加法</p></div>
   <div class="silicon-steps"><button data-physics-level="0">低电平 · 关闭</button><button data-physics-level="1">高电平 · 打开</button></div>
   <div class="physics-layout"><div class="physical-stage" id="physical-stage" role="img" aria-label="nMOS 晶体管剖面与导电通道示意"></div><div class="physics-explanation"><span id="physics-level">晶体管 / TRANSISTOR</span><h3 id="physics-heading"></h3><p id="physics-description"></p><div class="physics-status" id="physics-status"></div><small>栅极像控制按钮，源极和漏极是通道的两端。</small></div></div>
   <div class="demo-controls silicon-controls"><button data-play="physics">播放开关变化</button><button data-step="physics">切换开关</button><button data-reset="physics">重置</button><span id="physics-progress">1 / 2 个画面</span></div>
@@ -260,21 +260,21 @@
 </section>
 
 <section class="slide silicon-slide simple-storage-slide" data-title="存储：晶体管组成的反馈回路" data-seconds="75">
-  <div class="slide-header"><span class="chapter">硬件入门 2 / 7 · 怎样存住 0 和 1</span><h2>2组晶体管互相连接，作为一个整体，用于固定一个状态。</h2><p>下面分别展示存储 1、存储 0 时的电路状态。</p></div>
+  <div class="slide-header"><span class="chapter">硬件入门 2 / 6 · 怎样存住 0 和 1</span><h2>2组晶体管互相连接，作为一个整体，用于固定一个状态。</h2><p>下面分别展示存储 1、存储 0 时的电路状态。</p></div>
   <div class="physics-layout"><div class="physical-stage" id="storage-stage" role="img" aria-label="两组晶体管和反馈线路保存一位数据"></div><div class="physics-explanation"><span>存储一位 / STORE ONE BIT</span><h3 id="storage-heading"></h3><p id="storage-description"></p><div class="physics-status" id="storage-status"></div><small>这一整体有两个稳定组合，分别表示存储 1 和存储 0。</small></div></div>
   <div class="demo-controls silicon-controls"><button data-play="storage">播放两个案例</button><button data-step="storage">切换案例</button><button data-reset="storage">重置</button><button data-store-bit="1">存储 1</button><button data-store-bit="0">存储 0</button><span id="storage-progress">案例 1 / 2</span></div>
   <div class="slide-source">静态反馈存储原理示意；两个案例展示稳定状态，保持状态需要供电。来源：MIT 存储电路课程。</div>
 </section>
 
 <section class="slide silicon-slide simple-addition-slide" data-title="加法：把存好的数送进加法电路" data-seconds="40">
-  <div class="slide-header"><span class="chapter">硬件入门 3 / 7 · 怎样把两个数相加</span><h2>寄存器存数，加法电路负责把数加起来</h2><p id="simple-add-inputs">寄存器 A 保存 0011，B 也保存 0011，也就是计算 3 + 3</p></div>
+  <div class="slide-header"><span class="chapter">硬件入门 3 / 6 · 怎样把两个数相加</span><h2>寄存器存数，加法电路负责把数加起来</h2><p id="simple-add-inputs">寄存器 A 保存 0011，B 也保存 0011，也就是计算 3 + 3</p></div>
   <div class="physics-layout"><div class="physical-stage" id="addition-stage" role="img" aria-label="两个四位存储组通过线路连接四位加法电路"></div><div class="physics-explanation"><span>读取 → 相加 → 保存结果</span><h3 id="simple-add-heading"></h3><p id="simple-add-description"></p><div class="physics-status" id="simple-add-status"></div><small>每个存储单元由一组晶体管构成；这里的四位是数的位宽，矩阵仍为 4×4。</small></div></div>
   <div class="demo-controls silicon-controls"><button data-play="simple-add">播放加法过程</button><button data-step="simple-add">下一步</button><button data-reset="simple-add">重置</button><button data-add-case="3,3">案例 3 + 3</button><button data-add-case="7,1">案例 7 + 1</button><span id="simple-add-progress">0 / 5 步</span></div>
   <div class="slide-source">按位加法与进位的教学动画，不代表真实指令步数；每个加法单元也是晶体管组成的电路。来源：MIT、UC Berkeley 计算机组成课程。</div>
 </section>
 
 <section class="slide hardware-binary-slide" data-title="硬件入门：为什么加法开销通常更小" data-seconds="55">
-  <div class="slide-header"><span class="chapter">硬件入门 4 / 7 · 同位宽整数的硬件开销</span><h2>加法硬件开销通常更小，乘法要处理更多中间数据</h2><p>2 + 2 与 2 × 2 都得到 4，用通用四位电路观察不同的处理结构。</p></div>
+  <div class="slide-header"><span class="chapter">硬件入门 4 / 6 · 同位宽整数的硬件开销</span><h2>加法硬件开销通常更小，乘法要处理更多中间数据</h2><p>2 + 2 与 2 × 2 都得到 4，用通用四位电路观察不同的处理结构。</p></div>
   <div class="binary-comparison">
     <div class="binary-panel"><h3>加法：2 + 2 = 4</h3><p>两个输入 → 求和与进位 → 保存结果</p><div class="arithmetic-operands"><span>输入寄存器</span><b>0010</b><i>+</i><b>0010</b></div><div class="arithmetic-workspace"><div class="arithmetic-adder" id="cost-adder-unit"><span>加法电路</span><strong>逐位求和 + 进位</strong><small>直接合成一组结果位</small></div></div><div class="arithmetic-result"><span>结果存储</span><div id="cost-add-bits" class="cost-result-bits"></div><b id="cost-add-answer">等待结果</b></div><div class="arithmetic-resource"><b>通用电路最多 5 位</b><span>加法电路通常更简单</span></div></div>
     <div class="binary-panel"><h3>乘法：2 × 2 = 4</h3><p>两个输入 → 多行部分积 → 对齐、合并 → 保存结果</p><div class="arithmetic-operands"><span>输入寄存器</span><b>0010</b><i>×</i><b>0010</b></div><div class="arithmetic-workspace"><div class="partial-table" id="partial-table"></div><div class="cost-merge" id="cost-merge-unit">↓ 移位对齐，再用加法电路合并</div></div><div class="arithmetic-result"><span>结果存储</span><div id="cost-multiply-bits" class="cost-result-bits"></div><b id="cost-multiply-answer">等待结果</b></div><div class="arithmetic-resource"><b>通用电路最多 8 位</b><span>部分积与合并网络增加电路开销</span></div></div>
@@ -284,33 +284,18 @@
 </section>
 
 <section class="slide" data-title="GPU 的并行计算" data-seconds="35">
-  <div class="slide-header"><span class="chapter">硬件入门 5 / 7 · 让多个运算单元一起工作</span><h2>GPU 把许多计算任务分给小组同时做</h2><p>同一个 4×4 输出矩阵有 16 个格子，把它们看成 16 个独立任务</p></div>
+  <div class="slide-header"><span class="chapter">硬件入门 5 / 6 · 让多个运算单元一起工作</span><h2>GPU 把许多计算任务分给小组同时做</h2><p>同一个 4×4 输出矩阵有 16 个格子，把它们看成 16 个独立任务</p></div>
   <div class="parallel-layout"><div><h3>逐个处理 <span id="gpu-serial-label">0 / 16 轮</span></h3><div class="task-board" id="gpu-serial"></div><p>一轮完成一个任务</p></div><div><h3>4 组同时处理 <span id="gpu-parallel-label">0 / 4 轮</span></h3><div class="task-board purple" id="gpu-parallel"></div><p>一轮最多完成四个任务</p></div></div>
   <div class="demo-controls"><button data-play="gpu">播放对比</button><button data-step="gpu">推进一轮</button><button data-reset="gpu">重置</button><span id="gpu-caption" aria-live="polite">并行计算需要足够多、能够分开的任务</span></div>
   <div class="slide-source">原理示意，忽略通信与调度。CPU 也可以并行，这里不是硬件测速。来源：NVIDIA GPU 基础</div>
 </section>
 
-<section class="slide" data-title="数据复用与访存开销" data-seconds="35">
-  <div class="slide-header"><span class="chapter">硬件入门 6 / 7 · 减少数据搬运</span><h2>减少数据搬运，也能让计算更快</h2><p>4×4 的 A 有 16 个元素，每个元素都参与 4 个输出列的计算</p></div>
+<section class="slide" data-title="数据复用与访存开销" data-seconds="90">
+  <div class="slide-header"><span class="chapter">硬件入门 6 / 6 · 减少数据搬运</span><h2>减少数据搬运，也能让计算更快</h2><p>4×4 的 A 有 16 个元素，每个元素都参与 4 个输出列的计算</p></div>
   <div class="memory-layout"><div><h3>每次使用都去拿</h3><div class="trip-number"><b id="memory-naive">0</b><span>/ 64 趟</span></div><div class="transport"><span>显存</span><div class="transport-line"><i id="package-naive"></i></div><span>运算单元</span></div><p>16 份 × 4 次，共取 64 趟</p></div><div><h3>暂存到片上，重复使用</h3><div class="trip-number purple-text"><b id="memory-reuse">0</b><span>/ 16 趟</span></div><div class="transport"><span>显存</span><div class="transport-line"><i id="package-reuse"></i></div><span>片上存储</span></div><p>每份取一次，共取 16 趟</p></div></div>
   <div class="memory-connection"><strong>寄存器 / 共享内存</strong><span>都在芯片上，容量有限；共享内存可供线程组协作复用。FlashAttention 也利用分块减少显存读写。</span></div>
   <div class="demo-controls"><button data-play="memory">播放搬运</button><button data-step="memory">下一步</button><button data-reset="memory">重置</button></div>
   <div class="slide-source">只统计 A 的读取，并假设手边容量足够。B 与输出的开销未计入。这是教学示意，不是 FlashAttention 实测加速比。</div>
-</section>
-
-<section class="slide hardware-cost-slide" data-title="硬件入门：电路复杂度与实际速度" data-seconds="35">
-  <div class="slide-header"><span class="chapter">硬件入门 7 / 7 · 把直觉用对地方</span><h2>加法是基础积木，实际速度还要看机器</h2><p>“电路更简单”能解释优化动机；运行时间需要结合指令与数据搬运来判断</p></div>
-  <div class="hardware-facts"><div><span>01 · 电路</span><h3>整数加法比较基础</h3><p>同样位宽下，乘法通常要形成并合并多组部分积，使用更多电路资源。</p></div><div><span>02 · 指令</span><h3>现代硬件很擅长乘加</h3><p>GPU 的浮点加法与乘法可以有相同吞吐量；一条 FMA 指令能融合乘法与加法。</p></div><div><span>03 · 数据</span><h3>等待数据也要时间</h3><p>寄存器有限，中间结果太多会增加存储压力。少算、并行、少搬都可能带来收益。</p></div></div>
-  <div class="fma-callout"><span>FMA · 融合乘加</span><strong>S ← a × b + S</strong><span>一条指令完成融合乘加；Tensor Core 还提供专用矩阵乘加能力</span></div>
-  <div class="wide-takeaway compact">接下来研究：能否多做一些加减法，换掉成本更高的矩阵块乘法？</div>
-  <div class="slide-source">吞吐量是单位时间能完成多少操作，和单次等待时间不同。这里不给加法与乘法规定固定速度比。来源：NVIDIA 指令吞吐量表与最佳实践指南。</div>
-</section>
-
-<section class="slide" data-title="矩阵与现代计算" data-seconds="20">
-  <div class="slide-header"><span class="chapter">计算背景</span><h2>矩阵与现代计算</h2><p>很多复杂应用，最终都包含大量矩阵运算</p></div>
-  <div class="applications"><div><span class="application-index">01</span><h3>图像与图形</h3><p>像素排列成表格<br>坐标变换使用矩阵</p></div><div><span class="application-index">02</span><h3>神经网络</h3><p>输入与权重相乘<br>逐层计算新的表示</p></div><div><span class="application-index">03</span><h3>科学计算</h3><p>求解线性方程组<br>处理模拟中的数值计算</p></div></div>
-  <div class="wide-takeaway">一个基础操作的改进，可能影响许多上层应用</div>
-  <div class="slide-source">来源：AlphaTensor 团队介绍，NVIDIA 矩阵乘法指南</div>
 </section>
 
 <section class="slide basic-four-slide" data-title="4×4矩阵乘法的基本动作" data-seconds="60">
@@ -448,9 +433,9 @@
 
 </div></main>
 <aside id="notes-panel" hidden aria-label="演讲备注"><div class="notes-heading"><strong>演讲备注</strong><button id="notes-close" aria-label="关闭演讲备注">×</button></div><div id="notes-content"></div></aside>
-<footer class="navigation"><button id="previous" aria-label="上一页">← 上一页</button><span id="slide-count">01 / 28</span><span id="slide-title">AI 如何发现更快的矩阵乘法</span><div class="nav-right"><button id="timer-button" title="开始或暂停计时 T">计时 <span id="elapsed">00:00</span></button><button id="timer-reset" title="重置计时" aria-label="重置演讲计时">↺</button><button id="next" aria-label="下一页">下一页 →</button></div></footer>
+<footer class="navigation"><button id="previous" aria-label="上一页">← 上一页</button><span id="slide-count">01 / 26</span><span id="slide-title">AI 如何发现更快的矩阵乘法</span><div class="nav-right"><button id="timer-button" title="开始或暂停计时 T">计时 <span id="elapsed">00:00</span></button><button id="timer-reset" title="重置计时" aria-label="重置演讲计时">↺</button><button id="next" aria-label="下一页">下一页 →</button></div></footer>
 <div class="deck-progress" aria-hidden="true"><span id="deck-progress"></span></div>
-<dialog id="overview-dialog"><div class="dialog-header"><h2>演讲目录</h2><button data-close="overview-dialog" aria-label="关闭目录">×</button></div><p>28 页，建议讲解时间共 20 分钟。点击任意一页跳转。</p><div id="overview-grid"></div></dialog>
+<dialog id="overview-dialog"><div class="dialog-header"><h2>演讲目录</h2><button data-close="overview-dialog" aria-label="关闭目录">×</button></div><p>26 页，建议讲解时间共 20 分钟。点击任意一页跳转。</p><div id="overview-grid"></div></dialog>
 <dialog id="help-dialog"><div class="dialog-header"><h2>演示快捷键</h2><button data-close="help-dialog" aria-label="关闭快捷键">×</button></div><dl class="shortcut-list"><dt>→ / ↓ / 空格 / Page Down</dt><dd>下一页</dd><dt>← / ↑ / Page Up</dt><dd>上一页</dd><dt>Home / End</dt><dd>第一页 / 最后一页</dd><dt>F</dt><dd>进入或退出全屏</dd><dt>N</dt><dd>显示或隐藏本页演讲备注</dd><dt>O</dt><dd>打开目录</dd><dt>B</dt><dd>黑屏 / 恢复画面</dd><dt>T</dt><dd>开始或暂停演讲计时</dd><dt>R</dt><dd>重置当前页动画</dd></dl><p>动画由页面中的播放按钮控制。翻页会暂停动画。按 Esc 关闭目录或备注。备注会显示在当前屏幕上。</p></dialog>
 <div id="blackout" hidden><span>按 B 或点击恢复</span></div><button id="exit-cinema" aria-label="退出全屏演示">退出全屏 F</button><div class="sr-only" id="announcement" aria-live="polite"></div>
 <script>// AlphaTensor authors' published rank-47 factorization; output factor transposed to row-major C.
@@ -708,7 +693,7 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
   const evolveBlog='https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/';
   const notes=[
   {
-    "text": "开场可以问：同一道矩阵乘法，答案已经确定，计算过程还有没有改进空间？\n今天先用七页解释晶体管、寄存器、加法电路、GPU 并行和数据搬运，再从行乘列进入经典算法与 AI 发现算法。封面上的 64、49、47 都是后面同一道 4×4 题目所需的标量乘法次数。47 次有模 2 条件，后面单独解释。",
+    "text": "开场可以问：同一道矩阵乘法，答案已经确定，计算过程还有没有改进空间？\n今天先用六页解释晶体管、寄存器、加法电路、GPU 并行和数据搬运，再从行乘列进入经典算法与 AI 发现算法。封面上的 64、49、47 都是后面同一道 4×4 题目所需的标量乘法次数。47 次有模 2 条件，后面单独解释。",
     "action": "约15秒介绍主题后翻页。",
     "sources": [
       "https://doi.org/10.1038/s41586-022-05172-4"
@@ -757,27 +742,10 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
   },
   {
     "text": "4×4 的 A 有 16 个元素。计算 A 乘 B 时，A 的每个元素需要参与四个输出列，所以会被使用四次。\n如果每次使用都从远处取，读取 A 共 64 趟。如果先将 A 的 16 个元素拿到手边，并且容量足够，就可以重复使用，只读取 16 趟。这里仅统计 A，不包括 B、输出和其他开销。\nFlashAttention 使用分块减少显存与片上存储之间的读写，但这张 4×4 教学图不是该论文的实测性能。\n片上存储包含寄存器和共享内存等不同资源；这里只表达从显存暂存后复用的原则，不给它们相同容量或访问特性。",
-    "action": "播放搬运。观察右边在 16 趟停止，而左边继续到 64。",
+    "action": "播放搬运。观察右边在 16 趟停止，而左边继续到 64。 本页建议时长包含约55秒自主口头衔接，随后直接进入4×4矩阵乘法动画。",
     "sources": [
       "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/",
       "https://arxiv.org/abs/2205.14135"
-    ]
-  },
-  {
-    "text": "现在区分三个层面。第一，电路层：整数乘法通常形成和合并多组部分积，所以同位宽下比整数加法需要更多电路。第二，指令层：现代芯片用专用乘法器、流水线、向量单元等实现很高吞吐量。NVIDIA 官方表将多种架构的浮点加法、乘法、乘加列在同一吞吐量项中，不能声称标量乘法固定比加法慢十倍。吞吐量表示一段时间内可完成多少操作，延迟表示单次结果要等多久，两者不同。\nFMA 把 a×b+S 融合为一条指令并只做一次最终舍入；Tensor Core 提供专用矩阵乘加路径。第三，存储层：读写、中间结果和寄存器占用都会影响实际表现。因此后面以加减法换乘法是一种算法上的取舍，是否提速必须结合规模、精度、硬件和实测。更大矩阵里，一次块乘法本身包含很多标量操作，减少它更有研究价值。",
-    "action": "用一句话过渡：先理解机器成本，再看 Strassen 怎样通过加减法复用乘积。",
-    "sources": [
-      "https://docs.nvidia.com/cuda/archive/12.8.0/cuda-c-programming-guide/index.html#arithmetic-instructions",
-      "https://docs.nvidia.com/cuda/archive/13.0.1/cuda-c-best-practices-guide/index.html#registers",
-      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"
-    ]
-  },
-  {
-    "text": "矩阵可以表示图像中的像素、图形中的坐标，也可以表示神经网络的输入和权重。科学计算还经常需要求解线性方程组。\n这里的关键是：矩阵计算属于基础操作，会在许多任务中反复出现。因此，一个底层操作的改进可能影响很多上层应用。后面会区分数学上少做运算和机器实际跑得快。",
-    "action": "用听众熟悉的图像或神经网络举一个例子即可。",
-    "sources": [
-      "https://doi.org/10.1038/s41586-022-05172-4",
-      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"
     ]
   },
   {

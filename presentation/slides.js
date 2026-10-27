@@ -11,7 +11,7 @@
   const evolveBlog='https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/';
   const notes=[
   {
-    "text": "开场可以问：同一道矩阵乘法，答案已经确定，计算过程还有没有改进空间？\n今天先用七页解释晶体管、寄存器、加法电路、GPU 并行和数据搬运，再从行乘列进入经典算法与 AI 发现算法。封面上的 64、49、47 都是后面同一道 4×4 题目所需的标量乘法次数。47 次有模 2 条件，后面单独解释。",
+    "text": "开场可以问：同一道矩阵乘法，答案已经确定，计算过程还有没有改进空间？\n今天先用六页解释晶体管、寄存器、加法电路、GPU 并行和数据搬运，再从行乘列进入经典算法与 AI 发现算法。封面上的 64、49、47 都是后面同一道 4×4 题目所需的标量乘法次数。47 次有模 2 条件，后面单独解释。",
     "action": "约15秒介绍主题后翻页。",
     "sources": [
       "https://doi.org/10.1038/s41586-022-05172-4"
@@ -60,27 +60,10 @@
   },
   {
     "text": "4×4 的 A 有 16 个元素。计算 A 乘 B 时，A 的每个元素需要参与四个输出列，所以会被使用四次。\n如果每次使用都从远处取，读取 A 共 64 趟。如果先将 A 的 16 个元素拿到手边，并且容量足够，就可以重复使用，只读取 16 趟。这里仅统计 A，不包括 B、输出和其他开销。\nFlashAttention 使用分块减少显存与片上存储之间的读写，但这张 4×4 教学图不是该论文的实测性能。\n片上存储包含寄存器和共享内存等不同资源；这里只表达从显存暂存后复用的原则，不给它们相同容量或访问特性。",
-    "action": "播放搬运。观察右边在 16 趟停止，而左边继续到 64。",
+    "action": "播放搬运。观察右边在 16 趟停止，而左边继续到 64。 本页建议时长包含约55秒自主口头衔接，随后直接进入4×4矩阵乘法动画。",
     "sources": [
       "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/",
       "https://arxiv.org/abs/2205.14135"
-    ]
-  },
-  {
-    "text": "现在区分三个层面。第一，电路层：整数乘法通常形成和合并多组部分积，所以同位宽下比整数加法需要更多电路。第二，指令层：现代芯片用专用乘法器、流水线、向量单元等实现很高吞吐量。NVIDIA 官方表将多种架构的浮点加法、乘法、乘加列在同一吞吐量项中，不能声称标量乘法固定比加法慢十倍。吞吐量表示一段时间内可完成多少操作，延迟表示单次结果要等多久，两者不同。\nFMA 把 a×b+S 融合为一条指令并只做一次最终舍入；Tensor Core 提供专用矩阵乘加路径。第三，存储层：读写、中间结果和寄存器占用都会影响实际表现。因此后面以加减法换乘法是一种算法上的取舍，是否提速必须结合规模、精度、硬件和实测。更大矩阵里，一次块乘法本身包含很多标量操作，减少它更有研究价值。",
-    "action": "用一句话过渡：先理解机器成本，再看 Strassen 怎样通过加减法复用乘积。",
-    "sources": [
-      "https://docs.nvidia.com/cuda/archive/12.8.0/cuda-c-programming-guide/index.html#arithmetic-instructions",
-      "https://docs.nvidia.com/cuda/archive/13.0.1/cuda-c-best-practices-guide/index.html#registers",
-      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"
-    ]
-  },
-  {
-    "text": "矩阵可以表示图像中的像素、图形中的坐标，也可以表示神经网络的输入和权重。科学计算还经常需要求解线性方程组。\n这里的关键是：矩阵计算属于基础操作，会在许多任务中反复出现。因此，一个底层操作的改进可能影响很多上层应用。后面会区分数学上少做运算和机器实际跑得快。",
-    "action": "用听众熟悉的图像或神经网络举一个例子即可。",
-    "sources": [
-      "https://doi.org/10.1038/s41586-022-05172-4",
-      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"
     ]
   },
   {
