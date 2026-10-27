@@ -17,7 +17,7 @@
   }
   function storageDiagram(state){
     const q=state.q,other=1-q;
-    return svg(`${transistorGroup(215,70,other,'晶体管组 A')}${transistorGroup(600,70,q,'晶体管组 B')}${path('M415 165 H575',!!q)}${path('M800 165 H850 V318 H158 V165 H190',!!other)}${text(480,205,`A 侧 ${q}`,'svg-center signal-label')}${text(830,205,`B 侧 ${other}`,'svg-center svg-small')}${text(485,38,`存储 ${q}`,'svg-center signal-label')}${text(465,350,'两组互相连接，作为一个整体固定状态','svg-center svg-small')}`);
+    return svg(`${transistorGroup(215,70,other,'晶体管组 A')}${transistorGroup(600,70,q,'晶体管组 B')}${path('M415 165 H575',!!q)}<circle cx="485" cy="165" r="5" fill="${q?'#62dbf7':'#557494'}"/>${path('M485 165 V53',!!q)}${path('M478 62 L485 53 L492 62',!!q)}${text(505,105,'输出','svg-small')}${path('M800 165 H850 V318 H158 V165 H190',!!other)}${text(480,205,`A 侧 ${q}`,'svg-center signal-label')}${text(830,205,`B 侧 ${other}`,'svg-center svg-small')}${text(485,38,`存储 ${q}`,'svg-center signal-label')}${text(465,350,'两组互相连接，作为一个整体固定状态','svg-center svg-small')}`);
   }
   function memoryCell(x,y,value,highlight){
     return `<g><rect x="${x}" y="${y}" width="67" height="84" rx="8" class="small-memory-cell ${highlight?'memory-cell-active':''}"/><g transform="translate(${x+6} ${y+7}) scale(.15)">${mosTile(0,0,true,value===1)}${mosTile(0,85,false,value===0)}${mosTile(170,0,true,value===0)}${mosTile(170,85,false,value===1)}${path('M160 60 H170 M330 140 V190 H0 V80')}</g>${text(x+33,y+73,String(value),'svg-center memory-digit')}</g>`;
@@ -62,7 +62,7 @@
     const storageDemo=demo('storage',1,n=>{
       const stored=storageCases[n];
       $('#storage-stage').innerHTML=storageDiagram(stored);
-      $('#storage-stage').setAttribute('aria-label',`存储 ${stored.q}：晶体管组 A 为 ${stored.q}，晶体管组 B 为 ${1-stored.q}，两组作为一个整体固定状态。`);
+      $('#storage-stage').setAttribute('aria-label',`存储 ${stored.q}：晶体管组 A 为 ${stored.q}，晶体管组 B 为 ${1-stored.q}，两组作为一个整体固定状态，中间节点引出存储输出。`);
       $('#storage-heading').textContent=`存储 ${stored.q}`;
       $('#storage-description').textContent=`A 侧为 ${stored.q}，B 侧为 ${1-stored.q}。两组互相连接，作为一个整体保持这一组合，表示存储 ${stored.q}。持续供电时，这个状态保持不变。`;
       $('#storage-status').textContent=`整体保存：${stored.q}`;
