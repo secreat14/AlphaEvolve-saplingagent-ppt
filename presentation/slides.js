@@ -11,10 +11,30 @@
   const evolveBlog='https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/';
   const notes=[
   {
-    "text": "开场可以问：同一道矩阵乘法，答案已经确定，计算过程还有没有改进空间？\n今天先用五页解释寄存器、加法电路、GPU 并行和数据搬运，再从行乘列进入经典算法与 AI 发现算法。封面上的 64、49、47 都是后面同一道 4×4 题目所需的标量乘法次数。47 次有模 2 条件，后面单独解释。",
+    "text": "开场可以问：同一道矩阵乘法，答案已经确定，计算过程还有没有改进空间？\n今天先用七页解释晶体管、寄存器、加法电路、GPU 并行和数据搬运，再从行乘列进入经典算法与 AI 发现算法。封面上的 64、49、47 都是后面同一道 4×4 题目所需的标量乘法次数。47 次有模 2 条件，后面单独解释。",
     "action": "约15秒介绍主题后翻页。",
     "sources": [
       "https://doi.org/10.1038/s41586-022-05172-4"
+    ]
+  },
+  {
+    "text": "先从平面 nMOS 的简化剖面看起：栅极与硅之间有绝缘氧化层，栅极电压通过电场影响源漏之间的通道，栅极不与通道直接短接。画面从低电平的关断状态变为高电平下形成导电通道。这里只用平面结构解释原理，现代工艺还有 FinFET、GAA 等不同结构。\n下一层是 CMOS 反相器：一个 pMOS 接电源、一个 nMOS 接地，它们的栅极共用输入。输入低时，pMOS 导通、nMOS 关断，输出被拉高；输入高时相反，输出被拉低。这里画的是电路原理图，不是晶体管的几何版图。\n两个反相器加上受控输入与反馈开关，可构成静态 D 锁存器。输入开关打开时数据进入；输入关闭、反馈打开后，两个反相器循环恢复原有状态，因此输入变了也能保持。每个传输开关可以由一对 nMOS/pMOS 实现。静态保持需要持续供电，断电不会自动记住。\n最后用主、从两个互补时钟控制的锁存器构成正沿 D 触发器。CLK=0 时主级跟随输入、从级保持；CLK 从0变1时，主级关闭、从级打开，把刚才采集的值送到 Q。之后输入再变，Q 会保持到下一个有效上升沿。这是理想数字示意，真实电路还要求建立时间、保持时间，并存在传播延迟。大型寄存器文件也可采用 SRAM 单元阵列，不能说每个真实寄存器都恰好由图中的触发器组成。",
+    "action": "依次单步九个画面，重点停在反馈保持与时钟上升沿。若赶时间，顶部四个层级按钮可以直接跳转。",
+    "sources": [
+      "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c3/c3s1/",
+      "https://computationstructures.org/notes/sequential_logic/notes.html",
+      "https://tams-www.informatik.uni-hamburg.de/applets/hades/webdemos/05-switched/40-cmos/dff_print.html",
+      "https://research.nvidia.com/sites/default/files/pubs/2011-06_Energy-efficient-Mechanisms-for/2011_06_NVIDIA_ISCA.pdf"
+    ]
+  },
+  {
+    "text": "寄存器保存的是一组二进制位。这里用四个正沿 D 触发器组成四位教学寄存器，矩阵案例依旧是4×4，位宽和矩阵行列数是两回事。四个单元共享 CLK，但各自保存一位。使能 EN 通过数据多路选择器实现：EN=1 选择外部 D，EN=0 选择本位旧 Q。图中没有直接用 EN 门控时钟。\n自动案例从 Q=0000、D=0011、CLK=0 开始。第一次上升沿写入3。将输入改为1100时，时钟仍高，所以 Q 保持3。下降沿也不更新。EN=0 时的下一个上升沿仍保持3；再打开 EN，在下个上升沿写入12。输入改成0101时，Q继续保持12；读出得到12，而且不清空 Q。初始零是演示预设，真实芯片需要复位或初始化，不默认上电为零。\n可点击四个输入位、使能、时钟和读出按钮亲自测试。时钟按钮交替产生上升沿和下降沿。时序图以各次交互事件为横轴，只解释状态先后，不表示真实纳秒时间。门控和锁存的动画是教学理想模型，省略建立/保持时间与传播延迟。",
+    "action": "先播放完整案例，再让听众预测：只改输入会不会改 Q？关掉 EN 后再产生上升沿会怎样？",
+    "sources": [
+      "https://www.ti.com/product/SN74AUC2G79",
+      "https://computationstructures.org/notes/sequential_logic/notes.html",
+      "https://tams-www.informatik.uni-hamburg.de/applets/hades/webdemos/05-switched/40-cmos/dff_print.html",
+      "https://research.nvidia.com/sites/default/files/pubs/2011-06_Energy-efficient-Mechanisms-for/2011_06_NVIDIA_ISCA.pdf"
     ]
   },
   {
@@ -220,7 +240,11 @@
       "https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/",
       "https://homepage.cs.uiowa.edu/~dwjones/assem/summer18/notes/09muldiv.shtml",
       "https://docs.nvidia.com/cuda/archive/13.0.1/cuda-c-best-practices-guide/index.html#registers",
-      "https://docs.nvidia.com/cuda/archive/12.8.0/cuda-c-programming-guide/index.html#arithmetic-instructions"
+      "https://docs.nvidia.com/cuda/archive/12.8.0/cuda-c-programming-guide/index.html#arithmetic-instructions",
+      "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c3/c3s1/",
+      "https://computationstructures.org/notes/sequential_logic/notes.html",
+      "https://tams-www.informatik.uni-hamburg.de/applets/hades/webdemos/05-switched/40-cmos/dff_print.html",
+      "https://research.nvidia.com/sites/default/files/pubs/2011-06_Energy-efficient-Mechanisms-for/2011_06_NVIDIA_ISCA.pdf"
     ]
   }
 ];
@@ -241,6 +265,7 @@
     play.addEventListener('click',()=>object.play());$(`[data-step="${id}"]`).addEventListener('click',()=>object.next());$(`[data-reset="${id}"]`).addEventListener('click',()=>object.reset());
     demos.set(id,object);object.paint();return object;
   }
+  globalThis.RegisterVisuals.mount({demo});
   const math=globalThis.MatrixCompareMath;
   const sampleA=[1,0,1,1,0,1,1,0,1,1,0,1,0,0,1,1];
   const sampleB=[1,1,0,1,0,1,1,0,1,0,1,1,1,0,0,1];

@@ -184,3 +184,85 @@
 .sources-slide .source-links li{padding:8px 0 8px 13px}
 .sources-slide .source-links b{font-size:20px;line-height:1.4}
 .sources-slide .source-links span{font-size:17px;line-height:1.4;margin-top:3px}
+
+/* A scoped silicon lab, with circuit-native SVG and signal animations. */
+.silicon-slide{--cyan:#63e8ff;--violet:#c0a4ff;--neon-muted:#8ca1c1;--neon-line:#29425f;background-color:#071323;background-image:radial-gradient(ellipse at 42% 35%,#12325290,transparent 66%),linear-gradient(#23426222 1px,transparent 1px),linear-gradient(90deg,#23426222 1px,transparent 1px);background-size:auto,28px 28px,28px 28px;color:#eef9ff}
+.silicon-slide .chapter{color:#69c3dd;letter-spacing:2px}
+.silicon-slide h2{color:#e7f7ff;font-size:43px;letter-spacing:-1px}
+.silicon-slide .slide-header{margin-bottom:18px}
+.silicon-slide .slide-header>p{color:#a8bdd4;font-size:23px}
+.silicon-slide .slide-source{color:#7f98b8;font-size:14px}
+.silicon-steps{display:flex;align-items:center;gap:20px;margin:0 0 16px;color:#567899}
+.silicon-steps>button{color:#9fbbd6;border:1px solid #2b4968;background:#0c2037;border-radius:5px;font:17px var(--mono);padding:9px 17px;transition:color .2s,border-color .2s,box-shadow .2s}
+.silicon-steps>button.selected{color:var(--cyan);border-color:#51b9dc;box-shadow:0 0 18px #47c9f929,inset 0 0 16px #47c9f916}
+.physics-layout{display:grid;grid-template-columns:1fr 320px;gap:30px;align-items:center;min-height:355px}
+.physical-stage{height:350px;border:1px solid #2b4968;background:linear-gradient(135deg,#0d2438c9,#09182cc9);border-radius:12px;box-shadow:inset 0 0 45px #2c5f8533,0 0 24px #05101a88;position:relative;overflow:hidden}
+.physical-stage:before,.physical-stage:after{content:"";position:absolute;width:40px;height:40px;border-color:#66d4f5;border-style:solid;pointer-events:none;opacity:.6}
+.physical-stage:before{top:10px;left:10px;border-width:2px 0 0 2px}
+.physical-stage:after{bottom:10px;right:10px;border-width:0 2px 2px 0}
+.physical-stage>svg{width:100%;height:100%;display:block}
+.silicon-slide svg text{font:22px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#b4cee4}
+.silicon-slide svg .svg-center{text-anchor:middle}
+.silicon-slide svg .svg-small{font-size:17px}
+.silicon-slide svg .svg-tiny{font-size:13px}
+.silicon-slide svg .signal-label{fill:var(--cyan);font:24px var(--mono)}
+.circuit-wire{fill:none;stroke:#557494;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.circuit-wire.signal-high{stroke:#62dbf7;filter:drop-shadow(0 0 3px #4ddcff77)}
+.circuit-wire.signal-pulse{stroke:#92edff;stroke-dasharray:10 9;animation:signal-flow 1.3s linear infinite}
+@keyframes signal-flow{to{stroke-dashoffset:-76}}
+.silicon-substrate{fill:#26354e;stroke:#556e94;stroke-width:2}
+.doped-region{fill:#285d7b;stroke:#78c4db;stroke-width:2}
+.gate-oxide{fill:#bb985c;stroke:#f1d098;stroke-width:1}
+.metal-gate{fill:#4e5a77;stroke:#8eacd0;stroke-width:2;transition:fill .35s}
+.metal-gate.gate-on{fill:#267d97;stroke:#99f3ff;filter:drop-shadow(0 0 10px #58d8f566)}
+.conducting-channel{fill:#5ee7ef99;filter:drop-shadow(0 0 7px #58d8f5)}
+.electric-field{fill:none;stroke:#e7c47e;stroke-width:2;stroke-dasharray:4 3}
+.mos-switch,.transmission-gate,.latch-block{fill:#16253f;stroke:#526a91;stroke-width:2;transition:fill .3s,stroke .3s}
+.mos-switch.switch-on,.transmission-gate.switch-on,.latch-block.switch-on{fill:#113d4c;stroke:#72e8ed;filter:drop-shadow(0 0 6px #4dcbd32b)}
+.logic-symbol,.gate-bubble{fill:#1e2d48;stroke:#b0b6ed;stroke-width:2}
+.rising-edge-mark{fill:none;stroke:#f1c46b;stroke-width:5;filter:drop-shadow(0 0 7px #ffd06777)}
+.physics-explanation>span{font:15px var(--mono);color:#87c8e2;letter-spacing:1px}
+.silicon-slide .physics-explanation h3{font-size:28px;color:#e7f5ff;line-height:1.5;margin:18px 0 16px;letter-spacing:0}
+.physics-explanation p{font-size:22px;line-height:1.85;color:#b1c2d8;margin:0 0 20px;min-height:150px}
+.physics-status{border-left:3px solid var(--cyan);padding:9px 13px;font:20px var(--mono);color:var(--cyan);background:#0e3045;line-height:1.65;min-height:52px}
+.physics-explanation small{font-size:16px;line-height:1.8;color:#839fbd;display:block;margin-top:15px}
+.silicon-slide .silicon-controls{padding-top:15px;margin-bottom:15px}
+.silicon-controls button{background:#122d48;color:#b7d4ec;border:1px solid #315578;border-radius:5px;font-size:18px}
+.silicon-controls button[data-play]{background:#15465c;border-color:#59cee7;color:#baf7ff;box-shadow:0 0 15px #55d2ec20}
+.silicon-controls>span{color:#89a6c4;font-size:17px}
+.register-lab{display:grid;grid-template-columns:215px 1fr 190px;gap:24px;align-items:center;min-height:300px}
+.silicon-label{color:#8aabc9;font-size:16px;line-height:1.6}
+.chip-input-panel>strong,.chip-read-panel>strong{display:block;font:23px var(--mono);color:#9ceefa;margin:16px 0;white-space:nowrap}
+.input-bit-switches{display:flex;gap:7px;margin-top:15px}
+.input-bit-switches>button{background:#112840;border:1px solid #3c617f;color:#7ca0c0;border-radius:5px;width:46px;padding:7px 3px;transition:background .2s,box-shadow .2s}
+.input-bit-switches>button[aria-pressed=true]{background:#184553;border-color:#6be5ee;box-shadow:0 0 13px #61dbe535;color:#a3f1fa}
+.input-bit-switches small{display:block;font:12px var(--mono);margin-bottom:8px;color:#8cafc5}
+.input-bit-switches b{font:30px var(--mono)}
+.chip-input-panel>button,.chip-read-panel>button{background:#17324d;border:1px solid #466c95;border-radius:5px;color:#c0d9ed;font-size:17px;padding:10px 12px;width:100%}
+.chip-input-panel>button[aria-pressed=false]{border-color:#d2a064;color:#edc48b;background:#322a29}
+.chip-input-panel>small,.chip-read-panel>small{display:block;color:#809db8;font-size:16px;line-height:1.75;margin-top:12px}
+.register-chip-diagram{border:1px solid #355677;background:radial-gradient(ellipse,#1c3155bb,#091a2e);border-radius:11px;box-shadow:inset 0 0 30px #214d6e55,0 0 22px #080a1488;height:267px}
+.register-chip-diagram>svg{display:block;width:100%;height:100%}
+.register-bit-cell{fill:#0c2038;stroke:#3e6f96;stroke-width:2}
+.register-bit-cell.capture-flash{stroke:#74edff;fill:#154359;filter:drop-shadow(0 0 7px #56ddeb66);animation:capture-glow .65s ease-out}
+@keyframes capture-glow{from{fill:#2a8191}to{fill:#154359}}
+.mini-latch{fill:#1e2c49;stroke:#556890;stroke-width:1.5}
+.mini-latch.mini-open{fill:#1c4f5e;stroke:#64dbe7}
+.data-mux{fill:#392d54;stroke:#b09bdf;stroke-width:1.5}
+.clock-triangle{fill:#12253e;stroke:#8ad9f4;stroke-width:2}
+.silicon-slide svg .stored-bit{font:27px var(--mono);fill:#b7a9fa}
+.chip-live-status{display:flex;justify-content:space-between;gap:10px;color:#8faac7;font-size:16px;margin-top:12px;align-items:center}
+.chip-live-status b{font:19px var(--mono);color:#7edff6}
+.chip-mode{font-size:14px;color:#c3b2ef;background:#1a2945;padding:6px 9px;border-radius:4px}
+.chip-alu-icon{display:grid;place-items:center;width:90px;height:48px;border:1px solid #615b8f;background:#252343;color:#b6a8f0;font:23px var(--mono);clip-path:polygon(0 0,100% 0,82% 100%,18% 100%);margin:14px auto}
+.chip-read-panel{text-align:center;padding:16px 10px;border:1px solid #30415c;border-radius:8px;transition:border .2s,box-shadow .2s}
+.chip-read-panel>strong{font-size:21px}
+.chip-read-panel>small{margin:5px 0 15px}
+.chip-read-panel.read-active{border-color:#76d8f2;box-shadow:0 0 25px #52cef53b}
+.register-timing{height:86px;border-top:1px solid #294761;border-bottom:1px solid #294761;padding:5px 8px;margin-top:16px;background:#07172688}
+.register-timing svg{display:block;width:100%;height:100%}
+.timing-q{fill:#182b4c;stroke:#344b71;stroke-width:1}
+.timing-q.timing-capture{fill:#1c535e;stroke:#61cadc}
+.timing-edge{stroke:#caaa6a;stroke-width:1.5;stroke-dasharray:4 4;opacity:.8}
+.chip-caption{font-size:21px;line-height:1.65;color:#a9c3db;min-height:44px;margin:13px 0 0}
+.register-chip-slide .silicon-controls{padding-top:9px}

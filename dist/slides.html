@@ -186,6 +186,88 @@
 .sources-slide .source-links li{padding:8px 0 8px 13px}
 .sources-slide .source-links b{font-size:20px;line-height:1.4}
 .sources-slide .source-links span{font-size:17px;line-height:1.4;margin-top:3px}
+
+/* A scoped silicon lab, with circuit-native SVG and signal animations. */
+.silicon-slide{--cyan:#63e8ff;--violet:#c0a4ff;--neon-muted:#8ca1c1;--neon-line:#29425f;background-color:#071323;background-image:radial-gradient(ellipse at 42% 35%,#12325290,transparent 66%),linear-gradient(#23426222 1px,transparent 1px),linear-gradient(90deg,#23426222 1px,transparent 1px);background-size:auto,28px 28px,28px 28px;color:#eef9ff}
+.silicon-slide .chapter{color:#69c3dd;letter-spacing:2px}
+.silicon-slide h2{color:#e7f7ff;font-size:43px;letter-spacing:-1px}
+.silicon-slide .slide-header{margin-bottom:18px}
+.silicon-slide .slide-header>p{color:#a8bdd4;font-size:23px}
+.silicon-slide .slide-source{color:#7f98b8;font-size:14px}
+.silicon-steps{display:flex;align-items:center;gap:20px;margin:0 0 16px;color:#567899}
+.silicon-steps>button{color:#9fbbd6;border:1px solid #2b4968;background:#0c2037;border-radius:5px;font:17px var(--mono);padding:9px 17px;transition:color .2s,border-color .2s,box-shadow .2s}
+.silicon-steps>button.selected{color:var(--cyan);border-color:#51b9dc;box-shadow:0 0 18px #47c9f929,inset 0 0 16px #47c9f916}
+.physics-layout{display:grid;grid-template-columns:1fr 320px;gap:30px;align-items:center;min-height:355px}
+.physical-stage{height:350px;border:1px solid #2b4968;background:linear-gradient(135deg,#0d2438c9,#09182cc9);border-radius:12px;box-shadow:inset 0 0 45px #2c5f8533,0 0 24px #05101a88;position:relative;overflow:hidden}
+.physical-stage:before,.physical-stage:after{content:"";position:absolute;width:40px;height:40px;border-color:#66d4f5;border-style:solid;pointer-events:none;opacity:.6}
+.physical-stage:before{top:10px;left:10px;border-width:2px 0 0 2px}
+.physical-stage:after{bottom:10px;right:10px;border-width:0 2px 2px 0}
+.physical-stage>svg{width:100%;height:100%;display:block}
+.silicon-slide svg text{font:22px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;fill:#b4cee4}
+.silicon-slide svg .svg-center{text-anchor:middle}
+.silicon-slide svg .svg-small{font-size:17px}
+.silicon-slide svg .svg-tiny{font-size:13px}
+.silicon-slide svg .signal-label{fill:var(--cyan);font:24px var(--mono)}
+.circuit-wire{fill:none;stroke:#557494;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.circuit-wire.signal-high{stroke:#62dbf7;filter:drop-shadow(0 0 3px #4ddcff77)}
+.circuit-wire.signal-pulse{stroke:#92edff;stroke-dasharray:10 9;animation:signal-flow 1.3s linear infinite}
+@keyframes signal-flow{to{stroke-dashoffset:-76}}
+.silicon-substrate{fill:#26354e;stroke:#556e94;stroke-width:2}
+.doped-region{fill:#285d7b;stroke:#78c4db;stroke-width:2}
+.gate-oxide{fill:#bb985c;stroke:#f1d098;stroke-width:1}
+.metal-gate{fill:#4e5a77;stroke:#8eacd0;stroke-width:2;transition:fill .35s}
+.metal-gate.gate-on{fill:#267d97;stroke:#99f3ff;filter:drop-shadow(0 0 10px #58d8f566)}
+.conducting-channel{fill:#5ee7ef99;filter:drop-shadow(0 0 7px #58d8f5)}
+.electric-field{fill:none;stroke:#e7c47e;stroke-width:2;stroke-dasharray:4 3}
+.mos-switch,.transmission-gate,.latch-block{fill:#16253f;stroke:#526a91;stroke-width:2;transition:fill .3s,stroke .3s}
+.mos-switch.switch-on,.transmission-gate.switch-on,.latch-block.switch-on{fill:#113d4c;stroke:#72e8ed;filter:drop-shadow(0 0 6px #4dcbd32b)}
+.logic-symbol,.gate-bubble{fill:#1e2d48;stroke:#b0b6ed;stroke-width:2}
+.rising-edge-mark{fill:none;stroke:#f1c46b;stroke-width:5;filter:drop-shadow(0 0 7px #ffd06777)}
+.physics-explanation>span{font:15px var(--mono);color:#87c8e2;letter-spacing:1px}
+.silicon-slide .physics-explanation h3{font-size:28px;color:#e7f5ff;line-height:1.5;margin:18px 0 16px;letter-spacing:0}
+.physics-explanation p{font-size:22px;line-height:1.85;color:#b1c2d8;margin:0 0 20px;min-height:150px}
+.physics-status{border-left:3px solid var(--cyan);padding:9px 13px;font:20px var(--mono);color:var(--cyan);background:#0e3045;line-height:1.65;min-height:52px}
+.physics-explanation small{font-size:16px;line-height:1.8;color:#839fbd;display:block;margin-top:15px}
+.silicon-slide .silicon-controls{padding-top:15px;margin-bottom:15px}
+.silicon-controls button{background:#122d48;color:#b7d4ec;border:1px solid #315578;border-radius:5px;font-size:18px}
+.silicon-controls button[data-play]{background:#15465c;border-color:#59cee7;color:#baf7ff;box-shadow:0 0 15px #55d2ec20}
+.silicon-controls>span{color:#89a6c4;font-size:17px}
+.register-lab{display:grid;grid-template-columns:215px 1fr 190px;gap:24px;align-items:center;min-height:300px}
+.silicon-label{color:#8aabc9;font-size:16px;line-height:1.6}
+.chip-input-panel>strong,.chip-read-panel>strong{display:block;font:23px var(--mono);color:#9ceefa;margin:16px 0;white-space:nowrap}
+.input-bit-switches{display:flex;gap:7px;margin-top:15px}
+.input-bit-switches>button{background:#112840;border:1px solid #3c617f;color:#7ca0c0;border-radius:5px;width:46px;padding:7px 3px;transition:background .2s,box-shadow .2s}
+.input-bit-switches>button[aria-pressed=true]{background:#184553;border-color:#6be5ee;box-shadow:0 0 13px #61dbe535;color:#a3f1fa}
+.input-bit-switches small{display:block;font:12px var(--mono);margin-bottom:8px;color:#8cafc5}
+.input-bit-switches b{font:30px var(--mono)}
+.chip-input-panel>button,.chip-read-panel>button{background:#17324d;border:1px solid #466c95;border-radius:5px;color:#c0d9ed;font-size:17px;padding:10px 12px;width:100%}
+.chip-input-panel>button[aria-pressed=false]{border-color:#d2a064;color:#edc48b;background:#322a29}
+.chip-input-panel>small,.chip-read-panel>small{display:block;color:#809db8;font-size:16px;line-height:1.75;margin-top:12px}
+.register-chip-diagram{border:1px solid #355677;background:radial-gradient(ellipse,#1c3155bb,#091a2e);border-radius:11px;box-shadow:inset 0 0 30px #214d6e55,0 0 22px #080a1488;height:267px}
+.register-chip-diagram>svg{display:block;width:100%;height:100%}
+.register-bit-cell{fill:#0c2038;stroke:#3e6f96;stroke-width:2}
+.register-bit-cell.capture-flash{stroke:#74edff;fill:#154359;filter:drop-shadow(0 0 7px #56ddeb66);animation:capture-glow .65s ease-out}
+@keyframes capture-glow{from{fill:#2a8191}to{fill:#154359}}
+.mini-latch{fill:#1e2c49;stroke:#556890;stroke-width:1.5}
+.mini-latch.mini-open{fill:#1c4f5e;stroke:#64dbe7}
+.data-mux{fill:#392d54;stroke:#b09bdf;stroke-width:1.5}
+.clock-triangle{fill:#12253e;stroke:#8ad9f4;stroke-width:2}
+.silicon-slide svg .stored-bit{font:27px var(--mono);fill:#b7a9fa}
+.chip-live-status{display:flex;justify-content:space-between;gap:10px;color:#8faac7;font-size:16px;margin-top:12px;align-items:center}
+.chip-live-status b{font:19px var(--mono);color:#7edff6}
+.chip-mode{font-size:14px;color:#c3b2ef;background:#1a2945;padding:6px 9px;border-radius:4px}
+.chip-alu-icon{display:grid;place-items:center;width:90px;height:48px;border:1px solid #615b8f;background:#252343;color:#b6a8f0;font:23px var(--mono);clip-path:polygon(0 0,100% 0,82% 100%,18% 100%);margin:14px auto}
+.chip-read-panel{text-align:center;padding:16px 10px;border:1px solid #30415c;border-radius:8px;transition:border .2s,box-shadow .2s}
+.chip-read-panel>strong{font-size:21px}
+.chip-read-panel>small{margin:5px 0 15px}
+.chip-read-panel.read-active{border-color:#76d8f2;box-shadow:0 0 25px #52cef53b}
+.register-timing{height:86px;border-top:1px solid #294761;border-bottom:1px solid #294761;padding:5px 8px;margin-top:16px;background:#07172688}
+.register-timing svg{display:block;width:100%;height:100%}
+.timing-q{fill:#182b4c;stroke:#344b71;stroke-width:1}
+.timing-q.timing-capture{fill:#1c535e;stroke:#61cadc}
+.timing-edge{stroke:#caaa6a;stroke-width:1.5;stroke-dasharray:4 4;opacity:.8}
+.chip-caption{font-size:21px;line-height:1.65;color:#a9c3db;min-height:44px;margin:13px 0 0}
+.register-chip-slide .silicon-controls{padding-top:9px}
 </style></head>
 <body>
 <header class="app-bar"><a class="app-brand" href="#slide=1">[·] 矩阵与 AI</a><span class="app-description">20 分钟演讲版</span><div class="app-tools"><button id="overview-button" title="目录 O">目录 <kbd>O</kbd></button><button id="notes-button" aria-pressed="false" title="演讲备注 N">备注 <kbd>N</kbd></button><button id="fullscreen-button" title="全屏 F">全屏 <kbd>F</kbd></button><button id="help-button" aria-label="查看快捷键">?</button></div></header>
@@ -199,46 +281,63 @@
   <div class="cover-bottom"><span>中文讲解 · 过程动画 · 约 20 分钟</span><span>按 → 开始</span></div>
 </section>
 
-<section class="slide hardware-register-slide" data-title="硬件入门：内存、寄存器与运算单元" data-seconds="60">
-  <div class="slide-header"><span class="chapter">硬件入门 1 / 5 · 先认识三个角色</span><h2>数据先拿到手边，运算单元再计算</h2><p>内存 / 显存像仓库，寄存器像手边的小格子，运算单元像计算工具</p></div>
+<section class="slide silicon-slide register-physics-slide" data-title="寄存器物理结构：从晶体管到一位存储" data-seconds="75">
+  <div class="slide-header"><span class="chapter">硬件入门 1 / 7 · 放大芯片内部</span><h2>寄存器里的 0 和 1，是电路的稳定状态</h2><p>从一个电控开关开始，逐层看到“一位数据”怎样被保存</p></div>
+  <div class="silicon-steps"><button data-physics-level="0">01 晶体管</button><span>→</span><button data-physics-level="2">02 反相器</button><span>→</span><button data-physics-level="4">03 反馈存储</button><span>→</span><button data-physics-level="7">04 时钟采样</button></div>
+  <div class="physics-layout"><div class="physical-stage" id="physical-stage" role="img" aria-label="寄存器物理结构分层示意图"></div><div class="physics-explanation"><span id="physics-level">晶体管 / TRANSISTOR</span><h3 id="physics-heading">栅极电压，控制导电通道</h3><p id="physics-description"></p><div class="physics-status" id="physics-status"></div><small>1 表示高电平，0 表示低电平；电路通电时保存状态。</small></div></div>
+  <div class="demo-controls silicon-controls"><button data-play="physics">播放结构动画</button><button data-step="physics">下一步</button><button data-reset="physics">重置</button><span id="physics-progress">1 / 9 个画面</span></div>
+  <div class="slide-source">一种平面 CMOS 与主从触发器的原理示意，非芯片照片或工艺版图；光点表示信号变化。来源：MIT 6.004、汉堡大学数字电路演示。</div>
+</section>
+
+<section class="slide silicon-slide register-chip-slide" data-title="寄存器案例：四位数据的写入、保持与读出" data-seconds="75">
+  <div class="slide-header"><span class="chapter">硬件入门 2 / 7 · 亲手操作一个寄存器</span><h2>四个存储单元，共用同一个时钟</h2><p>先改输入 D，再给时钟一个上升沿；允许写入时，四位数据一起更新</p></div>
+  <div class="register-lab"><div class="chip-input-panel"><span class="silicon-label">输入数据 D · 点击改位</span><div class="input-bit-switches" id="chip-input-bits"></div><strong id="chip-input-value">0011₂ = 3</strong><button id="chip-enable" aria-pressed="true">允许写入 EN = 1</button><small>EN = 0 时，输入端选择旧 Q，继续保存原值。</small></div><div class="chip-lab-center"><div id="register-chip-diagram" class="register-chip-diagram" role="img" aria-label="四位寄存器内部触发器、使能反馈与共用时钟线路"></div><div class="chip-live-status"><span>CLK <b id="chip-clock-value">0</b></span><span>已存数据 Q <b id="chip-stored-value">0000₂ = 0</b></span><span class="chip-mode" id="chip-mode">等待上升沿</span></div></div><div class="chip-read-panel"><span class="silicon-label">最近一次读出 · 运算单元</span><strong id="chip-read-value">尚未读出</strong><div class="chip-alu-icon">ALU</div><small>读出只是把电平提供给下一级，不会清空寄存器。</small><button id="chip-read">读出当前 Q</button></div></div>
+  <div class="register-timing" id="register-timing" role="img" aria-label="CLK、输入 D 与输出 Q 的时序图"></div>
+  <p class="chip-caption" id="chip-caption" aria-live="polite"></p>
+  <div class="demo-controls silicon-controls"><button data-play="register-chip">播放完整案例</button><button data-step="register-chip">案例下一步</button><button data-reset="register-chip">重置</button><button id="chip-clock">时钟 0 → 1</button><span id="chip-case-progress">0 / 8 步</span></div>
+  <div class="slide-source">4 位是数的位宽，矩阵仍为 4×4。这是触发器式教学寄存器；大型寄存器文件也可用 SRAM 阵列。初始清零为演示设定。</div>
+</section>
+
+<section class="slide hardware-register-slide" data-title="硬件入门：内存、寄存器与运算单元" data-seconds="40">
+  <div class="slide-header"><span class="chapter">硬件入门 3 / 7 · 先认识三个角色</span><h2>数据先拿到手边，运算单元再计算</h2><p>内存 / 显存像仓库，寄存器像手边的小格子，运算单元像计算工具</p></div>
   <div class="register-layout"><div class="hardware-memory" id="hw-memory"><h3>内存 / 显存中的 A、B</h3><div class="hardware-inputs"><div><span>A · 4×4</span><div class="hardware-matrix" id="hardware-a"></div></div><div><span>B · 4×4</span><div class="hardware-matrix" id="hardware-b"></div></div></div><p>只放大第一行 × 第一列<br>得到左上角 C₁₁</p></div><span class="hardware-arrow" id="hw-load-arrow">→<small>读取</small></span><div class="hardware-processor"><span class="processor-label">处理器内部 · CPU / GPU 的简化示意</span><div class="hardware-registers" id="hw-registers"><h3>寄存器 · 暂存操作数</h3><div><span>Rₐ <b id="register-a">?</b></span><span>Rᵦ <b id="register-b">?</b></span></div></div><div class="hardware-alu" id="hw-alu"><span>↓</span><h3>运算单元 · 做乘法与加法</h3><strong id="register-operation">等待取数</strong></div><div class="hardware-accumulator" id="hw-accumulator"><span>累加结果也放在寄存器</span><strong>S = <b id="register-sum">0</b></strong></div></div><span class="hardware-arrow" id="hw-store-arrow">→<small>写回</small></span><div class="hardware-output" id="hw-output"><span>内存 / 显存</span><strong>C₁₁ = <b id="register-output">?</b></strong></div></div>
   <p class="hardware-caption" id="register-caption" aria-live="polite">先让 S = 0，再依次读取四对元素。寄存器负责存，运算单元负责算。</p>
   <div class="demo-controls"><button data-play="register">播放取数与计算</button><button data-step="register">下一步</button><button data-reset="register">重置</button><span id="register-progress">0 / 9 步</span></div>
   <div class="slide-source">省略指令译码、缓存等细节。寄存器容量有限；GPU 共享内存与缓存属于其他片上存储。来源：NVIDIA CUDA 官方指南。</div>
 </section>
 
-<section class="slide hardware-binary-slide" data-title="硬件入门：为什么加法电路更简单" data-seconds="75">
-  <div class="slide-header"><span class="chapter">硬件入门 2 / 5 · 放大一个数的内部计算</span><h2>加法处理进位，乘法还要合并部分积</h2><p>矩阵里的数用二进制存储：例如十进制的 3，写成四位二进制就是 0011</p></div>
+<section class="slide hardware-binary-slide" data-title="硬件入门：为什么加法电路更简单" data-seconds="55">
+  <div class="slide-header"><span class="chapter">硬件入门 4 / 7 · 放大一个数的内部计算</span><h2>加法处理进位，乘法还要合并部分积</h2><p>矩阵里的数用二进制存储：例如十进制的 3，写成四位二进制就是 0011</p></div>
   <div class="binary-comparison"><div class="binary-panel"><h3>加法：3 + 3 = 6</h3><p>从右向左，每位加上两个输入和进位</p><div class="adder-table" id="adder-table"></div><div class="binary-step-detail" id="adder-detail">最右位：1 + 1 = 二进制 10，要向左进 1。</div><div class="binary-answer" id="adder-answer">结果：?????</div></div><div class="binary-panel"><h3>乘法：3 × 3 = 9</h3><p>逐位产生部分积，移位后再相加</p><div class="partial-table" id="partial-table"></div><div class="binary-step-detail" id="multiplier-detail">乘数的某一位为 1，就取被乘数；为 0，就取 0。</div><div class="binary-answer" id="multiplier-answer">结果：????????</div></div></div>
   <p class="binary-conclusion">同样位宽下，通用整数乘法通常需要更多组合与加法电路；减法也可用补码交给加法器。</p>
   <div class="demo-controls"><button data-play="binary">播放电路思路</button><button data-step="binary">下一步</button><button data-reset="binary">重置</button><span>按位展开是解释原理，动画步数不代表时钟周期</span></div>
   <div class="slide-source">这里的“四位”是单个数的位宽，矩阵案例始终为 4×4。现代乘法器会并行合并部分积。来源：大学计算机组成课程讲义。</div>
 </section>
 
-<section class="slide" data-title="GPU 的并行计算" data-seconds="45">
-  <div class="slide-header"><span class="chapter">硬件入门 3 / 5 · 让多个运算单元一起工作</span><h2>GPU 把许多计算任务分给小组同时做</h2><p>同一个 4×4 输出矩阵有 16 个格子，把它们看成 16 个独立任务</p></div>
+<section class="slide" data-title="GPU 的并行计算" data-seconds="35">
+  <div class="slide-header"><span class="chapter">硬件入门 5 / 7 · 让多个运算单元一起工作</span><h2>GPU 把许多计算任务分给小组同时做</h2><p>同一个 4×4 输出矩阵有 16 个格子，把它们看成 16 个独立任务</p></div>
   <div class="parallel-layout"><div><h3>逐个处理 <span id="gpu-serial-label">0 / 16 轮</span></h3><div class="task-board" id="gpu-serial"></div><p>一轮完成一个任务</p></div><div><h3>4 组同时处理 <span id="gpu-parallel-label">0 / 4 轮</span></h3><div class="task-board purple" id="gpu-parallel"></div><p>一轮最多完成四个任务</p></div></div>
   <div class="demo-controls"><button data-play="gpu">播放对比</button><button data-step="gpu">推进一轮</button><button data-reset="gpu">重置</button><span id="gpu-caption" aria-live="polite">并行计算需要足够多、能够分开的任务</span></div>
   <div class="slide-source">原理示意，忽略通信与调度。CPU 也可以并行，这里不是硬件测速。来源：NVIDIA GPU 基础</div>
 </section>
 
-<section class="slide" data-title="数据复用与访存开销" data-seconds="45">
-  <div class="slide-header"><span class="chapter">硬件入门 4 / 5 · 减少数据搬运</span><h2>减少数据搬运，也能让计算更快</h2><p>4×4 的 A 有 16 个元素，每个元素都参与 4 个输出列的计算</p></div>
+<section class="slide" data-title="数据复用与访存开销" data-seconds="35">
+  <div class="slide-header"><span class="chapter">硬件入门 6 / 7 · 减少数据搬运</span><h2>减少数据搬运，也能让计算更快</h2><p>4×4 的 A 有 16 个元素，每个元素都参与 4 个输出列的计算</p></div>
   <div class="memory-layout"><div><h3>每次使用都去拿</h3><div class="trip-number"><b id="memory-naive">0</b><span>/ 64 趟</span></div><div class="transport"><span>显存</span><div class="transport-line"><i id="package-naive"></i></div><span>运算单元</span></div><p>16 份 × 4 次，共取 64 趟</p></div><div><h3>暂存到片上，重复使用</h3><div class="trip-number purple-text"><b id="memory-reuse">0</b><span>/ 16 趟</span></div><div class="transport"><span>显存</span><div class="transport-line"><i id="package-reuse"></i></div><span>片上存储</span></div><p>每份取一次，共取 16 趟</p></div></div>
   <div class="memory-connection"><strong>寄存器 / 共享内存</strong><span>都在芯片上，容量有限；共享内存可供线程组协作复用。FlashAttention 也利用分块减少显存读写。</span></div>
   <div class="demo-controls"><button data-play="memory">播放搬运</button><button data-step="memory">下一步</button><button data-reset="memory">重置</button></div>
   <div class="slide-source">只统计 A 的读取，并假设手边容量足够。B 与输出的开销未计入。这是教学示意，不是 FlashAttention 实测加速比。</div>
 </section>
 
-<section class="slide hardware-cost-slide" data-title="硬件入门：电路复杂度与实际速度" data-seconds="45">
-  <div class="slide-header"><span class="chapter">硬件入门 5 / 5 · 把直觉用对地方</span><h2>加法是基础积木，实际速度还要看机器</h2><p>“电路更简单”能解释优化动机；运行时间需要结合指令与数据搬运来判断</p></div>
+<section class="slide hardware-cost-slide" data-title="硬件入门：电路复杂度与实际速度" data-seconds="35">
+  <div class="slide-header"><span class="chapter">硬件入门 7 / 7 · 把直觉用对地方</span><h2>加法是基础积木，实际速度还要看机器</h2><p>“电路更简单”能解释优化动机；运行时间需要结合指令与数据搬运来判断</p></div>
   <div class="hardware-facts"><div><span>01 · 电路</span><h3>整数加法比较基础</h3><p>同样位宽下，乘法通常要形成并合并多组部分积，使用更多电路资源。</p></div><div><span>02 · 指令</span><h3>现代硬件很擅长乘加</h3><p>GPU 的浮点加法与乘法可以有相同吞吐量；一条 FMA 指令能融合乘法与加法。</p></div><div><span>03 · 数据</span><h3>等待数据也要时间</h3><p>寄存器有限，中间结果太多会增加存储压力。少算、并行、少搬都可能带来收益。</p></div></div>
   <div class="fma-callout"><span>FMA · 融合乘加</span><strong>S ← a × b + S</strong><span>一条指令完成融合乘加；Tensor Core 还提供专用矩阵乘加能力</span></div>
   <div class="wide-takeaway compact">接下来研究：能否多做一些加减法，换掉成本更高的矩阵块乘法？</div>
   <div class="slide-source">吞吐量是单位时间能完成多少操作，和单次等待时间不同。这里不给加法与乘法规定固定速度比。来源：NVIDIA 指令吞吐量表与最佳实践指南。</div>
 </section>
 
-<section class="slide" data-title="矩阵与现代计算" data-seconds="30">
+<section class="slide" data-title="矩阵与现代计算" data-seconds="20">
   <div class="slide-header"><span class="chapter">计算背景</span><h2>矩阵与现代计算</h2><p>很多复杂应用，最终都包含大量矩阵运算</p></div>
   <div class="applications"><div><span class="application-index">01</span><h3>图像与图形</h3><p>像素排列成表格<br>坐标变换使用矩阵</p></div><div><span class="application-index">02</span><h3>神经网络</h3><p>输入与权重相乘<br>逐层计算新的表示</p></div><div><span class="application-index">03</span><h3>科学计算</h3><p>求解线性方程组<br>处理模拟中的数值计算</p></div></div>
   <div class="wide-takeaway">一个基础操作的改进，可能影响许多上层应用</div>
@@ -264,7 +363,7 @@
   <div class="wide-takeaway compact">4 个输出块 × 每块 2 个乘积 = 8 次块乘法，继续直接算块内部就是 8 × 8 = 64 次标量乘法</div>
 </section>
 
-<section class="slide seed-slide" data-title="Strassen第三步：构造可复用的乘积" data-seconds="40">
+<section class="slide seed-slide" data-title="Strassen第三步：构造可复用的乘积" data-seconds="35">
   <div class="slide-header"><span class="chapter">Strassen 推导 3 / 7 · 构造思路</span><h2>先让一个乘积包含两处需要的项</h2><p>r 需要 ae，u 需要 dh。尝试把它们放进同一个中间乘积。</p></div>
   <div class="seed-expression">M₁ = (a + d)(e + h)</div>
   <div class="seed-expansion" id="seed-expansion"><span>=</span><b class="wanted">ae</b><span>+</span><b class="extra">ah</b><span>+</span><b class="extra">de</b><span>+</span><b class="wanted">dh</b></div>
@@ -274,7 +373,7 @@
   <div class="slide-source">M₁ 还不是任何一个完整输出：r 还缺 bg，u 还缺 cf，每个输出的多余项也需要分别抵消。</div>
 </section>
 
-<section class="slide definitions-slide" data-title="Strassen第四步：七个中间乘积公式" data-seconds="50">
+<section class="slide definitions-slide" data-title="Strassen第四步：七个中间乘积公式" data-seconds="45">
   <div class="slide-header"><span class="chapter">Strassen 推导 4 / 7 · 完整构造</span><h2>七个中间乘积的公式</h2><p>每条公式只有 1 次块乘法，括号内部先做加减法</p></div>
   <div class="seven-definitions" id="seven-definitions"></div>
   <div class="definition-expansion" id="definition-expansion" aria-live="polite">接下来逐条展开，观察哪些项能相互抵消。</div>
@@ -282,35 +381,35 @@
   <div class="slide-source">来源：Strassen 经典恒等式。这里只使用分配律与加减法，不交换矩阵乘法的左右顺序。</div>
 </section>
 
-<section class="slide simple-proof-slide" data-title="Strassen第五步：验证右上与左下输出" data-seconds="50">
+<section class="slide simple-proof-slide" data-title="Strassen第五步：验证右上与左下输出" data-seconds="45">
   <div class="slide-header"><span class="chapter">Strassen 推导 5 / 7 · 先验证两处简单的输出</span><h2>多出来的项，可以成对抵消</h2><p>先看右上块 s 和左下块 t，分别只需要组合两个中间乘积</p></div>
   <div class="simple-proofs"><div><h3>右上块 s</h3><div class="proof-line">s = M₃ + M₅</div><div class="proof-line reveal-simple" data-proof-level="1">= a(f − h) + (a + b)h</div><div class="proof-line reveal-simple" data-proof-level="2">= af <s>− ah + ah</s> + bh</div><div class="proof-line proof-result reveal-simple" data-proof-level="3">= af + bh ✓</div></div><div><h3>左下块 t</h3><div class="proof-line">t = M₂ + M₄</div><div class="proof-line reveal-simple" data-proof-level="1">= (c + d)e + d(g − e)</div><div class="proof-line reveal-simple" data-proof-level="2">= ce <s>+ de − de</s> + dg</div><div class="proof-line proof-result reveal-simple" data-proof-level="3">= ce + dg ✓</div></div></div>
   <p class="proof-caption" id="simple-proof-caption" aria-live="polite">点击下一步，先代入定义，再展开，最后消去相反项。</p>
   <div class="demo-controls"><button data-play="simple-proof">播放两处验证</button><button data-step="simple-proof">下一步</button><button data-reset="simple-proof">重置</button><span>结果恰好回到普通分块乘法的公式</span></div>
 </section>
 
-<section class="slide cancellation-slide" data-title="Strassen第六步：推导左上输出块" data-seconds="55">
+<section class="slide cancellation-slide" data-title="Strassen第六步：推导左上输出块" data-seconds="50">
   <div class="slide-header"><span class="chapter">Strassen 推导 6 / 7 · 验证左上块</span><h2>r = M₁ + M₄ − M₅ + M₇</h2><p>把四个中间乘积展开，多余项逐对抵消，留下 ae + bg</p></div>
   <div class="cancellation-layout"><div class="cancellation-workbench" id="proof-r-workbench"></div><div class="cancellation-pairs"><h3>本次抵消</h3><strong id="proof-r-pair">等待第一对</strong><p id="proof-r-explain">有正项也有负项时，可以按加法把它们放在一起抵消。</p><div class="final-block-result" id="proof-r-result">r = ae + bg ✓</div></div></div>
   <div class="demo-controls"><button data-play="proof-r">播放抵消</button><button data-step="proof-r">消去下一对</button><button data-reset="proof-r">重置</button><span id="proof-r-progress">0 / 5 对</span></div>
   <div class="slide-source">a…h 是原 4×4 矩阵的内部块。这里重排的是加法项，乘积 ae、ah 等的左右顺序始终不变。</div>
 </section>
 
-<section class="slide cancellation-slide" data-title="Strassen第七步：推导右下并完成验证" data-seconds="60">
+<section class="slide cancellation-slide" data-title="Strassen第七步：推导右下并完成验证" data-seconds="50">
   <div class="slide-header"><span class="chapter">Strassen 推导 7 / 7 · 验证右下块</span><h2>u = M₁ − M₂ + M₃ + M₆</h2><p>同样展开并抵消，留下 cf + dh，四个输出公式就都验证完成了</p></div>
   <div class="cancellation-layout"><div class="cancellation-workbench" id="proof-u-workbench"></div><div class="cancellation-pairs"><h3>本次抵消</h3><strong id="proof-u-pair">等待第一对</strong><p id="proof-u-explain">这次也复用了 M₁，但按右下输出的目标抵消不同的多余项。</p><div class="final-block-result" id="proof-u-result">u = cf + dh ✓</div></div></div>
   <div class="verified-blocks reconstruction-summary" id="verified-blocks"><span>r = M₁ + M₄ − M₅ + M₇</span><span>s = M₃ + M₅</span><span>t = M₂ + M₄</span><span>u = M₁ − M₂ + M₃ + M₆</span></div>
   <div class="demo-controls"><button data-play="proof-u">播放抵消</button><button data-step="proof-u">消去下一对</button><button data-reset="proof-u">重置</button><span id="proof-u-progress">0 / 5 对</span></div>
 </section>
 
-<section class="slide strassen-four-slide" data-title="4×4矩阵的Strassen算法" data-seconds="60">
+<section class="slide strassen-four-slide" data-title="4×4矩阵的Strassen算法" data-seconds="50">
   <div class="slide-header"><span class="chapter">沿用同一组 4 × 4 输入</span><h2>Strassen 用 49 次乘法还原相同的结果</h2><p>把 4×4 分成四个内部块，组合输入并复用中间乘积</p></div>
   <div class="strassen-four-layout"><div><div class="strassen-route">7 组块乘法 × 每组 7 次 = <b>49</b></div><div class="strassen-groups" id="strassen-products"></div><div class="demo-equation" id="strassen-product-equation">等待第一项</div><p id="strassen-caption" class="strassen-four-caption" aria-live="polite">高亮表示正在计算哪一组，每组包含 7 次标量乘法</p></div><div class="strassen-output-block"><span id="strassen-output-label">C 的过程累计 · 4 × 4</span><div class="matrix basic-four" id="strassen-output"></div><strong id="strassen-answer">0 / 49 次乘法</strong><small>完成后与前面的直接算法核对</small></div></div>
   <div class="demo-controls"><button data-play="strassen">播放 49 步</button><button data-step="strassen">下一步</button><button data-reset="strassen">重置</button><button id="strassen-finish">看完整结果</button><span>经典两层递归实现使用 198 次加减法</span></div>
   <div class="slide-source">2×2 只作为 4×4 的内部块。乘积动画展示分解贡献，198 是经典递归实现的加减法计数。来源：Strassen 与大学课程讲义。</div>
 </section>
 
-<section class="slide tradeoff-slide" data-title="为什么增加加法减少乘法" data-seconds="60">
+<section class="slide tradeoff-slide" data-title="为什么增加加法减少乘法" data-seconds="50">
   <div class="slide-header"><span class="chapter">仍然计算同一个 4 × 4 乘积</span><h2>多做加减法，是为了复用更少的乘积</h2><p>是否划算，要看省下的乘法成本能否覆盖新增的加法</p></div>
   <table class="tradeoff-table"><thead><tr><th>4×4 算法</th><th>乘法次数</th><th>加减法次数</th></tr></thead><tbody><tr><td>直接行乘列</td><td>64</td><td>48</td></tr><tr><td>经典 Strassen 递归</td><td class="purple-text">49</td><td>198</td></tr></tbody></table>
   <div class="tradeoff-saving">少做 <b>15</b> 次乘法，代价是多做 <b>150</b> 次加减法</div>
@@ -334,7 +433,7 @@
   <div class="wide-takeaway">接下来的三种算法，都在同一个模 2 规则下计算</div>
 </section>
 
-<section class="slide comparison-slide" data-title="四阶矩阵三算法动画对比" data-seconds="110">
+<section class="slide comparison-slide" data-title="四阶矩阵三算法动画对比" data-seconds="100">
   <div class="slide-header"><span class="chapter">同一组 4 × 4 输入</span><h2>三条路径，最后得到同一个答案</h2><p>每拍展示一次标量乘法。输入高亮表示取数，橙色表示输出贡献。</p></div>
   <div class="talk-comparison" id="talk-comparison"></div>
   <div class="comparison-status" id="comparison-status" aria-live="polite">统一采用模 2 运算。每列内部使用相同的 A 与 B。</div>
@@ -342,7 +441,7 @@
   <div class="slide-source">实际执行作者公开的 rank-47 分解。动画结束先后表示乘法次数差异，不等于真实运行时间比。</div>
 </section>
 
-<section class="slide tensor-four-slide" data-title="4×4算法正确性的检查" data-seconds="45">
+<section class="slide tensor-four-slide" data-title="4×4算法正确性的检查" data-seconds="35">
   <div class="slide-header"><span class="chapter">验证作者公开的 4 × 4、47 次方案</span><h2>16 个输出格子，都必须符合矩阵乘法</h2><p>下面是 4×4 输出的关系检查表，每格显示该输出还有多少条计算关系未吻合</p></div>
   <div class="tensor-four-layout"><div class="tensor-four-grid" id="talk-tensor"></div><div class="tensor-info"><div><span>已加入的中间乘积</span><strong id="tensor-count">0 / 47</strong></div><div><span>未吻合的关系总数</span><strong id="tensor-remaining">64</strong></div><p id="tensor-caption" aria-live="polite">一个组合乘积可能影响多个输出，最终所有关系必须归零。</p></div></div>
   <div class="demo-controls"><button data-play="tensor">播放验证</button><button data-step="tensor">下一步</button><button data-reset="tensor">重置</button><button id="tensor-finish">看验证终点</button><span>格内是关系条数，不是矩阵计算结果</span></div>
@@ -374,15 +473,15 @@
 
 <section class="slide sources-slide" data-title="参考资料" data-seconds="20">
   <div class="slide-header"><span class="chapter">参考资料</span><h2>论文与官方技术资料</h2><p>链接可点击，详细引用也保存在各页演讲备注中</p></div>
-  <ol class="source-links"><li><a href="https://doi.org/10.1038/s41586-022-05172-4" target="_blank" rel="noopener noreferrer"><b>AlphaTensor · Nature 2022</b><span>Fawzi 等，Discovering faster matrix multiplication algorithms with reinforcement learning</span></a></li><li><a href="https://link.springer.com/article/10.1007/BF02165411" target="_blank" rel="noopener noreferrer"><b>Strassen · 1969</b><span>Gaussian elimination is not optimal</span></a></li><li><a href="https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/" target="_blank" rel="noopener noreferrer"><b>NVIDIA GPU 与矩阵乘法指南</b><span>矩阵分块、并行计算、计算与访存瓶颈</span></a></li><li><a href="https://arxiv.org/abs/2205.14135" target="_blank" rel="noopener noreferrer"><b>FlashAttention · 2022</b><span>Dao 等，Fast and Memory-Efficient Exact Attention with IO-Awareness</span></a></li><li><a href="https://arxiv.org/abs/2506.13131" target="_blank" rel="noopener noreferrer"><b>AlphaEvolve · 2025</b><span>Novikov 等，A coding agent for scientific and algorithmic discovery</span></a></li><li><a href="https://homepage.cs.uiowa.edu/~dwjones/assem/summer18/notes/09muldiv.shtml" target="_blank" rel="noopener noreferrer"><b>硬件基础 · 大学课程与 CUDA 官方指南</b><span>二进制部分积、寄存器、片上存储与指令吞吐量；各页备注附详细链接</span></a></li></ol>
+  <ol class="source-links"><li><a href="https://doi.org/10.1038/s41586-022-05172-4" target="_blank" rel="noopener noreferrer"><b>AlphaTensor · Nature 2022</b><span>Fawzi 等，Discovering faster matrix multiplication algorithms with reinforcement learning</span></a></li><li><a href="https://link.springer.com/article/10.1007/BF02165411" target="_blank" rel="noopener noreferrer"><b>Strassen · 1969</b><span>Gaussian elimination is not optimal</span></a></li><li><a href="https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/" target="_blank" rel="noopener noreferrer"><b>NVIDIA GPU 与矩阵乘法指南</b><span>矩阵分块、并行计算、计算与访存瓶颈</span></a></li><li><a href="https://arxiv.org/abs/2205.14135" target="_blank" rel="noopener noreferrer"><b>FlashAttention · 2022</b><span>Dao 等，Fast and Memory-Efficient Exact Attention with IO-Awareness</span></a></li><li><a href="https://arxiv.org/abs/2506.13131" target="_blank" rel="noopener noreferrer"><b>AlphaEvolve · 2025</b><span>Novikov 等，A coding agent for scientific and algorithmic discovery</span></a></li><li><a href="https://homepage.cs.uiowa.edu/~dwjones/assem/summer18/notes/09muldiv.shtml" target="_blank" rel="noopener noreferrer"><b>硬件基础 · 大学课程与 CUDA 官方指南</b><span>晶体管、触发器、寄存器、二进制运算与 GPU；各页备注附详细链接</span></a></li></ol>
   <div class="slide-source">AlphaTensor 47 次方案来自作者开源仓库，使用 Apache 2.0 许可。来源版本与许可全文嵌入此 HTML。</div>
 </section>
 
 </div></main>
 <aside id="notes-panel" hidden aria-label="演讲备注"><div class="notes-heading"><strong>演讲备注</strong><button id="notes-close" aria-label="关闭演讲备注">×</button></div><div id="notes-content"></div></aside>
-<footer class="navigation"><button id="previous" aria-label="上一页">← 上一页</button><span id="slide-count">01 / 26</span><span id="slide-title">AI 如何发现更快的矩阵乘法</span><div class="nav-right"><button id="timer-button" title="开始或暂停计时 T">计时 <span id="elapsed">00:00</span></button><button id="timer-reset" title="重置计时" aria-label="重置演讲计时">↺</button><button id="next" aria-label="下一页">下一页 →</button></div></footer>
+<footer class="navigation"><button id="previous" aria-label="上一页">← 上一页</button><span id="slide-count">01 / 28</span><span id="slide-title">AI 如何发现更快的矩阵乘法</span><div class="nav-right"><button id="timer-button" title="开始或暂停计时 T">计时 <span id="elapsed">00:00</span></button><button id="timer-reset" title="重置计时" aria-label="重置演讲计时">↺</button><button id="next" aria-label="下一页">下一页 →</button></div></footer>
 <div class="deck-progress" aria-hidden="true"><span id="deck-progress"></span></div>
-<dialog id="overview-dialog"><div class="dialog-header"><h2>演讲目录</h2><button data-close="overview-dialog" aria-label="关闭目录">×</button></div><p>26 页，建议讲解时间共 20 分钟。点击任意一页跳转。</p><div id="overview-grid"></div></dialog>
+<dialog id="overview-dialog"><div class="dialog-header"><h2>演讲目录</h2><button data-close="overview-dialog" aria-label="关闭目录">×</button></div><p>28 页，建议讲解时间共 20 分钟。点击任意一页跳转。</p><div id="overview-grid"></div></dialog>
 <dialog id="help-dialog"><div class="dialog-header"><h2>演示快捷键</h2><button data-close="help-dialog" aria-label="关闭快捷键">×</button></div><dl class="shortcut-list"><dt>→ / ↓ / 空格 / Page Down</dt><dd>下一页</dd><dt>← / ↑ / Page Up</dt><dd>上一页</dd><dt>Home / End</dt><dd>第一页 / 最后一页</dd><dt>F</dt><dd>进入或退出全屏</dd><dt>N</dt><dd>显示或隐藏本页演讲备注</dd><dt>O</dt><dd>打开目录</dd><dt>B</dt><dd>黑屏 / 恢复画面</dd><dt>T</dt><dd>开始或暂停演讲计时</dd><dt>R</dt><dd>重置当前页动画</dd></dl><p>动画由页面中的播放按钮控制。翻页会暂停动画。按 Esc 关闭目录或备注。备注会显示在当前屏幕上。</p></dialog>
 <div id="blackout" hidden><span>按 B 或点击恢复</span></div><button id="exit-cinema" aria-label="退出全屏演示">退出全屏 F</button><div class="sr-only" id="announcement" aria-live="polite"></div>
 <script>// AlphaTensor authors' published rank-47 factorization; output factor transposed to row-major C.
@@ -536,6 +635,148 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
 
 "use strict";
 (() => {
+  // Ideal digital model: setup/hold time and propagation delay are discussed
+  // in the speaker notes. EN is implemented with a data mux, not a gated clock.
+  const initial=()=>({d:3,q:0,clock:0,enable:1,read:null,captured:false,event:'ready'});
+  function transition(state,event){
+    const next={...state,captured:false,event:event.type};
+    if(event.type==='data')next.d=event.value&15;
+    if(event.type==='enable')next.enable=event.value?1:0;
+    if(event.type==='clock'){
+      next.clock=event.value?1:0;
+      if(state.clock===0&&next.clock===1&&state.enable){next.q=state.d;next.captured=true;}
+    }
+    if(event.type==='read')next.read=state.q;
+    return next;
+  }
+  const script=[
+    [{type:'clock',value:1}],
+    [{type:'data',value:12}],
+    [{type:'clock',value:0}],
+    [{type:'enable',value:0},{type:'clock',value:1}],
+    [{type:'clock',value:0},{type:'enable',value:1}],
+    [{type:'clock',value:1}],
+    [{type:'data',value:5}],
+    [{type:'read'}]
+  ];
+  function scriptedFrames(){
+    let state=initial();const frames=[state];
+    for(const events of script){for(const event of events)state=transition(state,event);frames.push(state);}
+    return frames;
+  }
+  globalThis.RegisterPhysics={initial,transition,scriptedFrames};
+})();
+
+"use strict";
+(() => {
+  const $=selector=>document.querySelector(selector),$$=selector=>[...document.querySelectorAll(selector)];
+  const text=(x,y,value,kind='')=>`<text x="${x}" y="${y}" class="${kind}">${value}</text>`;
+  const path=(d,high=false,pulse=false)=>`<path d="${d}" class="circuit-wire ${high?'signal-high':''} ${pulse?'signal-pulse':''}"/>`;
+  const svg=body=>`<svg viewBox="0 0 920 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${body}</svg>`;
+  function transistor(on){
+    return svg(`<rect x="120" y="150" width="690" height="165" rx="12" class="silicon-substrate"/><rect x="180" y="150" width="130" height="65" rx="4" class="doped-region"/><rect x="620" y="150" width="130" height="65" rx="4" class="doped-region"/><rect x="310" y="125" width="310" height="20" class="gate-oxide"/><rect x="310" y="78" width="310" height="45" rx="3" class="metal-gate ${on?'gate-on':''}"/>${path('M245 150 V40 H180')}${path('M685 150 V40 H750')}${path('M465 78 V70 M465 32 V25',on)}${text(100,40,'源极 S')}${text(750,40,'漏极 D')}${text(465,62,`栅极 G = ${on?1:0}`,'svg-center signal-label')}${text(245,190,'n⁺','svg-center')}${text(685,190,'n⁺','svg-center')}${text(465,278,'p 型硅衬底','svg-center')}${text(465,337,'绝缘氧化层隔开栅极与硅；栅极电场控制下方通道','svg-center svg-small')}${on?`<rect x="310" y="151" width="310" height="17" class="conducting-channel"/>${path('M310 159 H620',true,true)}<path d="M365 123 V148 M465 123 V148 M565 123 V148" class="electric-field"/>`:text(465,192,'通道未形成','svg-center svg-small')}${path('M620 135 H850 V112')}${text(850,100,'氧化层','svg-center svg-small')}`);
+  }
+  function inverter(input){
+    const output=1-input;
+    return svg(`${path('M455 28 V70',!input)}${text(455,20,'电源 VDD','svg-center svg-small')}<rect x="410" y="70" width="90" height="70" rx="7" class="mos-switch ${!input?'switch-on':''}"/>${text(455,112,'pMOS','svg-center svg-small')}${path('M455 140 V190 H740',!!output,!input)}${path('M455 190 V230',!!input)}<rect x="410" y="230" width="90" height="70" rx="7" class="mos-switch ${input?'switch-on':''}"/>${text(455,272,'nMOS','svg-center svg-small')}${path('M455 300 V326',!!input)}${path('M420 326 H490 M430 337 H480 M442 348 H468')}${path('M140 190 H330 V105 H397',!!input)}<circle cx="403" cy="105" r="6" class="gate-bubble"/>${path('M330 190 V265 H410',!!input)}${text(130,170,`输入 A = ${input}`)}${text(750,198,`输出 Y = ${output}`,'signal-label')}${text(550,110,input?'关断':'导通','svg-small')}${text(550,270,input?'导通':'关断','svg-small')}${text(455,205,'●','svg-center svg-small')}${text(170,315,'CMOS 反相器：一个 pMOS + 一个 nMOS','svg-small')}`);
+  }
+  function inverterSymbol(x,y){return `<path d="M${x} ${y-30} L${x+60} ${y} L${x} ${y+30} Z" class="logic-symbol"/><circle cx="${x+67}" cy="${y}" r="7" class="gate-bubble"/>`;}
+  function transmissionGate(x,y,on,label){
+    return `<rect x="${x}" y="${y-25}" width="100" height="50" rx="7" class="transmission-gate ${on?'switch-on':''}"/>${text(x+50,y+7,'TG','svg-center')}${text(x+50,y-38,label,'svg-center svg-small')}`;
+  }
+  function latch(d,enable,q){
+    return svg(`${path('M40 170 H140',!!d,!!enable)}${text(40,145,`D = ${d}`)}${transmissionGate(140,170,enable,`输入开关 ${enable?'开':'关'}`)}${path('M240 170 H340',!!q,!!enable)}${inverterSymbol(340,170)}${path('M414 170 H560',!q,!!enable)}${text(485,145,String(1-q),'svg-center signal-label')}${inverterSymbol(560,170)}${path('M634 170 H850',!!q,!!enable)}${text(850,145,`Q = ${q}`,'svg-center signal-label')}${path('M740 170 V292 H540',!!q,!enable)}${transmissionGate(440,292,!enable,`反馈开关 ${enable?'关':'开'}`)}${path('M440 292 H290 V170',!!q,!enable)}${text(460,40,`D 锁存器 · G = ${enable}`,'svg-center')}${text(460,342,'TG 是由 nMOS 与 pMOS 并联形成的受控开关','svg-center svg-small')}`);
+  }
+  function latchBlock(x,caption,value,open){
+    return `<rect x="${x}" y="85" width="230" height="155" rx="12" class="latch-block ${open?'switch-on':''}"/>${text(x+115,117,caption,'svg-center svg-small')}${inverterSymbol(x+35,166)}${inverterSymbol(x+128,166)}${path(`M${x+109} 166 H${x+128}`)}${path(`M${x+207} 166 V212 H${x+22} V166 H${x+35}`,!!value,!open)}${text(x+115,200,String(value),'svg-center signal-label')}`;
+  }
+  function flipflop(rising){
+    return svg(`${text(45,160,'D = 1')}${path('M115 166 H180',true)}${latchBlock(180,'主锁存器 · CLK=0 时开',1,!rising)}${path('M410 166 H530',true,!!rising)}${latchBlock(530,'从锁存器 · CLK=1 时开',rising?1:0,!!rising)}${path('M760 166 H855',!!rising,!!rising)}${text(855,151,`Q = ${rising?1:0}`,'svg-center signal-label')}${path('M80 295 H790',!!rising,!!rising)}${path('M295 295 V260',!!rising)}<circle cx="295" cy="254" r="6" class="gate-bubble"/>${path('M295 248 V240',!rising)}${text(235,274,'¬CLK','svg-small')}${path('M645 295 V240',!!rising)}${text(50,325,rising?'CLK：0 → 1，上升沿把主级保存的值送到 Q':'CLK = 0：主级接收输入，从级仍保持旧 Q','svg-small')}${rising?'<path d="M86 285 V250 H126" class="rising-edge-mark"/>':''}`);
+  }
+  const physicalFrames=[
+    {level:0,name:'晶体管 / TRANSISTOR',heading:'栅极电压，控制导电通道',description:'把晶体管先看成一个电控开关。输入低电平时，这个 nMOS 的源、漏之间还没有形成导电通道。',status:'G = 0 · 关断',render:()=>transistor(false)},
+    {level:0,name:'晶体管 / TRANSISTOR',heading:'提高栅极电压，通道形成',description:'绝缘层让栅极和硅保持隔离。栅极的电场使下方形成通道，源、漏之间可以导通。',status:'G = 1 · 导通',render:()=>transistor(true)},
+    {level:2,name:'反相器 / INVERTER',heading:'两个互补开关，把 0 变成 1',description:'输入 A = 0：上方 pMOS 导通，下方 nMOS 关断，输出接向电源，被拉到高电平 1。',status:'输入 0 → 输出 1',render:()=>inverter(0)},
+    {level:2,name:'反相器 / INVERTER',heading:'输入反过来，输出也反过来',description:'输入 A = 1：上方 pMOS 关断，下方 nMOS 导通，输出接向地，被拉到低电平 0。',status:'输入 1 → 输出 0',render:()=>inverter(1)},
+    {level:4,name:'反馈存储 / D LATCH',heading:'打开输入，把一位数据送进去',description:'两个反相器串联后，0/1 会反相两次。输入开关打开、反馈开关关闭时，Q 跟随输入 D。',status:'G = 1 · 写入 D = 1',render:()=>latch(1,1,1)},
+    {level:4,name:'反馈存储 / D LATCH',heading:'关闭输入，反馈回路保留旧值',description:'现在 D 改成 0，但输入通路已关闭。Q = 1 经反馈回路回到前端，两个反相器继续恢复这个稳定状态。',status:'G = 0 · D = 0，Q 仍为 1',render:()=>latch(0,0,1)},
+    {level:4,name:'反馈存储 / D LATCH',heading:'再次打开输入，才能换成新值',description:'打开输入、断开反馈，新的 0 进入；Q 更新为 0。关上输入后，同一电路也能稳定保持 0。',status:'G = 1 · 写入 D = 0',render:()=>latch(0,1,0)},
+    {level:7,name:'时钟采样 / D FLIP-FLOP',heading:'两级锁存，组成一个触发器',description:'主、从锁存器由相反时钟电平控制。CLK = 0 时主级接收 D，从级保持，所以外部 Q 还不更新。',status:'CLK = 0 · 主级 1，从级 0',render:()=>flipflop(false)},
+    {level:7,name:'时钟采样 / D FLIP-FLOP',heading:'上升沿到来，Q 更新一次',description:'CLK 从 0 变成 1：主级关闭，从级打开，将刚才保存的值送到 Q。输入再变，Q 也会保持到下次有效采样。',status:'CLK ↑ · Q：0 → 1',render:()=>flipflop(true)}
+  ];
+  const bits=value=>value.toString(2).padStart(4,'0');
+  function registerDiagram(state){
+    let body=path('M20 278 H820',!!state.clock,state.event==='clock');
+    body+=text(20,308,'CLK · 四个单元共用同一条时钟线','svg-small');
+    for(let i=0;i<4;i++){
+      const x=25+i*205,d=(state.d>>(3-i))&1,q=(state.q>>(3-i))&1,chosen=state.enable?d:q;
+      body+=`<rect x="${x}" y="73" width="175" height="158" rx="12" class="register-bit-cell ${state.captured?'capture-flash':''}"/>${text(x+87,98,`位 ${3-i} · D 触发器`,'svg-center svg-small')}${text(x+74,21,`D${3-i}=${d}`,'svg-center svg-small')}${path(`M${x+74} 26 V38`,!!d)}<path d="M${x+55} 38 H${x+100} V60 H${x+55} Z" class="data-mux"/>${text(x+77,54,'MUX','svg-center svg-tiny')}${path(`M${x+77} 60 V75`,!!chosen,state.captured)}${path(`M${x+175} 167 H${x+188} V48 H${x+100}`,!!q,!state.enable)}${text(x+156,37,'旧 Q','svg-center svg-tiny')}<rect x="${x+15}" y="118" width="61" height="54" rx="5" class="mini-latch ${!state.clock?'mini-open':''}"/><rect x="${x+99}" y="118" width="61" height="54" rx="5" class="mini-latch ${state.clock?'mini-open':''}"/>${text(x+45,140,'主','svg-center svg-small')}${text(x+129,140,'从','svg-center svg-small')}${path(`M${x+23} 156 H${x+67} M${x+107} 156 H${x+151}`)}${path(`M${x+76} 145 H${x+99}`,!!chosen,state.captured)}${text(x+87,213,`Q${3-i} = ${q}`,'svg-center stored-bit')}${path(`M${x+87} 278 V231`,!!state.clock,state.event==='clock')}<path d="M${x+79} 231 L${x+87} 220 L${x+95} 231" class="clock-triangle"/>`;
+    }
+    return `<svg viewBox="0 0 840 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${body}</svg>`;
+  }
+  function timingDiagram(history){
+    const frames=history.slice(-9),step=110,left=150;
+    let body=text(8,20,'CLK','svg-small')+text(8,47,'输入 D','svg-small')+text(8,74,'保存 Q','svg-small');
+    let clock='';
+    frames.forEach((state,i)=>{
+      const x=left+i*step,y=state.clock?7:23;
+      clock+=i?` H${x} V${y} H${x+step}`:`M${x} ${y} H${x+step}`;
+      body+=text(x+step/2,48,bits(state.d),'svg-center svg-small')+`<rect x="${x+3}" y="55" width="${step-6}" height="27" rx="4" class="timing-q ${state.captured?'timing-capture':''}"/>`+text(x+step/2,75,bits(state.q),'svg-center svg-small');
+      if(state.captured)body+=`<path d="M${x} 2 V84" class="timing-edge"/>`;
+    });
+    return `<svg viewBox="0 0 1240 86" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${body}${path(clock,true)}</svg>`;
+  }
+  const scriptCaptions=[
+    'D = 0011 已准备好。Q 初始为 0000，等待允许写入的上升沿。',
+    '第一次上升沿：EN = 1，四个单元同时写入，Q 从 0000 变成 0011。',
+    '只把 D 改成 1100，CLK 仍为 1，没有新上升沿，Q 继续保持 0011。',
+    'CLK 从 1 降到 0：下降沿不更新这个正沿触发器的 Q。',
+    '关闭 EN 后再产生上升沿：输入选择旧 Q，寄存器仍保持 0011。',
+    '时钟回到 0，重新打开 EN，准备在下一个上升沿写入。',
+    '第二次有效写入：CLK ↑ 且 EN = 1，Q 更新为 1100，也就是十进制 12。',
+    'D 改为 0101，但 Q 仍是 1100。输入值与已保存的值可以不同。',
+    '读出的是 Q = 1100，也就是 12。读出不会清空寄存器。'
+  ];
+  function mount({demo}){
+    const physicsDemo=demo('physics',8,n=>{
+      const frame=physicalFrames[n];$('#physical-stage').innerHTML=frame.render();
+      $('#physical-stage').setAttribute('aria-label',frame.heading+'。'+frame.description);
+      $('#physics-level').textContent=frame.name;$('#physics-heading').textContent=frame.heading;$('#physics-description').textContent=frame.description;$('#physics-status').textContent=frame.status;$('#physics-progress').textContent=`${n+1} / 9 个画面`;
+      $$('[data-physics-level]').forEach(button=>{const active=Number(button.dataset.physicsLevel)===frame.level;button.classList.toggle('selected',active);button.setAttribute('aria-pressed',String(active));});
+    },2700);
+    $$('[data-physics-level]').forEach(button=>button.addEventListener('click',()=>{physicsDemo.stop();physicsDemo.cursor=Number(button.dataset.physicsLevel);physicsDemo.paint();}));
+    const model=globalThis.RegisterPhysics,frames=model.scriptedFrames();
+    let state=model.initial(),history=[state];
+    function renderChip(caption,manual=false){
+      $('#chip-input-bits').innerHTML=Array.from({length:4},(_,i)=>{const bit=3-i,value=(state.d>>bit)&1;return `<button data-input-bit="${bit}" aria-label="输入位 ${bit}，当前 ${value}，点击切换" aria-pressed="${!!value}"><small>D${bit}</small><b>${value}</b></button>`;}).join('');
+      $('#chip-input-value').textContent=`${bits(state.d)}₂ = ${state.d}`;
+      $('#chip-stored-value').textContent=`${bits(state.q)}₂ = ${state.q}`;
+      $('#chip-clock-value').textContent=state.clock;$('#chip-clock').textContent=`时钟 ${state.clock} → ${1-state.clock}`;
+      $('#chip-enable').textContent=`允许写入 EN = ${state.enable}`;$('#chip-enable').setAttribute('aria-pressed',String(!!state.enable));
+      $('#chip-read-value').textContent=state.read===null?'尚未读出':`${bits(state.read)}₂ = ${state.read}`;
+      $('.chip-read-panel').classList.toggle('read-active',state.event==='read');
+      $('#chip-mode').textContent=state.captured?'正在写入':!state.enable?'禁止写入 · 保持':'保持 · 等待上升沿';
+      $('#register-chip-diagram').innerHTML=registerDiagram(state);
+      $('#register-timing').innerHTML=timingDiagram(history);
+      $('#chip-caption').textContent=caption;
+      if(manual)$('#chip-case-progress').textContent='手动探索 · 可随时重播案例';
+    }
+    const chipDemo=demo('register-chip',8,n=>{state={...frames[n]};history=frames.slice(0,n+1);renderChip(scriptCaptions[n]);$('#chip-case-progress').textContent=`${n} / 8 步`;},1900);
+    function interact(event){
+      chipDemo.stop();chipDemo.cursor=0;state=model.transition(state,event);history=[...history,state].slice(-9);
+      const caption=event.type==='data'?`输入 D 改成 ${bits(state.d)}，已存的 Q 仍为 ${bits(state.q)}。`:event.type==='enable'?`EN = ${state.enable}：${state.enable?'允许下个上升沿写入外部 D':'输入选择旧 Q，后续上升沿继续保持'}。`:event.type==='read'?`读出 Q = ${bits(state.q)}，十进制 ${state.q}。存储单元里的值保持不变。`:state.captured?`CLK ↑ 且 EN = 1：Q 写入 ${bits(state.q)}，十进制 ${state.q}。`:`${state.clock?'CLK ↑，但 EN = 0':'CLK ↓，不是采样沿'}：Q 保持 ${bits(state.q)}。`;
+      renderChip(caption,true);
+    }
+    $('#chip-input-bits').addEventListener('click',event=>{const button=event.target.closest('[data-input-bit]');if(button)interact({type:'data',value:state.d^(1<<Number(button.dataset.inputBit))});});
+    $('#chip-enable').addEventListener('click',()=>interact({type:'enable',value:1-state.enable}));
+    $('#chip-clock').addEventListener('click',()=>interact({type:'clock',value:1-state.clock}));
+    $('#chip-read').addEventListener('click',()=>interact({type:'read'}));
+  }
+  globalThis.RegisterVisuals={mount};
+})();
+
+"use strict";
+(() => {
   const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
   const slides=$$('.slide');
   const paper='https://doi.org/10.1038/s41586-022-05172-4';
@@ -547,10 +788,30 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
   const evolveBlog='https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/';
   const notes=[
   {
-    "text": "开场可以问：同一道矩阵乘法，答案已经确定，计算过程还有没有改进空间？\n今天先用五页解释寄存器、加法电路、GPU 并行和数据搬运，再从行乘列进入经典算法与 AI 发现算法。封面上的 64、49、47 都是后面同一道 4×4 题目所需的标量乘法次数。47 次有模 2 条件，后面单独解释。",
+    "text": "开场可以问：同一道矩阵乘法，答案已经确定，计算过程还有没有改进空间？\n今天先用七页解释晶体管、寄存器、加法电路、GPU 并行和数据搬运，再从行乘列进入经典算法与 AI 发现算法。封面上的 64、49、47 都是后面同一道 4×4 题目所需的标量乘法次数。47 次有模 2 条件，后面单独解释。",
     "action": "约15秒介绍主题后翻页。",
     "sources": [
       "https://doi.org/10.1038/s41586-022-05172-4"
+    ]
+  },
+  {
+    "text": "先从平面 nMOS 的简化剖面看起：栅极与硅之间有绝缘氧化层，栅极电压通过电场影响源漏之间的通道，栅极不与通道直接短接。画面从低电平的关断状态变为高电平下形成导电通道。这里只用平面结构解释原理，现代工艺还有 FinFET、GAA 等不同结构。\n下一层是 CMOS 反相器：一个 pMOS 接电源、一个 nMOS 接地，它们的栅极共用输入。输入低时，pMOS 导通、nMOS 关断，输出被拉高；输入高时相反，输出被拉低。这里画的是电路原理图，不是晶体管的几何版图。\n两个反相器加上受控输入与反馈开关，可构成静态 D 锁存器。输入开关打开时数据进入；输入关闭、反馈打开后，两个反相器循环恢复原有状态，因此输入变了也能保持。每个传输开关可以由一对 nMOS/pMOS 实现。静态保持需要持续供电，断电不会自动记住。\n最后用主、从两个互补时钟控制的锁存器构成正沿 D 触发器。CLK=0 时主级跟随输入、从级保持；CLK 从0变1时，主级关闭、从级打开，把刚才采集的值送到 Q。之后输入再变，Q 会保持到下一个有效上升沿。这是理想数字示意，真实电路还要求建立时间、保持时间，并存在传播延迟。大型寄存器文件也可采用 SRAM 单元阵列，不能说每个真实寄存器都恰好由图中的触发器组成。",
+    "action": "依次单步九个画面，重点停在反馈保持与时钟上升沿。若赶时间，顶部四个层级按钮可以直接跳转。",
+    "sources": [
+      "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c3/c3s1/",
+      "https://computationstructures.org/notes/sequential_logic/notes.html",
+      "https://tams-www.informatik.uni-hamburg.de/applets/hades/webdemos/05-switched/40-cmos/dff_print.html",
+      "https://research.nvidia.com/sites/default/files/pubs/2011-06_Energy-efficient-Mechanisms-for/2011_06_NVIDIA_ISCA.pdf"
+    ]
+  },
+  {
+    "text": "寄存器保存的是一组二进制位。这里用四个正沿 D 触发器组成四位教学寄存器，矩阵案例依旧是4×4，位宽和矩阵行列数是两回事。四个单元共享 CLK，但各自保存一位。使能 EN 通过数据多路选择器实现：EN=1 选择外部 D，EN=0 选择本位旧 Q。图中没有直接用 EN 门控时钟。\n自动案例从 Q=0000、D=0011、CLK=0 开始。第一次上升沿写入3。将输入改为1100时，时钟仍高，所以 Q 保持3。下降沿也不更新。EN=0 时的下一个上升沿仍保持3；再打开 EN，在下个上升沿写入12。输入改成0101时，Q继续保持12；读出得到12，而且不清空 Q。初始零是演示预设，真实芯片需要复位或初始化，不默认上电为零。\n可点击四个输入位、使能、时钟和读出按钮亲自测试。时钟按钮交替产生上升沿和下降沿。时序图以各次交互事件为横轴，只解释状态先后，不表示真实纳秒时间。门控和锁存的动画是教学理想模型，省略建立/保持时间与传播延迟。",
+    "action": "先播放完整案例，再让听众预测：只改输入会不会改 Q？关掉 EN 后再产生上升沿会怎样？",
+    "sources": [
+      "https://www.ti.com/product/SN74AUC2G79",
+      "https://computationstructures.org/notes/sequential_logic/notes.html",
+      "https://tams-www.informatik.uni-hamburg.de/applets/hades/webdemos/05-switched/40-cmos/dff_print.html",
+      "https://research.nvidia.com/sites/default/files/pubs/2011-06_Energy-efficient-Mechanisms-for/2011_06_NVIDIA_ISCA.pdf"
     ]
   },
   {
@@ -756,7 +1017,11 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
       "https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/",
       "https://homepage.cs.uiowa.edu/~dwjones/assem/summer18/notes/09muldiv.shtml",
       "https://docs.nvidia.com/cuda/archive/13.0.1/cuda-c-best-practices-guide/index.html#registers",
-      "https://docs.nvidia.com/cuda/archive/12.8.0/cuda-c-programming-guide/index.html#arithmetic-instructions"
+      "https://docs.nvidia.com/cuda/archive/12.8.0/cuda-c-programming-guide/index.html#arithmetic-instructions",
+      "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c3/c3s1/",
+      "https://computationstructures.org/notes/sequential_logic/notes.html",
+      "https://tams-www.informatik.uni-hamburg.de/applets/hades/webdemos/05-switched/40-cmos/dff_print.html",
+      "https://research.nvidia.com/sites/default/files/pubs/2011-06_Energy-efficient-Mechanisms-for/2011_06_NVIDIA_ISCA.pdf"
     ]
   }
 ];
@@ -777,6 +1042,7 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
     play.addEventListener('click',()=>object.play());$(`[data-step="${id}"]`).addEventListener('click',()=>object.next());$(`[data-reset="${id}"]`).addEventListener('click',()=>object.reset());
     demos.set(id,object);object.paint();return object;
   }
+  globalThis.RegisterVisuals.mount({demo});
   const math=globalThis.MatrixCompareMath;
   const sampleA=[1,0,1,1,0,1,1,0,1,1,0,1,0,0,1,1];
   const sampleB=[1,1,0,1,0,1,1,0,1,0,1,1,1,0,0,1];
