@@ -7,3 +7,4 @@ local-secrets/
 logs/
 *.log
 /.openai/
+.codex-build
