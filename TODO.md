@@ -20,7 +20,7 @@
 ## 当前任务
 
 - `RUN-632a61f4-ab72-4519-84a3-02055701c017`：文档整理、全量验证、敏感文件筛查、Git 初始化和指定 GitHub 仓库推送已完成。实现提交：`e0c7eede5acbddcf94e95f2b955562c2db72bd6f`。
-- `RUN-eadd6e29-3863-46e4-bcc8-068d23ed4033`：确认 AI 配置、密钥和 Token 均未被 Git 跟踪；补强忽略规则，并将仓库统一为单一 `main` 分支。
+- `RUN-eadd6e29-3863-46e4-bcc8-068d23ed4033`：已确认 AI 配置、密钥和 Token 均未被 Git 跟踪；补强忽略规则，将 GitHub 默认分支切换为 `main`，并删除旧远程功能分支。安全与分支整理提交：`3ebf4879ef0c5dbbdae40c1eb90f5b0439c67153`。
 
 ## 后续可选事项
 
@@ -31,8 +31,9 @@
 
 - 目标远程：`https://github.com/secreat14/AlphaEvolve-saplingagent-ppt.git`
 - 目标分支：`main`（用户明确要求只使用主分支）
-- 当前状态：演讲实现和自检完成；正在迁移默认分支，未记录人工演讲验收
+- 当前状态：演讲实现和自检完成；GitHub 默认分支为 `main`，远程只保留 `main`；未记录人工演讲验收
 - 已推送实现提交：`e0c7eede5acbddcf94e95f2b955562c2db72bd6f`
+- AI 配置保护与主分支提交：`3ebf4879ef0c5dbbdae40c1eb90f5b0439c67153`
 - 执行 AI：Codex
 - 当前任务：`RUN-eadd6e29-3863-46e4-bcc8-068d23ed4033`
 - Worktree：当前项目根目录

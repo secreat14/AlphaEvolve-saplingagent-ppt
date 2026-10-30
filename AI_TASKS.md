@@ -11,7 +11,7 @@
 ## Current tasks
 
 - `RUN-632a61f4-ab72-4519-84a3-02055701c017` — Codex — organized the project around the AlphaTensor presentation, removed obsolete documentation, verified, committed, and pushed to the confirmed repository. Scope: project documentation, presentation source/build outputs, historical task documents, and Git metadata. Implementation commit: `e0c7eede5acbddcf94e95f2b955562c2db72bd6f`. Status: implementation and self-check complete; human presentation acceptance not recorded.
-- `RUN-eadd6e29-3863-46e4-bcc8-068d23ed4033` — Codex — audit tracked content for AI configuration credentials, strengthen ignore rules, move publication to `main`, set GitHub's default branch to `main`, and remove the obsolete remote feature branch. Actual credentials and `local-secrets/` are prohibited from modification or publication. Status: in progress.
+- `RUN-eadd6e29-3863-46e4-bcc8-068d23ed4033` — Codex — audited tracked content for AI configuration credentials, strengthened ignore rules, moved publication to `main`, set GitHub's default branch to `main`, and removed the obsolete remote feature branch. Actual credentials and `local-secrets/` were not modified or published. Security/branch commit: `3ebf4879ef0c5dbbdae40c1eb90f5b0439c67153`. Status: implementation and self-check complete; human presentation acceptance not recorded.
 - Runtime records below are local execution records and do not establish human acceptance.
 
 <!-- seedagent-runtime-tasks:start -->
