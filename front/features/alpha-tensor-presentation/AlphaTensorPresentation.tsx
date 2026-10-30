@@ -1,6 +1,6 @@
 import { ExternalLink, Presentation } from 'lucide-react';
 
-const presentationUrl = '/presentation/index.html?v=14-slides';
+const presentationUrl = '/presentation/index.html?v=16-slides';
 
 export function AlphaTensorPresentation() {
   return <section className="presentation-workspace" aria-labelledby="presentation-title">
@@ -20,7 +20,7 @@ export function AlphaTensorPresentation() {
     <iframe
       className="presentation-frame"
       src={presentationUrl}
-      title="矩阵与 AI：12 分钟演讲"
+      title="矩阵与 AI：14 分钟演讲"
       allow="fullscreen"
       allowFullScreen
     />

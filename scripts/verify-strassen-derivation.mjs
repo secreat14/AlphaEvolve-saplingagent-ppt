@@ -28,8 +28,19 @@ for(const [name,output] of Object.entries(outputs)){
     assert.deepEqual(polynomial(survivors),normalize(expected[name]),`${name}: uncancelled terms are the target`);
   }
 }
+const notebook=JSON.parse(fs.readFileSync('alphatensor_demo.ipynb','utf8'));
+const sampleCode=notebook.cells[3].source.join('');
+const sampleA=JSON.parse(sampleCode.match(/^A = (\[[^\n]+\])/m)[1]);
+const sampleB=JSON.parse(sampleCode.match(/^B = (\[[^\n]+\])/m)[1]);
+const a2=[sampleA[0],sampleA[1],sampleA[4],sampleA[5]];
+const b2=[sampleB[0],sampleB[1],sampleB[4],sampleB[5]];
+const mod2=value=>((value%2)+2)%2;
+const sampleProducts=products.map(product=>mod2(product.left.reduce((sum,weight,i)=>sum+weight*a2[i],0))*mod2(product.right.reduce((sum,weight,i)=>sum+weight*b2[i],0)));
+assert.deepEqual(Array.from(sampleProducts),[0,1,0,1,1,0,1]);
+const sampleOutput=Object.values(outputs).map(output=>mod2(output.combination.reduce((sum,[index,sign])=>sum+sign*sampleProducts[index],0)));
+assert.deepEqual(sampleOutput,[1,1,0,1]);
 const html=fs.readFileSync('presentation/slides.template.html','utf8');
 const timing=[...html.matchAll(/data-seconds="(\d+)"/g)].map(match=>Number(match[1]));
-assert.equal(timing.length,14);
-assert.equal(timing.reduce((sum,x)=>sum+x),705);
-console.log('PASS: seven product expansions, four reconstruction identities, all cancellation pairs, 14 slides / 11:45.');
+assert.equal(timing.length,16);
+assert.equal(timing.reduce((sum,x)=>sum+x),825);
+console.log('PASS: seven product expansions, four reconstruction identities, all cancellation pairs, 16 slides / 13:45.');

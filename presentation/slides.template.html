@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="zh-CN">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f6ef"><meta name="description" content="约12分钟中文HTML演示文稿：用过程动画理解矩阵乘法与AlphaTensor。独立文件，可离线打开。"><title>AI 如何发现更快的矩阵乘法｜12分钟演讲</title><style>/*__CSS__*/</style></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f6ef"><meta name="description" content="约14分钟中文HTML演示文稿：用过程动画理解矩阵乘法与AlphaTensor。独立文件，可离线打开。"><title>AI 如何发现更快的矩阵乘法｜14分钟演讲</title><style>/*__CSS__*/</style></head>
 <body>
-<header class="app-bar"><a class="app-brand" href="#slide=1">[·] 矩阵与 AI</a><span class="app-description">12 分钟演讲版</span><div class="app-tools"><button id="overview-button" title="目录 O">目录 <kbd>O</kbd></button><button id="notes-button" aria-pressed="false" title="演讲备注 N">备注 <kbd>N</kbd></button><button id="fullscreen-button" title="全屏 F">全屏 <kbd>F</kbd></button><button id="help-button" aria-label="查看快捷键">?</button></div></header>
+<header class="app-bar"><a class="app-brand" href="#slide=1">[·] 矩阵与 AI</a><span class="app-description">14 分钟演讲版</span><div class="app-tools"><button id="overview-button" title="目录 O">目录 <kbd>O</kbd></button><button id="notes-button" aria-pressed="false" title="演讲备注 N">备注 <kbd>N</kbd></button><button id="fullscreen-button" title="全屏 F">全屏 <kbd>F</kbd></button><button id="help-button" aria-label="查看快捷键">?</button></div></header>
 <main id="viewport" aria-label="幻灯片演示区域"><div id="stage">
 
 <section class="slide cover active" data-title="AI 如何发现更快的矩阵乘法" data-seconds="15">
@@ -10,7 +10,7 @@
   <h1>AI 如何发现<br><em>更快的矩阵乘法</em></h1>
   <p class="cover-subtitle">以 AI 算法为主线，实算比较同一组 4×4 矩阵</p>
   <div class="cover-numbers"><div><b>64</b><span>直接算法</span></div><span class="number-separator">/</span><div><b>49</b><span>Strassen</span></div><span class="number-separator">/</span><div><b>47</b><span>AlphaTensor · 模 2</span></div></div>
-  <div class="cover-bottom"><span>中文讲解 · 过程动画 · 约 12 分钟</span><span>按 → 开始</span></div>
+  <div class="cover-bottom"><span>中文讲解 · 过程动画 · 约 14 分钟</span><span>按 → 开始</span></div>
 </section>
 
 <section class="slide silicon-slide register-physics-slide" data-title="晶体管：电压控制的微型开关" data-seconds="30">
@@ -52,11 +52,26 @@
   <div class="demo-controls"><button data-play="basic">播放过程</button><button data-step="basic">下一步</button><button data-reset="basic">重置</button><button id="basic-finish">看完整结果</button><span id="basic-work-count">0 / 64 次乘法，0 / 48 次加法</span></div>
 </section>
 
+<section class="slide notebook-strassen-slide" data-title="Strassen：七次乘法怎样算 2×2" data-seconds="60">
+  <div class="slide-header"><span class="chapter">2×2 模 2 矩阵 · 七乘法规则</span><h2>Strassen：先组合，再做 7 次乘法</h2><p>取前面 A、B 左上角的 2×2 数字，单独相乘来说明规则</p></div>
+  <div class="notebook-example-row"><div class="notebook-matrix"><span>A</span><div><b>1</b><b>0</b><b>0</b><b>1</b></div></div><span class="notebook-operator">×</span><div class="notebook-matrix"><span>B</span><div><b>1</b><b>1</b><b>0</b><b>1</b></div></div><span class="notebook-operator">=</span><div class="notebook-matrix result"><span>C（模 2）</span><div><b>1</b><b>1</b><b>0</b><b>1</b></div></div><p>普通做法需要 <strong>8 次乘法</strong><br>Strassen 先组合输入，只用 <strong>7 次</strong></p></div>
+  <div class="notebook-strassen-body"><div><h3>把 A 写成 a、b、c、d，B 写成 e、f、g、h</h3><div class="notebook-products"><span>M₁ = (a+d)(e+h) = 0</span><span>M₅ = (a+b)h = 1</span><span>M₂ = (c+d)e = 1</span><span>M₆ = (c+a)(e+f) = 0</span><span>M₃ = a(f+h) = 0</span><span>M₇ = (b+d)(g+h) = 1</span><span>M₄ = d(g+e) = 1</span></div></div><div class="notebook-rebuild"><h3>再合成答案</h3><p>C₁₁ = M₁+M₄+M₅+M₇<br><strong>= 0+1+1+1 ≡ 1</strong></p><p>4×4 分块后，外层有 7 个组合，每个组合在内层再用 7 次乘法：<strong>7 × 7 = 49</strong> 次标量乘法。</p></div></div>
+  <div class="slide-source">这是从前面 4×4 输入取数后的独立 2×2 小题；完整 4×4 结果还包含其他块的贡献。公式采用模 2 下的 Strassen 七乘法规则。来源：Strassen 1969。</div>
+</section>
+
 <section class="slide dark" data-title="AlphaTensor 的算法发现" data-seconds="60">
   <div class="slide-header"><span class="chapter">AlphaTensor · Nature 2022</span><h2>AI 开始参与寻找计算算法</h2><p>在大量计算路径中，寻找正确、乘法次数更少的方案</p></div>
   <div class="discovery-flow"><div><span>01</span><h3>选择输入组合</h3><p>先用加减法组合输入<br>再把组合后的数相乘</p></div><div><span>02</span><h3>安排输出贡献</h3><p>一个中间乘积<br>可以用于哪些输出？</p></div><div><span>03</span><h3>检查与改进</h3><p>算法必须正确<br>同时尽量减少乘法</p></div></div>
   <div class="dark-statement">搜索目标是计算路径<br><strong>找到的算法可以处理适用范围内的新矩阵</strong></div>
   <div class="slide-source">来源：Fawzi 等，Discovering faster matrix multiplication algorithms with reinforcement learning</div>
+</section>
+
+<section class="slide notebook-alpha-slide" data-title="AlphaTensor：47 个乘积怎样合成结果" data-seconds="60">
+  <div class="slide-header"><span class="chapter">4×4 模 2 矩阵 · 47 项分解</span><h2>AI 找到 47 个乘积的组合规则</h2><p>每项先把输入组合对 2 取余，再相乘；每次更新输出也对 2 取余</p></div>
+  <div class="notebook-alpha-formulas" aria-label="AlphaTensor 的 47 项矩阵乘法公式"><div><span>每一项 r = 1…47</span><strong>L<sub>r</sub> = (<span class="notebook-sum" role="img" aria-label="i 从 1 到 16 求和"><span aria-hidden="true">16</span><span aria-hidden="true">∑</span><span aria-hidden="true">i=1</span></span> u<sub>ri</sub>a<sub>i</sub>) mod 2</strong><strong>R<sub>r</sub> = (<span class="notebook-sum" role="img" aria-label="j 从 1 到 16 求和"><span aria-hidden="true">16</span><span aria-hidden="true">∑</span><span aria-hidden="true">j=1</span></span> v<sub>rj</sub>b<sub>j</sub>) mod 2</strong><strong>p<sub>r</sub> = L<sub>r</sub> × R<sub>r</sub></strong></div><div><span>每个输出 o = 1…16</span><strong>c<sub>o</sub> = (<span class="notebook-sum" role="img" aria-label="r 从 1 到 47 求和"><span aria-hidden="true">47</span><span aria-hidden="true">∑</span><span aria-hidden="true">r=1</span></span> w<sub>ro</sub>p<sub>r</sub>) mod 2</strong><small>a、b 是 A、B 按行排成的 16 个数；u、v、w 取 0 或 1，决定取数与输出位置</small></div></div>
+  <div class="notebook-alpha-example"><div class="notebook-alpha-step"><span>第 2 项：从 A 取数</span><strong>L₂ = (1+1+1) mod 2 = 1</strong><small>A₁₃、A₂₂、A₂₃</small></div><div class="notebook-alpha-step emphasis"><span>从 B 取数</span><strong>R₂ = (0+0+1) mod 2 = 1</strong><small>B₂₁、B₂₄、B₃₄</small></div><div class="notebook-alpha-step"><span>乘一次，更新两个输出</span><strong>p₂ = 1 × 1 = 1</strong><small>加入 C₁₄、C₂₁；每格更新后对 2 取余</small></div></div>
+  <div class="notebook-alpha-result"><div><span>47 项全部合并后</span><div class="notebook-output-matrix"><b>1</b><b>1</b><b>1</b><b>1</b><b>1</b><b>1</b><b>0</b><b>1</b><b>0</b><b>0</b><b>1</b><b>0</b><b>0</b><b>0</b><b>1</b><b>0</b></div></div><p>每项可以贡献给多个位置；多余贡献会在后续模 2 加法中抵消。<br><strong>结果与直接计算相同，乘法从 64 次降到 47 次。</strong></p></div>
+  <div class="slide-source">输入组合和输出累计都在每步对 2 取余；47 项来自作者公开的模 2 分解。来源：Fawzi 等，Nature 2022。</div>
 </section>
 
 <section class="slide comparison-slide" data-title="四阶矩阵三算法动画对比" data-seconds="120">
@@ -76,10 +91,10 @@
 
 <section class="slide ai-operation-cost-slide" data-title="计算对比：少乘法与多加法的代价" data-seconds="90">
   <div class="slide-header"><span class="chapter">把加法的代价也算进去 · 模 2</span><h2>少了乘法，还要检查增加了多少加法</h2><p>统一采用逐项线性组合的直接展开实现，不共享额外的加法中间项</p></div>
-  <table class="ai-cost-table"><thead><tr><th>4×4 方案</th><th>乘法</th><th>输入组合 XOR</th><th>输出合并 XOR</th><th>总 XOR</th></tr></thead><tbody id="ai-cost-table-body"></tbody></table>
-  <div class="ai-cost-control"><label for="ai-multiply-cost">教学假设：一次 XOR 成本为 1，乘法成本为 <b id="ai-cost-weight">20</b></label><input id="ai-multiply-cost" type="range" min="1" max="50" value="20"><div><button data-ai-cost="1">成本 1</button><button data-ai-cost="20">成本 20</button><button data-ai-cost="50">成本 50</button></div></div>
+  <table class="ai-cost-table"><thead><tr><th>4×4 方案</th><th>乘法</th><th>输入组合加法</th><th>输出合并加法</th><th>总加法</th></tr></thead><tbody id="ai-cost-table-body"></tbody></table>
+  <div class="ai-cost-control"><label for="ai-multiply-cost">教学假设：一次模 2 加法成本为 1，乘法成本为 <b id="ai-cost-weight">20</b></label><input id="ai-multiply-cost" type="range" min="1" max="50" value="20"><div><button data-ai-cost="1">成本 1</button><button data-ai-cost="20">成本 20</button><button data-ai-cost="50">成本 50</button></div></div>
   <div class="ai-weighted-costs" id="ai-weighted-costs"></div><p id="ai-cost-verdict" class="ai-cost-verdict" aria-live="polite"></p>
-  <div class="slide-source">次数由本页执行的分解自动统计，XOR 是模 2 加法。Strassen 展平计数与经典递归的 198 次不同；模型忽略访存，不是实测速度。</div>
+  <div class="slide-source">次数由本页执行的分解自动统计，此处加法均对 2 取余。Strassen 展平计数与经典递归的 198 次不同；模型忽略访存，不是实测速度。</div>
 </section>
 
 <section class="slide" data-title="AlphaEvolve 的后续进展" data-seconds="75">
@@ -90,7 +105,7 @@
 
 <section class="slide" data-title="乘法次数与运行时间" data-seconds="50">
   <div class="slide-header"><span class="chapter">理解成果的边界</span><h2>乘法更少，仍需要测量实际速度</h2><p>26.56% 是乘法次数的减少比例；耗时变化要在目标硬件上测量。</p></div>
-  <div class="cost-comparison"><div><span>算法层面 · 同一 4×4、模 2 任务</span><h3>AI 减少了标量乘法次数</h3><strong>64 → 47</strong></div><div><span>硬件层面 · 真实程序运行</span><h3>XOR、访存和指令同样影响耗时</h3><strong class="multiply-work">仍需实测</strong></div></div>
+  <div class="cost-comparison"><div><span>算法层面 · 同一 4×4、模 2 任务</span><h3>AI 减少了标量乘法次数</h3><strong>64 → 47</strong></div><div><span>硬件层面 · 真实程序运行</span><h3>加法、访存和指令同样影响耗时</h3><strong class="multiply-work">仍需实测</strong></div></div>
   <div class="cost-factors"><div><strong>额外运算</strong><span>加减法与中间结果</span></div><div><strong>数据搬运</strong><span>存储容量与读写开销</span></div><div><strong>硬件与精度</strong><span>矩阵形状、并行利用率、数值误差</span></div></div>
 </section>
 
@@ -106,9 +121,9 @@
 
 </div></main>
 <aside id="notes-panel" hidden aria-label="演讲备注"><div class="notes-heading"><strong>演讲备注</strong><button id="notes-close" aria-label="关闭演讲备注">×</button></div><div id="notes-content"></div></aside>
-<footer class="navigation"><button id="previous" aria-label="上一页">← 上一页</button><span id="slide-count">01 / 14</span><span id="slide-title">AI 如何发现更快的矩阵乘法</span><div class="nav-right"><button id="timer-button" title="开始或暂停计时 T">计时 <span id="elapsed">00:00</span></button><button id="timer-reset" title="重置计时" aria-label="重置演讲计时">↺</button><button id="next" aria-label="下一页">下一页 →</button></div></footer>
+<footer class="navigation"><button id="previous" aria-label="上一页">← 上一页</button><span id="slide-count">01 / 16</span><span id="slide-title">AI 如何发现更快的矩阵乘法</span><div class="nav-right"><button id="timer-button" title="开始或暂停计时 T">计时 <span id="elapsed">00:00</span></button><button id="timer-reset" title="重置计时" aria-label="重置演讲计时">↺</button><button id="next" aria-label="下一页">下一页 →</button></div></footer>
 <div class="deck-progress" aria-hidden="true"><span id="deck-progress"></span></div>
-<dialog id="overview-dialog"><div class="dialog-header"><h2>演讲目录</h2><button data-close="overview-dialog" aria-label="关闭目录">×</button></div><p>14 页，建议讲解时间共 11 分 45 秒。点击任意一页跳转。</p><div id="overview-grid"></div></dialog>
+<dialog id="overview-dialog"><div class="dialog-header"><h2>演讲目录</h2><button data-close="overview-dialog" aria-label="关闭目录">×</button></div><p>16 页，建议讲解时间共 13 分 45 秒。点击任意一页跳转。</p><div id="overview-grid"></div></dialog>
 <dialog id="help-dialog"><div class="dialog-header"><h2>演示快捷键</h2><button data-close="help-dialog" aria-label="关闭快捷键">×</button></div><dl class="shortcut-list"><dt>→ / ↓ / 空格 / Page Down</dt><dd>下一页</dd><dt>← / ↑ / Page Up</dt><dd>上一页</dd><dt>Home / End</dt><dd>第一页 / 最后一页</dd><dt>F</dt><dd>进入或退出全屏</dd><dt>N</dt><dd>显示或隐藏本页演讲备注</dd><dt>O</dt><dd>打开目录</dd><dt>B</dt><dd>黑屏 / 恢复画面</dd><dt>T</dt><dd>开始或暂停演讲计时</dd><dt>R</dt><dd>重置当前页动画</dd></dl><p>动画由页面中的播放按钮控制。翻页会暂停动画。按 Esc 关闭目录或备注。备注会显示在当前屏幕上。</p></dialog>
 <div id="blackout" hidden><span>按 B 或点击恢复</span></div><button id="exit-cinema" aria-label="退出全屏演示">退出全屏 F</button><div class="sr-only" id="announcement" aria-live="polite"></div>
 <script>/*__DATA__*/

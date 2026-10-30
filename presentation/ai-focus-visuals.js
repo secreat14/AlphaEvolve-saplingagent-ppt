@@ -31,7 +31,7 @@
       $('#ai-cost-weight').textContent=weight;
       $('#ai-weighted-costs').innerHTML=stats.map((item,index)=>`<div class="${values[index]===minimum?'best-cost':''}"><span>${item.id==='strassen'?'Strassen（展平）':item.name}</span><div><i style="width:${100*values[index]/largestValue}%"></i></div><b>${number(values[index])} 单位</b></div>`).join('');
       const winners=stats.filter((_,index)=>values[index]===minimum).map(item=>item.id==='strassen'?'Strassen':item.name).join('、');
-      $('#ai-cost-verdict').textContent=`按这个假设，${winners}的算术成本最低。AI 比直接法少 17 乘、多 292 XOR；是否划算取决于两者的实际成本。`;
+      $('#ai-cost-verdict').textContent=`按这个假设，${winners}的算术成本最低。AI 比直接法少 17 乘、多 292 次模 2 加法；是否划算取决于两者的实际成本。`;
     }
     $('#ai-multiply-cost').addEventListener('input',weighted);
     $$('[data-ai-cost]').forEach(button=>button.addEventListener('click',()=>{$('#ai-multiply-cost').value=button.dataset.aiCost;weighted();}));

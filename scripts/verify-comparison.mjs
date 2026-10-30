@@ -8,6 +8,12 @@ vm.runInContext(fs.readFileSync('dist/comparison-math.js','utf8'),context);
 const math=context.MatrixCompareMath;
 const algorithms=[math.directTerms(),math.strassenTerms(),context.ALPHATENSOR_47.terms];
 assert.deepEqual(algorithms.map(x=>x.length),[64,49,47]);
+const notebookA=[1,0,1,1,0,1,1,0,1,1,0,1,0,0,1,1];
+const notebookB=[1,1,0,1,0,1,1,0,1,0,1,1,1,0,0,1];
+const notebookTrace=math.trace(algorithms[2],notebookA,notebookB);
+assert.deepEqual([notebookTrace[1].left,notebookTrace[1].right,notebookTrace[1].product],[1,1,1]);
+assert.deepEqual(Array.from(notebookTrace[1].accumulator.slice(0,5)),[1,1,0,1,0]);
+assert.deepEqual(Array.from(notebookTrace.at(-1).accumulator),Array.from(math.multiply(notebookA,notebookB)));
 
 // Check every input basis pair: this covers all 4096 coefficients of the
 // bilinear 4x4 multiplication tensor, including output index ordering.

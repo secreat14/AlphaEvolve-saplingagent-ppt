@@ -57,6 +57,13 @@
     ]
   },
   {
+    "text": "本页的七个公式与笔记本的 S2 模 2 因子逐项对应。取笔记本 4×4 输入 A、B 各自左上角的四个数，组成独立的小题：A 的 a=1、b=0、c=0、d=1；B 的 e=1、f=1、g=0、h=1。这个小题的 C 不是完整 4×4 结果的左上块，因为完整结果还包含其他块的贡献。\n所有结果按模 2 解释，所以 1+1 最终得 0。直接计算四个输出共要八次标量乘法；Strassen 把输入先组合，形成 M1 到 M7 七个乘积。本例的值依次是 0、1、0、1、1、0、1。左上角为 M1+M4+M5+M7，得到 0+1+1+1 模 2 等于 1。其余三格得到 1、0、1，与直接计算一致。\n推广到 4×4 时先分成 2×2 的块，再对外层七个组合各用内层七次标量乘法。下一页动画按外层优先、内层随后这一顺序走完 49 拍，与笔记本 TERMS_49 的 49 项顺序和值一致。这里的独立 2×2 数值例子只是解释七项规则，不是动画中的某一拍。Strassen 在普通算术中也成立，但那时公式里的部分加号须用减号，不能照搬这页的全部加号。",
+    "action": "先指 A、B 的数字，再读七个 M 的结果，最后只详细算 C11，并指出 7×7=49。",
+    "sources": [
+      "https://link.springer.com/article/10.1007/BF02165411"
+    ]
+  },
+  {
     "text": "Strassen 是人设计的经典基线；AlphaTensor 尝试用强化学习帮助搜索新的矩阵乘法算法，论文发表于 2022 年 Nature。\n寻找算法时，需要决定怎样线性组合输入、让组合后的数相乘，以及把中间乘积加到哪些输出。最终必须与矩阵乘法完全一致，同时希望乘法更少。可以把它理解成：神经网络判断哪些动作更有希望，树搜索往前探索，再用反馈不断改进选择。发现出来的是适用范围内通用的计算规则。",
     "action": "按从左到右的顺序解释三步，不需要介绍寄存器或神经网络结构。",
     "sources": [
@@ -64,7 +71,15 @@
     ]
   },
   {
-    "text": "这是同一道 4×4 题目，三列都使用相同的输入 A 和 B。紫色与绿色标出本步从 A 和 B 选取的数字，橙色标出本步贡献到哪些输出。每拍展示一次标量乘法。\n直接算法按行乘列，逐项累加。Strassen 对输入进行分块组合，用两层递归完成 49 次乘法。AI 列实际使用作者公开的 47 项模 2 分解，将若干输入先按模 2 相加，再相乘，并把结果复用到不同输出。\n动画到 47 步时 AI 路径结束，到 49 步时 Strassen 结束，到 64 步时直接算法结束。最后三种结果必须一致。加法、搬运与硬件开销没有按时间计入，所以不能把动画的结束先后当成实测运行速度。",
+    "text": "先读与逐拍动画一致的通用公式：Lr 和 Rr 分别把 A、B 中被 0/1 系数选中的数相加并对 2 取余；pr=Lr×Rr；每个输出 co 每收到一项贡献就更新当前累计值并对 2 取余。幻灯片的 i、j、o 从 1 编到 16，与笔记本的 0 到 15 是同一组按行展开的矩阵位置。\n用公开分解的第 2 项实算：A13=A22=A23=1，所以 L2=(1+1+1) mod 2=1；B21=0、B24=0、B34=1，所以 R2=(0+0+1) mod 2=1。p2=1×1=1，按该项的输出权重加到 C14 和 C21，再分别对 2 取余。动画第 2 拍显示 1×1=1。\n全部 47 项完成后，C 的四行分别是 1111、1101、0010、0010，与直接矩阵乘法取模 2 一致。笔记本还检查了 16×16×16=4096 个系数关系，证明这组公开因子对任意二进制 4×4 输入都满足模 2 矩阵乘法。47 次只数标量乘法；输入组合和输出合并的加法仍有成本。这组特定因子不能直接用于普通整数矩阵乘法。",
+    "action": "先读通用公式，再计算第 2 项的 L2=1、R2=1、p2=1。下一页单步到 AI 第 2 拍，对照动画的 1×1=1 和两个输出位置。",
+    "sources": [
+      "https://doi.org/10.1038/s41586-022-05172-4",
+      "https://github.com/google-deepmind/alphatensor/tree/1949163da3bef7e3eb268a3ac015fd1c2dbfc767/algorithms"
+    ]
+  },
+  {
+    "text": "这是同一道 4×4 题目，三列都使用相同的输入 A 和 B。紫色与绿色标出本步从 A 和 B 选取的数字，橙色标出本步贡献到哪些输出。每拍展示一次标量乘法。\n直接算法按行乘列，逐项累加。Strassen 对输入进行分块组合，用两层递归完成 49 次乘法。AI 列使用作者公开的 47 项模 2 分解。与笔记本一致，AI 输入组合先对 2 取余，再相乘；输出矩阵每拍累计后也对 2 取余。第 2 拍可看到 1×1=1，并高亮 C14、C21。\n动画到 47 步时 AI 路径结束，到 49 步时 Strassen 结束，到 64 步时直接算法结束。最后三种结果必须一致。加法、搬运与硬件开销没有按时间计入，所以不能把动画的结束先后当成实测运行速度。",
     "action": "先单步两三次，解释输入高亮与输出贡献，再快速播放到终点。建议留约两分半。",
     "sources": [
       "https://doi.org/10.1038/s41586-022-05172-4",
@@ -72,7 +87,7 @@
     ]
   },
   {
-    "text": "横轴是方阵大小 N，只取 N=4^k，便于把 4×4 算法递归应用 k 层。每层直接法把乘法数乘 64，Strassen 乘 49，AlphaTensor 的模 2 方案乘 47，所以总数分别为 64^k、49^k、47^k。纵轴把直接法设为 100%，观察另外两条线随矩阵变大而下降。\n例如 N=1024=4^5：直接法需要 1,073,741,824 次标量乘法，AlphaTensor 需要 229,345,007 次，约为直接法的 21.36%，少 78.64%。论文将递归复杂度写为约 O(N^2.778)，优于 Strassen 的约 O(N^2.807) 与直接法 O(N^3)。\n这是模 2 条件下的理论乘法计数。其他尺寸可通过分块或填充处理，但额外 XOR、访存、常数项和硬件实现仍决定实际耗时。",
+    "text": "横轴是方阵大小 N，只取 N=4^k，便于把 4×4 算法递归应用 k 层。每层直接法把乘法数乘 64，Strassen 乘 49，AlphaTensor 的模 2 方案乘 47，所以总数分别为 64^k、49^k、47^k。纵轴把直接法设为 100%，观察另外两条线随矩阵变大而下降。\n例如 N=1024=4^5：直接法需要 1,073,741,824 次标量乘法，AlphaTensor 需要 229,345,007 次，约为直接法的 21.36%，少 78.64%。论文将递归复杂度写为约 O(N^2.778)，优于 Strassen 的约 O(N^2.807) 与直接法 O(N^3)。\n这是模 2 条件下的理论乘法计数。其他尺寸可通过分块或填充处理，但额外的模 2 加法、访存、常数项和硬件实现仍决定实际耗时。",
     "action": "沿横轴从 4 指到 1024，先比较三条线，再用 N=1024 的数字说明理论乘法优势如何累积；最后强调模 2 与非实测边界。",
     "sources": [
       "https://doi.org/10.1038/s41586-022-05172-4",
@@ -80,8 +95,8 @@
     ]
   },
   {
-    "text": "这里用统一的直接展开方式计数，所有三种算法都逐项计算输入线性组合，再合并输出，不共享额外的加法中间表达式。模2加法用XOR实现。直接算法64次乘法、0次输入XOR、48次输出XOR；Strassen展平49乘、190次输入XOR、128次输出XOR，总318；AlphaTensor47乘、202次输入XOR、138次输出XOR，总340。\n计数规则是k个输入项相加需要k-1次XOR，一个输出的k个贡献合并需要k-1次XOR。首次赋值不算加法，零系数不执行操作。次数不随矩阵中0/1取值变化而消除操作。这些是当前统一展开实现的计数，不是论文宣称的最优加法数。经典递归Strassen可共享中间结果，得到198次加减法，那是另一个实现口径。\n所以AI比展平Strassen少2次乘法，但多22次XOR；乘法成本m、XOR成本1时，需要m>11才在这个模型中更划算。相比直接算法，AI省17乘、多292 XOR，需要m>292/17约17.18。成本20时三者为1328、1298、1280；成本1时为112、367、387。教学模型不等于GPU实测时间，实际要考虑共享优化、精度、访存与专用指令。",
-    "action": "先解释乘法变少而XOR增加，再点成本1、20、50，让听众观察不同假设会改变结论。",
+    "text": "这里用统一的直接展开方式计数，所有三种算法都逐项计算输入线性组合，再合并输出，不共享额外的加法中间表达式。所有输出最终对 2 取余。直接算法64次乘法、0次输入加法、48次输出加法；Strassen展平49乘、190次输入加法、128次输出加法，总318；AlphaTensor47乘、202次输入加法、138次输出加法，总340。\n计数规则是k个输入项相加需要k-1次模 2 加法，一个输出的k个贡献合并需要k-1次模 2 加法。首次赋值不算加法，零系数不执行操作。次数不随矩阵中0/1取值变化而消除操作。这些是当前统一展开实现的计数，不是论文宣称的最优加法数。经典递归Strassen可共享中间结果，得到198次加减法，那是另一个实现口径。\n所以AI比展平Strassen少2次乘法，但多22次模 2 加法；乘法成本m、模 2 加法成本1时，需要m>11才在这个模型中更划算。相比直接算法，AI省17乘、多292次模 2 加法，需要m>292/17约17.18。成本20时三者为1328、1298、1280；成本1时为112、367、387。教学模型不等于GPU实测时间，实际要考虑共享优化、精度、访存与专用指令。",
+    "action": "先解释乘法变少而模 2 加法增加，再点成本1、20、50，让听众观察不同假设会改变结论。",
     "sources": [
       "https://github.com/google-deepmind/alphatensor",
       "https://doi.org/10.1038/s41586-022-05172-4",
@@ -97,7 +112,7 @@
     ]
   },
   {
-    "text": "前一页的曲线统计递归后的标量乘法次数，本页成本滑块统计单层 4×4 方案的假设算术单位；它们都不是硬件实测加速比。实际要计入额外 XOR、寄存器与中间结果、访存、融合乘加、矩阵形状、精度和实现。大矩阵让理论乘法优势累积，但是否更快仍需在目标硬件和目标数据类型上测量。",
+    "text": "前一页的曲线统计递归后的标量乘法次数，本页成本滑块统计单层 4×4 方案的假设算术单位；它们都不是硬件实测加速比。实际要计入额外的模 2 加法、寄存器与中间结果、访存、融合乘加、矩阵形状、精度和实现。大矩阵让理论乘法优势累积，但是否更快仍需在目标硬件和目标数据类型上测量。",
     "action": "把大矩阵的理论曲线与本页的实现边界联系起来，避免把乘法数直接说成加速比。",
     "sources": [
       "https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html",
@@ -186,7 +201,7 @@
   const traces={};
   const smallMatrix=values=>values.map(v=>`<span>${v}</span>`).join('');
   $('#talk-comparison').innerHTML=methods.map(m=>`<div class="comparison-method ${m.id}" id="talk-method-${m.id}"><h3>${m.name}</h3><div class="method-counter"><b id="talk-count-${m.id}">0</b><span>/ ${m.total} 次</span></div><div class="method-progress"><i id="talk-progress-${m.id}"></i></div><div class="method-inputs"><div><span>输入 A</span><div class="small-matrix" id="talk-a-${m.id}">${smallMatrix(a4)}</div></div><b>×</b><div><span>输入 B</span><div class="small-matrix" id="talk-b-${m.id}">${smallMatrix(b4)}</div></div></div><div class="method-equation" id="talk-equation-${m.id}">? × ? = ?</div><p class="method-caption" id="talk-caption-${m.id}">准备第一步</p><div class="method-output"><div><span id="talk-output-label-${m.id}">输出累计 C</span><div class="small-matrix" id="talk-c-${m.id}">${smallMatrix(Array(16).fill(0))}</div></div><p id="talk-output-note-${m.id}">当前为中间状态，仍需继续累加。</p></div></div>`).join('');
-  const rebuild=()=>{methods.forEach(m=>{traces[m.id]=math.trace(m.terms,a4,b4);});};rebuild();
+   const rebuild=()=>{methods.forEach(m=>{traces[m.id]=math.trace(m.terms,a4,b4);});};rebuild();
   function updateGrid(id,values,mask,kind){$$(id+'>span').forEach((e,i)=>{e.textContent=values[i];for(const c of ['a','b','c'])e.classList.toggle(c+'-on',kind===c&&!!mask?.[i]);});}
   const comparison=demo('compare',64,frame=>{
     let finished=0;
@@ -199,8 +214,8 @@
       $('#talk-count-'+m.id).textContent=n;$('#talk-progress-'+m.id).style.width=`${100*n/m.total}%`;
       updateGrid('#talk-a-'+m.id,a4,term?.u,'a');updateGrid('#talk-b-'+m.id,b4,term?.v,'b');updateGrid('#talk-c-'+m.id,step?.accumulator||Array(16).fill(0),term?.w,'c');
       $('#talk-equation-'+m.id).textContent=step?`${step.left} × ${step.right} = ${step.product}`:'? × ? = ?';
-      $('#talk-caption-'+m.id).textContent=!term?'先按输入组合，再做一次标量乘法':m.id==='direct'?`第 ${term.row+1} 行与第 ${term.col+1} 列，第 ${term.k+1} 对数字`:m.id==='strassen'?`外层第 ${term.outer+1} 个组合，内层第 ${term.inner+1} 次乘法`:`A 取 ${term.u.filter(Boolean).length} 格、B 取 ${term.v.filter(Boolean).length} 格，先按模 2 相加`;
-      $('#talk-output-label-'+m.id).textContent=complete?'最终答案 C':'输出累计 C';
+       $('#talk-caption-'+m.id).textContent=!term?'先按输入组合，再做一次标量乘法':m.id==='direct'?`第 ${term.row+1} 行与第 ${term.col+1} 列，第 ${term.k+1} 对数字`:m.id==='strassen'?`外层第 ${term.outer+1} 个组合，内层第 ${term.inner+1} 次乘法`:`A 取 ${term.u.filter(Boolean).length} 格、B 取 ${term.v.filter(Boolean).length} 格，输入组合先对 2 取余`;
+       $('#talk-output-label-'+m.id).textContent=complete?'最终答案 C':m.id==='alpha'?'输出累计 C（模 2）':'输出累计 C';
       const correct=complete&&step.accumulator.every((x,i)=>x===target[i]);
       $('#talk-output-note-'+m.id).textContent=correct?'已完成，结果与直接算法一致':term?`本步把 ${step.product} 加到 ${term.w.filter(Boolean).length} 个输出格子`:'当前为中间状态，仍需继续累加。';
     }
@@ -222,7 +237,7 @@
   function duration(seconds){return `${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}`;}
   function renderNotes(){
     const note=notes[current];
-    $('#notes-content').innerHTML=`<div class="notes-time">第 ${current+1} 页，建议 ${duration(Number(slides[current].dataset.seconds))}，全场 11:45</div><div class="notes-body"></div><div class="notes-action"></div><div class="notes-sources">参考来源${note.sources.map((url,i)=>`<a href="${url}" target="_blank" rel="noopener noreferrer">${i+1}. ${url}</a>`).join('')}</div>`;
+    $('#notes-content').innerHTML=`<div class="notes-time">第 ${current+1} 页，建议 ${duration(Number(slides[current].dataset.seconds))}，全场 ${duration(slides.reduce((sum,slide)=>sum+Number(slide.dataset.seconds),0))}</div><div class="notes-body"></div><div class="notes-action"></div><div class="notes-sources">参考来源${note.sources.map((url,i)=>`<a href="${url}" target="_blank" rel="noopener noreferrer">${i+1}. ${url}</a>`).join('')}</div>`;
     $('.notes-body').textContent=note.text;$('.notes-action').textContent=note.action;
   }
   function go(index,updateHash=true){

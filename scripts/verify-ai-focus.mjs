@@ -26,6 +26,9 @@ for(let i=0;i<16;i++)for(let j=0;j<16;j++){
 const a=[1,0,1,1,0,1,1,0,1,1,0,1,0,0,1,1],b=[1,1,0,1,0,1,1,0,1,0,1,1,1,0,0,1];
 const expected=[1,1,1,1,1,1,0,1,0,0,1,0,0,0,1,0];
 for(const terms of methods)assert.deepEqual(Array.from(model.evaluate(terms,a,b).result),expected);
+const first=model.step(methods[2][0],a,b);
+assert.equal(first.left,1);assert.equal(first.right,1);assert.equal(first.product,1);
+assert.deepEqual(Array.from(first.delta),[1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0]);
 const second=model.step(methods[2][1],a,b);
 assert.equal(second.left,1);assert.equal(second.right,1);assert.equal(second.product,1);
 assert.deepEqual(Array.from(second.delta),[0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0]);
@@ -43,9 +46,11 @@ assert.deepEqual(expectedStats.map(stats=>model.weighted(stats,1)),[112,367,387]
 assert.equal(model.weighted(expectedStats[1],11),model.weighted(expectedStats[2],11));
 const html=fs.readFileSync('presentation/slides.template.html','utf8');
 const titles=[...html.matchAll(/<section class="slide\b[^>]*data-title="([^"]+)"/g)].map(match=>match[1]);
-assert.equal(titles.length,14);
-assert.equal(titles[6],'AlphaTensor 的算法发现');
-assert.equal(titles[7],'四阶矩阵三算法动画对比');
-assert.equal(titles[8],'大矩阵上乘法优势如何累积');
+assert.equal(titles.length,16);
+assert.equal(titles[6],'Strassen：七次乘法怎样算 2×2');
+assert.equal(titles[7],'AlphaTensor 的算法发现');
+assert.equal(titles[8],'AlphaTensor：47 个乘积怎样合成结果');
+assert.equal(titles[9],'四阶矩阵三算法动画对比');
+assert.equal(titles[10],'大矩阵上乘法优势如何累积');
 assert.equal(titles.filter(title=>title.startsWith('Strassen第')).length,0);
-console.log('PASS: 64/49/47 counts, recursive sizes 4..1024, exact multiplication series, 21.36% endpoint, weighted-cost thresholds, and 14 AI-focused slides.');
+console.log('PASS: 64/49/47 counts, recursive sizes 4..1024, exact multiplication series, 21.36% endpoint, weighted-cost thresholds, and 16 AI-focused slides.');
