@@ -1,0 +1,98 @@
+# Local operation and recovery
+
+Node >=24.11, official Codex CLI (local 0.146.1), front/app-builder/mcp dependency lock file. Unified entrance node scripts/dev.mjs; rely on node kernel/scripts/install.mjs for the first time. No need for global business dependence, no cloud deployment. The script location is derived from the root directory, the port is config/runtime.json, and HTTP is 127.0.0.1.
+
+OpenCode CLI and SDK 1.19.0 are locked in `backend/agent-runtime/package-lock.json`. Installation must include optional platform packages and allow the locked OpenCode postinstall selector, then verify `node_modules/.bin/opencode --version`. Agent-runtime starts it only on demand at loopback `openCodePort` (4315 by default), with an in-memory Basic password and isolated XDG storage under `local-secrets/opencode/`. Use `Saplingagent.sh opencode` to add a provider, then restart the app. Never commit or package that credential directory.
+
+setup.mjs generates local-secrets/runtime/service-token (600), and the project authentication directory 700. Copy from the local Codex auth to local-secrets/codex for the first time, it has not been overwritten; no authentication node kernel/scripts/login.mjs, and then restart. The CODEX_HOME environment is only effective in the current subprocess and does not change the global configuration. The internal service does not expose the token to the browser.
+
+Start status.ready must contain actual authentication/model catalog/MCP discovery; the directory does not guarantee the amount, and the actual request may fail. At present, it is Full Access, and there is no sequential execution confirmation or stable base protection; native file/shell and MCP standard execution confirmation are automatically accepted. Ctrl+C terminates the service created this time. App Server uses its own process group, and unknown port occupation does not terminate other people's processes.
+
+TASK016 exit processing supports SIGTERM and SIGHUP at the same time (turn off the macOS terminal). Agent first sends SIGTERM to the App Server independent process group created by himself, and sends SIGKILL to the same group process that is still alive after 750ms; waits for process cleaning up to 1500ms, saves and cleans up the session and waits at the same time, and then cancels the unfinished workspace HTTP request and closes the connection to meet the four-second stop period of the unified launcher. The processing only covers the process group of this spawn, does not scan the port, does not send signals to other Codex instances or user processes; the system forced termination of Agent itself still cannot guarantee the landing. App Server connection errors also clean up the descendants in its group to prevent the leader from exiting but leaving the MCP descendants.
+
+After saving sessionId/threadId, you can refresh or restart to continue the chat; start to fix the residual running state of the disk. Failure and requestId retry to avoid duplicate user messages; stop/fault to stop the old turn and release the session, and the ongoing atomic tool operation is still subject to the change record. The application code is restored through page_rollback, and the business data is saved separately.
+
+TASK-20261010-006 running policy: turnTimeoutMs of config/runtime.json defaults to 0, missing fields are also 0, turning off the whole round of hard time limit; turnIdleWarningMs defaults to 600000, no effective progress for 10 consecutive minutes only prompts to wait/stop, not automatically interrupting or resending. Both of them require 0..2147483647 integer milliseconds, negative/decimal/string/null/over-boundary value makes the start reject, and 0 closes their respective timers; explicit positive turnTimeoutMs is still an absolute total time limit that cannot be renewed. The configuration is loaded in Agent startup, and the modification is restarted to take effect for the new round. The existing running round does not change the strategy dynamically. The tool's own timeout, real Stop and error handling are still valid. The final progress metadata is only in the active process, and the restart is not a breakpoint continuation; the page is reconnected to read the current snapshot and reissue the idle reminder. The standard Full Access confirmation is automatically passed, and no new free question input interface is added.
+
+Unit/isolated HTTP test uses mock clock, fake AppServer and memory workspace. All temporary data is in the project.cache/turn-progress-test/, and there is no new dependency/real account/model call. The independent candidate is based on main ea20b59, and the test submission is registered by authoritative coordination, and the main is synchronized after manual confirmation; to restore the old code, you need to restart Agent and restore the corresponding public configuration, without covering the real conversation data.
+
+The Git version panel call system already has a `git` executable file, and requires no additional Node dependency or global installation. Before switching, it automatically submits all non-neglected changes in the current named branch, and does not switch if the submission fails; detached saves are retained under recovery refs. Branch switching will change the version-controlled file in the current Worktree; after success, the browser reloads the target version, and the started Node back-end process will still load the code before switching, and the full operation of the target version should be restarted according to the version entrance. If the target version does not include the Git panel, the panel will not continue to be displayed after reloading; you can use Git commands or the version containing this function to restart. The interface does not create branches or operate remotely.
+
+Rely on the fault to give real 503/error; After the App Server is closed, the status polling interval is at least 15s to try to restart, and do not fake the model results. See SERVICE for log directory and 30-day cleaning. System isolation, customer seed packaging and Windows/Linux online have not been verified. For details, please refer to the root TODO.
+
+Runtime MCP calls Agent internal POST /internal/register-task before controlled changes, Bearer authenticates and binds the current App Server MCP item fingerprint. Before modification, project_context({modification:true}) tries to return taskId; read-only without registration; callback failure does not block the operation. Source code changes are restarted according to the process loading method; no automatic rollback, active recovery of available file snapshots, command and native operation side effects do not guarantee recovery.
+
+TASK015 macOS13.5+ source package installation: root directory Saplingagent.sh install prepares the project Node24.21 LTS, Codex0.146.1 and lock dependency; Saplingagent.sh login is completed by the user to complete the official OAuth by the user; Saplingagent.sh start and other accounts/models/MCP and web pages are really ready before opening the browser. SEED_CODEX_BIN points to kernel/scripts/macos/codex.sh, always forcing the project CODEX_HOME and file credentials to be stored, and not imported into global auth. Saplingagent.sh doctor only metadata, no model request. For details, see../../Docs/macos-install.html; This is a native development/open source operation, and commercial/hosting requires separate SIWC. The old node development entrance is reserved. This task does not change the FullAccess or API structure.
+
+## Version panel update (2026-10-11)
+
+The panel lists historical commits with optional custom names and permits loading a selected commit in detached HEAD. Named branch tips stay unchanged by historical checkout, except an explicit pre-checkout save of pending named-branch work. Saving detached work creates a retained refs/saplingagent/saved/<sha> recovery ref; users can return to an available branch. Save version still excludes known private data, credentials and local runtime/build artifacts even when old source lacks ignore rules; explicitly staged private files return GIT_PRIVATE_FILES (409). No filesystem access restrictions are added.
+
+Select a commit, edit Version name and choose Save name. Empty text clears its alias. Aliases are local repository metadata in the common Git directory (saplingagent/version-labels.json), survive branch changes/restarts and preserve the SHA and original subject. Names are not included in a Git push or source ZIP. A failed writer lock may require removing version-labels.json.lock only after checking that no writer is alive. Malformed labels must be repaired from backup; they are never silently overwritten.
+
+The starting page remains chat with Git controls/footer. The earlier uncommitted clock was explicitly reverted by the user. Checkout reloads frontend source, while changed backend code/dependencies require a service restart; old commits may lack the panel, in which case git switch main from Terminal restores its source. Do not reset sessions/authentication to restore source. No new dependency or login change.
+
+## Managed restart
+The project runtime manager prepares this service using the internal contract before terminating its owned process group. Finish AI/file/Git work before Restart app or Restart backend; busy work refuses restart without interruption. Prepared services reject new mutations until release or replacement. The launcher keeps its gateway/control alive. See ../runtime-manager/CONTRACT.md and DEPLOY.md.
+
+## Windows x64 candidate (TASK-20261011-029)
+
+Native Windows10/11 x64 uses the shared kernel/contracts/local-process.mjs OS contract. Project Node and native executable dependencies remain local. App Server uses codex.exe with file credential storage; OpenCode uses its selected opencode.exe, local XDG data/config/cache/state. The manager and command cancellation stop only their owned live PID trees with taskkill /PID /T /F; POSIX detached process-group behavior is retained. Windows shell commands use ComSpec cmd.exe /d /s /c, regardless of an inherited Git Bash SHELL. HTTP/SSE/permissions remain unchanged, including Full Access. Windows forced termination is abrupt; finish active operations before restart, and externally detached programs or forced parent death cannot guarantee cleanup. Native Windows10 auth/model/restart acceptance is pending; current host checks are macOS/synthetic. Start with bash Saplingagent.sh in Windows Git Bash; platform guide ../../docs/windows-install.html. No actual credentials, global environment or running production processes are changed by this candidate.
+
+With the standalone setup candidate, Configure AI opens the independently built web page before chat starts. Save/select a ChatGPT, Codex Responses API or OpenCode scheme, finish setup and start the application. OpenCode default does not need Codex login; both remain installed as pinned local dependencies. New runtime reads local-secrets/ai-config/ and referenced API keys. Restart existing runtime and start a fresh conversation to apply a changed scheme. Actual upstream/tool-call/authentication/Windows acceptance requires user testing; readiness does not send a billable prompt. No credentials or saved sessions are changed on source rollback.
+
+## Claude Agent delivery
+
+Install/update using the same project-local Bash launcher. Agent dependencies pin official Claude Agent SDK0.3.296, including optional native macOS/Windows x64/arm64 binaries; do not omit optional packages. The installer verifies the native binary without a model prompt. No separate global Claude Code installation, new public port or global account import is required. Configure AI in the independent page, choose Claude Agent / Anthropic Messages, save an API key/model/custom API base URL, finish, restart and begin a new conversation. Startup control initialization and MCP/Skills checks do not establish provider quota.
+
+Keys use local-secrets/api-keys/ai-<id>.json and the shared credential ledger. SDK settings/transcripts use local-secrets/claude/. CLAUDE.md imports AGENTS.md; existing .agents/skills loads through .agents/.claude-plugin/plugin.json. Full Access remains bypassPermissions with sandbox disabled. Native dialogs are not advertised/rendered; ordinary chat questions are used. Stopping/restarting terminates only owned process trees before releasing a running session. Windows10 actual SDK/model/browser acceptance is pending.
+
+Rollback: preserve local-secrets and data, select the previous reviewed Git version, install its lockfiles and restart. Older versions cannot parse Claude profiles; before switching back, select a compatible default in the current setup page, back up connections.json, then deliberately remove only Claude profiles from that metadata file before starting the older version. Do not overwrite or delete credentials or transcripts automatically. Recheck health and an existing conversation after rollback.
+
+
+For an extracted customer ZIP, first install asks for Git storage and starts real release history unless explicitly configured. An app placed beneath another repository will not use that parent for version operations. Use launcher menu5/git to initialize its own repository. Returning to older Agent source can restore the older parent-discovery behavior; retain customer Git/data and never remove .git as a runtime repair. Full Access remains unchanged.
+
+
+## OpenCode displays internal instructions (TASK-20261012-017)
+
+An older adapter forwarded user-message parts as assistant replies, exposing the appended runtime instructions (for example Current permissions: full-access). Update the complete source to a version containing TASK017, then Restart backend/Restart app, or stop the launch terminal and run bash Saplingagent.sh start. Install / update repairs dependencies; it does not download new source. Keep data/ and local-secrets/; do not reset Git storage or credentials for this bug. Main receives the maintainer fix; release must be explicitly synchronized before release downloads contain it.
+
+New turns attribute replies to the submitted message and send runtime instructions as system context. Previously saved incorrect bubbles are preserved, so a new conversation gives a clean view. Old native OpenCode user history may also contain the former context. If a new conversation shows a real API/quota/model error, check its configured endpoint, protocol, exact model and provider rights; readiness/catalog discovery alone does not prove inference. No automatic resend, history cleanup or model fallback is introduced.
+
+## Enabling attachments and fresh page reading
+
+Restart app after source changes and reload the frontend. Existing workspace/Agent/builder/MCP processes implement this feature; there is no new persistent process to register. Frontend dependency installation is covered by its lockfile. Back up local data/attachments with sessions; removing composer chips does not delete stored files. No session migration, credential import, API-key change or global dependency is needed. Real image understanding depends on the selected model/provider and quota; synthetic checks establish transport, not account entitlement. File uploads are20 MiB each, JSON upload 32 MiB and chat attachment count 10. Reverse proxies must preserve same-origin routes/body budgets and support long polling.
+
+## Kernel metadata deployment
+
+Ship contracts/kernel.mjs and kernel/manifest.json with the complete folder. GET /api/kernel reports installed metadata without model calls, conversations, local paths or arbitrary receipt fields. Missing legacy manifests fall back to0.90; invalid metadata reports a warning. Independent updates require a stopped app and the launcher kernel command, followed by dependency repair and startup verification. Source recovery does not restore business data. See ../../kernel/DEPLOY.md.
+
+
+## Distribution metadata deployment (2026-10-17)
+
+Ship config/release.json and kernel/contracts/release.mjs with the complete source; restart Agent to load GET /api/release. No model or credential is needed to read public distribution identity. Missing/invalid metadata returns503, without changing chat/Git/kernel behavior. An independent kernel update preserves the product declaration and may leave old application HTTP code without this additive route; frontend handles404 explicitly.
+
+
+## Conversation controls adoption (TASK-20261019-056)
+
+Deploy the Agent together with the Workspace contextUsage persistence extension and
+matching chat UI, then Restart app. Existing saved sessions need no migration;
+missing usage remains unknown. No dependency change, account import, provider
+reconfiguration or model request is needed for these routes. Source rollback keeps
+sessions and optional metadata intact. The isolated chat-controls tests use a fake
+App Server and loopback Workspace with synthetic data under .cache/chat-controls-test;
+they do not demonstrate real model entitlement or native Windows operation.
+
+## Same-conversation AI handoff (2026-10-23)
+
+Deploy matching application Workspace, Agent and front/chat sources together, then Restart app. This is an application feature: kernel-only updates do not replace it, and kernel0.9.6/adapters/dependencies remain unchanged. Existing files read with engineRevision0; first explicit AI change persists binding metadata. Never reset customer sessions/credentials to adopt it.
+
+In an idle conversation, choose the target AI/provider/model and Apply. The current conversation and unsent composer remain. The next send transfers a labelled recent-history excerpt with the complete local transcript reference; a failed/interrupted handoff remains pending for manual retry. Model memory is not guaranteed by a successful transfer. Reconfiguration still requires restart; no automatic inference, authentication import or merging of separate sessions. See [conversation handoff](../../docs/conversation-handoff.html).
+
+Rollback needs care: older application versions do not understand binding revisions/history and can discard this metadata on writes. Preserve data/ including sessions and attachments, stop the app before source rollback, and retain a matching application-source version; a kernel backup alone is insufficient. No new persistent service, platform API or dependencies. Synthetic tests verify storage/transport/UI behavior, not live provider entitlement or native Windows acceptance.
+
+## Codex account model selection (2026-10-29)
+
+Reload the Agent/app after installing this change. The chat model picker uses the current native catalog; refresh sends metadata RPCs without inference. Selecting a model in an idle existing conversation needs no restart and preserves its native Codex thread. Runtime/profile/credential changes still need restart. `config/runtime.json.preferredModel` is the automatic choice only; explicit missing IDs are rejected instead of downgraded.
+
+Verify with `node --test backend/agent-runtime/test/codex-model-http.test.mjs backend/agent-runtime/test/session-handoff.test.mjs backend/agent-runtime/test/chat-controls.test.mjs` using project-local Node and dependencies. Tests create only synthetic project-local fixtures/RPC accounts, not actual provider calls. Real model entitlement, latency, quota and Windows native behavior remain separate acceptance.

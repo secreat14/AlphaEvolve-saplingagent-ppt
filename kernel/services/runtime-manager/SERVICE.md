@@ -1,0 +1,44 @@
+# Runtime manager
+
+Owns application child-process lifecycle as the persistent parent launched by `scripts/dev.mjs`. Uses Node built-ins with no new npm dependency. `manager.mjs` supervises owned processes; `server.mjs` provides authenticated lifecycle control; `gateway.mjs` streams same-origin frontend/API/WebSocket traffic and provides the independent recovery page. Tests exercise real synthetic child processes, Git source transitions, HTTP gates, SSE and upgrades.
+
+`status-page.mjs` renders the shared macOS/Windows project-status page and its small
+browser controller; `status.mjs` reads optional project/kernel metadata without
+initialization and dispatches the fixed project logs folder to the system opener.
+The existing gateway and controller host this page and its APIs. Confirmed stop waits
+for owned child exit before the owner callback shuts down listeners. This introduces
+no additional persistent process or business-service registration.
+
+The gateway starts from configured frontPort5173 and manager control from4314; the unified launcher chooses available ascending ports for every service. Selected gateway/control ports survive complete restarts. Internal Vite starts from vitePort5174. Core backends start workspace, builder, optional PDF (when source exists), then Agent; Agent owns model engines/MCP. services.mjs adds discovered Node backends and config/services.json registrations in dependency order on every restart. Reverse-order shutdown only signals manager-created process groups. Full restart replaces frontend and backend; backend mode keeps a healthy frontend when endpoint mappings are unchanged; changed mappings refresh it in the same job. Current checkout source, service registrations and config are read again. Internal port edits apply in-page; public/control preferences keep the current origin until a cold launch. The persistent controller is loaded by the launcher. Busy work refuses preparation and releases acquired gates. Older source without drain support has the limits in CONTRACT.md.
+
+Logs: logs/runtime-manager/runtime-manager-YYYY-MM-DD.log, lifecycle metadata only, 30-day retention. Child diagnostics stay in the terminal. Project commands use argv without an implicit shell; Node/npm resolve via the running project runtime. HTTP readiness does not send the internal token to ordinary project health endpoints. Existing internal token is read from local-secrets; never returned to browsers. This service adds no directory restrictions, root access, automatic rollback, chat resend or inference.
+
+## Windows x64 candidate (TASK-20261011-030)
+
+Native Windows10/11 x64 uses the shared kernel/contracts/local-process.mjs OS contract. Project Node and native executable dependencies remain local. App Server uses codex.exe with file credential storage; OpenCode uses its selected opencode.exe, local XDG data/config/cache/state. The manager and command cancellation stop only their owned live PID trees with taskkill /PID /T /F; POSIX detached process-group behavior is retained. Windows shell commands use ComSpec cmd.exe /d /s /c, regardless of an inherited Git Bash SHELL. HTTP/SSE/permissions remain unchanged, including Full Access. Windows forced termination is abrupt; finish active operations before restart, and externally detached programs or forced parent death cannot guarantee cleanup. Native Windows10 auth/model/restart acceptance is pending; current host checks are macOS/synthetic. Start with bash Saplingagent.sh in Windows Git Bash; platform guide ../../docs/windows-install.html. No actual credentials, global environment or running production processes are changed by this candidate.
+
+TASK-20261014-002: ports.mjs selects ascending loopback ports, skipping occupied and already selected ports. Manager keeps configured starting ports separate from per-instance overrides and exposes actual ports in status. SEED_FRONT_PORT and existing service port variables route children. No configuration rewrite, foreign process termination or new dependency. The ignored runtime-address file is launcher-owned discovery metadata; logs/runtime-manager records only selected numeric ports and normal lifecycle metadata. See CONTRACT.md.
+
+Product0.9.2: standalone /__saplingagent/kernel and /api/runtime/kernel routes use the public kernel maintenance contract. Synchronous maintenance gate drains services before a copied worker starts; gateway writes/restart are blocked during handoff. The owner callback closes registered app processes after HTTP202 flush, never the independent worker. No new persistent business daemon. Kernel worker validates new runtime discovery/readiness and handles temporary lifecycle/recovery.
+
+TASK-20261027-004: cold startup and both restart scopes share bounded internal
+port selection/retry. Conflicts after owned shutdown advance to free ports; bind
+races clean only owned partial attempts before retrying (eight attempts maximum).
+Public/control listeners remain stable. Changed builtin/custom endpoint maps
+restart the frontend so captured proxies/env follow the new addresses. Logs add
+restart_port_retry and restart_scope_expanded metadata, without credentials.
+
+
+## Configure AI from the application
+
+Open the main page's top-right Settings, then Configure AI. The runtime gateway
+starts a short-lived local bootstrap and opens/reuses the independent setup page
+in the default system browser. Preparation is asynchronous; repeated clicks share
+one job. Opening setup leaves current application services running. Save work
+before Save & build; existing finalization owns stop/rename/build, and users open
+the app again after Finish setup. If the browser cannot open, copy the displayed
+loopback URL into a new tab's address bar. Do not replace this with a fixed-port
+link or disable setup Host/Origin checks. Errors/slow startup point to
+logs/project-launcher; the existing bash Saplingagent.sh configure remains usable.
+This JavaScript controller change requires one cold launch for existing running
+instances; it does not require rebuilding the native app. Current kernel0.9.9.

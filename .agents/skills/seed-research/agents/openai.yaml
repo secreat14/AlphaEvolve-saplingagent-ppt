@@ -1,0 +1,4 @@
+interface:
+  display_name: "Technical research"
+  short_description: "Research official sources and explain feasible options and limitations."
+  default_prompt: "Use $seed-research to investigate this feature and explain the official evidence."

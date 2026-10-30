@@ -1,0 +1,14 @@
+{
+  "agentPort": 4310,
+  "workspacePort": 4311,
+  "builderPort": 4312,
+  "openCodePort": 4315,
+  "frontPort": 5173,
+  "preferredModel": "gpt-6.1-sol",
+  "reasoningEffort": "medium",
+  "turnTimeoutMs": 0,
+  "turnIdleWarningMs": 600000,
+  "permissionMode": "full-access",
+  "vitePort": 5174,
+  "runtimeManagerPort": 4314
+}

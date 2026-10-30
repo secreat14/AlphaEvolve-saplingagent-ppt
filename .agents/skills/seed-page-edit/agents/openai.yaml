@@ -1,0 +1,4 @@
+interface:
+  display_name: "Page evolution"
+  short_description: "Build and adapt the application through conversation, verify results, and support user-requested restoration."
+  default_prompt: "Use $seed-page-edit to update this Saplingagent page as requested."

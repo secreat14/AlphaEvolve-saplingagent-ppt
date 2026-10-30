@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reusable workflows"
+  short_description: "Create project Skills and supporting resources, then verify discovery and workflow behavior."
+  default_prompt: "Use $seed-skill-author to turn my workflow into a project Skill."
