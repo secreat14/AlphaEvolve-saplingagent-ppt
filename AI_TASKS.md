@@ -10,7 +10,7 @@
 
 ## Current tasks
 
-- `RUN-632a61f4-ab72-4519-84a3-02055701c017` — Codex — organize the project around the AlphaTensor presentation, remove obsolete documentation, verify, commit, and push to the confirmed repository. Scope: project documentation, presentation source/build outputs, historical task documents, and Git metadata. Status: in progress.
+- `RUN-632a61f4-ab72-4519-84a3-02055701c017` — Codex — organized the project around the AlphaTensor presentation, removed obsolete documentation, verified, committed, and pushed to the confirmed repository. Scope: project documentation, presentation source/build outputs, historical task documents, and Git metadata. Implementation commit: `e0c7eede5acbddcf94e95f2b955562c2db72bd6f`. Status: implementation and self-check complete; human presentation acceptance not recorded.
 - Runtime records below are local execution records and do not establish human acceptance.
 
 <!-- seedagent-runtime-tasks:start -->
