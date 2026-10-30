@@ -2,6 +2,15 @@ selfdata.json
 local-secrets/
 .secrets/
 secrets/
+# Never publish local AI/provider configuration or credential stores.
+auth.json
+connections.json
+project-secrets.json
+*.credentials.json
+*.token
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
 .worktrees/
 .cache/
 .claude/settings.local.json

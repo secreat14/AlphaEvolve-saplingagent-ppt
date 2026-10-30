@@ -22,4 +22,6 @@ Also read:
 - The presentation remains embedded in the Saplingagent application while the right-side AI chat stays available.
 - Keep citations, licenses, speaker notes, accessibility, offline use, and the distinction between operation counts and real runtime.
 - The publication target is `https://github.com/secreat14/AlphaEvolve-saplingagent-ppt.git`; verify the configured remote before every push.
+- This customer repository publishes only `main`; do not create or push feature/release branches unless the user explicitly changes that instruction.
 - Do not commit credentials, conversations, runtime data, logs, dependencies, caches, native application bundles or generated frontend build output.
+- In particular, never commit the current AI configuration under `local-secrets/`, including `connections.json`, `auth.json`, API keys, login tokens or runtime service tokens.

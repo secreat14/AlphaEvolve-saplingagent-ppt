@@ -20,6 +20,7 @@
 ## 当前任务
 
 - `RUN-632a61f4-ab72-4519-84a3-02055701c017`：文档整理、全量验证、敏感文件筛查、Git 初始化和指定 GitHub 仓库推送已完成。实现提交：`e0c7eede5acbddcf94e95f2b955562c2db72bd6f`。
+- `RUN-eadd6e29-3863-46e4-bcc8-068d23ed4033`：确认 AI 配置、密钥和 Token 均未被 Git 跟踪；补强忽略规则，并将仓库统一为单一 `main` 分支。
 
 ## 后续可选事项
 
@@ -29,9 +30,9 @@
 ## Git 分支管理
 
 - 目标远程：`https://github.com/secreat14/AlphaEvolve-saplingagent-ppt.git`
-- 目标分支：沿用远程默认分支 `front/matrix-html-presentation`
-- 当前状态：实现和自检完成，已推送；未记录人工演讲验收
+- 目标分支：`main`（用户明确要求只使用主分支）
+- 当前状态：演讲实现和自检完成；正在迁移默认分支，未记录人工演讲验收
 - 已推送实现提交：`e0c7eede5acbddcf94e95f2b955562c2db72bd6f`
 - 执行 AI：Codex
-- 任务：`RUN-632a61f4-ab72-4519-84a3-02055701c017`
-- Worktree：当前项目根目录（仓库初始化前无独立 Worktree）
+- 当前任务：`RUN-eadd6e29-3863-46e4-bcc8-068d23ed4033`
+- Worktree：当前项目根目录
