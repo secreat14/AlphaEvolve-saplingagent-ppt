@@ -15,7 +15,7 @@ Also read:
 
 ## Project-specific notes
 
-- Project goal: complete and maintain the 21-slide, approximately 20-minute Chinese presentation “AI 如何发现更快的矩阵乘法”.
+- Project goal: complete and maintain the 14-slide, approximately 12-minute Chinese presentation “AI 如何发现更快的矩阵乘法”.
 - Presentation source lives in `presentation/`; build with `node scripts/build-presentation.mjs`.
 - Generated presentation outputs are `dist/slides.html`, `矩阵与AI-20分钟演讲.html`, and `front/public/presentation/index.html`. Do not edit generated copies independently.
 - Mathematical and structural checks are in `scripts/verify-*.mjs`.

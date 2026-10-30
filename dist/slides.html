@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-CN">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f6ef"><meta name="description" content="20分钟中文HTML演示文稿：用过程动画理解矩阵乘法、GPU和AlphaTensor。独立文件，可离线打开。"><title>AI 如何发现更快的矩阵乘法｜20分钟演讲</title><style>:root{--paper:#f6f6ef;--ink:#25302b;--purple:#5751d3;--muted:#7e8879;--line:#dce1d3;--green:#728c59;--orange:#b38750;--scale:1;--mono:ui-monospace,SFMono-Regular,Consolas,monospace}*{box-sizing:border-box}body{margin:0;background:#e6e9df;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;overflow:hidden}button,select{font:inherit}button,a,select{touch-action:manipulation}button{cursor:pointer}button:disabled{cursor:default;opacity:.35}button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #928ce3;outline-offset:3px}button{border:0}a{color:inherit}.app-bar{height:54px;display:flex;align-items:center;gap:20px;padding:0 26px;background:#f6f6ef;border-bottom:1px solid var(--line);font-size:12px;position:fixed;inset:0 0 auto;z-index:50}.app-brand{text-decoration:none;font-weight:650;font-size:15px}.app-description{color:#9aa28f;font-size:11px}.app-tools{display:flex;margin-left:auto;align-items:center;gap:7px}.app-tools button,.navigation button{background:transparent;border:1px solid transparent;color:#6d7960;border-radius:6px;padding:7px 10px;font-size:12px}.app-tools button:hover,.navigation button:hover{background:#e9ecdf}.app-tools button[aria-pressed=true]{background:#e9e7fb;color:var(--purple)}kbd{font:9px var(--mono);margin-left:4px;opacity:.55}.app-tools #help-button{border-color:var(--line);width:27px;height:27px;padding:0}#viewport{position:fixed;top:54px;bottom:51px;left:0;right:0;overflow:hidden}#stage{position:absolute;width:1440px;height:810px;top:50%;left:50%;transform:translate(-50%,-50%) scale(var(--scale));transform-origin:center;box-shadow:0 5px 40px #2438200b;background:var(--paper);overflow:hidden}.slide{position:absolute;inset:0;padding:58px 72px 52px;background:var(--paper);display:none;flex-direction:column;overflow:hidden}.slide.active{display:flex;animation:slide-in .22s ease}.slide-header{margin-bottom:28px}.chapter{display:block;font-size:17px;letter-spacing:2px;color:#939e86;margin-bottom:16px;font-weight:500}.slide h2{font-size:48px;font-weight:650;letter-spacing:-1.8px;line-height:1.25;margin:0 0 16px}.slide-header>p{font-size:25px;line-height:1.6;color:#78856b;margin:0}.slide h3{font-size:27px;font-weight:600;margin:0 0 18px}.slide-source{font-size:15px;line-height:1.7;color:#97a089;position:absolute;bottom:20px;left:72px;right:72px}.cover{background:#e9eddf;padding:70px 82px 48px}.cover-kicker{font-size:23px;letter-spacing:2px;color:#7c8d6a;margin-bottom:30px}.cover h1{font-size:89px;line-height:1.24;letter-spacing:-4px;font-weight:700;margin:0}.cover em,.closing em{font-style:normal;color:var(--purple)}.cover-subtitle{font-size:27px;color:#80906f;margin:25px 0 30px}.cover-numbers{display:flex;align-items:center;gap:45px;margin-top:12px}.cover-numbers>div{display:flex;align-items:baseline;gap:17px}.cover-numbers b{font:73px var(--mono);color:#5b7050}.cover-numbers>div:last-child b{color:var(--purple)}.cover-numbers>div>span{font-size:19px;color:#879777}.number-separator{font:42px var(--mono);color:#c0c9b3}.cover-bottom{margin-top:auto;display:flex;justify-content:space-between;border-top:1px solid #cbd5bf;padding-top:20px;font-size:17px;color:#859674}.applications{display:grid;grid-template-columns:repeat(3,1fr);gap:56px;margin:55px 0 50px}.applications>div+div{border-left:1px solid var(--line);padding-left:50px}.application-index{font:22px var(--mono);color:#a4b192;display:block;margin-bottom:27px}.applications h3{font-size:38px;font-weight:600;margin-bottom:20px}.applications p{font-size:27px;line-height:1.95;color:#8d9a80;margin:0}.wide-takeaway{font-size:30px;color:#647954;border-top:1px solid var(--line);padding:26px 0 0;line-height:1.6;margin-top:auto}.wide-takeaway.compact{font-size:25px;padding-top:20px}.big-matrix-equation{display:flex;gap:45px;justify-content:center;align-items:center;margin:5px 0 24px}.matrix-block{text-align:center}.matrix-block>span{font:23px var(--mono);display:block;color:#9aa88a;margin-bottom:15px}.matrix{display:grid;padding:9px 12px;gap:8px;border-left:3px solid #9fae8e;border-right:3px solid #9fae8e;border-radius:6px}.matrix.two{grid-template-columns:repeat(2,88px)}.matrix .cell{display:grid;place-items:center;font:36px var(--mono);height:78px;background:#edf0e5;color:#7b8d68;border-radius:7px;transition:background .2s,color .2s,box-shadow .2s}.matrix .cell.a-lit{background:#dfdcfa;color:var(--purple)}.matrix .cell.b-lit{background:#dcebd2;color:#688a4b}.matrix .cell.active{box-shadow:inset 0 0 0 3px currentColor}.matrix .cell.output-lit{background:#ece9fc;color:var(--purple)}.operator{font:38px var(--mono);color:#a3af94;padding-top:40px}.demo-equation{font:44px var(--mono);text-align:center;color:var(--purple);margin:12px 0}.demo-caption{font-size:24px;text-align:center;color:#8c997c;line-height:1.7;min-height:41px;margin:8px 0 15px}.demo-controls{display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:20px;min-height:60px}.demo-controls button{padding:11px 18px;font-size:19px;background:#e9edde;color:#7a8e67;border-radius:7px;white-space:nowrap}.demo-controls button[data-play]{background:var(--purple);color:white;min-width:130px}.demo-controls button:hover{filter:brightness(.97)}.demo-controls>span{font-size:19px;color:#8b9a7b;margin-left:12px;line-height:1.6}.demo-controls label{font-size:17px;color:#8c9a7d;display:flex;gap:7px;align-items:center}.demo-controls select{border:1px solid #d7deca;background:#f4f6ec;border-radius:5px;font-size:17px;padding:8px 7px;color:#7d8b6e}.strassen-products{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:3px 0 18px}.strassen-product{padding:17px 19px;border-top:2px solid #dce2d2;background:#f0f2e8;min-height:138px;transition:background .2s,border-color .2s}.strassen-product.current{background:#eae7fc;border-color:#8b82d9}.strassen-product>span{font:17px var(--mono);color:#a2ad95}.strassen-product>p{font:23px var(--mono);margin:13px 0;color:#8a9978}.strassen-product>b{font:31px var(--mono);color:#7a78bd}.strassen-answer{display:flex;gap:35px;align-items:center;border-top:1px solid var(--line);padding-top:18px}.strassen-answer>div{flex-shrink:0}.strassen-answer span{font-size:18px;color:#94a184;display:block;margin-bottom:10px}.strassen-answer strong{font:30px var(--mono);color:var(--purple);font-weight:500}.strassen-answer p{font-size:22px;line-height:1.7;color:#8b9a7b;margin:0}.recursion-visual{display:flex;align-items:center;justify-content:center;gap:140px;margin-top:8px}.matrix.four{grid-template-columns:repeat(4,65px);gap:6px}.matrix.four .cell{height:61px;font-size:25px}.block-colors .cell.block-0{background:#e3dff6;color:#857bb8}.block-colors .cell.block-1{background:#e3ebd5;color:#8c9e70}.block-colors .cell.block-2{background:#e5e5d8;color:#93967e}.block-colors .cell.block-3{background:#e1ebe5;color:#7f9d8b}.block-colors .cell:nth-child(4n+2){margin-right:5px}.block-colors .cell:nth-child(n+5):nth-child(-n+8){margin-bottom:5px}.matrix-block>small{display:block;font-size:20px;color:#9aa98a;margin-top:16px}.recursion-text>div{display:flex;gap:40px;align-items:baseline;margin-bottom:20px}.recursion-text>div>span{font-size:23px;color:#8c9b7b;min-width:110px}.recursion-text strong{font:50px var(--mono);color:#7c78bf}.recursion-text strong small{font:23px -apple-system,sans-serif;color:#98a38d}.recursion-text .recursion-total{font:56px var(--mono);margin:28px 0 10px;color:#8d9b7b}.recursion-total b{color:var(--purple);font-weight:500}.recursion-text>p{font-size:21px;color:#99a48c;line-height:1.6}.parallel-layout{display:grid;grid-template-columns:1fr 1fr;gap:100px;padding:6px 15px 0}.parallel-layout h3{display:flex;justify-content:space-between;align-items:center;font-size:27px}.parallel-layout h3 span{font:19px var(--mono);color:#98a789}.task-board{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.task-board>span{height:58px;display:grid;place-items:center;font:25px var(--mono);background:#e8ecdf;color:#a4b292;border-radius:5px;transition:background .2s,color .2s}.task-board>span.done{background:#c9dab6;color:#7b985f}.task-board>span.current{background:#7f9d61;color:#fff}.task-board.purple>span{background:#e8e5f5;color:#a9a3c4}.task-board.purple>span.done{background:#d4cfef;color:#8d81c0}.task-board.purple>span.current{background:#8c80d0;color:#fff}.parallel-layout>div>p{font-size:22px;color:#96a487;margin:16px 0 0}.memory-layout{display:grid;grid-template-columns:1fr 1fr;gap:100px;margin:22px 0 26px}.memory-layout h3{font-size:28px;font-weight:500}.trip-number{display:flex;align-items:baseline;gap:25px;color:#7f926b}.trip-number>b{font:104px var(--mono);font-weight:400}.trip-number>span{font:28px var(--mono);color:#9ba98d}.purple-text{color:var(--purple)!important}.transport{display:flex;align-items:center;gap:16px;margin:25px 0}.transport>span{font-size:22px;color:#9aa88b;white-space:nowrap}.transport-line{flex:1;position:relative;border-top:2px dashed #c3ceb4;height:5px}.transport-line i{height:14px;width:14px;background:#95aa7c;position:absolute;left:0;top:-8px;border-radius:3px}.transport-line i.travel{animation:travel .25s ease}.memory-layout>div>p{font-size:23px;color:#95a486}.memory-connection{display:flex;align-items:center;gap:30px;padding-top:23px;border-top:1px solid var(--line)}.memory-connection>strong{font-size:31px;color:#818f72;font-weight:500}.memory-connection>span{font-size:23px;line-height:1.7;color:#96a388}.dark{background:#25362d;color:#f0f1e7}.dark .chapter{color:#8f9f7f}.dark .slide-header>p{color:#9cac8e}.dark .slide-source{color:#758d6d}.discovery-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:55px;margin:43px 0 40px}.discovery-flow>div+div{border-left:1px solid #4d644c;padding-left:48px}.discovery-flow>div>span{font:24px var(--mono);color:#829d70;display:block;margin-bottom:27px}.discovery-flow h3{font-size:32px;font-weight:500;margin-bottom:20px;color:#d0dac5}.discovery-flow p{font-size:26px;line-height:1.85;color:#8fa482;margin:0}.dark-statement{font-size:27px;line-height:1.9;color:#849d78;border-top:1px solid #4a6148;padding-top:25px;margin-top:auto}.dark-statement strong{color:#c7d4b8;font-weight:500}.domain-comparison{display:grid;grid-template-columns:1fr 1fr;gap:90px;margin:45px 0 30px}.domain-comparison>div+div{border-left:1px solid var(--line);padding-left:70px}.domain-comparison>div>span{font-size:24px;color:#96a28a}.domain-comparison strong{display:block;font:65px var(--mono);margin:27px 0;color:#8a9a78;font-weight:400;white-space:nowrap}.domain-comparison strong b{color:var(--purple);font-weight:500}.domain-comparison p{font-size:25px;color:#9aa88b;margin:0}.domain-rules{display:flex;justify-content:space-between;font:27px var(--mono);color:#8f9e7f;border-top:1px solid var(--line);padding-top:25px}.comparison-slide{padding-top:40px}.comparison-slide .chapter{margin-bottom:10px;font-size:15px}.comparison-slide h2{font-size:41px;margin-bottom:12px}.comparison-slide .slide-header{margin-bottom:18px}.comparison-slide .slide-header>p{font-size:21px}.talk-comparison{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}.comparison-method{--method:#849c6a;min-width:0;border-left:1px solid var(--line);padding-left:24px}.comparison-method:first-child{border-left:0;padding-left:0}.comparison-method.strassen{--method:#8f80c9}.comparison-method.alpha{--method:#689887}.comparison-method.inactive{opacity:.37}.comparison-method h3{font-size:24px;font-weight:550;margin:0 0 6px}.method-counter{display:flex;align-items:baseline;gap:13px}.method-counter b{font:51px var(--mono);color:var(--method);font-weight:400}.method-counter span{font:18px var(--mono);color:#a2ad95}.method-progress{height:4px;background:#e1e7d6;margin:10px 0 14px}.method-progress>i{display:block;height:100%;width:0;background:var(--method);transition:width .15s}.method-inputs{display:flex;gap:17px;align-items:center;justify-content:center}.method-inputs>div>span,.method-output>div>span{display:block;font-size:15px;color:#97a78a;margin-bottom:7px}.method-inputs>b{font:22px var(--mono);color:#b0bba3;padding-top:20px}.small-matrix{display:grid;grid-template-columns:repeat(4,23px);gap:4px;border-left:2px solid #adb99e;border-right:2px solid #adb99e;border-radius:4px;padding:4px 6px}.small-matrix>span{font:18px var(--mono);height:24px;display:grid;place-items:center;background:#ebefe2;color:#9dac8e;border-radius:2px;transition:background .15s,color .15s}.small-matrix>span.a-on{background:#ded8f8;color:#8a79cc;box-shadow:inset 0 0 0 1px #b8abea}.small-matrix>span.b-on{background:#d9e7cc;color:#7b9d5b;box-shadow:inset 0 0 0 1px #b6ca9e}.small-matrix>span.c-on{background:#f5e4ce;color:#b79869;box-shadow:inset 0 0 0 1px #dfc39d}.method-equation{font:28px var(--mono);color:var(--method);text-align:center;margin:17px 0 8px}.method-caption{font-size:18px;line-height:1.65;color:#9ba88d;min-height:58px;margin:0 0 9px}.method-output{display:flex;gap:20px;align-items:center}.method-output>p{font-size:18px;line-height:1.8;color:#9ba88d;margin:0}.method-output>div{flex-shrink:0}.comparison-method.complete .method-output .small-matrix>span{background:#dfead4;color:#819e64;box-shadow:none}.comparison-status{font-size:20px;color:#8b9d79;border-top:1px solid var(--line);padding-top:12px;margin-top:15px}.comparison-controls{gap:9px;padding-top:12px;min-height:0}.comparison-controls button{font-size:17px;padding:10px 12px}.comparison-controls button[data-play]{min-width:115px}.comparison-controls label{font-size:16px;margin-left:4px}.comparison-controls select{font-size:16px;padding:7px 5px}.comparison-slide .slide-source{bottom:13px;font-size:14px}.tensor-boards{display:grid;grid-template-columns:repeat(4,1fr);gap:35px;margin:12px 0 30px}.tensor-boards h3{font:21px var(--mono);color:#9da98f;margin:0 0 14px}.tensor-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.tensor-grid>span{height:48px;display:grid;place-items:center;font:23px var(--mono);background:#e9eee1;color:#b0bca2;border-radius:4px;transition:background .2s,color .2s}.tensor-grid>span.positive{background:#dcd6f5;color:#8f7dca}.tensor-grid>span.negative{background:#f4e1ca;color:#b99b6a}.tensor-grid.done>span{background:#e1ebd6;color:#9cb186}.tensor-info{display:flex;align-items:center;gap:55px;border-top:1px solid var(--line);padding-top:22px}.tensor-info>div>span{display:block;font-size:18px;color:#9da98e}.tensor-info strong{font:40px var(--mono);display:block;margin-top:8px;color:#8980bf;font-weight:400}.tensor-info>p{font-size:23px;line-height:1.8;color:#95a386;margin:0;flex:1}.results-table{border-collapse:collapse;width:100%;margin:24px 0 30px}.results-table th{text-align:left;font-size:20px;font-weight:500;color:#a0ad92;border-bottom:1px solid var(--line);padding:12px 15px}.results-table td{padding:25px 15px;border-bottom:1px solid var(--line);font-size:27px;color:#899a77}.results-table td strong{font:52px var(--mono);font-weight:400;display:block}.results-table td small{display:block;font-size:18px;line-height:1.6;color:#a1ad95;margin-top:6px}.evolve-layout{display:grid;grid-template-columns:1fr 1.05fr;gap:70px;margin:25px 0 0}.evolve-layout>div+div{border-left:1px solid var(--line);padding-left:65px}.evolve-layout h3{font-size:28px;font-weight:500;color:#98a88a}.evolve-big{font:78px var(--mono);color:var(--purple);font-weight:400;display:block;margin:30px 0}.evolve-big span{font:29px -apple-system,sans-serif;color:#adb59f}.evolve-layout p{font-size:28px;line-height:1.9;color:#8a9c77;margin:0}.evolve-layout small{font-size:19px;color:#a1ad94;display:block;margin-top:16px}.evolve-measure{display:flex;gap:27px;align-items:center;margin:30px 0}.evolve-measure strong{font:53px var(--mono);font-weight:400;color:#8e83c0;min-width:155px}.evolve-measure span{font-size:24px;line-height:1.7;color:#9ba98c}.evolve-layout .evolve-bottom{font-size:22px;border-top:1px solid var(--line);padding-top:20px;margin-top:30px;color:#8c9e77}.cost-comparison{display:grid;grid-template-columns:1fr 1fr;gap:80px;margin:35px 0 50px}.cost-comparison>div+div{border-left:1px solid var(--line);padding-left:65px}.cost-comparison>div>span{font-size:23px;color:#a1ad94}.cost-comparison h3{font-size:32px;font-weight:500;margin:22px 0 25px;color:#8d9f79}.cost-comparison strong{font:54px var(--mono);font-weight:400;color:#8e82c2}.cost-factors{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:28px;gap:30px}.cost-factors strong{display:block;font-size:26px;font-weight:500;color:#8b9e76;margin-bottom:12px}.cost-factors span{font-size:23px;color:#a0ad91;line-height:1.8;display:block}.closing{background:#e9eddf;padding:65px 82px}.closing h2{font-size:71px;line-height:1.3;font-weight:650;letter-spacing:-2.8px;margin:20px 0 38px}.closing-lines{display:flex;gap:70px}.closing-lines>div{border-left:2px solid #cbd5bd;padding-left:22px}.closing-lines b{display:block;font-size:32px;font-weight:500;color:#879d70;margin-bottom:12px}.closing-lines span{font-size:24px;color:#99a98a}.closing-question{font-size:28px;color:#879d6e;border-top:1px solid #cbd5bd;margin-top:auto;margin-bottom:0;padding-top:28px}.sources-slide .slide-header{margin-bottom:12px}.source-links{list-style:decimal-leading-zero;padding-left:42px;margin:0}.source-links li{padding:15px 0 15px 13px;border-bottom:1px solid var(--line);font:19px var(--mono);color:#a1ae92}.source-links a{text-decoration:none;display:block}.source-links a:hover b{text-decoration:underline}.source-links b{font:500 23px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;color:#8a9e75;display:block;line-height:1.5}.source-links span{font:18px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;display:block;line-height:1.6;margin-top:5px;color:#a0ad92}.navigation{position:fixed;inset:auto 0 0;height:51px;display:flex;align-items:center;gap:15px;background:#f6f6ef;border-top:1px solid var(--line);padding:0 24px;z-index:50}.navigation>#slide-count{font:12px var(--mono);color:#a1aa93}.navigation>#slide-title{font-size:11px;color:#98a38b;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.nav-right{margin-left:auto;display:flex;gap:6px;align-items:center}.nav-right #timer-button{font-size:10px;color:#a1aa95}.nav-right #elapsed{font:11px var(--mono);margin-left:6px}.nav-right #timer-button.running{color:var(--purple)}.deck-progress{position:fixed;bottom:0;left:0;right:0;height:3px;z-index:60}.deck-progress>span{display:block;height:100%;background:var(--purple);width:6.25%;transition:width .2s}#notes-panel{position:fixed;right:0;top:54px;bottom:51px;width:360px;padding:23px;background:#f9faf4;border-left:1px solid var(--line);overflow-y:auto;z-index:30}#notes-panel[hidden]{display:none}.notes-heading{display:flex;align-items:center;justify-content:space-between}.notes-heading>strong{font-size:15px;font-weight:600}.notes-heading>button{font-size:23px;background:transparent;color:#7c8c6c}.notes-time{font-size:11px;color:var(--purple);padding:10px 0;border-bottom:1px solid var(--line);margin-bottom:17px}.notes-body{font-size:14px;line-height:1.95;color:#66785a;white-space:pre-line}.notes-action{font-size:13px;line-height:1.85;background:#ecefe2;color:#718363;border-radius:8px;padding:12px 14px;margin:18px 0}.notes-sources{font-size:11px;color:#9aa68e;line-height:1.8;margin-top:22px;overflow-wrap:anywhere}.notes-sources a{display:block;margin:7px 0;color:#8e92ab}dialog{border:1px solid #dbe2cf;background:#f8faf2;color:#526446;border-radius:14px;max-width:min(1000px,92vw);width:1000px;max-height:85vh;padding:27px;box-shadow:0 24px 80px #1f382930}dialog::backdrop{background:#263a2b88;backdrop-filter:blur(5px)}.dialog-header{display:flex;align-items:center;justify-content:space-between;gap:20px}.dialog-header h2{font-size:23px;font-weight:550;margin:0}.dialog-header button{font-size:27px;background:transparent;color:#889e76}dialog>p{font-size:12px;color:#91a37e;line-height:1.9}#overview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-top:20px}#overview-grid>button{border:1px solid #dfe6d2;padding:17px;background:#eff3e7;text-align:left;min-height:110px;border-radius:7px;color:#7c9465}#overview-grid>button.current{background:#eae5fc;border-color:#b9afe3;color:#8f7bc1}#overview-grid>button>span{display:block;font:11px var(--mono);opacity:.7;margin-bottom:13px}#overview-grid>button>strong{display:block;font-size:13px;font-weight:500;line-height:1.7}#overview-grid>button>small{display:block;font-size:10px;margin-top:9px;opacity:.7}#help-dialog{width:650px}.shortcut-list{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;font-size:13px;padding:10px 0}.shortcut-list dt{color:#8d83b3}.shortcut-list dd{margin:0;color:#91a47b}#blackout{position:fixed;inset:0;z-index:100;background:#000;color:#5c5c5c;display:grid;place-items:end center;padding-bottom:40px;font-size:12px;cursor:pointer}#blackout[hidden]{display:none}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}@keyframes slide-in{from{opacity:.3;transform:translateX(8px)}to{opacity:1;transform:none}}@keyframes travel{from{left:0;opacity:.6}to{left:calc(100% - 14px);opacity:1}}@media(max-width:750px){.app-bar{padding:0 13px;gap:10px}.app-brand{font-size:12px}.app-description{display:none}.app-tools{gap:1px}.app-tools button{font-size:10px;padding:6px}.app-tools kbd{display:none}.navigation{padding:0 10px;gap:8px}.navigation button{font-size:10px;padding:6px}.navigation>#slide-title{display:none}.navigation>#slide-count{font-size:10px}.nav-right{gap:1px}#notes-panel{width:min(360px,100vw);z-index:70;top:54px;bottom:51px}.shortcut-list{font-size:11px;gap:11px}#overview-grid{grid-template-columns:repeat(2,1fr)}dialog{padding:20px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;transition-duration:.001ms!important}}@media print{@page{size:1440px 810px;margin:0}body{overflow:visible;background:white;-webkit-print-color-adjust:exact;print-color-adjust:exact}.app-bar,.navigation,.deck-progress,#notes-panel,dialog,#blackout{display:none!important}#viewport{position:static;overflow:visible}#stage{position:static;transform:none;width:1440px;height:auto;box-shadow:none;overflow:visible}.slide{display:flex!important;position:relative;width:1440px;height:810px;break-after:page;page-break-after:always;animation:none!important}.slide:last-child{break-after:auto}.demo-controls{visibility:hidden}}
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f6ef"><meta name="description" content="约12分钟中文HTML演示文稿：用过程动画理解矩阵乘法与AlphaTensor。独立文件，可离线打开。"><title>AI 如何发现更快的矩阵乘法｜12分钟演讲</title><style>:root{--paper:#f6f6ef;--ink:#25302b;--purple:#5751d3;--muted:#7e8879;--line:#dce1d3;--green:#728c59;--orange:#b38750;--scale:1;--mono:ui-monospace,SFMono-Regular,Consolas,monospace}*{box-sizing:border-box}body{margin:0;background:#e6e9df;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;overflow:hidden}button,select{font:inherit}button,a,select{touch-action:manipulation}button{cursor:pointer}button:disabled{cursor:default;opacity:.35}button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #928ce3;outline-offset:3px}button{border:0}a{color:inherit}.app-bar{height:54px;display:flex;align-items:center;gap:20px;padding:0 26px;background:#f6f6ef;border-bottom:1px solid var(--line);font-size:12px;position:fixed;inset:0 0 auto;z-index:50}.app-brand{text-decoration:none;font-weight:650;font-size:15px}.app-description{color:#9aa28f;font-size:11px}.app-tools{display:flex;margin-left:auto;align-items:center;gap:7px}.app-tools button,.navigation button{background:transparent;border:1px solid transparent;color:#6d7960;border-radius:6px;padding:7px 10px;font-size:12px}.app-tools button:hover,.navigation button:hover{background:#e9ecdf}.app-tools button[aria-pressed=true]{background:#e9e7fb;color:var(--purple)}kbd{font:9px var(--mono);margin-left:4px;opacity:.55}.app-tools #help-button{border-color:var(--line);width:27px;height:27px;padding:0}#viewport{position:fixed;top:54px;bottom:51px;left:0;right:0;overflow:hidden}#stage{position:absolute;width:1440px;height:810px;top:50%;left:50%;transform:translate(-50%,-50%) scale(var(--scale));transform-origin:center;box-shadow:0 5px 40px #2438200b;background:var(--paper);overflow:hidden}.slide{position:absolute;inset:0;padding:58px 72px 52px;background:var(--paper);display:none;flex-direction:column;overflow:hidden}.slide.active{display:flex;animation:slide-in .22s ease}.slide-header{margin-bottom:28px}.chapter{display:block;font-size:17px;letter-spacing:2px;color:#939e86;margin-bottom:16px;font-weight:500}.slide h2{font-size:48px;font-weight:650;letter-spacing:-1.8px;line-height:1.25;margin:0 0 16px}.slide-header>p{font-size:25px;line-height:1.6;color:#78856b;margin:0}.slide h3{font-size:27px;font-weight:600;margin:0 0 18px}.slide-source{font-size:15px;line-height:1.7;color:#97a089;position:absolute;bottom:20px;left:72px;right:72px}.cover{background:#e9eddf;padding:70px 82px 48px}.cover-kicker{font-size:23px;letter-spacing:2px;color:#7c8d6a;margin-bottom:30px}.cover h1{font-size:89px;line-height:1.24;letter-spacing:-4px;font-weight:700;margin:0}.cover em,.closing em{font-style:normal;color:var(--purple)}.cover-subtitle{font-size:27px;color:#80906f;margin:25px 0 30px}.cover-numbers{display:flex;align-items:center;gap:45px;margin-top:12px}.cover-numbers>div{display:flex;align-items:baseline;gap:17px}.cover-numbers b{font:73px var(--mono);color:#5b7050}.cover-numbers>div:last-child b{color:var(--purple)}.cover-numbers>div>span{font-size:19px;color:#879777}.number-separator{font:42px var(--mono);color:#c0c9b3}.cover-bottom{margin-top:auto;display:flex;justify-content:space-between;border-top:1px solid #cbd5bf;padding-top:20px;font-size:17px;color:#859674}.applications{display:grid;grid-template-columns:repeat(3,1fr);gap:56px;margin:55px 0 50px}.applications>div+div{border-left:1px solid var(--line);padding-left:50px}.application-index{font:22px var(--mono);color:#a4b192;display:block;margin-bottom:27px}.applications h3{font-size:38px;font-weight:600;margin-bottom:20px}.applications p{font-size:27px;line-height:1.95;color:#8d9a80;margin:0}.wide-takeaway{font-size:30px;color:#647954;border-top:1px solid var(--line);padding:26px 0 0;line-height:1.6;margin-top:auto}.wide-takeaway.compact{font-size:25px;padding-top:20px}.big-matrix-equation{display:flex;gap:45px;justify-content:center;align-items:center;margin:5px 0 24px}.matrix-block{text-align:center}.matrix-block>span{font:23px var(--mono);display:block;color:#9aa88a;margin-bottom:15px}.matrix{display:grid;padding:9px 12px;gap:8px;border-left:3px solid #9fae8e;border-right:3px solid #9fae8e;border-radius:6px}.matrix.two{grid-template-columns:repeat(2,88px)}.matrix .cell{display:grid;place-items:center;font:36px var(--mono);height:78px;background:#edf0e5;color:#7b8d68;border-radius:7px;transition:background .2s,color .2s,box-shadow .2s}.matrix .cell.a-lit{background:#dfdcfa;color:var(--purple)}.matrix .cell.b-lit{background:#dcebd2;color:#688a4b}.matrix .cell.active{box-shadow:inset 0 0 0 3px currentColor}.matrix .cell.output-lit{background:#ece9fc;color:var(--purple)}.operator{font:38px var(--mono);color:#a3af94;padding-top:40px}.demo-equation{font:44px var(--mono);text-align:center;color:var(--purple);margin:12px 0}.demo-caption{font-size:24px;text-align:center;color:#8c997c;line-height:1.7;min-height:41px;margin:8px 0 15px}.demo-controls{display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:20px;min-height:60px}.demo-controls button{padding:11px 18px;font-size:19px;background:#e9edde;color:#7a8e67;border-radius:7px;white-space:nowrap}.demo-controls button[data-play]{background:var(--purple);color:white;min-width:130px}.demo-controls button:hover{filter:brightness(.97)}.demo-controls>span{font-size:19px;color:#8b9a7b;margin-left:12px;line-height:1.6}.demo-controls label{font-size:17px;color:#8c9a7d;display:flex;gap:7px;align-items:center}.demo-controls select{border:1px solid #d7deca;background:#f4f6ec;border-radius:5px;font-size:17px;padding:8px 7px;color:#7d8b6e}.strassen-products{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:3px 0 18px}.strassen-product{padding:17px 19px;border-top:2px solid #dce2d2;background:#f0f2e8;min-height:138px;transition:background .2s,border-color .2s}.strassen-product.current{background:#eae7fc;border-color:#8b82d9}.strassen-product>span{font:17px var(--mono);color:#a2ad95}.strassen-product>p{font:23px var(--mono);margin:13px 0;color:#8a9978}.strassen-product>b{font:31px var(--mono);color:#7a78bd}.strassen-answer{display:flex;gap:35px;align-items:center;border-top:1px solid var(--line);padding-top:18px}.strassen-answer>div{flex-shrink:0}.strassen-answer span{font-size:18px;color:#94a184;display:block;margin-bottom:10px}.strassen-answer strong{font:30px var(--mono);color:var(--purple);font-weight:500}.strassen-answer p{font-size:22px;line-height:1.7;color:#8b9a7b;margin:0}.recursion-visual{display:flex;align-items:center;justify-content:center;gap:140px;margin-top:8px}.matrix.four{grid-template-columns:repeat(4,65px);gap:6px}.matrix.four .cell{height:61px;font-size:25px}.block-colors .cell.block-0{background:#e3dff6;color:#857bb8}.block-colors .cell.block-1{background:#e3ebd5;color:#8c9e70}.block-colors .cell.block-2{background:#e5e5d8;color:#93967e}.block-colors .cell.block-3{background:#e1ebe5;color:#7f9d8b}.block-colors .cell:nth-child(4n+2){margin-right:5px}.block-colors .cell:nth-child(n+5):nth-child(-n+8){margin-bottom:5px}.matrix-block>small{display:block;font-size:20px;color:#9aa98a;margin-top:16px}.recursion-text>div{display:flex;gap:40px;align-items:baseline;margin-bottom:20px}.recursion-text>div>span{font-size:23px;color:#8c9b7b;min-width:110px}.recursion-text strong{font:50px var(--mono);color:#7c78bf}.recursion-text strong small{font:23px -apple-system,sans-serif;color:#98a38d}.recursion-text .recursion-total{font:56px var(--mono);margin:28px 0 10px;color:#8d9b7b}.recursion-total b{color:var(--purple);font-weight:500}.recursion-text>p{font-size:21px;color:#99a48c;line-height:1.6}.parallel-layout{display:grid;grid-template-columns:1fr 1fr;gap:100px;padding:6px 15px 0}.parallel-layout h3{display:flex;justify-content:space-between;align-items:center;font-size:27px}.parallel-layout h3 span{font:19px var(--mono);color:#98a789}.task-board{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.task-board>span{height:58px;display:grid;place-items:center;font:25px var(--mono);background:#e8ecdf;color:#a4b292;border-radius:5px;transition:background .2s,color .2s}.task-board>span.done{background:#c9dab6;color:#7b985f}.task-board>span.current{background:#7f9d61;color:#fff}.task-board.purple>span{background:#e8e5f5;color:#a9a3c4}.task-board.purple>span.done{background:#d4cfef;color:#8d81c0}.task-board.purple>span.current{background:#8c80d0;color:#fff}.parallel-layout>div>p{font-size:22px;color:#96a487;margin:16px 0 0}.memory-layout{display:grid;grid-template-columns:1fr 1fr;gap:100px;margin:22px 0 26px}.memory-layout h3{font-size:28px;font-weight:500}.trip-number{display:flex;align-items:baseline;gap:25px;color:#7f926b}.trip-number>b{font:104px var(--mono);font-weight:400}.trip-number>span{font:28px var(--mono);color:#9ba98d}.purple-text{color:var(--purple)!important}.transport{display:flex;align-items:center;gap:16px;margin:25px 0}.transport>span{font-size:22px;color:#9aa88b;white-space:nowrap}.transport-line{flex:1;position:relative;border-top:2px dashed #c3ceb4;height:5px}.transport-line i{height:14px;width:14px;background:#95aa7c;position:absolute;left:0;top:-8px;border-radius:3px}.transport-line i.travel{animation:travel .25s ease}.memory-layout>div>p{font-size:23px;color:#95a486}.memory-connection{display:flex;align-items:center;gap:30px;padding-top:23px;border-top:1px solid var(--line)}.memory-connection>strong{font-size:31px;color:#818f72;font-weight:500}.memory-connection>span{font-size:23px;line-height:1.7;color:#96a388}.dark{background:#25362d;color:#f0f1e7}.dark .chapter{color:#8f9f7f}.dark .slide-header>p{color:#9cac8e}.dark .slide-source{color:#758d6d}.discovery-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:55px;margin:43px 0 40px}.discovery-flow>div+div{border-left:1px solid #4d644c;padding-left:48px}.discovery-flow>div>span{font:24px var(--mono);color:#829d70;display:block;margin-bottom:27px}.discovery-flow h3{font-size:32px;font-weight:500;margin-bottom:20px;color:#d0dac5}.discovery-flow p{font-size:26px;line-height:1.85;color:#8fa482;margin:0}.dark-statement{font-size:27px;line-height:1.9;color:#849d78;border-top:1px solid #4a6148;padding-top:25px;margin-top:auto}.dark-statement strong{color:#c7d4b8;font-weight:500}.domain-comparison{display:grid;grid-template-columns:1fr 1fr;gap:90px;margin:45px 0 30px}.domain-comparison>div+div{border-left:1px solid var(--line);padding-left:70px}.domain-comparison>div>span{font-size:24px;color:#96a28a}.domain-comparison strong{display:block;font:65px var(--mono);margin:27px 0;color:#8a9a78;font-weight:400;white-space:nowrap}.domain-comparison strong b{color:var(--purple);font-weight:500}.domain-comparison p{font-size:25px;color:#9aa88b;margin:0}.domain-rules{display:flex;justify-content:space-between;font:27px var(--mono);color:#8f9e7f;border-top:1px solid var(--line);padding-top:25px}.comparison-slide{padding-top:40px}.comparison-slide .chapter{margin-bottom:10px;font-size:15px}.comparison-slide h2{font-size:41px;margin-bottom:12px}.comparison-slide .slide-header{margin-bottom:18px}.comparison-slide .slide-header>p{font-size:21px}.talk-comparison{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}.comparison-method{--method:#849c6a;min-width:0;border-left:1px solid var(--line);padding-left:24px}.comparison-method:first-child{border-left:0;padding-left:0}.comparison-method.strassen{--method:#8f80c9}.comparison-method.alpha{--method:#689887}.comparison-method.inactive{opacity:.37}.comparison-method h3{font-size:24px;font-weight:550;margin:0 0 6px}.method-counter{display:flex;align-items:baseline;gap:13px}.method-counter b{font:51px var(--mono);color:var(--method);font-weight:400}.method-counter span{font:18px var(--mono);color:#a2ad95}.method-progress{height:4px;background:#e1e7d6;margin:10px 0 14px}.method-progress>i{display:block;height:100%;width:0;background:var(--method);transition:width .15s}.method-inputs{display:flex;gap:17px;align-items:center;justify-content:center}.method-inputs>div>span,.method-output>div>span{display:block;font-size:15px;color:#97a78a;margin-bottom:7px}.method-inputs>b{font:22px var(--mono);color:#b0bba3;padding-top:20px}.small-matrix{display:grid;grid-template-columns:repeat(4,23px);gap:4px;border-left:2px solid #adb99e;border-right:2px solid #adb99e;border-radius:4px;padding:4px 6px}.small-matrix>span{font:18px var(--mono);height:24px;display:grid;place-items:center;background:#ebefe2;color:#9dac8e;border-radius:2px;transition:background .15s,color .15s}.small-matrix>span.a-on{background:#ded8f8;color:#8a79cc;box-shadow:inset 0 0 0 1px #b8abea}.small-matrix>span.b-on{background:#d9e7cc;color:#7b9d5b;box-shadow:inset 0 0 0 1px #b6ca9e}.small-matrix>span.c-on{background:#f5e4ce;color:#b79869;box-shadow:inset 0 0 0 1px #dfc39d}.method-equation{font:28px var(--mono);color:var(--method);text-align:center;margin:17px 0 8px}.method-caption{font-size:18px;line-height:1.65;color:#9ba88d;min-height:58px;margin:0 0 9px}.method-output{display:flex;gap:20px;align-items:center}.method-output>p{font-size:18px;line-height:1.8;color:#9ba88d;margin:0}.method-output>div{flex-shrink:0}.comparison-method.complete .method-output .small-matrix>span{background:#dfead4;color:#819e64;box-shadow:none}.comparison-status{font-size:20px;color:#8b9d79;border-top:1px solid var(--line);padding-top:12px;margin-top:15px}.comparison-controls{gap:9px;padding-top:12px;min-height:0}.comparison-controls button{font-size:17px;padding:10px 12px}.comparison-controls button[data-play]{min-width:115px}.comparison-controls label{font-size:16px;margin-left:4px}.comparison-controls select{font-size:16px;padding:7px 5px}.comparison-slide .slide-source{bottom:13px;font-size:14px}.tensor-boards{display:grid;grid-template-columns:repeat(4,1fr);gap:35px;margin:12px 0 30px}.tensor-boards h3{font:21px var(--mono);color:#9da98f;margin:0 0 14px}.tensor-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.tensor-grid>span{height:48px;display:grid;place-items:center;font:23px var(--mono);background:#e9eee1;color:#b0bca2;border-radius:4px;transition:background .2s,color .2s}.tensor-grid>span.positive{background:#dcd6f5;color:#8f7dca}.tensor-grid>span.negative{background:#f4e1ca;color:#b99b6a}.tensor-grid.done>span{background:#e1ebd6;color:#9cb186}.tensor-info{display:flex;align-items:center;gap:55px;border-top:1px solid var(--line);padding-top:22px}.tensor-info>div>span{display:block;font-size:18px;color:#9da98e}.tensor-info strong{font:40px var(--mono);display:block;margin-top:8px;color:#8980bf;font-weight:400}.tensor-info>p{font-size:23px;line-height:1.8;color:#95a386;margin:0;flex:1}.results-table{border-collapse:collapse;width:100%;margin:24px 0 30px}.results-table th{text-align:left;font-size:20px;font-weight:500;color:#a0ad92;border-bottom:1px solid var(--line);padding:12px 15px}.results-table td{padding:25px 15px;border-bottom:1px solid var(--line);font-size:27px;color:#899a77}.results-table td strong{font:52px var(--mono);font-weight:400;display:block}.results-table td small{display:block;font-size:18px;line-height:1.6;color:#a1ad95;margin-top:6px}.evolve-layout{display:grid;grid-template-columns:1fr 1.05fr;gap:70px;margin:25px 0 0}.evolve-layout>div+div{border-left:1px solid var(--line);padding-left:65px}.evolve-layout h3{font-size:28px;font-weight:500;color:#98a88a}.evolve-big{font:78px var(--mono);color:var(--purple);font-weight:400;display:block;margin:30px 0}.evolve-big span{font:29px -apple-system,sans-serif;color:#adb59f}.evolve-layout p{font-size:28px;line-height:1.9;color:#8a9c77;margin:0}.evolve-layout small{font-size:19px;color:#a1ad94;display:block;margin-top:16px}.evolve-measure{display:flex;gap:27px;align-items:center;margin:30px 0}.evolve-measure strong{font:53px var(--mono);font-weight:400;color:#8e83c0;min-width:155px}.evolve-measure span{font-size:24px;line-height:1.7;color:#9ba98c}.evolve-layout .evolve-bottom{font-size:22px;border-top:1px solid var(--line);padding-top:20px;margin-top:30px;color:#8c9e77}.cost-comparison{display:grid;grid-template-columns:1fr 1fr;gap:80px;margin:35px 0 50px}.cost-comparison>div+div{border-left:1px solid var(--line);padding-left:65px}.cost-comparison>div>span{font-size:23px;color:#a1ad94}.cost-comparison h3{font-size:32px;font-weight:500;margin:22px 0 25px;color:#8d9f79}.cost-comparison strong{font:54px var(--mono);font-weight:400;color:#8e82c2}.cost-factors{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:28px;gap:30px}.cost-factors strong{display:block;font-size:26px;font-weight:500;color:#8b9e76;margin-bottom:12px}.cost-factors span{font-size:23px;color:#a0ad91;line-height:1.8;display:block}.closing{background:#e9eddf;padding:65px 82px}.closing h2{font-size:71px;line-height:1.3;font-weight:650;letter-spacing:-2.8px;margin:20px 0 38px}.closing-lines{display:flex;gap:70px}.closing-lines>div{border-left:2px solid #cbd5bd;padding-left:22px}.closing-lines b{display:block;font-size:32px;font-weight:500;color:#879d70;margin-bottom:12px}.closing-lines span{font-size:24px;color:#99a98a}.closing-question{font-size:28px;color:#879d6e;border-top:1px solid #cbd5bd;margin-top:auto;margin-bottom:0;padding-top:28px}.sources-slide .slide-header{margin-bottom:12px}.source-links{list-style:decimal-leading-zero;padding-left:42px;margin:0}.source-links li{padding:15px 0 15px 13px;border-bottom:1px solid var(--line);font:19px var(--mono);color:#a1ae92}.source-links a{text-decoration:none;display:block}.source-links a:hover b{text-decoration:underline}.source-links b{font:500 23px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;color:#8a9e75;display:block;line-height:1.5}.source-links span{font:18px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;display:block;line-height:1.6;margin-top:5px;color:#a0ad92}.navigation{position:fixed;inset:auto 0 0;height:51px;display:flex;align-items:center;gap:15px;background:#f6f6ef;border-top:1px solid var(--line);padding:0 24px;z-index:50}.navigation>#slide-count{font:12px var(--mono);color:#a1aa93}.navigation>#slide-title{font-size:11px;color:#98a38b;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.nav-right{margin-left:auto;display:flex;gap:6px;align-items:center}.nav-right #timer-button{font-size:10px;color:#a1aa95}.nav-right #elapsed{font:11px var(--mono);margin-left:6px}.nav-right #timer-button.running{color:var(--purple)}.deck-progress{position:fixed;bottom:0;left:0;right:0;height:3px;z-index:60}.deck-progress>span{display:block;height:100%;background:var(--purple);width:6.25%;transition:width .2s}#notes-panel{position:fixed;right:0;top:54px;bottom:51px;width:360px;padding:23px;background:#f9faf4;border-left:1px solid var(--line);overflow-y:auto;z-index:30}#notes-panel[hidden]{display:none}.notes-heading{display:flex;align-items:center;justify-content:space-between}.notes-heading>strong{font-size:15px;font-weight:600}.notes-heading>button{font-size:23px;background:transparent;color:#7c8c6c}.notes-time{font-size:11px;color:var(--purple);padding:10px 0;border-bottom:1px solid var(--line);margin-bottom:17px}.notes-body{font-size:14px;line-height:1.95;color:#66785a;white-space:pre-line}.notes-action{font-size:13px;line-height:1.85;background:#ecefe2;color:#718363;border-radius:8px;padding:12px 14px;margin:18px 0}.notes-sources{font-size:11px;color:#9aa68e;line-height:1.8;margin-top:22px;overflow-wrap:anywhere}.notes-sources a{display:block;margin:7px 0;color:#8e92ab}dialog{border:1px solid #dbe2cf;background:#f8faf2;color:#526446;border-radius:14px;max-width:min(1000px,92vw);width:1000px;max-height:85vh;padding:27px;box-shadow:0 24px 80px #1f382930}dialog::backdrop{background:#263a2b88;backdrop-filter:blur(5px)}.dialog-header{display:flex;align-items:center;justify-content:space-between;gap:20px}.dialog-header h2{font-size:23px;font-weight:550;margin:0}.dialog-header button{font-size:27px;background:transparent;color:#889e76}dialog>p{font-size:12px;color:#91a37e;line-height:1.9}#overview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-top:20px}#overview-grid>button{border:1px solid #dfe6d2;padding:17px;background:#eff3e7;text-align:left;min-height:110px;border-radius:7px;color:#7c9465}#overview-grid>button.current{background:#eae5fc;border-color:#b9afe3;color:#8f7bc1}#overview-grid>button>span{display:block;font:11px var(--mono);opacity:.7;margin-bottom:13px}#overview-grid>button>strong{display:block;font-size:13px;font-weight:500;line-height:1.7}#overview-grid>button>small{display:block;font-size:10px;margin-top:9px;opacity:.7}#help-dialog{width:650px}.shortcut-list{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;font-size:13px;padding:10px 0}.shortcut-list dt{color:#8d83b3}.shortcut-list dd{margin:0;color:#91a47b}#blackout{position:fixed;inset:0;z-index:100;background:#000;color:#5c5c5c;display:grid;place-items:end center;padding-bottom:40px;font-size:12px;cursor:pointer}#blackout[hidden]{display:none}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}@keyframes slide-in{from{opacity:.3;transform:translateX(8px)}to{opacity:1;transform:none}}@keyframes travel{from{left:0;opacity:.6}to{left:calc(100% - 14px);opacity:1}}@media(max-width:750px){.app-bar{padding:0 13px;gap:10px}.app-brand{font-size:12px}.app-description{display:none}.app-tools{gap:1px}.app-tools button{font-size:10px;padding:6px}.app-tools kbd{display:none}.navigation{padding:0 10px;gap:8px}.navigation button{font-size:10px;padding:6px}.navigation>#slide-title{display:none}.navigation>#slide-count{font-size:10px}.nav-right{gap:1px}#notes-panel{width:min(360px,100vw);z-index:70;top:54px;bottom:51px}.shortcut-list{font-size:11px;gap:11px}#overview-grid{grid-template-columns:repeat(2,1fr)}dialog{padding:20px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;transition-duration:.001ms!important}}@media print{@page{size:1440px 810px;margin:0}body{overflow:visible;background:white;-webkit-print-color-adjust:exact;print-color-adjust:exact}.app-bar,.navigation,.deck-progress,#notes-panel,dialog,#blackout{display:none!important}#viewport{position:static;overflow:visible}#stage{position:static;transform:none;width:1440px;height:auto;box-shadow:none;overflow:visible}.slide{display:flex!important;position:relative;width:1440px;height:810px;break-after:page;page-break-after:always;animation:none!important}.slide:last-child{break-after:auto}.demo-controls{visibility:hidden}}
 /* Contrast for projection: body copy stays darker than the decorative labels. */
 .slide-header>p,.applications p,.demo-caption,.strassen-answer p,.parallel-layout>div>p,.memory-layout>div>p,.memory-connection>span,.domain-comparison p,.tensor-info>p,.evolve-layout p,.evolve-measure span,.cost-factors span,.closing-lines span{color:#738365}.method-caption,.method-output>p{color:#7b8d6b}.source-links b{color:#6e845a}.source-links span{color:#899b79}.results-table td{color:#758b60}.dark .slide-header>p{color:#a8b99a}.dark .slide-source{color:#819777}
 /* Keep the complete three-way animation and its controls on one 16:9 slide. */
@@ -279,24 +279,18 @@
 .ai-checks small{font:18px var(--mono);color:#9ba68e}
 .ai-numeric-slide .demo-controls{padding-top:12px}
 .ai-numeric-slide .demo-controls>span{font-size:17px}
-.ai-savings-bars{display:grid;gap:17px;margin:12px 0 25px}
-.ai-savings-bars>div{display:grid;grid-template-columns:230px 1fr 110px;gap:22px;align-items:center}
-.ai-savings-bars span{font-size:25px;color:#91a080}
-.ai-savings-bars>div>div{height:32px;background:#e9eddf;border-radius:4px;overflow:hidden}
-.ai-savings-bars i{display:block;background:#acb997;height:100%;border-radius:4px}
-.ai-savings-bars i.ai-best{background:#8e80cd}
-.ai-savings-bars b{font:27px var(--mono);color:#819071;font-weight:400}
-.ai-saving-equations{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 0;display:grid;gap:15px}
-.ai-saving-equations>div{display:flex;align-items:center;gap:32px}
-.ai-saving-equations span{font-size:23px;color:#9ba78c;min-width:230px}
-.ai-saving-equations b{font:29px var(--mono);color:#8272bd;font-weight:400}
-.ai-repeat-control{display:grid;grid-template-columns:1fr 400px;gap:30px;align-items:center;margin:25px 0 20px}
-.ai-repeat-control label{font-size:23px;color:#90a07d}
-.ai-repeat-control b{font-weight:500;color:#7b6cb3}
-.ai-repeat-control input,.ai-cost-control input{width:100%;accent-color:var(--purple)}
-.ai-repeat-summary{display:flex;justify-content:space-between;align-items:center;gap:25px;background:#eef0e5;padding:20px 22px;border-radius:6px;font-size:22px;color:#91a07f}
-.ai-repeat-summary b{color:#7c8e68;font-weight:500}
-.ai-repeat-summary strong{font-size:26px;font-weight:500;color:#7b6ab7}
+.ai-scale-slide .slide-header{margin-bottom:8px}
+.ai-scale-chart-wrap{position:relative;margin:0 0 8px;padding-left:34px}
+.ai-scale-chart-wrap svg{display:block;width:100%;height:345px;overflow:visible}
+.ai-scale-y-label{position:absolute;left:-60px;top:147px;transform:rotate(-90deg);font-size:16px;color:#8d9b7d;letter-spacing:.5px}
+.scale-grid line{stroke:#dfe5d6;stroke-width:1}.scale-grid text,.scale-axis text{fill:#8d9b7d;font:16px var(--mono)}
+.scale-axis line{stroke:#9eaa91;stroke-width:1.4}.scale-line{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.scale-line.direct{stroke:#a5b198}.scale-line.strassen{stroke:#7aa298}.scale-line.alpha{stroke:#8877c5}
+.scale-dot.direct,.scale-legend .direct{fill:#a5b198}.scale-dot.strassen,.scale-legend .strassen{fill:#7aa298}.scale-dot.alpha,.scale-legend .alpha{fill:#8877c5}
+.scale-legend text{fill:#718268;font:17px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}.scale-x-label{fill:#718268;font:18px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}
+.ai-scale-complexity{display:grid;grid-template-columns:1fr 1fr 1.35fr;gap:18px;margin-top:2px}
+.ai-scale-complexity>div{border-top:2px solid var(--line);padding:12px 15px 0;display:grid;grid-template-columns:auto auto;align-items:baseline;gap:6px 18px}
+.ai-scale-complexity span{font-size:17px;color:#8d9b7d}.ai-scale-complexity b{font:25px var(--mono);font-weight:400;color:#718268;text-align:right}.ai-scale-complexity sup{font-size:.62em}.ai-scale-complexity small{grid-column:1/-1;font-size:14px;color:#8877c5;line-height:1.45}.ai-scale-complexity .ai-scale-best{border-color:#a99bdd;background:#f0ecfa;border-radius:5px;padding:12px 15px 10px}.ai-scale-best b{color:#7866b7}
+.ai-cost-control input{width:100%;accent-color:var(--purple)}
 .ai-operation-cost-slide .slide-header{margin-bottom:16px}
 .ai-operation-cost-slide .slide-header>p{font-size:23px}
 .ai-cost-table{border-collapse:collapse;width:100%;font-size:24px;margin:0 0 15px}
@@ -321,19 +315,19 @@
 .ai-operation-cost-slide .slide-source{font-size:14px}
 </style></head>
 <body>
-<header class="app-bar"><a class="app-brand" href="#slide=1">[·] 矩阵与 AI</a><span class="app-description">20 分钟演讲版</span><div class="app-tools"><button id="overview-button" title="目录 O">目录 <kbd>O</kbd></button><button id="notes-button" aria-pressed="false" title="演讲备注 N">备注 <kbd>N</kbd></button><button id="fullscreen-button" title="全屏 F">全屏 <kbd>F</kbd></button><button id="help-button" aria-label="查看快捷键">?</button></div></header>
+<header class="app-bar"><a class="app-brand" href="#slide=1">[·] 矩阵与 AI</a><span class="app-description">12 分钟演讲版</span><div class="app-tools"><button id="overview-button" title="目录 O">目录 <kbd>O</kbd></button><button id="notes-button" aria-pressed="false" title="演讲备注 N">备注 <kbd>N</kbd></button><button id="fullscreen-button" title="全屏 F">全屏 <kbd>F</kbd></button><button id="help-button" aria-label="查看快捷键">?</button></div></header>
 <main id="viewport" aria-label="幻灯片演示区域"><div id="stage">
 
 <section class="slide cover active" data-title="AI 如何发现更快的矩阵乘法" data-seconds="15">
-  <div class="cover-kicker">矩阵运算、GPU 与算法发现</div>
+  <div class="cover-kicker">矩阵运算、硬件与算法发现</div>
   <h1>AI 如何发现<br><em>更快的矩阵乘法</em></h1>
   <p class="cover-subtitle">以 AI 算法为主线，实算比较同一组 4×4 矩阵</p>
   <div class="cover-numbers"><div><b>64</b><span>直接算法</span></div><span class="number-separator">/</span><div><b>49</b><span>Strassen</span></div><span class="number-separator">/</span><div><b>47</b><span>AlphaTensor · 模 2</span></div></div>
-  <div class="cover-bottom"><span>中文讲解 · 过程动画 · 约 20 分钟</span><span>按 → 开始</span></div>
+  <div class="cover-bottom"><span>中文讲解 · 过程动画 · 约 12 分钟</span><span>按 → 开始</span></div>
 </section>
 
 <section class="slide silicon-slide register-physics-slide" data-title="晶体管：电压控制的微型开关" data-seconds="30">
-  <div class="slide-header"><span class="chapter">硬件入门 1 / 5 · 晶体管</span><h2>晶体管，就是一个电控微型开关</h2><p>先认识一个开关，后面用同样的图看它怎样参与存储和加法</p></div>
+  <div class="slide-header"><span class="chapter">硬件入门 1 / 4 · 晶体管</span><h2>晶体管，就是一个电控微型开关</h2><p>先认识一个开关，后面用同样的图看它怎样参与存储和加法</p></div>
   <div class="silicon-steps"><button data-physics-level="0">低电平 · 关闭</button><button data-physics-level="1">高电平 · 打开</button></div>
   <div class="physics-layout"><div class="physical-stage" id="physical-stage" role="img" aria-label="nMOS 晶体管剖面与导电通道示意"></div><div class="physics-explanation"><span id="physics-level">晶体管 / TRANSISTOR</span><h3 id="physics-heading"></h3><p id="physics-description"></p><div class="physics-status" id="physics-status"></div><small>栅极像控制按钮，源极和漏极是通道的两端。</small></div></div>
   <div class="demo-controls silicon-controls"><button data-play="physics">播放开关变化</button><button data-step="physics">切换开关</button><button data-reset="physics">重置</button><span id="physics-progress">1 / 2 个画面</span></div>
@@ -341,35 +335,27 @@
 </section>
 
 <section class="slide silicon-slide simple-storage-slide" data-title="存储：晶体管组成的反馈回路" data-seconds="35">
-  <div class="slide-header"><span class="chapter">硬件入门 2 / 5 · 怎样存住 0 和 1</span><h2>2组晶体管互相连接，作为一个整体，用于固定一个状态。</h2><p>下面分别展示存储 1、存储 0 时的电路状态。</p></div>
+  <div class="slide-header"><span class="chapter">硬件入门 2 / 4 · 怎样存住 0 和 1</span><h2>2组晶体管互相连接，作为一个整体，用于固定一个状态。</h2><p>下面分别展示存储 1、存储 0 时的电路状态。</p></div>
   <div class="physics-layout"><div class="physical-stage" id="storage-stage" role="img" aria-label="两组晶体管和反馈线路保存一位数据"></div><div class="physics-explanation"><span>存储一位 / STORE ONE BIT</span><h3 id="storage-heading"></h3><p id="storage-description"></p><div class="physics-status" id="storage-status"></div><small>这一整体有两个稳定组合，分别表示存储 1 和存储 0。</small></div></div>
   <div class="demo-controls silicon-controls"><button data-play="storage">播放两个案例</button><button data-step="storage">切换案例</button><button data-reset="storage">重置</button><button data-store-bit="1">存储 1</button><button data-store-bit="0">存储 0</button><span id="storage-progress">案例 1 / 2</span></div>
   <div class="slide-source">静态反馈存储原理示意；两个案例展示稳定状态，保持状态需要供电。来源：MIT 存储电路课程。</div>
 </section>
 
 <section class="slide silicon-slide simple-addition-slide" data-title="加法：把存好的数送进加法电路" data-seconds="25">
-  <div class="slide-header"><span class="chapter">硬件入门 3 / 5 · 怎样把两个数相加</span><h2>寄存器存数，加法电路负责把数加起来</h2><p id="simple-add-inputs">寄存器 A 保存 0011，B 也保存 0011，也就是计算 3 + 3</p></div>
+  <div class="slide-header"><span class="chapter">硬件入门 3 / 4 · 怎样把两个数相加</span><h2>寄存器存数，加法电路负责把数加起来</h2><p id="simple-add-inputs">寄存器 A 保存 0011，B 也保存 0011，也就是计算 3 + 3</p></div>
   <div class="physics-layout"><div class="physical-stage" id="addition-stage" role="img" aria-label="两个四位存储组通过线路连接四位加法电路"></div><div class="physics-explanation"><span>读取 → 相加 → 保存结果</span><h3 id="simple-add-heading"></h3><p id="simple-add-description"></p><div class="physics-status" id="simple-add-status"></div><small>每个存储单元由一组晶体管构成；这里的四位是数的位宽，矩阵仍为 4×4。</small></div></div>
   <div class="demo-controls silicon-controls"><button data-play="simple-add">播放加法过程</button><button data-step="simple-add">下一步</button><button data-reset="simple-add">重置</button><button data-add-case="3,3">案例 3 + 3</button><button data-add-case="7,1">案例 7 + 1</button><span id="simple-add-progress">0 / 5 步</span></div>
   <div class="slide-source">按位加法与进位的教学动画，不代表真实指令步数；每个加法单元也是晶体管组成的电路。来源：MIT、UC Berkeley 计算机组成课程。</div>
 </section>
 
 <section class="slide hardware-binary-slide" data-title="硬件入门：为什么加法开销通常更小" data-seconds="35">
-  <div class="slide-header"><span class="chapter">硬件入门 4 / 5 · 同位宽整数的硬件开销</span><h2>加法硬件开销通常更小，乘法要处理更多中间数据</h2><p>2 + 2 与 2 × 2 都得到 4，用通用四位电路观察不同的处理结构。</p></div>
+  <div class="slide-header"><span class="chapter">硬件入门 4 / 4 · 同位宽整数的硬件开销</span><h2>加法硬件开销通常更小，乘法要处理更多中间数据</h2><p>2 + 2 与 2 × 2 都得到 4，用通用四位电路观察不同的处理结构。</p></div>
   <div class="binary-comparison">
     <div class="binary-panel"><h3>加法：2 + 2 = 4</h3><p>两个输入 → 求和与进位 → 保存结果</p><div class="arithmetic-operands"><span>输入寄存器</span><b>0010</b><i>+</i><b>0010</b></div><div class="arithmetic-workspace"><div class="arithmetic-adder" id="cost-adder-unit"><span>加法电路</span><strong>逐位求和 + 进位</strong><small>直接合成一组结果位</small></div></div><div class="arithmetic-result"><span>结果存储</span><div id="cost-add-bits" class="cost-result-bits"></div><b id="cost-add-answer">等待结果</b></div><div class="arithmetic-resource"><b>通用电路最多 5 位</b><span>加法电路通常更简单</span></div></div>
     <div class="binary-panel"><h3>乘法：2 × 2 = 4</h3><p>两个输入 → 多行部分积 → 对齐、合并 → 保存结果</p><div class="arithmetic-operands"><span>输入寄存器</span><b>0010</b><i>×</i><b>0010</b></div><div class="arithmetic-workspace"><div class="partial-table" id="partial-table"></div><div class="cost-merge" id="cost-merge-unit">↓ 移位对齐，再用加法电路合并</div></div><div class="arithmetic-result"><span>结果存储</span><div id="cost-multiply-bits" class="cost-result-bits"></div><b id="cost-multiply-answer">等待结果</b></div><div class="arithmetic-resource"><b>通用电路最多 8 位</b><span>部分积与合并网络增加电路开销</span></div></div>
   </div>
   <p class="binary-conclusion">结果同为 4，通用电路的开销可以不同 → 用较低开销的加法，换取更少的乘法</p>
   <div class="demo-controls"><button data-play="binary">播放开销对比</button><button data-step="binary">下一步</button><button data-reset="binary">重置</button><span id="binary-cost-caption" aria-live="polite">相同输入、相同结果，观察通用电路内部的不同结构</span></div>
-</section>
-
-<section class="slide" data-title="数据复用与访存开销" data-seconds="90">
-  <div class="slide-header"><span class="chapter">硬件入门 5 / 5 · 减少数据搬运</span><h2>减少数据搬运，也能让计算更快</h2><p>4×4 的 A 有 16 个元素，每个元素都参与 4 个输出列的计算</p></div>
-  <div class="memory-layout"><div><h3>每次使用都去拿</h3><div class="trip-number"><b id="memory-naive">0</b><span>/ 64 趟</span></div><div class="transport"><span>显存</span><div class="transport-line"><i id="package-naive"></i></div><span>运算单元</span></div><p>16 份 × 4 次，共取 64 趟</p></div><div><h3>暂存到片上，重复使用</h3><div class="trip-number purple-text"><b id="memory-reuse">0</b><span>/ 16 趟</span></div><div class="transport"><span>显存</span><div class="transport-line"><i id="package-reuse"></i></div><span>片上存储</span></div><p>每份取一次，共取 16 趟</p></div></div>
-  <div class="memory-connection"><strong>寄存器 / 共享内存</strong><span>都在芯片上，容量有限；共享内存可供线程组协作复用。FlashAttention 也利用分块减少显存读写。</span></div>
-  <div class="demo-controls"><button data-play="memory">播放搬运</button><button data-step="memory">下一步</button><button data-reset="memory">重置</button></div>
-  <div class="slide-source">只统计 A 的读取，并假设手边容量足够。B 与输出的开销未计入。这是教学示意，不是 FlashAttention 实测加速比。</div>
 </section>
 
 <section class="slide basic-four-slide" data-title="4×4矩阵乘法的基本动作" data-seconds="35">
@@ -379,42 +365,11 @@
   <div class="demo-controls"><button data-play="basic">播放过程</button><button data-step="basic">下一步</button><button data-reset="basic">重置</button><button id="basic-finish">看完整结果</button><span id="basic-work-count">0 / 64 次乘法，0 / 48 次加法</span></div>
 </section>
 
-<section class="slide classic-summary-slide" data-title="传统算法基线：64次与49次" data-seconds="45">
-  <div class="slide-header"><span class="chapter">传统算法 · 只保留比较基线</span><h2>同一个 4×4 任务：64 次可以降到 49 次</h2><p>Strassen 先组合输入，再复用中间乘积；接下来由 AI 继续寻找更短的配方</p></div>
-  <div class="classic-summary"><div><span>直接行乘列</span><strong>16 × 4 = 64</strong><p>16 个输出格子<br>每格需要 4 次乘法</p></div><b>→</b><div><span>Strassen 递归</span><strong>7 × 7 = 49</strong><p>外层 7 组块乘法<br>每组内部再用 7 次乘法</p></div></div>
-  <div class="classic-reuse"><b>减少 15 次乘法</b><span>通过加减法组合与复用乘积，恢复相同的 4×4 输出</span></div>
-  <div class="wide-takeaway compact">AI 要继续寻找：能否用少于 49 次乘法，仍然得到正确答案？</div>
-  <div class="slide-source">内部块只是 4×4 的拆分。Strassen 完整公式与验证保留在本页演讲备注中。</div>
-</section>
-
 <section class="slide dark" data-title="AlphaTensor 的算法发现" data-seconds="60">
   <div class="slide-header"><span class="chapter">AlphaTensor · Nature 2022</span><h2>AI 开始参与寻找计算算法</h2><p>在大量计算路径中，寻找正确、乘法次数更少的方案</p></div>
   <div class="discovery-flow"><div><span>01</span><h3>选择输入组合</h3><p>先用加减法组合输入<br>再把组合后的数相乘</p></div><div><span>02</span><h3>安排输出贡献</h3><p>一个中间乘积<br>可以用于哪些输出？</p></div><div><span>03</span><h3>检查与改进</h3><p>算法必须正确<br>同时尽量减少乘法</p></div></div>
   <div class="dark-statement">搜索目标是计算路径<br><strong>找到的算法可以处理适用范围内的新矩阵</strong></div>
   <div class="slide-source">来源：Fawzi 等，Discovering faster matrix multiplication algorithms with reinforcement learning</div>
-</section>
-
-<section class="slide" data-title="模二运算的规则" data-seconds="35">
-  <div class="slide-header"><span class="chapter">对比前统一规则</span><h2>47 次乘法的结果有一个条件：模 2</h2><p>只有 0 与 1，相加后保留除以 2 的余数</p></div>
-  <div class="domain-comparison"><div><span>普通实数运算</span><strong>1 + 1 = <b>2</b></strong><p>我们熟悉的加法</p></div><div><span>模 2 运算</span><strong>1 + 1 = <b>0</b></strong><p>2 ÷ 2 = 1，余数为 0</p></div></div>
-  <div class="domain-rules"><span>0 + 0 = 0</span><span>0 + 1 = 1</span><span>1 + 1 = 0</span><span>1 × 1 = 1</span></div>
-  <div class="wide-takeaway">接下来的三种算法，都在同一个模 2 规则下计算</div>
-</section>
-
-<section class="slide ai-recipe-slide" data-title="AI算法实算：一个乘积怎样复用" data-seconds="100">
-  <div class="slide-header"><span class="chapter">AlphaTensor 的公开 47 步方案 · 模 2</span><h2>先组合输入，一次乘法可以服务多个输出</h2><p id="ai-recipe-intro">逐步查看作者公开方案中的真实步骤</p></div>
-  <div class="ai-matrix-triplet"><div><span>A · 4×4</span><div id="ai-recipe-a" class="ai-matrix"></div></div><b>×</b><div><span>B · 4×4</span><div id="ai-recipe-b" class="ai-matrix"></div></div><b>→</b><div><span>本步贡献 ΔC · 4×4</span><div id="ai-recipe-delta" class="ai-matrix"></div></div></div>
-  <div class="ai-recipe-formulas"><div id="ai-left-expression"></div><div id="ai-right-expression"></div><div id="ai-product-expression"></div></div>
-  <div class="demo-controls"><button data-play="ai-recipe">播放一个 AI 步骤</button><button data-step="ai-recipe">下一步</button><button data-reset="ai-recipe">重置</button><button data-ai-term="0">第 1 步：复用</button><button data-ai-term="1">第 2 步：组合与复用</button><span id="ai-recipe-progress">0 / 4</span></div>
-  <div class="slide-source">这是公开分解的实际项，ΔC 只表示本步贡献。所有 47 项相加后才是完整答案；输入组合与输出累加均按模 2 进行。</div>
-</section>
-
-<section class="slide dark ai-search-slide" data-title="AI怎样找到47步方案" data-seconds="75">
-  <div class="slide-header"><span class="chapter">AlphaTensor · 强化学习发现算法</span><h2>AI 搜索的是整套计算配方</h2><p>每次提出输入组合与输出分配，目标是正确完成乘法，并尽量减少步数</p></div>
-  <div class="ai-search-flow" id="ai-search-flow"><div><b>01</b><h3>给定目标</h3><p>两个 4×4 矩阵的<br>全部正确乘法关系</p></div><span>→</span><div><b>02</b><h3>选择动作</h3><p>怎样组合 A、B？<br>乘积送到哪些输出？</p></div><span>→</span><div><b>03</b><h3>更新状态</h3><p>扣除这一步的贡献<br>继续处理剩余关系</p></div><span>→</span><div><b>04</b><h3>评估路径</h3><p>关系全部吻合<br>并尽量缩短配方</p></div></div>
-  <div class="ai-search-caption" id="ai-search-caption" aria-live="polite">先定义什么才是正确的矩阵乘法，再搜索实现它的计算路径。</div>
-  <div class="demo-controls"><button data-play="ai-search">播放搜索思路</button><button data-step="ai-search">下一步</button><button data-reset="ai-search">重置</button></div>
-  <div class="slide-source">搜索原理示意，浏览器演示公开方案，没有现场训练模型。来源：AlphaTensor 论文与作者开源仓库。</div>
 </section>
 
 <section class="slide comparison-slide" data-title="四阶矩阵三算法动画对比" data-seconds="120">
@@ -425,27 +380,11 @@
   <div class="slide-source">实际执行作者公开的 rank-47 分解。动画结束先后表示乘法次数差异，不等于真实运行时间比。</div>
 </section>
 
-<section class="slide ai-numeric-slide" data-title="计算核对：三种算法的同一个4×4答案" data-seconds="70">
-  <div class="slide-header"><span class="chapter">把比较落实到数字 · 统一模 2</span><h2>三种算法，16 个输出格子全部相同</h2><p>沿用动画中的同一组输入，先手算一个格子，再核对完整结果</p></div>
-  <div class="ai-matrix-triplet"><div><span>A · 4×4</span><div id="ai-numeric-a" class="ai-matrix"></div></div><b>×</b><div><span>B · 4×4</span><div id="ai-numeric-b" class="ai-matrix"></div></div><b>=</b><div><span>共同结果 C · 4×4</span><div id="ai-numeric-c" class="ai-matrix"></div></div></div>
-  <div class="ai-numeric-equation" id="ai-numeric-equation"></div>
-  <div class="ai-checks" id="ai-numeric-checks"></div>
-  <div class="demo-controls"><button data-check-cell="0">手算 C₁₁</button><button data-check-cell="3">手算 C₁₄</button><button data-check-cell="all">核对全部 16 格</button><span>对比页“换一题”后，这里的输入和结果会同步更新</span></div>
-</section>
-
-<section class="slide tensor-four-slide" data-title="4×4算法正确性的检查" data-seconds="55">
-  <div class="slide-header"><span class="chapter">验证作者公开的 4 × 4、47 次方案</span><h2>16 个输出格子，都必须符合矩阵乘法</h2><p>下面是 4×4 输出的关系检查表，每格显示该输出还有多少条计算关系未吻合</p></div>
-  <div class="tensor-four-layout"><div class="tensor-four-grid" id="talk-tensor"></div><div class="tensor-info"><div><span>已加入的中间乘积</span><strong id="tensor-count">0 / 47</strong></div><div><span>未吻合的关系总数</span><strong id="tensor-remaining">64</strong></div><p id="tensor-caption" aria-live="polite">一个组合乘积可能影响多个输出，最终所有关系必须归零。</p></div></div>
-  <div class="demo-controls"><button data-play="tensor">播放验证</button><button data-step="tensor">下一步</button><button data-reset="tensor">重置</button><button id="tensor-finish">看验证终点</button><span>格内是关系条数，不是矩阵计算结果</span></div>
-  <div class="slide-source">每个输出对应 16×16 种输入元素乘积，共检查 4096 个系数。按已知 47 步路径验证，不在浏览器训练或搜索 AlphaTensor。</div>
-</section>
-
-<section class="slide ai-savings-slide" data-title="计算对比：AI究竟少算了多少" data-seconds="70">
-  <div class="slide-header"><span class="chapter">同一个 4×4、模 2 任务 · 只比较乘法次数</span><h2>64 → 47：少 17 次，减少 26.56%</h2><p>以直接算法的 64 次为分母；与 Strassen 比，则以 49 次为分母</p></div>
-  <div class="ai-savings-bars" id="ai-savings-bars"></div>
-  <div class="ai-saving-equations"><div><span>相比直接算法</span><b>(64 − 47) ÷ 64 = 26.56%</b></div><div><span>相比 Strassen</span><b>(49 − 47) ÷ 49 = 4.08%</b></div></div>
-  <div class="ai-repeat-control"><label for="ai-repeat-count">重复做同样的 4×4 任务 <b id="ai-repeat-label">10,000</b> 次</label><input id="ai-repeat-count" type="range" min="1" max="100000" step="1" value="10000"></div><div id="ai-repeat-summary" class="ai-repeat-summary"></div>
-  <div class="slide-source">这里统计标量乘法次数；26.56% 不是实际耗时减少比例，加法、访存与硬件实现仍需计入。</div>
+<section class="slide ai-scale-slide" data-title="大矩阵上乘法优势如何累积" data-seconds="70">
+  <div class="slide-header"><span class="chapter">递归应用 4×4 的模 2 算法 · 只比较标量乘法</span><h2>矩阵越大，47 次方案的乘法优势越明显</h2><p>横轴是方阵大小 N；纵轴把直接法 N³ 的乘法量设为 100%</p></div>
+  <div class="ai-scale-chart-wrap"><span class="ai-scale-y-label">相对直接法的乘法量</span><svg id="ai-scale-chart" viewBox="0 0 1120 345" role="img" aria-label="矩阵大小从4增长到1024时三种算法的相对标量乘法量折线图"></svg></div>
+  <div class="ai-scale-complexity"><div><span>直接算法</span><b>O(N<sup>3</sup>)</b></div><div><span>Strassen 递归</span><b>O(N<sup>2.807</sup>)</b></div><div class="ai-scale-best"><span>AlphaTensor · 模 2</span><b>O(N<sup>2.778</sup>)</b><small id="ai-scale-summary"></small></div></div>
+  <div class="slide-source">当 N = 4ᵏ 时，乘法数分别为 64ᵏ、49ᵏ、47ᵏ。论文指出 47 次方案递归后复杂度约 O(N<sup>2.778</sup>)；这里只比较乘法次数，不代表实际运行时间。</div>
 </section>
 
 <section class="slide ai-operation-cost-slide" data-title="计算对比：少乘法与多加法的代价" data-seconds="90">
@@ -469,7 +408,7 @@
 </section>
 
 <section class="slide closing" data-title="演讲结论与讨论" data-seconds="40">
-  <span class="chapter">结论与讨论</span><h2>AI 已经开始<br><em>参与算法发现</em></h2><div class="closing-lines"><div><b>少算</b><span>重新组合计算步骤</span></div><div><b>一起算</b><span>把独立任务并行执行</span></div><div><b>少搬</b><span>让数据在手边重复使用</span></div></div><p class="closing-question">你会怎样衡量一种计算方法“更好”？</p>
+  <span class="chapter">结论与讨论</span><h2>AI 已经开始<br><em>参与算法发现</em></h2><div class="closing-lines"><div><b>少算</b><span>重新组合计算步骤</span></div><div><b>递归</b><span>小算法服务更大矩阵</span></div><div><b>实测</b><span>理论优势仍需硬件验证</span></div></div><p class="closing-question">你会怎样衡量一种计算方法“更好”？</p>
 </section>
 
 <section class="slide sources-slide" data-title="参考资料" data-seconds="25">
@@ -480,9 +419,9 @@
 
 </div></main>
 <aside id="notes-panel" hidden aria-label="演讲备注"><div class="notes-heading"><strong>演讲备注</strong><button id="notes-close" aria-label="关闭演讲备注">×</button></div><div id="notes-content"></div></aside>
-<footer class="navigation"><button id="previous" aria-label="上一页">← 上一页</button><span id="slide-count">01 / 21</span><span id="slide-title">AI 如何发现更快的矩阵乘法</span><div class="nav-right"><button id="timer-button" title="开始或暂停计时 T">计时 <span id="elapsed">00:00</span></button><button id="timer-reset" title="重置计时" aria-label="重置演讲计时">↺</button><button id="next" aria-label="下一页">下一页 →</button></div></footer>
+<footer class="navigation"><button id="previous" aria-label="上一页">← 上一页</button><span id="slide-count">01 / 14</span><span id="slide-title">AI 如何发现更快的矩阵乘法</span><div class="nav-right"><button id="timer-button" title="开始或暂停计时 T">计时 <span id="elapsed">00:00</span></button><button id="timer-reset" title="重置计时" aria-label="重置演讲计时">↺</button><button id="next" aria-label="下一页">下一页 →</button></div></footer>
 <div class="deck-progress" aria-hidden="true"><span id="deck-progress"></span></div>
-<dialog id="overview-dialog"><div class="dialog-header"><h2>演讲目录</h2><button data-close="overview-dialog" aria-label="关闭目录">×</button></div><p>21 页，建议讲解时间共 19 分 35 秒。点击任意一页跳转。</p><div id="overview-grid"></div></dialog>
+<dialog id="overview-dialog"><div class="dialog-header"><h2>演讲目录</h2><button data-close="overview-dialog" aria-label="关闭目录">×</button></div><p>14 页，建议讲解时间共 11 分 45 秒。点击任意一页跳转。</p><div id="overview-grid"></div></dialog>
 <dialog id="help-dialog"><div class="dialog-header"><h2>演示快捷键</h2><button data-close="help-dialog" aria-label="关闭快捷键">×</button></div><dl class="shortcut-list"><dt>→ / ↓ / 空格 / Page Down</dt><dd>下一页</dd><dt>← / ↑ / Page Up</dt><dd>上一页</dd><dt>Home / End</dt><dd>第一页 / 最后一页</dd><dt>F</dt><dd>进入或退出全屏</dd><dt>N</dt><dd>显示或隐藏本页演讲备注</dd><dt>O</dt><dd>打开目录</dd><dt>B</dt><dd>黑屏 / 恢复画面</dd><dt>T</dt><dd>开始或暂停演讲计时</dd><dt>R</dt><dd>重置当前页动画</dd></dl><p>动画由页面中的播放按钮控制。翻页会暂停动画。按 Esc 关闭目录或备注。备注会显示在当前屏幕上。</p></dialog>
 <div id="blackout" hidden><span>按 B 或点击恢复</span></div><button id="exit-cinema" aria-label="退出全屏演示">退出全屏 F</button><div class="sr-only" id="announcement" aria-live="polite"></div>
 <script>// AlphaTensor authors' published rank-47 factorization; output factor transposed to row-major C.
@@ -758,71 +697,52 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
     return {left,right,product,delta:term.w.map(value=>value?product:0)};
   }
   const saving=(baseline,optimized)=>({saved:baseline-optimized,percent:100*(baseline-optimized)/baseline});
+  const recursiveSeries=(levels=5)=>Array.from({length:levels},(_,index)=>{
+    const level=index+1,size=4**level,direct=64**level,strassen=49**level,alpha=47**level;
+    return {level,size,direct,strassen,alpha,directPercent:100,strassenPercent:100*strassen/direct,alphaPercent:100*alpha/direct};
+  });
   const weighted=(stats,multiplyCost)=>stats.multiplications*multiplyCost+stats.xor;
-  globalThis.AiFocusModel={support,count,evaluate,step,saving,weighted};
+  globalThis.AiFocusModel={support,count,evaluate,step,saving,recursiveSeries,weighted};
 })();
 
 "use strict";
 (() => {
   const $=selector=>document.querySelector(selector),$$=selector=>[...document.querySelectorAll(selector)];
   const number=value=>Number(value).toLocaleString('en-US');
-  const coordinate=(prefix,i)=>`${prefix}[${Math.floor(i/4)+1},${i%4+1}]`;
-  function grid(id,values,mask=[],kind='input'){
-    $('#'+id).innerHTML=values.map((value,i)=>`<span class="${mask[i]?`ai-${kind}-lit`:''}">${value}</span>`).join('');
-  }
-  function mount({demo,math,methods,getInputs}){
-    const model=globalThis.AiFocusModel,terms=globalThis.ALPHATENSOR_47.terms;
-    let termIndex=1,checkCell='all';
-    const recipe=demo('ai-recipe',4,n=>{
-      const {a,b}=getInputs(),term=terms[termIndex],value=model.step(term,a,b);
-      grid('ai-recipe-a',a,n>=1?term.u:[]);grid('ai-recipe-b',b,n>=2?term.v:[]);
-      grid('ai-recipe-delta',n===4?value.delta:Array(16).fill(0),n===4?term.w:[],'output');
-      const formula=(name,vector,values,result)=>`${name} = (${model.support(vector).map(i=>coordinate(name==='α'?'A':'B',i)).join(' + ')}) mod 2 = (${model.support(vector).map(i=>values[i]).join(' + ')}) mod 2 = ${result}`;
-      $('#ai-recipe-intro').textContent=`作者公开方案的第 ${termIndex+1} 步：先组合输入，再做 1 次乘法，分配到 ${model.support(term.w).length} 个输出格子。`;
-      $('#ai-left-expression').textContent=n>=1?formula('α',term.u,a,value.left):'① 从 A 中选择并组合元素';
-      $('#ai-right-expression').textContent=n>=2?formula('β',term.v,b,value.right):'② 从 B 中选择并组合元素';
-      $('#ai-product-expression').textContent=n>=3?`③ p = α × β = ${value.left} × ${value.right} = ${value.product}${n===4?' → '+model.support(term.w).map(i=>coordinate('C',i)).join('、')+' 各加 '+value.product:''}`:'③ 两个组合相乘，再分配本步贡献';
-      $('#ai-recipe-progress').textContent=`${n} / 4`;
-      $$('[data-ai-term]').forEach(button=>button.classList.toggle('selected',Number(button.dataset.aiTerm)===termIndex));
-    },1600);
-    $$('[data-ai-term]').forEach(button=>button.addEventListener('click',()=>{termIndex=Number(button.dataset.aiTerm);recipe.reset();}));
-    const searchCaptions=[
-      '先定义什么才是正确的 4×4 矩阵乘法，再搜索实现它的计算路径。',
-      '目标涵盖全部输入之间的正确乘法关系，不只针对眼前这两个数字矩阵。',
-      '一个动作同时决定：A 如何组合、B 如何组合、乘积贡献到哪些输出。',
-      '把这一步的贡献从目标中扣除，继续匹配剩余的乘法关系。',
-      '全部关系匹配，才是正确配方；再比较步数。AlphaTensor 找到适用于模 2 的 47 步方案。'
-    ];
-    demo('ai-search',4,n=>{$$('#ai-search-flow>div').forEach((element,i)=>element.classList.toggle('active',i===n-1));$('#ai-search-caption').textContent=searchCaptions[n];},2100);
-    function numeric(){
-      const {a,b}=getInputs(),expected=math.multiply(a,b);
-      const mask=Array(16).fill(0);if(checkCell!=='all')mask[Number(checkCell)]=1;
-      const row=checkCell==='all'?0:Math.floor(Number(checkCell)/4),col=checkCell==='all'?0:Number(checkCell)%4;
-      grid('ai-numeric-a',a,checkCell==='all'?[]:a.map((_,i)=>Number(Math.floor(i/4)===row)));
-      grid('ai-numeric-b',b,checkCell==='all'?[]:b.map((_,i)=>Number(i%4===col)));
-      grid('ai-numeric-c',expected,mask,'output');
-      const products=Array.from({length:4},(_,k)=>`${a[row*4+k]}×${b[k*4+col]}`),ordinary=Array.from({length:4},(_,k)=>a[row*4+k]*b[k*4+col]).reduce((sum,value)=>sum+value,0);
-      $('#ai-numeric-equation').textContent=checkCell==='all'?'全部 16 格逐一核对：三种算法的最终结果一致。':`${coordinate('C',row*4+col)} = (${products.join(' + ')}) mod 2 = ${ordinary} mod 2 = ${expected[row*4+col]}`;
-      $('#ai-numeric-checks').innerHTML=methods.map(method=>{const computed=model.evaluate(method.terms,a,b),correct=computed.result.every((value,i)=>value===expected[i]);return `<div><span>${method.name}</span><b>${correct?'16 / 16 格一致 ✓':'存在不一致'}</b><small>${computed.counts.multiplications} 次乘法</small></div>`;}).join('');
-    }
-    $$('[data-check-cell]').forEach(button=>button.addEventListener('click',()=>{checkCell=button.dataset.checkCell;numeric();}));
+  function mount({methods}){
+    const model=globalThis.AiFocusModel;
     const stats=methods.map(method=>({...method,...model.count(method.terms)}));
-    $('#ai-savings-bars').innerHTML=stats.map(item=>`<div><span>${item.id==='strassen'?'Strassen':item.name}</span><div><i style="width:${100*item.multiplications/64}%" class="${item.id==='alpha'?'ai-best':''}"></i></div><b>${item.multiplications} 次</b></div>`).join('');
-    function repeat(){
-      const repetitions=Number($('#ai-repeat-count').value);$('#ai-repeat-label').textContent=number(repetitions);
-      $('#ai-repeat-summary').innerHTML=`<span>直接算法 <b>${number(64*repetitions)}</b> 次</span><span>AI <b>${number(47*repetitions)}</b> 次</span><strong>节省 ${number(17*repetitions)} 次乘法</strong>`;
-    }
-    $('#ai-repeat-count').addEventListener('input',repeat);repeat();
+    const series=model.recursiveSeries(5);
+    const width=1120,height=345,left=82,right=42,top=24,bottom=64;
+    const plotWidth=width-left-right,plotHeight=height-top-bottom;
+    const x=index=>left+index*plotWidth/(series.length-1);
+    const y=percent=>top+(100-percent)*plotHeight/100;
+    const points=key=>series.map((item,index)=>`${x(index)},${y(item[key])}`).join(' ');
+    const yTicks=[0,25,50,75,100].map(value=>`<g><line x1="${left}" y1="${y(value)}" x2="${width-right}" y2="${y(value)}"/><text x="${left-14}" y="${y(value)+5}" text-anchor="end">${value}%</text></g>`).join('');
+    const xTicks=series.map((item,index)=>`<g><line x1="${x(index)}" y1="${height-bottom}" x2="${x(index)}" y2="${height-bottom+7}"/><text x="${x(index)}" y="${height-bottom+27}" text-anchor="middle">${number(item.size)}</text></g>`).join('');
+    const circles=(key,className)=>series.map((item,index)=>`<circle class="${className}" cx="${x(index)}" cy="${y(item[key])}" r="5"/>`).join('');
+    $('#ai-scale-chart').innerHTML=`
+      <g class="scale-grid">${yTicks}</g>
+      <g class="scale-axis"><line x1="${left}" y1="${top}" x2="${left}" y2="${height-bottom}"/><line x1="${left}" y1="${height-bottom}" x2="${width-right}" y2="${height-bottom}"/>${xTicks}</g>
+      <polyline class="scale-line direct" points="${points('directPercent')}"/>
+      <polyline class="scale-line strassen" points="${points('strassenPercent')}"/>
+      <polyline class="scale-line alpha" points="${points('alphaPercent')}"/>
+      ${circles('directPercent','scale-dot direct')}${circles('strassenPercent','scale-dot strassen')}${circles('alphaPercent','scale-dot alpha')}
+      <g class="scale-legend"><circle class="direct" cx="${left+20}" cy="${top+20}" r="5"/><text x="${left+33}" y="${top+25}">直接法</text><circle class="strassen" cx="${left+145}" cy="${top+20}" r="5"/><text x="${left+158}" y="${top+25}">Strassen</text><circle class="alpha" cx="${left+300}" cy="${top+20}" r="5"/><text x="${left+313}" y="${top+25}">AlphaTensor</text></g>
+      <text class="scale-x-label" x="${left+plotWidth/2}" y="${height-4}" text-anchor="middle">矩阵大小 N（N × N）</text>`;
+    const largest=series.at(-1);
+    $('#ai-scale-summary').textContent=`N = ${number(largest.size)} 时约为直接法的 ${largest.alphaPercent.toFixed(2)}%，少 ${number(largest.direct-largest.alpha)} 次乘法`;
     $('#ai-cost-table-body').innerHTML=stats.map(item=>`<tr><td>${item.id==='strassen'?'Strassen（展平）':item.name}</td><td>${item.multiplications}</td><td>${item.inputXor}</td><td>${item.outputXor}</td><td>${item.xor}</td></tr>`).join('');
     function weighted(){
-      const weight=Number($('#ai-multiply-cost').value),values=stats.map(item=>model.weighted(item,weight)),largest=Math.max(...values),minimum=Math.min(...values);
+      const weight=Number($('#ai-multiply-cost').value),values=stats.map(item=>model.weighted(item,weight)),largestValue=Math.max(...values),minimum=Math.min(...values);
       $('#ai-cost-weight').textContent=weight;
-      $('#ai-weighted-costs').innerHTML=stats.map((item,i)=>`<div class="${values[i]===minimum?'best-cost':''}"><span>${item.id==='strassen'?'Strassen（展平）':item.name}</span><div><i style="width:${100*values[i]/largest}%"></i></div><b>${number(values[i])} 单位</b></div>`).join('');
-      const winners=stats.filter((_,i)=>values[i]===minimum).map(item=>item.id==='strassen'?'Strassen':item.name).join('、');
+      $('#ai-weighted-costs').innerHTML=stats.map((item,index)=>`<div class="${values[index]===minimum?'best-cost':''}"><span>${item.id==='strassen'?'Strassen（展平）':item.name}</span><div><i style="width:${100*values[index]/largestValue}%"></i></div><b>${number(values[index])} 单位</b></div>`).join('');
+      const winners=stats.filter((_,index)=>values[index]===minimum).map(item=>item.id==='strassen'?'Strassen':item.name).join('、');
       $('#ai-cost-verdict').textContent=`按这个假设，${winners}的算术成本最低。AI 比直接法少 17 乘、多 292 XOR；是否划算取决于两者的实际成本。`;
     }
-    $('#ai-multiply-cost').addEventListener('input',weighted);$$('[data-ai-cost]').forEach(button=>button.addEventListener('click',()=>{$('#ai-multiply-cost').value=button.dataset.aiCost;weighted();}));weighted();numeric();
-    return {refresh(){recipe.paint();numeric();}};
+    $('#ai-multiply-cost').addEventListener('input',weighted);
+    $$('[data-ai-cost]').forEach(button=>button.addEventListener('click',()=>{$('#ai-multiply-cost').value=button.dataset.aiCost;weighted();}));
+    weighted();
   }
   globalThis.AiFocusVisuals={mount};
 })();
@@ -839,7 +759,7 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
   const evolveBlog='https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/';
   const notes=[
   {
-    "text": "今天以AI算法发现为主线。硬件部分建立成本直觉，传统矩阵算法只保留64次和49次两个基线。重点用真实公开分解讲清AI的47步、实算同一组4×4输入、验证结果，并计算乘法节省与额外XOR代价。47步适用于模2条件，AlphaEvolve的48次则是复数条件。",
+    "text": "今天以 AI 算法发现为主线。先用硬件建立加法与乘法的成本直觉，再用同一组 4×4 输入比较直接法、Strassen 与 AlphaTensor。重点是 47 次模 2 方案怎样递归服务更大的矩阵，以及为什么乘法次数优势仍不能直接等同于运行时间优势。",
     "action": "约15秒介绍主题后翻页。",
     "sources": [
       "https://doi.org/10.1038/s41586-022-05172-4"
@@ -879,57 +799,17 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
     ]
   },
   {
-    "text": "4×4 的 A 有 16 个元素。计算 A 乘 B 时，A 的每个元素需要参与四个输出列，所以会被使用四次。\n如果每次使用都从远处取，读取 A 共 64 趟。如果先将 A 的 16 个元素拿到手边，并且容量足够，就可以重复使用，只读取 16 趟。这里仅统计 A，不包括 B、输出和其他开销。\nFlashAttention 使用分块减少显存与片上存储之间的读写，但这张 4×4 教学图不是该论文的实测性能。\n片上存储包含寄存器和共享内存等不同资源；这里只表达从显存暂存后复用的原则，不给它们相同容量或访问特性。",
-    "action": "简要说明数据复用，并留约55秒自行口头衔接，随后进入矩阵算法基线。",
-    "sources": [
-      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/",
-      "https://arxiv.org/abs/2205.14135"
-    ]
-  },
-  {
-    "text": "全场矩阵案例统一使用 4×4。这里 A 和 B 都只含 0 和 1，但这一页先按普通算术相乘，不取模。第一行与第一列计算为 1×1+0×0+1×1+1×1=3。四个乘积只需要三次加法合并。\n输出有 16 格，每格 4 次乘法、3 次加法，所以总计 64 次乘法和 48 次加法。后面 Strassen 使用同一组输入并还原同一结果。再往后改为模 2 运算时，规则变化会明确说明。",
+    "text": "全场矩阵案例统一从 4×4 开始。这里 A 和 B 都只含 0 和 1，但这一页先按普通算术相乘，不取模。第一行与第一列计算为 1×1+0×0+1×1+1×1=3。四个乘积只需要三次加法合并。\n输出有 16 格，每格 4 次乘法、3 次加法，所以总计 64 次乘法和 48 次加法。后面的三算法动画会在模 2 条件下比较 64、49、47 次乘法，并最终得到相同结果。",
     "action": "只示范左上格的四乘三加，再点看完整结果，快速建立64次基线。",
     "sources": [
       "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"
     ]
   },
   {
-    "text": "传统算法压缩到两个比较基线。直接法16个输出、每格4次乘法，总共64次。Strassen把同一个4×4矩阵分成四个内部块，外层7组块乘法，每组继续7次标量乘法，总共49次。少15次乘法，来自输入组合与中间乘积复用。\n需要时可查看完整公式：A=[a b;c d]，B=[e f;g h]，每个字母是原4×4的内部块。M1=(a+d)(e+h)，M2=(c+d)e，M3=a(f-h)，M4=d(g-e)，M5=(a+b)h，M6=(c-a)(e+f)，M7=(b-d)(g+h)。输出r=M1+M4-M5+M7=ae+bg，s=M3+M5=af+bh，t=M2+M4=ce+dg，u=M1-M2+M3+M6=cf+dh。按分配律展开，相反项抵消即可验证；不交换矩阵乘法顺序。\n这里把完整推导留作备查，主讲只用45秒建立49次基线，接下来重点讲AI怎样找到47次方案。",
-    "action": "讲清64与49的来源即可，随后进入AlphaTensor。",
-    "sources": [
-      "https://link.springer.com/article/10.1007/BF02165411",
-      "https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html"
-    ]
-  },
-  {
-    "text": "前面的 Strassen 是人设计的算法。AlphaTensor 尝试用强化学习帮助搜索新的矩阵乘法算法，论文发表于 2022 年 Nature。\n寻找算法时，需要决定怎样线性组合输入、让组合后的数相乘，以及把中间乘积加到哪些输出。最终必须与矩阵乘法完全一致，同时希望乘法更少。可以把它理解成：神经网络判断哪些动作更有希望，树搜索往前探索，再用反馈不断改进选择。发现出来的是适用范围内通用的计算规则。",
+    "text": "Strassen 是人设计的经典基线；AlphaTensor 尝试用强化学习帮助搜索新的矩阵乘法算法，论文发表于 2022 年 Nature。\n寻找算法时，需要决定怎样线性组合输入、让组合后的数相乘，以及把中间乘积加到哪些输出。最终必须与矩阵乘法完全一致，同时希望乘法更少。可以把它理解成：神经网络判断哪些动作更有希望，树搜索往前探索，再用反馈不断改进选择。发现出来的是适用范围内通用的计算规则。",
     "action": "按从左到右的顺序解释三步，不需要介绍寄存器或神经网络结构。",
     "sources": [
       "https://doi.org/10.1038/s41586-022-05172-4"
-    ]
-  },
-  {
-    "text": "在比较 47 次方案前，需要统一运算规则。模 2 只保留除以 2 的余数，结果是 0 或 1。例如 1+1=2，2 除以 2 的余数是 0，所以模 2 中写成 1+1=0。\nAlphaTensor 的 4×4、47 次结果属于这个规则。它不能直接拿来计算任意实数 4×4 矩阵。接下来三种算法都使用相同的模 2 规则，因此最终答案可以公平比较。",
-    "action": "可以问听众 1+1+1 在模 2 下是多少，答案是 1。",
-    "sources": [
-      "https://doi.org/10.1038/s41586-022-05172-4"
-    ]
-  },
-  {
-    "text": "这一页真的执行作者公开的47项分解。默认展示第2项：α=A13+A22+A23，β=B21+B24+B34，相加全部按模2。用默认输入，α=(1+1+1) mod2=1，β=(0+0+1) mod2=1，p=αβ=1。这一个乘积给C14和C21各加1。\nΔC表示本项贡献，不能把它当成完整结果。前一项与后面45项一起累加，才恢复16个输出。第1项更直观：p=A13×B31，一次乘积送到C11、C12、C21。个别项会把看似不属于某个输出的贡献暂时加进去，其他项负责抵消。完整47项的正确性在后面验证。",
-    "action": "按四次下一步，分别展示A组合、B组合、一次乘法、多个输出贡献；再切到第1步看更简单的复用。",
-    "sources": [
-      "https://github.com/google-deepmind/alphatensor",
-      "https://doi.org/10.1038/s41586-022-05172-4"
-    ]
-  },
-  {
-    "text": "AlphaTensor使用强化学习搜索矩阵乘法分解，目标不是记住某两个矩阵的答案，而是找到对适用范围所有输入都正确的配方。把原来的双线性乘法规则表示为目标，每个动作选择u、v、w，对应怎样组合A、B的元素、以及一个乘积贡献到哪些输出。减去本项贡献后，处理剩余目标；全部归零表示得到完整算法。训练时探索许多路径，并鼓励更短的正确方案。\n页面只是解释这个搜索逻辑，不在浏览器现场训练或声称重新发现47步。后面的47步动画沿作者公开的已知路径执行。",
-    "action": "逐步点亮四个环节，最后强调：学习的是算法配方，使用时直接运行配方即可。",
-    "sources": [
-      "https://doi.org/10.1038/s41586-022-05172-4",
-      "https://github.com/google-deepmind/alphatensor",
-      "https://deepmind.google/blog/discovering-novel-algorithms-with-alphatensor/"
     ]
   },
   {
@@ -941,23 +821,8 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
     ]
   },
   {
-    "text": "三种算法都计算同一组4×4输入，并统一模2。默认共同答案C按行是1111、1101、0010、0010。C11可手算为1×1+0×0+1×1+1×1=3，3 mod2=1；C14也为3 mod2=1。\n页面实际执行64、49、47项分解，并逐格比较16个输出，而不是把答案写死。对比页换题时这里会同步更新。一次数值例子可帮助理解；后面的4096个系数检查才验证完整恒等式。",
-    "action": "先手算C11，再点核对全部16格。必要时回对比页换一题，观察结果保持一致。",
-    "sources": [
-      "https://github.com/google-deepmind/alphatensor",
-      "https://doi.org/10.1038/s41586-022-05172-4"
-    ]
-  },
-  {
-    "text": "这一页验证作者公开的 4×4、47 次模 2 方案。输出 C 有 16 格，每格可能涉及 A 的 16 个元素与 B 的 16 个元素之间的 256 种乘积关系，所以整个恒等式有 4096 个系数。\n我们把每个输出的 256 个系数压缩成一个统计数，表示还有多少条关系未吻合。初始每格需要四项，16 格共 64 条。逐步加入公开的 47 个组合乘积后，所有 4096 个系数必须吻合。中途关系数可能增加，因为新的贡献还需要被后面的乘积抵消。\n最终全部归零，说明这个恒等式对适用范围内所有输入成立。这是在验证一条已知路径，不是在浏览器训练或运行 AlphaTensor 搜索。",
-    "action": "单步一次，解释关系计数可以增加。然后播放或看验证终点，确认总数归零。",
-    "sources": [
-      "https://doi.org/10.1038/s41586-022-05172-4"
-    ]
-  },
-  {
-    "text": "直接算法64次，Strassen49次，AlphaTensor47次，都针对同一个4×4、模2任务。相比直接算法省64-47=17次，17/64=26.5625%，显示26.56%；相比Strassen省2次，2/49约4.0816%，显示4.08%。分母必须使用各自被比较的基线。\n同样的4×4任务做10000次，直接法640000次乘法，Strassen490000次，AI470000次；AI比直接法少170000次乘法。这不是耗时减少26.56%，也没有把47次模2方案推广到普通实数。",
-    "action": "讲清两个百分比的分母，再拖动重复次数，观察累计节省量。",
+    "text": "横轴是方阵大小 N，只取 N=4^k，便于把 4×4 算法递归应用 k 层。每层直接法把乘法数乘 64，Strassen 乘 49，AlphaTensor 的模 2 方案乘 47，所以总数分别为 64^k、49^k、47^k。纵轴把直接法设为 100%，观察另外两条线随矩阵变大而下降。\n例如 N=1024=4^5：直接法需要 1,073,741,824 次标量乘法，AlphaTensor 需要 229,345,007 次，约为直接法的 21.36%，少 78.64%。论文将递归复杂度写为约 O(N^2.778)，优于 Strassen 的约 O(N^2.807) 与直接法 O(N^3)。\n这是模 2 条件下的理论乘法计数。其他尺寸可通过分块或填充处理，但额外 XOR、访存、常数项和硬件实现仍决定实际耗时。",
+    "action": "沿横轴从 4 指到 1024，先比较三条线，再用 N=1024 的数字说明理论乘法优势如何累积；最后强调模 2 与非实测边界。",
     "sources": [
       "https://doi.org/10.1038/s41586-022-05172-4",
       "https://github.com/google-deepmind/alphatensor"
@@ -981,19 +846,19 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
     ]
   },
   {
-    "text": "前面的百分比统计乘法次数，成本滑块统计假设的算术单位；它们都不是硬件实测加速比。实际要计入额外XOR、寄存器与中间结果、访存、融合乘加、矩阵形状、精度和实现。这里仍用4×4解释原理，不宣称这类小矩阵在GPU上必然加速。",
-    "action": "把前面的成本模型与这里的块计算逻辑联系起来。",
+    "text": "前一页的曲线统计递归后的标量乘法次数，本页成本滑块统计单层 4×4 方案的假设算术单位；它们都不是硬件实测加速比。实际要计入额外 XOR、寄存器与中间结果、访存、融合乘加、矩阵形状、精度和实现。大矩阵让理论乘法优势累积，但是否更快仍需在目标硬件和目标数据类型上测量。",
+    "action": "把大矩阵的理论曲线与本页的实现边界联系起来，避免把乘法数直接说成加速比。",
     "sources": [
       "https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html",
       "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/"
     ]
   },
   {
-    "text": "回到开场问题：同一道计算题，即使答案固定，计算路径仍然可能改进。Strassen 和 AlphaTensor 展示了重新组合步骤来减少乘法，GPU 展示并行执行，FlashAttention 展示减少数据搬运。\n今天最重要的结论是，AI 已经可以参与基础算法的发现与优化，而评价一种方法还需要明确适用条件和衡量标准。可以在这一页接受提问。",
+    "text": "回到开场问题：同一道计算题，即使答案固定，计算路径仍然可能改进。Strassen 和 AlphaTensor 展示了重新组合步骤来减少乘法；递归让一个小矩阵算法服务更大的矩阵；成本模型提醒我们仍要测量实际实现。\n今天最重要的结论是，AI 已经可以参与基础算法的发现与优化，而评价一种方法还需要明确数域、规模、运算计数与真实硬件表现。可以在这一页接受提问。",
     "action": "总结后停顿，邀请听众讨论怎样定义计算方法更好。",
     "sources": [
       "https://doi.org/10.1038/s41586-022-05172-4",
-      "https://arxiv.org/abs/2205.14135"
+      "https://deepmind.google/blog/discovering-novel-algorithms-with-alphatensor/"
     ]
   },
   {
@@ -1065,17 +930,12 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
     const completed=Math.floor(n/5);$('#basic-work-count').textContent=`${completed*4+Math.min(n%5,4)} / 64 次乘法，${completed*3} / 48 次加法`;
   },350);
   $('#basic-finish').addEventListener('click',()=>basic.finish());
-  demo('memory',64,n=>{
-    $('#memory-naive').textContent=n;$('#memory-reuse').textContent=Math.min(n,16);
-    for(const [id,moving] of [['package-naive',n>0],['package-reuse',n>0&&n<=16]]){const e=$('#'+id);e.classList.remove('travel');if(moving){void e.offsetWidth;e.classList.add('travel');}}
-  },300);
   const methods=[{id:'direct',name:'直接行乘列',total:64,terms:math.directTerms()},{id:'strassen',name:'Strassen 两层分块',total:49,terms:math.strassenTerms()},{id:'alpha',name:'AlphaTensor 优化',total:47,terms:globalThis.ALPHATENSOR_47.terms}];
   let a4=[1,0,1,1,0,1,1,0,1,1,0,1,0,0,1,1],b4=[1,1,0,1,0,1,1,0,1,0,1,1,1,0,0,1],mode='all';
-  let aiFocus=null;
   const traces={};
   const smallMatrix=values=>values.map(v=>`<span>${v}</span>`).join('');
   $('#talk-comparison').innerHTML=methods.map(m=>`<div class="comparison-method ${m.id}" id="talk-method-${m.id}"><h3>${m.name}</h3><div class="method-counter"><b id="talk-count-${m.id}">0</b><span>/ ${m.total} 次</span></div><div class="method-progress"><i id="talk-progress-${m.id}"></i></div><div class="method-inputs"><div><span>输入 A</span><div class="small-matrix" id="talk-a-${m.id}">${smallMatrix(a4)}</div></div><b>×</b><div><span>输入 B</span><div class="small-matrix" id="talk-b-${m.id}">${smallMatrix(b4)}</div></div></div><div class="method-equation" id="talk-equation-${m.id}">? × ? = ?</div><p class="method-caption" id="talk-caption-${m.id}">准备第一步</p><div class="method-output"><div><span id="talk-output-label-${m.id}">输出累计 C</span><div class="small-matrix" id="talk-c-${m.id}">${smallMatrix(Array(16).fill(0))}</div></div><p id="talk-output-note-${m.id}">当前为中间状态，仍需继续累加。</p></div></div>`).join('');
-  const rebuild=()=>{methods.forEach(m=>{traces[m.id]=math.trace(m.terms,a4,b4);});aiFocus?.refresh();};rebuild();
+  const rebuild=()=>{methods.forEach(m=>{traces[m.id]=math.trace(m.terms,a4,b4);});};rebuild();
   function updateGrid(id,values,mask,kind){$$(id+'>span').forEach((e,i)=>{e.textContent=values[i];for(const c of ['a','b','c'])e.classList.toggle(c+'-on',kind===c&&!!mask?.[i]);});}
   const comparison=demo('compare',64,frame=>{
     let finished=0;
@@ -1099,16 +959,7 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
   $('#compare-tempo').addEventListener('change',e=>{const playing=!!comparison.timer;comparison.stop();comparison.interval=Number(e.target.value);if(playing)comparison.play();});
   $('#compare-finish').addEventListener('click',()=>comparison.finish());
   $('#compare-random').addEventListener('click',()=>{a4=Array.from({length:16},()=>Math.round(Math.random()));b4=Array.from({length:16},()=>Math.round(Math.random()));rebuild();comparison.reset();});
-  const residualFrames=math.residualFrames(globalThis.ALPHATENSOR_47.terms);
-  $('#talk-tensor').innerHTML=Array.from({length:16},(_,i)=>`<div><span>C${Math.floor(i/4)+1}${i%4+1}</span><strong>4</strong></div>`).join('');
-  const tensorDemo=demo('tensor',47,n=>{
-    const perOutput=residualFrames[n],remaining=perOutput.reduce((sum,x)=>sum+x,0);
-    $$('#talk-tensor>div').forEach((e,i)=>{e.querySelector('strong').textContent=perOutput[i];e.classList.toggle('aligned',perOutput[i]===0);e.classList.toggle('contributed',n>0&&!!globalThis.ALPHATENSOR_47.terms[n-1].w[i]);});
-    $('#tensor-count').textContent=`${n} / 47`;$('#tensor-remaining').textContent=remaining;
-    $('#tensor-caption').textContent=remaining===0?'4096 个系数全部吻合，公开的 47 项分解通过完整恒等式验证。':'格内数字统计该输出尚未吻合的关系，可能先增后减，最终必须全部归零。';
-  },180);
-  $('#tensor-finish').addEventListener('click',()=>tensorDemo.finish());
-  aiFocus=globalThis.AiFocusVisuals.mount({demo,math,methods,getInputs:()=>({a:a4,b:b4})});
+  globalThis.AiFocusVisuals.mount({methods});
 
   function resize(){
     const notesVisible=!$('#notes-panel').hidden&&innerWidth>750;
@@ -1120,7 +971,7 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
   function duration(seconds){return `${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}`;}
   function renderNotes(){
     const note=notes[current];
-    $('#notes-content').innerHTML=`<div class="notes-time">第 ${current+1} 页，建议 ${duration(Number(slides[current].dataset.seconds))}，全场 19:35</div><div class="notes-body"></div><div class="notes-action"></div><div class="notes-sources">参考来源${note.sources.map((url,i)=>`<a href="${url}" target="_blank" rel="noopener noreferrer">${i+1}. ${url}</a>`).join('')}</div>`;
+    $('#notes-content').innerHTML=`<div class="notes-time">第 ${current+1} 页，建议 ${duration(Number(slides[current].dataset.seconds))}，全场 11:45</div><div class="notes-body"></div><div class="notes-action"></div><div class="notes-sources">参考来源${note.sources.map((url,i)=>`<a href="${url}" target="_blank" rel="noopener noreferrer">${i+1}. ${url}</a>`).join('')}</div>`;
     $('.notes-body').textContent=note.text;$('.notes-action').textContent=note.action;
   }
   function go(index,updateHash=true){

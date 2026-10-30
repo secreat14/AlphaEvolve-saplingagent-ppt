@@ -29,6 +29,10 @@
     return {left,right,product,delta:term.w.map(value=>value?product:0)};
   }
   const saving=(baseline,optimized)=>({saved:baseline-optimized,percent:100*(baseline-optimized)/baseline});
+  const recursiveSeries=(levels=5)=>Array.from({length:levels},(_,index)=>{
+    const level=index+1,size=4**level,direct=64**level,strassen=49**level,alpha=47**level;
+    return {level,size,direct,strassen,alpha,directPercent:100,strassenPercent:100*strassen/direct,alphaPercent:100*alpha/direct};
+  });
   const weighted=(stats,multiplyCost)=>stats.multiplications*multiplyCost+stats.xor;
-  globalThis.AiFocusModel={support,count,evaluate,step,saving,weighted};
+  globalThis.AiFocusModel={support,count,evaluate,step,saving,recursiveSeries,weighted};
 })();
