@@ -5,7 +5,6 @@
   const paper='https://doi.org/10.1038/s41586-022-05172-4';
   const strassenPaper='https://link.springer.com/article/10.1007/BF02165411';
   const nvidia='https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/';
-  const gpuSource='https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html';
   const flash='https://arxiv.org/abs/2205.14135';
   const evolve='https://arxiv.org/abs/2506.13131';
   const evolveBlog='https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/';
@@ -48,14 +47,6 @@
       "https://homepage.cs.uiowa.edu/~dwjones/assem/summer18/notes/09muldiv.shtml",
       "https://courses.csail.mit.edu/6.896/spring04/handouts/arithmetic-ckts.pdf",
       "https://docs.nvidia.com/cuda/archive/12.8.0/cuda-c-programming-guide/index.html#arithmetic-instructions"
-    ]
-  },
-  {
-    "text": "继续使用 4×4 输出的 16 个格子作为任务。每格需要计算一组行乘列，这 16 个输出可以分工。一个小组逐格做需要 16 轮，四组同时做理想情况下需要四轮。\n这是等耗时独立任务的教学模型，没有统计调度、通信和数据访问，不能当作 CPU 与 GPU 的真实测速。CPU 也可以并行。GPU 的收益需要合适的任务规模与分工方式。",
-    "action": "播放后，在右边四轮完成时暂停，指出任务格子是 C11 到 C44。",
-    "sources": [
-      "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/",
-      "https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html"
     ]
   },
   {
@@ -245,13 +236,6 @@
     const completed=Math.floor(n/5);$('#basic-work-count').textContent=`${completed*4+Math.min(n%5,4)} / 64 次乘法，${completed*3} / 48 次加法`;
   },350);
   $('#basic-finish').addEventListener('click',()=>basic.finish());
-  for(const id of ['gpu-serial','gpu-parallel'])$('#'+id).innerHTML=Array.from({length:16},(_,i)=>`<span>C${Math.floor(i/4)+1}${i%4+1}</span>`).join('');
-  demo('gpu',16,n=>{
-    $$('#gpu-serial>span').forEach((e,i)=>{e.classList.toggle('done',i<n);e.classList.toggle('current',n>0&&i===n-1);});
-    $$('#gpu-parallel>span').forEach((e,i)=>{e.classList.toggle('done',i<Math.min(16,n*4));e.classList.toggle('current',n>0&&n<=4&&i>=(n-1)*4&&i<n*4);});
-    $('#gpu-serial-label').textContent=`${n} / 16 轮`;$('#gpu-parallel-label').textContent=`${Math.min(n,4)} / 4 轮`;
-    $('#gpu-caption').textContent=n>=4?'右边在第 4 轮完成，左边需要 16 轮完成':'并行计算需要足够多、能够分开的任务';
-  },450);
   demo('memory',64,n=>{
     $('#memory-naive').textContent=n;$('#memory-reuse').textContent=Math.min(n,16);
     for(const [id,moving] of [['package-naive',n>0],['package-reuse',n>0&&n<=16]]){const e=$('#'+id);e.classList.remove('travel');if(moving){void e.offsetWidth;e.classList.add('travel');}}
@@ -307,7 +291,7 @@
   function duration(seconds){return `${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}`;}
   function renderNotes(){
     const note=notes[current];
-    $('#notes-content').innerHTML=`<div class="notes-time">第 ${current+1} 页，建议 ${duration(Number(slides[current].dataset.seconds))}，全场 20:00</div><div class="notes-body"></div><div class="notes-action"></div><div class="notes-sources">参考来源${note.sources.map((url,i)=>`<a href="${url}" target="_blank" rel="noopener noreferrer">${i+1}. ${url}</a>`).join('')}</div>`;
+    $('#notes-content').innerHTML=`<div class="notes-time">第 ${current+1} 页，建议 ${duration(Number(slides[current].dataset.seconds))}，全场 19:35</div><div class="notes-body"></div><div class="notes-action"></div><div class="notes-sources">参考来源${note.sources.map((url,i)=>`<a href="${url}" target="_blank" rel="noopener noreferrer">${i+1}. ${url}</a>`).join('')}</div>`;
     $('.notes-body').textContent=note.text;$('.notes-action').textContent=note.action;
   }
   function go(index,updateHash=true){

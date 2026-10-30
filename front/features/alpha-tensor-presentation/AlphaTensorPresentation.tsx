@@ -1,6 +1,6 @@
 import { ExternalLink, Presentation } from 'lucide-react';
 
-const presentationUrl = '/presentation/index.html';
+const presentationUrl = '/presentation/index.html?v=21-slides';
 
 export function AlphaTensorPresentation() {
   return <section className="presentation-workspace" aria-labelledby="presentation-title">

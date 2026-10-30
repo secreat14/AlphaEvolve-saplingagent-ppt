@@ -37,8 +37,8 @@ assert.deepEqual(expectedStats.map(stats=>model.weighted(stats,1)),[112,367,387]
 assert.equal(model.weighted(expectedStats[1],11),model.weighted(expectedStats[2],11));
 const html=fs.readFileSync('presentation/slides.template.html','utf8');
 const titles=[...html.matchAll(/<section class="slide\b[^>]*data-title="([^"]+)"/g)].map(match=>match[1]);
-assert.equal(titles.length,22);
-assert.equal(titles[8],'传统算法基线：64次与49次');
-assert.equal(titles[9],'AlphaTensor 的算法发现');
+assert.equal(titles.length,21);
+assert.equal(titles[7],'传统算法基线：64次与49次');
+assert.equal(titles[8],'AlphaTensor 的算法发现');
 assert.equal(titles.filter(title=>title.startsWith('Strassen第')).length,0);
-console.log('PASS: 64/49/47 counts and 48/318/340 XORs; all tensor coefficients via the counted evaluator; real AI step; identical sample results; percentages and weighted-cost thresholds; 22 AI-focused slides.');
+console.log('PASS: 64/49/47 counts and 48/318/340 XORs; all tensor coefficients via the counted evaluator; real AI step; identical sample results; percentages and weighted-cost thresholds; 21 AI-focused slides.');

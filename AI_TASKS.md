@@ -10,6 +10,7 @@
 
 ## Current tasks
 
+- `RUN-4a13e628-f219-4449-b3ba-a3250c745e14` — Codex — removed the original sixth slide, its matching speaker note, and page-specific animation initialization; synchronized the generated presentation, timing checks, and project documentation. Scope: presentation source/generated outputs, affected validation, and status documentation. Branch: `main`. Status: implementation and self-check complete, pending commit; human presentation acceptance not recorded.
 - `RUN-632a61f4-ab72-4519-84a3-02055701c017` — Codex — organized the project around the AlphaTensor presentation, removed obsolete documentation, verified, committed, and pushed to the confirmed repository. Scope: project documentation, presentation source/build outputs, historical task documents, and Git metadata. Implementation commit: `e0c7eede5acbddcf94e95f2b955562c2db72bd6f`. Status: implementation and self-check complete; human presentation acceptance not recorded.
 - `RUN-eadd6e29-3863-46e4-bcc8-068d23ed4033` — Codex — audited tracked content for AI configuration credentials, strengthened ignore rules, moved publication to `main`, set GitHub's default branch to `main`, and removed the obsolete remote feature branch. Actual credentials and `local-secrets/` were not modified or published. Security/branch commit: `3ebf4879ef0c5dbbdae40c1eb90f5b0439c67153`. Status: implementation and self-check complete; human presentation acceptance not recorded.
 - Runtime records below are local execution records and do not establish human acceptance.
@@ -24,6 +25,7 @@ agent-runtime maintains this section serially. Modification tools attempt to reg
 | --- | --- | --- | --- |
 | RUN-5febe827-50d9-4854-b0c8-af7bf1f4c073 | completed | 2026-10-30T01:58:35.851Z | [Record](backend/agent-runtime/ai-tasks/runtime/RUN-5febe827-50d9-4854-b0c8-af7bf1f4c073.md) |
 | RUN-632a61f4-ab72-4519-84a3-02055701c017 | completed | 2026-10-30T02:05:58.767Z | [Record](backend/agent-runtime/ai-tasks/runtime/RUN-632a61f4-ab72-4519-84a3-02055701c017.md) |
-| RUN-eadd6e29-3863-46e4-bcc8-068d23ed4033 | inProgress | 2026-10-30T02:13:22.172Z | [Record](backend/agent-runtime/ai-tasks/runtime/RUN-eadd6e29-3863-46e4-bcc8-068d23ed4033.md) |
+| RUN-eadd6e29-3863-46e4-bcc8-068d23ed4033 | completed | 2026-10-30T02:15:28.425Z | [Record](backend/agent-runtime/ai-tasks/runtime/RUN-eadd6e29-3863-46e4-bcc8-068d23ed4033.md) |
+| RUN-4a13e628-f219-4449-b3ba-a3250c745e14 | inProgress | 2026-10-30T02:17:29.894Z | [Record](backend/agent-runtime/ai-tasks/runtime/RUN-4a13e628-f219-4449-b3ba-a3250c745e14.md) |
 
 <!-- seedagent-runtime-tasks:end -->
