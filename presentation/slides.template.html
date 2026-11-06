@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="zh-CN">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f6ef"><meta name="description" content="约14分钟中文HTML演示文稿：用过程动画理解矩阵乘法与AlphaTensor。独立文件，可离线打开。"><title>AI 如何发现更快的矩阵乘法｜14分钟演讲</title><style>/*__CSS__*/</style></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f6ef"><meta name="description" content="约19分钟中文HTML演示文稿：用过程动画理解矩阵乘法与AlphaTensor。独立文件，可离线打开。"><title>AI 如何发现更快的矩阵乘法｜19分钟演讲</title><style>/*__CSS__*/</style></head>
 <body>
-<header class="app-bar"><a class="app-brand" href="#slide=1">[·] 矩阵与 AI</a><span class="app-description">14 分钟演讲版</span><div class="app-tools"><button id="overview-button" title="目录 O">目录 <kbd>O</kbd></button><button id="notes-button" aria-pressed="false" title="演讲备注 N">备注 <kbd>N</kbd></button><button id="fullscreen-button" title="全屏 F">全屏 <kbd>F</kbd></button><button id="help-button" aria-label="查看快捷键">?</button></div></header>
+<header class="app-bar"><a class="app-brand" href="#slide=1">[·] 矩阵与 AI</a><span class="app-description">19 分钟演讲版</span><div class="app-tools"><button id="overview-button" title="目录 O">目录 <kbd>O</kbd></button><button id="notes-button" aria-pressed="false" title="演讲备注 N">备注 <kbd>N</kbd></button><button id="fullscreen-button" title="全屏 F">全屏 <kbd>F</kbd></button><button id="help-button" aria-label="查看快捷键">?</button></div></header>
 <main id="viewport" aria-label="幻灯片演示区域"><div id="stage">
 
 <section class="slide cover active" data-title="AI 如何发现更快的矩阵乘法" data-seconds="15">
@@ -10,7 +10,7 @@
   <h1>AI 如何发现<br><em>更快的矩阵乘法</em></h1>
   <p class="cover-subtitle">以 AI 算法为主线，实算比较同一组 4×4 矩阵</p>
   <div class="cover-numbers"><div><b>64</b><span>直接算法</span></div><span class="number-separator">/</span><div><b>49</b><span>Strassen</span></div><span class="number-separator">/</span><div><b>47</b><span>AlphaTensor · 模 2</span></div></div>
-  <div class="cover-bottom"><span>中文讲解 · 过程动画 · 约 14 分钟</span><span>按 → 开始</span></div>
+  <div class="cover-bottom"><span>中文讲解 · 过程动画 · 约 19 分钟</span><span>按 → 开始</span></div>
 </section>
 
 <section class="slide silicon-slide register-physics-slide" data-title="晶体管：电压控制的微型开关" data-seconds="30">
@@ -66,12 +66,76 @@
   <div class="slide-source">来源：Fawzi 等，Discovering faster matrix multiplication algorithms with reinforcement learning</div>
 </section>
 
-<section class="slide notebook-alpha-slide" data-title="AlphaTensor：47 个乘积怎样合成结果" data-seconds="60">
-  <div class="slide-header"><span class="chapter">4×4 模 2 矩阵 · 47 项分解</span><h2>AI 找到 47 个乘积的组合规则</h2><p>每项先把输入组合对 2 取余，再相乘；每次更新输出也对 2 取余</p></div>
-  <div class="notebook-alpha-formulas" aria-label="AlphaTensor 的 47 项矩阵乘法公式"><div><span>每一项 r = 1…47</span><strong>L<sub>r</sub> = (<span class="notebook-sum" role="img" aria-label="i 从 1 到 16 求和"><span aria-hidden="true">16</span><span aria-hidden="true">∑</span><span aria-hidden="true">i=1</span></span> u<sub>ri</sub>a<sub>i</sub>) mod 2</strong><strong>R<sub>r</sub> = (<span class="notebook-sum" role="img" aria-label="j 从 1 到 16 求和"><span aria-hidden="true">16</span><span aria-hidden="true">∑</span><span aria-hidden="true">j=1</span></span> v<sub>rj</sub>b<sub>j</sub>) mod 2</strong><strong>p<sub>r</sub> = L<sub>r</sub> × R<sub>r</sub></strong></div><div><span>每个输出 o = 1…16</span><strong>c<sub>o</sub> = (<span class="notebook-sum" role="img" aria-label="r 从 1 到 47 求和"><span aria-hidden="true">47</span><span aria-hidden="true">∑</span><span aria-hidden="true">r=1</span></span> w<sub>ro</sub>p<sub>r</sub>) mod 2</strong><small>a、b 是 A、B 按行排成的 16 个数；u、v、w 取 0 或 1，决定取数与输出位置</small></div></div>
-  <div class="notebook-alpha-example"><div class="notebook-alpha-step"><span>第 2 项：从 A 取数</span><strong>L₂ = (1+1+1) mod 2 = 1</strong><small>A₁₃、A₂₂、A₂₃</small></div><div class="notebook-alpha-step emphasis"><span>从 B 取数</span><strong>R₂ = (0+0+1) mod 2 = 1</strong><small>B₂₁、B₂₄、B₃₄</small></div><div class="notebook-alpha-step"><span>乘一次，更新两个输出</span><strong>p₂ = 1 × 1 = 1</strong><small>加入 C₁₄、C₂₁；每格更新后对 2 取余</small></div></div>
-  <div class="notebook-alpha-result"><div><span>47 项全部合并后</span><div class="notebook-output-matrix"><b>1</b><b>1</b><b>1</b><b>1</b><b>1</b><b>1</b><b>0</b><b>1</b><b>0</b><b>0</b><b>1</b><b>0</b><b>0</b><b>0</b><b>1</b><b>0</b></div></div><p>每项可以贡献给多个位置；多余贡献会在后续模 2 加法中抵消。<br><strong>结果与直接计算相同，乘法从 64 次降到 47 次。</strong></p></div>
-  <div class="slide-source">输入组合和输出累计都在每步对 2 取余；47 项来自作者公开的模 2 分解。来源：Fawzi 等，Nature 2022。</div>
+<section class="slide alpha-explain-slide" data-title="AlphaTensor 优化：先看完整计算路线" data-seconds="40">
+  <div class="slide-header"><span class="chapter">AlphaTensor 分步解释 · 1 / 7 · 全景</span><h2>把 64 次乘法，重新组织成 47 项</h2><p>同一组 4×4 输入，同一个模 2 结果；改变的是中间怎么算</p></div>
+  <div class="ae-route" aria-label="输入组合、一次乘法、输出分配的三步流程">
+    <article><span class="ae-number">01</span><h3>先组合输入</h3><div class="ae-route-pair"><b class="ae-color-a">A 的若干格</b><span>分别</span><b class="ae-color-b">B 的若干格</b></div><p>分别相加，再对 2 取余<br>得到两个数 L、R</p><small>u、v 决定从哪里取数</small></article><span class="ae-route-arrow">→</span>
+    <article><span class="ae-number">02</span><h3>只乘一次</h3><div class="ae-route-equation">L × R = p</div><p>每项产生一个中间乘积<br>一共执行 47 项</p><small>47 次指这一步的标量乘法</small></article><span class="ae-route-arrow">→</span>
+    <article><span class="ae-number">03</span><h3>分配给输出</h3><div class="ae-route-equation ae-color-c">p → C 的多格</div><p>按规则累加到指定位置<br>每次更新都对 2 取余</p><small>w 决定贡献送到哪里</small></article>
+  </div>
+  <div class="ae-bottom-row"><div class="ae-mod-card"><b>本段的运算规则：模 2</b><span>0 + 1 → 1　　1 + 1 → 0</span><small>相加后只保留除以 2 的余数</small></div><p class="ae-takeaway">节省来自<strong>重新组合与复用乘积</strong><br>输入组合、输出合并仍要做加法</p></div>
+  <div class="slide-source">以下沿用 alphatensor_demo.ipynb 的输入和作者公开的 47 项模 2 分解；接下来只放大第 2 项。</div>
+</section>
+
+<section class="slide alpha-explain-slide" data-title="AlphaTensor 第一步：选择并组合输入" data-seconds="55">
+  <div class="slide-header"><span class="chapter">AlphaTensor 分步解释 · 2 / 7 · 放大第 2 项</span><h2>先从 A、B 各取几格，组合成两个数</h2><p>彩色格是被选中的位置；格子左上角标记“行、列”</p></div>
+  <div class="ae-input-panels">
+    <article class="ae-input-card"><div class="ae-matrix-block"><h3 class="ae-color-a">输入 A</h3><div class="ae-grid" id="ae-input-a" role="img" aria-label="A 矩阵，选中第1行第3列、第2行第2列和第2行第3列"></div></div><div class="ae-input-rule"><span class="ae-rule-tag ae-color-a">由第 2 项的 u 选取</span><h3>A₁₃ + A₂₂ + A₂₃</h3><p>把选中的 3 个数相加<br>再对 2 取余</p><strong id="ae-sum-a"></strong><b class="ae-input-answer ae-color-a">L₂ = 1</b></div></article>
+    <article class="ae-input-card"><div class="ae-matrix-block"><h3 class="ae-color-b">输入 B</h3><div class="ae-grid" id="ae-input-b" role="img" aria-label="B 矩阵，选中第2行第1列、第2行第4列和第3行第4列"></div></div><div class="ae-input-rule"><span class="ae-rule-tag ae-color-b">由第 2 项的 v 选取</span><h3>B₂₁ + B₂₄ + B₃₄</h3><p>被选中不等于数值为 1<br>B₂₁ 和 B₂₄ 的数值都是 0</p><strong id="ae-sum-b"></strong><b class="ae-input-answer ae-color-b">R₂ = 1</b></div></article>
+  </div>
+  <div class="ae-callout"><b>u、v 是固定的“取数清单”</b><span>系数 1 表示选取，0 表示不取；换一组输入，取数位置仍然不变。</span></div>
+  <div class="slide-source">第 2 项：u 选 A₁₃、A₂₂、A₂₃；v 选 B₂₁、B₂₄、B₃₄。数值和位置由公开分解及 Notebook 输入生成。</div>
+</section>
+
+<section class="slide alpha-explain-slide" data-title="AlphaTensor 第二步：一次乘法可以复用" data-seconds="40">
+  <div class="slide-header"><span class="chapter">AlphaTensor 分步解释 · 3 / 7 · 计算中间乘积</span><h2>两个组合数相乘，结果可以送到多处</h2><p>第 2 项只做一次标量乘法：p₂ = L₂ × R₂ = 1 × 1 = 1</p></div>
+  <svg class="ae-product-diagram" viewBox="0 0 1220 285" role="img" aria-label="L2等于1和R2等于1相乘得到p2等于1，再沿两条箭头复用到C14和C21">
+    <defs><marker id="ae-arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#6c716b" stroke-width="1.5"/></marker></defs>
+    <rect x="8" y="35" width="210" height="90" rx="18" fill="#eae5fb"/><text x="113" y="91" text-anchor="middle" class="ae-svg-a">L₂ = 1</text>
+    <rect x="8" y="165" width="210" height="90" rx="18" fill="#e6efdf"/><text x="113" y="221" text-anchor="middle" class="ae-svg-b">R₂ = 1</text>
+    <path d="M225 80 H310 V145 H390" class="ae-wire" marker-end="url(#ae-arrow)"/><path d="M225 210 H310 V145" class="ae-wire"/>
+    <rect x="405" y="65" width="350" height="160" rx="22" fill="#fff" stroke="#b9b0e0" stroke-width="2"/><text x="580" y="114" text-anchor="middle" class="ae-svg-label">只做 1 次乘法</text><text x="580" y="179" text-anchor="middle" class="ae-svg-product">p₂ = 1 × 1 = 1</text>
+    <path d="M766 145 H850" class="ae-wire"/><path d="M850 145 V75 H990" class="ae-wire" marker-end="url(#ae-arrow)"/><path d="M850 145 V215 H990" class="ae-wire" marker-end="url(#ae-arrow)"/>
+    <rect x="1005" y="35" width="205" height="80" rx="16" fill="#f5e9d7"/><text x="1107" y="87" text-anchor="middle" class="ae-svg-c">C₁₄</text>
+    <rect x="1005" y="175" width="205" height="80" rx="16" fill="#f5e9d7"/><text x="1107" y="227" text-anchor="middle" class="ae-svg-c">C₂₁</text>
+    <text x="877" y="136" text-anchor="middle" class="ae-svg-label">复用</text>
+  </svg>
+  <div class="ae-bottom-row"><div class="ae-mod-card"><b>w₂ 决定送往哪里</b><span>C₁₄、C₂₁ 的系数为 1</span><small>其余 14 个输出位置的系数为 0</small></div><p class="ae-takeaway">一个 p 可以参与多个输出<br><strong>无需为每个去向重新相乘</strong></p></div>
+  <div class="slide-source">这是一项双线性计算：先组合输入，再相乘，最后线性合并输出。一次乘法的复用不代表没有额外加法成本。</div>
+</section>
+
+<section class="slide alpha-explain-slide" data-title="AlphaTensor 第三步：更新输出并对2取余" data-seconds="55">
+  <div class="slide-header"><span class="chapter">AlphaTensor 分步解释 · 4 / 7 · 累加第 2 项</span><h2>收到一个 1，当前结果可能从 1 变回 0</h2><p>第 1 项已经写入部分贡献；现在把 p₂ = 1 加到 C₁₄ 和 C₂₁</p></div>
+  <div class="ae-output-equation">
+    <article><h3>第 1 项后的累计</h3><div class="ae-grid" id="ae-before" role="img" aria-label="完成第1项后的输出累计矩阵"></div><p>C₁₄ = 0　C₂₁ = 1</p></article><span class="ae-big-operator">＋</span>
+    <article><h3 class="ae-color-c">第 2 项的贡献</h3><div class="ae-grid" id="ae-contribution" role="img" aria-label="第2项在C14和C21各贡献1，其余贡献为0"></div><p>只向这两格各加 1</p></article><span class="ae-big-operator">→</span>
+    <article><h3>每格对 2 取余后</h3><div class="ae-grid" id="ae-after" role="img" aria-label="第2项更新后，C14从0变1，C21从1变0"></div><p><b>C₁₄：0→1　C₂₁：1→0</b></p></article>
+  </div>
+  <div class="ae-callout"><b>模 2 中，两个 1 相加会抵消</b><span>C₂₁ 更新为 (1 + 1) mod 2 = 0；当前累计值还不是最终答案。</span></div>
+  <div class="slide-source">普通整数中的 1+1=2；这里运算定义在模 2 上，取余后得到 0。三个矩阵直接取自同一组输入的前两项真实轨迹。</div>
+</section>
+
+<section class="slide alpha-explain-slide" data-title="AlphaTensor 第四步：走完47项合成答案" data-seconds="65">
+  <div class="slide-header"><span class="chapter">AlphaTensor 分步解释 · 5 / 7 · 把所有贡献合起来</span><h2>重复同样的三步，直到第 47 项</h2><p>每项的 u、v、w 不同；取数 → 乘一次 → 更新输出的流程相同</p></div>
+  <div class="ae-walk-layout"><div class="ae-walk-left"><div class="ae-walk-heading"><span>已完成的乘法项</span><strong id="ae-walk-count" aria-live="polite">0 / 47</strong></div><div class="ae-term-strip" id="ae-term-strip" aria-label="47项完成进度"></div><label class="ae-slider-label" for="ae-walk-slider">拖动查看任意一步</label><input id="ae-walk-slider" type="range" min="0" max="47" value="0"><div class="ae-frame-buttons"><button data-alpha-frame="1">第 1 项</button><button data-alpha-frame="2">第 2 项</button><button data-alpha-frame="47">完整结果</button></div><p id="ae-walk-formula"></p></div><div class="ae-matrix-block"><h3>当前输出累计</h3><div class="ae-grid" id="ae-accumulator" role="img" aria-label="随步骤更新的AlphaTensor输出累计矩阵"></div><small>橙色标出本项贡献的位置</small></div><span class="ae-big-operator">⇄</span><div class="ae-matrix-block"><h3>直接计算的目标</h3><div class="ae-grid" id="ae-target" role="img" aria-label="直接矩阵乘法的最终模2结果"></div><small>直接法计算后对 2 取余</small></div></div>
+  <p class="ae-walk-status" id="ae-walk-status" aria-live="polite"></p>
+  <div class="demo-controls ae-walk-controls"><button data-play="alpha-walk">播放 47 项</button><button data-step="alpha-walk">下一项</button><button data-reset="alpha-walk">重置</button><span>先看第 2 项，再跳到完整结果</span></div>
+  <div class="slide-source">完整结果的四行是 1111、1101、0010、0010。中间某格暂时与目标相同，不代表后续不会再改变。</div>
+</section>
+
+<section class="slide alpha-explain-slide" data-title="AlphaTensor 正确性：验证全部4096个系数" data-seconds="50">
+  <div class="slide-header"><span class="chapter">AlphaTensor 分步解释 · 6 / 7 · 不只算对一个例子</span><h2>为什么换一组输入，这套规则仍然成立？</h2><p>把 47 项公式展开，核对每个输出里每种 Aᵢⱼ × Bₖₗ 的系数</p></div>
+  <div class="ae-proof-flow"><article><span>16 个输出位置</span><strong>C 的每一格</strong></article><b>×</b><article><span>16 个 A 输入</span><strong>A 的每一格</strong></article><b>×</b><article><span>16 个 B 输入</span><strong>B 的每一格</strong></article><b>=</b><article class="ae-proof-total"><span>全部系数关系</span><strong>4096 个</strong></article></div>
+  <div class="ae-proof-example"><div><span class="ae-rule-tag">看一个不该留下的项</span><h3>C₁₂ 中不应出现 A₁₁ × B₃₁</h3><p>直接法中，两者的内侧下标 1 和 3 不匹配。</p></div><div><span id="ae-cancel-terms" class="ae-rule-tag"></span><h3>1 + 1 ≡ 0 <small>（模 2）</small></h3><p>两项各带来一次，合并后正好抵消。</p></div></div>
+  <div class="ae-proof-verdict"><strong><span id="ae-proof-errors">0</span> / 4096</strong><div><h3>公开分解与直接法的系数不一致数</h3><p>全部一致 → 对任意二进制 4×4 输入，都得到相同的模 2 乘积。</p></div></div>
+  <div class="slide-source">对应 Notebook 的 coefficient_errors：检查 Σᵣ wᵣₒ uᵣᵢ vᵣⱼ mod 2。这个 47 项分解不能原样用于普通整数矩阵乘法。</div>
+</section>
+
+<section class="slide alpha-explain-slide" data-title="AlphaTensor 搜索：AI怎样找到47项规则" data-seconds="55">
+  <div class="slide-header"><span class="chapter">AlphaTensor 分步解释 · 7 / 7 · 从执行回到发现</span><h2>AI 搜索的是整套计算规则</h2><p>把“还有哪些计算关系没匹配好”作为状态；每次尝试一组 u、v、w</p></div>
+  <div class="ae-search-route"><article><span>起点</span><h3>目标矩阵乘法</h3><p>用张量 T 记录<br>所有输入与输出关系</p></article><b>→</b><article><span>动作</span><h3>提出一项规则</h3><p>选择 u、v、w<br>对应一次中间乘法</p></article><b>→</b><article><span>更新</span><h3>扣掉这项贡献</h3><p>剩余张量<br>S ← S − u⊗v⊗w</p></article><b>→</b><article><span>终点</span><h3>剩余关系全为 0</h3><p>算法正确<br>再比较所用乘法数</p></article></div>
+  <div class="ae-search-bottom"><div class="ae-search-learning"><h3>怎样更快找到好规则？</h3><p>神经网络建议有希望的动作，树搜索探索后续；强化学习用反馈改进选择。</p><small>未匹配完就继续探索；正确前提下，鼓励用更少步骤完成。</small></div><div class="ae-search-residual"><span>公开 47 项分解的回放 · 非训练过程</span><div><article><b id="ae-residual-start"></b><small>初始剩余系数</small></article><i>→</i><article><b id="ae-residual-mid"></b><small>扣掉前 2 项后</small></article><i>→</i><article><b id="ae-residual-end"></b><small>扣掉 47 项后</small></article></div><small>剩余非零项数不必每步下降；终点必须全部归零。</small></div></div>
+  <div class="slide-source">搜索阶段发现固定规则，执行阶段把规则用于新输入；本网页只回放公开分解。47 是已找到的方案，不代表已证明全局最优。来源：DeepMind、Nature 2022。</div>
 </section>
 
 <section class="slide comparison-slide" data-title="四阶矩阵三算法动画对比" data-seconds="120">
@@ -121,9 +185,9 @@
 
 </div></main>
 <aside id="notes-panel" hidden aria-label="演讲备注"><div class="notes-heading"><strong>演讲备注</strong><button id="notes-close" aria-label="关闭演讲备注">×</button></div><div id="notes-content"></div></aside>
-<footer class="navigation"><button id="previous" aria-label="上一页">← 上一页</button><span id="slide-count">01 / 16</span><span id="slide-title">AI 如何发现更快的矩阵乘法</span><div class="nav-right"><button id="timer-button" title="开始或暂停计时 T">计时 <span id="elapsed">00:00</span></button><button id="timer-reset" title="重置计时" aria-label="重置演讲计时">↺</button><button id="next" aria-label="下一页">下一页 →</button></div></footer>
+<footer class="navigation"><button id="previous" aria-label="上一页">← 上一页</button><span id="slide-count">01 / 22</span><span id="slide-title">AI 如何发现更快的矩阵乘法</span><div class="nav-right"><button id="timer-button" title="开始或暂停计时 T">计时 <span id="elapsed">00:00</span></button><button id="timer-reset" title="重置计时" aria-label="重置演讲计时">↺</button><button id="next" aria-label="下一页">下一页 →</button></div></footer>
 <div class="deck-progress" aria-hidden="true"><span id="deck-progress"></span></div>
-<dialog id="overview-dialog"><div class="dialog-header"><h2>演讲目录</h2><button data-close="overview-dialog" aria-label="关闭目录">×</button></div><p>16 页，建议讲解时间共 13 分 45 秒。点击任意一页跳转。</p><div id="overview-grid"></div></dialog>
+<dialog id="overview-dialog"><div class="dialog-header"><h2>演讲目录</h2><button data-close="overview-dialog" aria-label="关闭目录">×</button></div><p>22 页，建议讲解时间共 18 分 45 秒。点击任意一页跳转。</p><div id="overview-grid"></div></dialog>
 <dialog id="help-dialog"><div class="dialog-header"><h2>演示快捷键</h2><button data-close="help-dialog" aria-label="关闭快捷键">×</button></div><dl class="shortcut-list"><dt>→ / ↓ / 空格 / Page Down</dt><dd>下一页</dd><dt>← / ↑ / Page Up</dt><dd>上一页</dd><dt>Home / End</dt><dd>第一页 / 最后一页</dd><dt>F</dt><dd>进入或退出全屏</dd><dt>N</dt><dd>显示或隐藏本页演讲备注</dd><dt>O</dt><dd>打开目录</dd><dt>B</dt><dd>黑屏 / 恢复画面</dd><dt>T</dt><dd>开始或暂停演讲计时</dd><dt>R</dt><dd>重置当前页动画</dd></dl><p>动画由页面中的播放按钮控制。翻页会暂停动画。按 Esc 关闭目录或备注。备注会显示在当前屏幕上。</p></dialog>
 <div id="blackout" hidden><span>按 B 或点击恢复</span></div><button id="exit-cinema" aria-label="退出全屏演示">退出全屏 F</button><div class="sr-only" id="announcement" aria-live="polite"></div>
 <script>/*__DATA__*/
@@ -134,6 +198,7 @@
 /*__REGISTER_VISUALS__*/
 /*__AI_MODEL__*/
 /*__AI_VISUALS__*/
+/*__ALPHA_EXPLAINER__*/
 /*__APP__*/</script>
 <!--__LICENSE__-->
 </body></html>

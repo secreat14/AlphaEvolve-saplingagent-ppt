@@ -71,11 +71,60 @@
     ]
   },
   {
-    "text": "先读与逐拍动画一致的通用公式：Lr 和 Rr 分别把 A、B 中被 0/1 系数选中的数相加并对 2 取余；pr=Lr×Rr；每个输出 co 每收到一项贡献就更新当前累计值并对 2 取余。幻灯片的 i、j、o 从 1 编到 16，与笔记本的 0 到 15 是同一组按行展开的矩阵位置。\n用公开分解的第 2 项实算：A13=A22=A23=1，所以 L2=(1+1+1) mod 2=1；B21=0、B24=0、B34=1，所以 R2=(0+0+1) mod 2=1。p2=1×1=1，按该项的输出权重加到 C14 和 C21，再分别对 2 取余。动画第 2 拍显示 1×1=1。\n全部 47 项完成后，C 的四行分别是 1111、1101、0010、0010，与直接矩阵乘法取模 2 一致。笔记本还检查了 16×16×16=4096 个系数关系，证明这组公开因子对任意二进制 4×4 输入都满足模 2 矩阵乘法。47 次只数标量乘法；输入组合和输出合并的加法仍有成本。这组特定因子不能直接用于普通整数矩阵乘法。",
-    "action": "先读通用公式，再计算第 2 项的 L2=1、R2=1、p2=1。下一页单步到 AI 第 2 拍，对照动画的 1×1=1 和两个输出位置。",
+    "text": "先建立完整路线：每项从 A 中选一些格相加对2取余，得到 L；从 B 中选一些格相加对2取余，得到 R；计算 p=L×R；最后把 p 按固定规则加到 C 的指定位置，每次更新再对2取余。u、v、w 就是这三张固定清单。47项各有不同的清单。注意 A 和 B 分别组合，并不是把两矩阵相加。\n模2只保留余数，因此1+1变成0。这种抵消是后面公式成立的关键。我们少做的是乘法，不能忽略组合输入和合并输出的加法。接下来放大与 Notebook 一致的第2项。",
+    "action": "沿流程图从左讲到右，先读模2例子，暂不展示求和符号。",
     "sources": [
       "https://doi.org/10.1038/s41586-022-05172-4",
       "https://github.com/google-deepmind/alphatensor/tree/1949163da3bef7e3eb268a3ac015fd1c2dbfc767/algorithms"
+    ]
+  },
+  {
+    "text": "本例 A 和 B 都来自 alphatensor_demo.ipynb，按行排列。小角标13表示第1行第3列，不是第13个元素。第2项的u在A13、A22、A23为1，其余为0，得到L2=(1+1+1) mod2=1。v在B21、B24、B34为1，得到R2=(0+0+1) mod2=1。\n绿色选中的两个0特别重要：系数为1只表示要读取那个位置，和位置上的数值是两回事。规则不因输入数值而改变。若换另一对二进制矩阵，这张取数清单仍然适用。",
+    "action": "先指出A的三个紫色格，再指出B的三个绿色格，明确选中位置可以存0。",
+    "sources": [
+      "https://doi.org/10.1038/s41586-022-05172-4",
+      "https://github.com/google-deepmind/alphatensor/tree/1949163da3bef7e3eb268a3ac015fd1c2dbfc767/algorithms"
+    ]
+  },
+  {
+    "text": "上一页把两组输入各组合成一个数，现在只需要L2×R2=1×1=1。第2项的w在C14和C21为1，其余为0，因此这个乘积会被复用到两个输出，而不是再计算两次同样的乘法。\n不应把复用理解成两次完整点积已经算好：一个项只是一些输出的部分贡献，整套47项才合成正确结果。u和v指定输入组合，w指定输出去向，三者都来自固定分解。输入组合、分配与合并仍然有成本。",
+    "action": "沿箭头从L2、R2指向p2，再用分叉说明一个乘积有两个去向。",
+    "sources": [
+      "https://doi.org/10.1038/s41586-022-05172-4",
+      "https://github.com/google-deepmind/alphatensor/tree/1949163da3bef7e3eb268a3ac015fd1c2dbfc767/algorithms"
+    ]
+  },
+  {
+    "text": "为解释抵消，先看第1项的真实累计值。第1项取A13和B31，两者都是1，乘积1写入C11、C12和C21。然后第2项向C14和C21各加1。C14从0变1；C21从1变0，因为(1+1) mod2=0。其余格不变。\n此时只完成2项，矩阵仍是中间状态。不能要求每一步的输出都向最终数值单调靠近。模2加法允许后续项把前面贡献抵消，这是整套分解的代数作用。",
+    "action": "对照三个矩阵，只逐个解释C14与C21两个橙色位置。",
+    "sources": [
+      "https://doi.org/10.1038/s41586-022-05172-4",
+      "https://github.com/google-deepmind/alphatensor/tree/1949163da3bef7e3eb268a3ac015fd1c2dbfc767/algorithms"
+    ]
+  },
+  {
+    "text": "47项重复同一计算流程，但每项有各自的u、v、w。左侧47个编号每完成一项亮一个，右侧显示累计矩阵和直接法目标。可以先跳到第1项和第2项核对上一页，再播放或拖动到47项。\n最后四行是1111、1101、0010、0010，与直接矩阵乘法对2取余相同。每步橙色只表示本项会贡献到的位置；某项乘积为0时也会按固定规则计算，不能因为本例输入有0就改变算法的乘法计数。暂时匹配的格数不一定每步增加。",
+    "action": "点击第2项对照上一页，再点击完整结果；时间充足时播放或拖动47项轨迹。",
+    "sources": [
+      "https://doi.org/10.1038/s41586-022-05172-4",
+      "https://github.com/google-deepmind/alphatensor/tree/1949163da3bef7e3eb268a3ac015fd1c2dbfc767/algorithms"
+    ]
+  },
+  {
+    "text": "算对一组例子还不够。固定分解是双线性的，所以可以把所有输出展开为a_i b_j的线性组合。总共有16个输出、16个A输入和16个B输入，共4096个系数关系。目标系数是：输入A的列与B的行相同，并且外侧行列对应当前输出时为1，其余为0。\nNotebook检查每个Σ_r w_ro u_ri v_rj mod2是否等于目标系数。不一致数为0，就得到对任意二进制4×4输入的恒等式。举例：C12中不应有A11 B31，但第7项与第13项各产生一次，模2合并后系数0。普通整数中系数2不会消失，因此这组特定47项不能原样用于普通整数乘法。",
+    "action": "用16×16×16建立完整验证范围，再解释一项多余贡献为何被抵消。",
+    "sources": [
+      "https://doi.org/10.1038/s41586-022-05172-4",
+      "https://github.com/google-deepmind/alphatensor/tree/1949163da3bef7e3eb268a3ac015fd1c2dbfc767/algorithms"
+    ]
+  },
+  {
+    "text": "前几页是在执行已经找到的算法。这页解释发现阶段：把矩阵乘法全部系数关系写成目标张量T，以剩余张量S为游戏状态。一个动作选择三组系数u、v、w，对应一次中间乘法；扣除它的外积贡献，得到新状态。对模2来说，减法与加法相同。终点S全部为0时，得到一套正确的计算规则。\n神经网络帮助建议动作并评估前景，树搜索探索后续，强化学习利用反馈改进选择；在正确前提下鼓励减少步骤。图中的三个剩余非零系数数量是公开分解的真实回放，不是浏览器训练，也不要求每步数量下降。47是发现的方案，不宣称证明不存在46项。规则找到后，面对新输入只需执行，不用每次重新搜索。",
+    "action": "区分发现和执行，沿四个方框说明搜索目标；最后回到后续三算法动画。",
+    "sources": [
+      "https://doi.org/10.1038/s41586-022-05172-4",
+      "https://github.com/google-deepmind/alphatensor/tree/1949163da3bef7e3eb268a3ac015fd1c2dbfc767/algorithms",
+      "https://deepmind.google/blog/discovering-novel-algorithms-with-alphatensor/"
     ]
   },
   {
@@ -169,6 +218,7 @@
   const math=globalThis.MatrixCompareMath;
   const sampleA=[1,0,1,1,0,1,1,0,1,1,0,1,0,0,1,1];
   const sampleB=[1,1,0,1,0,1,1,0,1,0,1,1,1,0,0,1];
+  globalThis.AlphaExplainer.mount({demo,a:sampleA,b:sampleB});
   const sampleC=math.multiplyOrdinary(sampleA,sampleB);
   const hardware=globalThis.HardwareLesson;
   const costOperand=2,partials=hardware.multiplicationPartials(costOperand,costOperand,4);
@@ -285,7 +335,7 @@
     if(key==='f'){event.preventDefault();fullscreen();}else if(key==='n'){event.preventDefault();toggleNotes();}else if(key==='o'){event.preventDefault();$('#overview-dialog').showModal();}else if(key==='t'){event.preventDefault();toggleTimer();}else if(key==='r'){event.preventDefault();const button=slides[current].querySelector('[data-reset]');if(button)demos.get(button.dataset.reset).reset();}else if(key==='escape'){if(document.body.classList.contains('cinema'))fullscreen();else if(!$('#notes-panel').hidden)toggleNotes();}
   });
   let pointerStart=null;
-  $('#viewport').addEventListener('pointerdown',event=>{if(event.pointerType==='touch'&&!event.target.closest('button,select,a'))pointerStart={x:event.clientX,y:event.clientY};});
+  $('#viewport').addEventListener('pointerdown',event=>{if(event.pointerType==='touch'&&!event.target.closest('button,input,select,textarea,a'))pointerStart={x:event.clientX,y:event.clientY};});
   $('#viewport').addEventListener('pointerup',event=>{if(!pointerStart)return;const dx=event.clientX-pointerStart.x,dy=event.clientY-pointerStart.y;pointerStart=null;if(Math.abs(dx)>75&&Math.abs(dx)>Math.abs(dy)*1.5)go(current+(dx<0?1:-1));});
   window.addEventListener('resize',resize);document.addEventListener('fullscreenchange',()=>{if(nativeFullscreen&&!document.fullscreenElement){nativeFullscreen=false;setCinema(false);}resize();});
   document.addEventListener('visibilitychange',()=>{if(document.hidden)demos.forEach(d=>d.stop());});
