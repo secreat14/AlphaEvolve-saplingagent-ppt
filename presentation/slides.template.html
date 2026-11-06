@@ -126,7 +126,7 @@
 <section class="slide alpha-explain-slide" data-title="AlphaTensor 正确性：验证全部4096个系数" data-seconds="50">
   <div class="slide-header"><span class="chapter">AlphaTensor 分步解释 · 6 / 7 · 不只算对一个例子</span><h2>为什么换一组输入，这套规则仍然成立？</h2><p>把 47 项公式展开，核对每个输出里每种 Aᵢⱼ × Bₖₗ 的系数</p></div>
   <div class="ae-proof-flow"><article><span>16 个输出位置</span><strong>C 的每一格</strong></article><b>×</b><article><span>16 个 A 输入</span><strong>A 的每一格</strong></article><b>×</b><article><span>16 个 B 输入</span><strong>B 的每一格</strong></article><b>=</b><article class="ae-proof-total"><span>全部系数关系</span><strong>4096 个</strong></article></div>
-  <div class="ae-proof-example"><div><span class="ae-rule-tag">看一个不该留下的项</span><h3>C₁₂ 中不应出现 A₁₁ × B₃₁</h3><p>直接法中，两者的内侧下标 1 和 3 不匹配。</p></div><div><span id="ae-cancel-terms" class="ae-rule-tag"></span><h3>1 + 1 ≡ 0 <small>（模 2）</small></h3><p>两项各带来一次，合并后正好抵消。</p></div></div>
+  <div class="ae-proof-example"><div><span class="ae-rule-tag">应该保留 · 系数 1</span><h3>C₁₁ 需要 A₁₂ × B₂₁</h3><p>内侧下标同为 2；<span id="ae-keep-terms"></span>贡献一次。</p><strong class="ae-proof-match">目标 1 = 实际 1</strong></div><div><span class="ae-rule-tag">应该抵消 · 系数 0</span><h3>C₁₂ 不需要 A₁₁ × B₃₁</h3><p>内侧下标 1 与 3 不同；<span id="ae-cancel-terms"></span>各贡献一次。</p><strong class="ae-proof-match">目标 0 = (1+1) mod 2 = 0</strong></div></div>
   <div class="ae-proof-verdict"><strong><span id="ae-proof-errors">0</span> / 4096</strong><div><h3>公开分解与直接法的系数不一致数</h3><p>全部一致 → 对任意二进制 4×4 输入，都得到相同的模 2 乘积。</p></div></div>
   <div class="slide-source">对应 Notebook 的 coefficient_errors：检查 Σᵣ wᵣₒ uᵣᵢ vᵣⱼ mod 2。这个 47 项分解不能原样用于普通整数矩阵乘法。</div>
 </section>

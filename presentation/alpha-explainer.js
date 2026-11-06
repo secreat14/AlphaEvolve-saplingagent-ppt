@@ -34,6 +34,8 @@
       if(found!==expected)coefficientErrors++;
     }
     $('#ae-proof-errors').textContent=coefficientErrors;
+    const retained=terms.flatMap((term,r)=>term.w[0]&&term.u[1]&&term.v[4]?[r+1]:[]);
+    $('#ae-keep-terms').textContent=retained.map(r=>`第 ${r} 项`).join(' + ');
     const cancellation=terms.flatMap((term,r)=>term.w[1]&&term.u[0]&&term.v[8]?[r+1]:[]);
     $('#ae-cancel-terms').textContent=cancellation.map(r=>`第 ${r} 项`).join(' + ');
     grid('#ae-target',target,{tone:'c'});

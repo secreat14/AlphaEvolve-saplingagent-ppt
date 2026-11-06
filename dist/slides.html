@@ -438,9 +438,10 @@
 .ae-proof-flow article{padding:20px 14px;border:1px solid #dce1d3;border-radius:12px;text-align:center;background:#fffefa}
 .ae-proof-flow span{display:block;font-size:18px;color:#7b886f;margin-bottom:12px}.ae-proof-flow strong{font-size:26px;font-weight:550;color:#5d7052}
 .ae-proof-flow>b{font-size:22px;color:#8b937f;text-align:center}.ae-proof-flow .ae-proof-total{background:#eae5f7;border-color:#c8bde6}.ae-proof-total strong{color:var(--ae-a)}
-.ae-proof-example{display:grid;grid-template-columns:1.15fr 1fr;gap:35px;padding:22px 26px;background:#efeee5;border-radius:12px}
+.ae-proof-example{display:grid;grid-template-columns:1fr 1fr;gap:35px;padding:22px 26px;background:#efeee5;border-radius:12px}
 .ae-proof-example>div+div{border-left:1px solid #d9ddcd;padding-left:30px}
 .ae-proof-example h3{font-size:26px;color:#5f6f53;margin:12px 0}.ae-proof-example h3 small{font-size:18px;font-weight:400}.ae-proof-example p{font-size:20px;color:#758267;line-height:1.6;margin:0}
+.ae-proof-match{display:block;margin-top:13px;font:23px var(--mono);color:var(--ae-a)}
 .ae-proof-verdict{display:flex;gap:30px;align-items:center;margin:25px 0 0;padding:0 14px}
 .ae-proof-verdict>strong{font:38px var(--mono);color:var(--ae-b);white-space:nowrap}
 .ae-proof-verdict h3{font-size:23px;color:#5b7050;margin:0 0 10px}.ae-proof-verdict p{font-size:21px;color:#79866e;margin:0;line-height:1.6}
@@ -581,7 +582,7 @@
 <section class="slide alpha-explain-slide" data-title="AlphaTensor 正确性：验证全部4096个系数" data-seconds="50">
   <div class="slide-header"><span class="chapter">AlphaTensor 分步解释 · 6 / 7 · 不只算对一个例子</span><h2>为什么换一组输入，这套规则仍然成立？</h2><p>把 47 项公式展开，核对每个输出里每种 Aᵢⱼ × Bₖₗ 的系数</p></div>
   <div class="ae-proof-flow"><article><span>16 个输出位置</span><strong>C 的每一格</strong></article><b>×</b><article><span>16 个 A 输入</span><strong>A 的每一格</strong></article><b>×</b><article><span>16 个 B 输入</span><strong>B 的每一格</strong></article><b>=</b><article class="ae-proof-total"><span>全部系数关系</span><strong>4096 个</strong></article></div>
-  <div class="ae-proof-example"><div><span class="ae-rule-tag">看一个不该留下的项</span><h3>C₁₂ 中不应出现 A₁₁ × B₃₁</h3><p>直接法中，两者的内侧下标 1 和 3 不匹配。</p></div><div><span id="ae-cancel-terms" class="ae-rule-tag"></span><h3>1 + 1 ≡ 0 <small>（模 2）</small></h3><p>两项各带来一次，合并后正好抵消。</p></div></div>
+  <div class="ae-proof-example"><div><span class="ae-rule-tag">应该保留 · 系数 1</span><h3>C₁₁ 需要 A₁₂ × B₂₁</h3><p>内侧下标同为 2；<span id="ae-keep-terms"></span>贡献一次。</p><strong class="ae-proof-match">目标 1 = 实际 1</strong></div><div><span class="ae-rule-tag">应该抵消 · 系数 0</span><h3>C₁₂ 不需要 A₁₁ × B₃₁</h3><p>内侧下标 1 与 3 不同；<span id="ae-cancel-terms"></span>各贡献一次。</p><strong class="ae-proof-match">目标 0 = (1+1) mod 2 = 0</strong></div></div>
   <div class="ae-proof-verdict"><strong><span id="ae-proof-errors">0</span> / 4096</strong><div><h3>公开分解与直接法的系数不一致数</h3><p>全部一致 → 对任意二进制 4×4 输入，都得到相同的模 2 乘积。</p></div></div>
   <div class="slide-source">对应 Notebook 的 coefficient_errors：检查 Σᵣ wᵣₒ uᵣᵢ vᵣⱼ mod 2。这个 47 项分解不能原样用于普通整数矩阵乘法。</div>
 </section>
@@ -1004,6 +1005,8 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
       if(found!==expected)coefficientErrors++;
     }
     $('#ae-proof-errors').textContent=coefficientErrors;
+    const retained=terms.flatMap((term,r)=>term.w[0]&&term.u[1]&&term.v[4]?[r+1]:[]);
+    $('#ae-keep-terms').textContent=retained.map(r=>`第 ${r} 项`).join(' + ');
     const cancellation=terms.flatMap((term,r)=>term.w[1]&&term.u[0]&&term.v[8]?[r+1]:[]);
     $('#ae-cancel-terms').textContent=cancellation.map(r=>`第 ${r} 项`).join(' + ');
     grid('#ae-target',target,{tone:'c'});
@@ -1142,8 +1145,8 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
     ]
   },
   {
-    "text": "算对一组例子还不够。固定分解是双线性的，所以可以把所有输出展开为a_i b_j的线性组合。总共有16个输出、16个A输入和16个B输入，共4096个系数关系。目标系数是：输入A的列与B的行相同，并且外侧行列对应当前输出时为1，其余为0。\nNotebook检查每个Σ_r w_ro u_ri v_rj mod2是否等于目标系数。不一致数为0，就得到对任意二进制4×4输入的恒等式。举例：C12中不应有A11 B31，但第7项与第13项各产生一次，模2合并后系数0。普通整数中系数2不会消失，因此这组特定47项不能原样用于普通整数乘法。",
-    "action": "用16×16×16建立完整验证范围，再解释一项多余贡献为何被抵消。",
+    "text": "算对一组例子还不够。固定分解是双线性的，所以可以把所有输出展开为a_i b_j的线性组合。总共有16个输出、16个A输入和16个B输入，共4096个系数关系。目标系数是：输入A的列与B的行相同，并且外侧行列对应当前输出时为1，其余为0。\n先看应该保留的项：C11 需要 A12 B21，内侧下标同为2；公开分解的第39项贡献一次，目标系数与实际系数都是1。再看应该抵消的项：C12 不需要 A11 B31，但第7项与第13项各贡献一次，模2合并后实际系数为0，与目标一致。Notebook检查每个Σ_r w_ro u_ri v_rj mod2是否等于目标系数，全部4096项均一致，因此这套规则对任意二进制4×4输入都正确。普通整数中系数2不会消失，所以特定47项不能原样用于普通整数乘法。",
+    "action": "先用 C11 的 A12 B21 说明系数1如何保留，再用 C12 的 A11 B31 说明两个贡献如何抵消为0，最后回到4096项全检。",
     "sources": [
       "https://doi.org/10.1038/s41586-022-05172-4",
       "https://github.com/google-deepmind/alphatensor/tree/1949163da3bef7e3eb268a3ac015fd1c2dbfc767/algorithms"
