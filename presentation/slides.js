@@ -6,8 +6,6 @@
   const strassenPaper='https://link.springer.com/article/10.1007/BF02165411';
   const nvidia='https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/';
   const flash='https://arxiv.org/abs/2205.14135';
-  const evolve='https://arxiv.org/abs/2506.13131';
-  const evolveBlog='https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/';
   const notes=[
   {
     "text": "今天以 AI 算法发现为主线。先用硬件建立加法与乘法的成本直觉，再用同一组 4×4 输入比较直接法、Strassen 与 AlphaTensor。重点是 47 次模 2 方案怎样递归服务更大的矩阵，以及为什么乘法次数优势仍不能直接等同于运行时间优势。",
@@ -153,15 +151,7 @@
     ]
   },
   {
-    "text": "AlphaEvolve 在 2025 年把大语言模型提出代码、自动评估与进化搜索结合起来。这里仍只看 4×4 矩阵：团队找到复数设定下 48 次标量乘法的方案，改进了该设定的 49 次基线。\nAlphaTensor 的 47 次方案属于模 2，AlphaEvolve 的 48 次属于复数。两种运算规则不同，不能仅凭 47 小于 48 就判断哪个成果更好。\n本页再计算两项：复数条件下49到48，省1次，即1/49约2.04%；相对直接64次是少16次，16/64=25%。这里的标量是复数乘法，不是实数乘法指令，不能把不同数域的47和48直接排序。",
-    "action": "先指左边的复数条件，再对照右边的模 2 条件。",
-    "sources": [
-      "https://arxiv.org/abs/2506.13131",
-      "https://doi.org/10.1038/s41586-022-05172-4"
-    ]
-  },
-  {
-    "text": "前一页的曲线统计递归后的标量乘法次数，本页成本滑块统计单层 4×4 方案的假设算术单位；它们都不是硬件实测加速比。实际要计入额外的模 2 加法、寄存器与中间结果、访存、融合乘加、矩阵形状、精度和实现。大矩阵让理论乘法优势累积，但是否更快仍需在目标硬件和目标数据类型上测量。",
+    "text": "前面的大矩阵曲线统计递归后的标量乘法次数，上一页的成本滑块统计单层 4×4 方案的假设算术单位；它们都不是硬件实测加速比。实际要计入额外的模 2 加法、寄存器与中间结果、访存、融合乘加、矩阵形状、精度和实现。大矩阵让理论乘法优势累积，但是否更快仍需在目标硬件和目标数据类型上测量。",
     "action": "把大矩阵的理论曲线与本页的实现边界联系起来，避免把乘法数直接说成加速比。",
     "sources": [
       "https://math.mit.edu/~djk/18.310/Lecture-Notes/Matrix_Multiplication.html",
@@ -185,8 +175,6 @@
       "https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/",
       "https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html",
       "https://arxiv.org/abs/2205.14135",
-      "https://arxiv.org/abs/2506.13131",
-      "https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/",
       "https://homepage.cs.uiowa.edu/~dwjones/assem/summer18/notes/09muldiv.shtml",
       "https://docs.nvidia.com/cuda/archive/13.0.1/cuda-c-best-practices-guide/index.html#registers",
       "https://docs.nvidia.com/cuda/archive/12.8.0/cuda-c-programming-guide/index.html#arithmetic-instructions",

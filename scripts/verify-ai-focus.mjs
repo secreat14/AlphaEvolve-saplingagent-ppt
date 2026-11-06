@@ -52,11 +52,11 @@ assert.deepEqual(expectedStats.map(stats=>model.weighted(stats,1)),[112,367,387]
 assert.equal(model.weighted(expectedStats[1],11),model.weighted(expectedStats[2],11));
 const html=fs.readFileSync('presentation/slides.template.html','utf8');
 const titles=[...html.matchAll(/<section class="slide\b[^>]*data-title="([^"]+)"/g)].map(match=>match[1]);
-assert.equal(titles.length,22);
+assert.equal(titles.length,21);
 assert.equal(titles[6],'Strassen：七次乘法怎样算 2×2');
 assert.equal(titles[7],'AlphaTensor 的算法发现');
 assert.deepEqual(titles.slice(8,15),['AlphaTensor 优化：先看完整计算路线','AlphaTensor 第一步：选择并组合输入','AlphaTensor 第二步：一次乘法可以复用','AlphaTensor 第三步：更新输出并对2取余','AlphaTensor 第四步：走完47项合成答案','AlphaTensor 正确性：验证全部4096个系数','AlphaTensor 搜索：AI怎样找到47项规则']);
 assert.equal(titles[15],'四阶矩阵三算法动画对比');
 assert.equal(titles[16],'大矩阵上乘法优势如何累积');
 assert.equal(titles.filter(title=>title.startsWith('Strassen第')).length,0);
-console.log('PASS: 64/49/47 counts, recursive sizes 4..1024, exact multiplication series, 21.36% endpoint, weighted-cost thresholds, and 22 AI-focused slides.');
+console.log('PASS: 64/49/47 counts, recursive sizes 4..1024, exact multiplication series, 21.36% endpoint, weighted-cost thresholds, and 21 AI-focused slides.');

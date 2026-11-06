@@ -41,6 +41,6 @@ const sampleOutput=Object.values(outputs).map(output=>mod2(output.combination.re
 assert.deepEqual(sampleOutput,[1,1,0,1]);
 const html=fs.readFileSync('presentation/slides.template.html','utf8');
 const timing=[...html.matchAll(/data-seconds="(\d+)"/g)].map(match=>Number(match[1]));
-assert.equal(timing.length,22);
-assert.equal(timing.reduce((sum,x)=>sum+x),1125);
-console.log('PASS: seven product expansions, four reconstruction identities, all cancellation pairs, 22 slides / 18:45.');
+assert.equal(timing.length,21);
+assert.equal(timing.reduce((sum,x)=>sum+x),1050);
+console.log('PASS: seven product expansions, four reconstruction identities, all cancellation pairs, 21 slides / 17:30.');
