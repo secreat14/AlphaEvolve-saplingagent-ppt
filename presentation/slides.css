@@ -18,6 +18,15 @@
 .notebook-rebuild{border-left:1px solid var(--line);padding-left:42px}
 .notebook-rebuild p{font-size:22px;line-height:1.65;color:#74866b;margin:0 0 18px}
 .notebook-rebuild p:first-of-type{font-family:var(--mono)}
+.strassen-recursion{border-top:1px solid var(--line);padding-top:5px}
+.strassen-recursion-row{display:grid;grid-template-columns:58px 1fr;gap:12px;align-items:center;padding:5px 0;color:#667c5b;font-size:18px;line-height:1.2}
+.strassen-recursion-row+.strassen-recursion-row{border-top:1px solid #e5e9dd}
+.strassen-recursion-row>b{font:29px var(--mono);color:var(--purple)}
+.strassen-recursion-row small{display:block;font-size:15px;line-height:1.25;color:#88997c;margin-top:2px}
+.strassen-block-grid{display:grid;grid-template-columns:repeat(2,22px);gap:3px;width:max-content}
+.strassen-block-grid i{width:22px;height:22px;background:#dfe7d8;border:1px solid #9eae91}
+.strassen-recursion-total{display:block;border-top:1px solid var(--line);padding-top:6px;font:29px var(--mono);white-space:nowrap}
+.strassen-recursion-total small{font:17px -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
 .notebook-alpha-formulas{display:grid;grid-template-columns:1.25fr 1fr;gap:45px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 0 12px}
 .notebook-alpha-formulas>div+div{border-left:1px solid var(--line);padding-left:38px}
 .notebook-alpha-formulas>div>span{display:block;font-size:17px;color:#8a9d79;margin-bottom:7px}
