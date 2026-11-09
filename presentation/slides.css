@@ -454,3 +454,67 @@
 .ae-search-residual>div{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:24px 0 20px}
 .ae-search-residual article{text-align:center}.ae-search-residual article b{display:block;font:37px var(--mono);color:var(--ae-a);margin-bottom:13px}.ae-search-residual article small{font-size:16px;color:#859078}
 .ae-search-residual i{font-size:23px;font-style:normal;color:#9ca38e}
+
+.language-control{display:flex;align-items:center;margin-right:8px}
+#language-select{font:12px system-ui,-apple-system,sans-serif;background:#f0edf8;border:1px solid #cdc3e6;border-radius:7px;color:#625385;padding:7px 23px 7px 10px;cursor:pointer;min-height:32px}
+#language-select:focus-visible{outline:2px solid #7463be;outline-offset:3px}
+html[lang="en"] .slide-header h2{font-size:42px;line-height:1.2}
+html[lang="en"] .slide-header>p{font-size:23px;line-height:1.45}
+html[lang="en"] .chapter{font-size:15px;letter-spacing:.7px}
+html[lang="en"] .slide-source{font-size:13px;line-height:1.4}
+html[lang="en"] .cover h1{font-size:84px;line-height:1.18}
+html[lang="en"] .cover-subtitle{font-size:25px}
+html[lang="en"] .physics-explanation h3{font-size:30px;line-height:1.3}
+html[lang="en"] .physics-explanation p{font-size:21px;line-height:1.55}
+html[lang="en"] .physics-explanation small{font-size:16px;line-height:1.45}
+html[lang="en"] .binary-panel h3{font-size:24px}
+html[lang="en"] .binary-panel>p{font-size:19px}
+html[lang="en"] .binary-conclusion{font-size:23px}
+html[lang="en"] .arithmetic-resource span{font-size:17px;line-height:1.4}
+html[lang="en"] .notebook-products span{font-size:22px}
+html[lang="en"] .notebook-strassen-body h3{font-size:20px}
+html[lang="en"] .notebook-example-row>p{font-size:20px}
+html[lang="en"] .ae-route h3{font-size:25px}
+html[lang="en"] .ae-route p{font-size:21px;line-height:1.55}
+html[lang="en"] .ae-route small{font-size:16px}
+html[lang="en"] .ae-route-pair{font-size:20px;white-space:normal}
+html[lang="en"] .ae-mod-card b{font-size:20px}
+html[lang="en"] .ae-takeaway{font-size:24px}
+html[lang="en"] .ae-input-rule p{font-size:19px}
+html[lang="en"] .ae-rule-tag{font-size:16px}
+html[lang="en"] .ae-callout{gap:20px}
+html[lang="en"] .ae-callout>b{font-size:20px;white-space:normal;flex-shrink:0;max-width:40%}
+html[lang="en"] .ae-callout>span{font-size:18px}
+html[lang="en"] .ae-output-equation h3{font-size:21px}
+html[lang="en"] .ae-output-equation p{font-size:18px}
+html[lang="en"] .ae-walk-layout .ae-matrix-block>small{font-size:15px;line-height:1.4;max-width:230px;margin:12px auto 0}
+html[lang="en"] .ae-walk-heading{font-size:19px}
+html[lang="en"] .ae-walk-status{font-size:21px}
+html[lang="en"] .ae-proof-flow span{font-size:17px}
+html[lang="en"] .ae-proof-flow strong{font-size:24px}
+html[lang="en"] .ae-proof-example h3{font-size:24px}
+html[lang="en"] .ae-proof-example p{font-size:18px}
+html[lang="en"] .ae-proof-verdict h3{font-size:22px}
+html[lang="en"] .ae-proof-verdict p{font-size:19px}
+html[lang="en"] .ae-search-route h3{font-size:22px}
+html[lang="en"] .ae-search-route p{font-size:18px;line-height:1.5}
+html[lang="en"] .ae-search-learning p{font-size:20px;line-height:1.55}
+html[lang="en"] .ae-search-residual>span{font-size:17px}
+html[lang="en"] .ae-search-residual article small{font-size:14px}
+html[lang="en"] .method-caption,html[lang="en"] .method-output>p{font-size:17px;line-height:1.4}
+html[lang="en"] .comparison-method>h3{font-size:24px}
+html[lang="en"] .demo-controls{gap:10px}
+html[lang="en"] .demo-controls button{font-size:17px;padding:10px 17px}
+html[lang="en"] .comparison-controls button{font-size:15px;padding:9px 12px}
+html[lang="en"] .comparison-controls label{font-size:14px}
+html[lang="en"] .ai-scale-complexity small{font-size:17px;line-height:1.4}
+html[lang="en"] .ai-cost-table th{font-size:19px}
+html[lang="en"] .ai-cost-control label{font-size:20px}
+html[lang="en"] .ai-cost-verdict{font-size:21px;line-height:1.5}
+html[lang="en"] .closing h2{font-size:76px}
+html[lang="en"] .closing-lines b{font-size:27px;white-space:nowrap}
+html[lang="en"] .closing-lines span{font-size:23px}
+html[lang="en"] .closing-question{font-size:24px}
+html[lang="en"] .source-links li a b{font-size:21px}
+html[lang="en"] .source-links li a span{font-size:16px}
+@media(max-width:750px){.language-control{margin-right:3px}#language-select{font-size:10px;min-height:29px;padding:5px 14px 5px 5px}.app-tools{gap:1px}}

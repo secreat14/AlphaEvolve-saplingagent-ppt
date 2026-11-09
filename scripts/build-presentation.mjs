@@ -6,7 +6,10 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const read=name=>fs.readFileSync(path.join(root,name),'utf8');
 let html=read('presentation/slides.template.html');
 const escapeScript=text=>text.replace(/<\/script/gi,'<\\/script');
+const englishCatalogue=JSON.parse(read('presentation/locales/en.json'));
+const localizationSource=read('presentation/i18n.js').replace('/*__ENGLISH__*/',()=>JSON.stringify(englishCatalogue));
 html=html.replace('/*__CSS__*/',()=>read('presentation/slides.css'))
+  .replace('/*__I18N__*/',()=>escapeScript(localizationSource))
   .replace('/*__DATA__*/',()=>escapeScript(read('dist/alpha47.js')))
   .replace('/*__MATH__*/',()=>escapeScript(read('dist/comparison-math.js')))
   .replace('/*__DERIVATION__*/',()=>escapeScript(read('presentation/strassen-derivation.js')))
@@ -18,7 +21,7 @@ html=html.replace('/*__CSS__*/',()=>read('presentation/slides.css'))
   .replace('/*__ALPHA_EXPLAINER__*/',()=>escapeScript(read('presentation/alpha-explainer.js')))
   .replace('/*__APP__*/',()=>escapeScript(read('presentation/slides.js')))
   .replace('<!--__LICENSE__-->',()=>`<!-- AlphaTensor public factorization data: Apache License 2.0.\n${read('dist/alphatensor-LICENSE.txt').replace(/-->/g,'-- >')}\n-->`);
-if(/\/\*__(?:CSS|DATA|MATH|DERIVATION|HARDWARE|PHYSICS|REGISTER_VISUALS|AI_MODEL|AI_VISUALS|ALPHA_EXPLAINER|APP)__\*\//.test(html))throw new Error('Unreplaced inline content marker');
+if(/\/\*__(?:CSS|I18N|ENGLISH|DATA|MATH|DERIVATION|HARDWARE|PHYSICS|REGISTER_VISUALS|AI_MODEL|AI_VISUALS|ALPHA_EXPLAINER|APP)__\*\//.test(html))throw new Error('Unreplaced inline content marker');
 const output=path.join(root,'dist/slides.html');
 fs.writeFileSync(output,html);
 const standalone=path.join(root,'矩阵与AI-20分钟演讲.html');

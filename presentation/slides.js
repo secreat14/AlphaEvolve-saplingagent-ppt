@@ -185,14 +185,16 @@
     ]
   }
 ];
+  const i18n=globalThis.PresentationI18n;
+  i18n.registerNotes(notes);
   let current=0;
   const demos=new Map();
   const cells=(values)=>values.map(v=>`<span class="cell">${v}</span>`).join('');
   function demo(id,max,render,interval=900){
     const object={id,max,cursor:0,interval,timer:null,render,
       stop(){if(this.timer!==null)clearInterval(this.timer);this.timer=null;this.sync();},
-      sync(){const button=$(`[data-play="${id}"]`);button.textContent=this.timer?'暂停':this.cursor>=this.max?'再播放':button.dataset.original;button.setAttribute('aria-pressed',String(this.timer!==null));},
-      paint(){this.render(this.cursor);this.sync();},
+      sync(){const button=$(`[data-play="${id}"]`);button.textContent=this.timer?'暂停':this.cursor>=this.max?'再播放':button.dataset.original;button.setAttribute('aria-pressed',String(this.timer!==null));i18n.apply(button);},
+      paint(){this.render(this.cursor);this.sync();i18n.apply();},
       reset(){this.stop();this.cursor=0;this.paint();},
       next(){this.stop();if(this.cursor>=this.max)this.cursor=0;this.cursor++;this.paint();},
       play(){if(this.timer){this.stop();return;}if(this.cursor>=this.max)this.cursor=0;this.cursor++;this.paint();if(this.cursor<this.max)this.timer=setInterval(()=>{this.cursor++;this.paint();if(this.cursor>=this.max)this.stop();},this.interval);this.sync();},
@@ -287,7 +289,7 @@
     $('#previous').disabled=current===0;$('#next').disabled=current===slides.length-1;
     $('#announcement').textContent=`第 ${current+1} 页：${slides[current].dataset.title}`;
     $$('#overview-grid>button').forEach((button,i)=>{button.classList.toggle('current',i===current);button.setAttribute('aria-current',i===current?'page':'false');});
-    renderNotes();if(updateHash&&location.hash!==`#slide=${current+1}`){try{history.replaceState(null,'',`#slide=${current+1}`);}catch{location.hash=`slide=${current+1}`;}}
+    renderNotes();i18n.apply();if(updateHash&&location.hash!==`#slide=${current+1}`){try{history.replaceState(null,'',`#slide=${current+1}`);}catch{location.hash=`slide=${current+1}`;}}
   }
   $('#overview-grid').innerHTML=slides.map((slide,i)=>`<button data-jump="${i}"><span>${String(i+1).padStart(2,'0')}</span><strong>${slide.dataset.title}</strong><small>建议 ${duration(Number(slide.dataset.seconds))}</small></button>`).join('');
   $$('[data-jump]').forEach(button=>button.addEventListener('click',()=>{$('#overview-dialog').close();go(Number(button.dataset.jump));}));
@@ -328,5 +330,5 @@
   window.addEventListener('resize',resize);document.addEventListener('fullscreenchange',()=>{if(nativeFullscreen&&!document.fullscreenElement){nativeFullscreen=false;setCinema(false);}resize();});
   document.addEventListener('visibilitychange',()=>{if(document.hidden)demos.forEach(d=>d.stop());});
   window.addEventListener('hashchange',()=>{const match=location.hash.match(/^#slide=(\d+)$/);if(match)go(Number(match[1])-1,false);});
-  const initial=location.hash.match(/^#slide=(\d+)$/);go(initial?Number(initial[1])-1:0);resize();
+  const initial=location.hash.match(/^#slide=(\d+)$/);go(initial?Number(initial[1])-1:0);resize();i18n.start();
 })();
