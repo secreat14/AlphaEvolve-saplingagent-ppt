@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Three-minute English speaking script for the AlphaTensor Jupyter notebook demo, with time blocks and on-screen cues.">
+  <title>AlphaTensor Notebook Demo · Three-Minute Script</title>
+  <style>
+    :root{--bg:#f3f4ee;--paper:#fffef9;--ink:#24362c;--muted:#69786b;--line:#dee5d8;--accent:#45634e;--purple:#655695}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,"Segoe UI",sans-serif;line-height:1.6}
+    a{color:var(--accent)}
+    a:focus-visible{outline:3px solid #8d7bb7;outline-offset:3px}
+    header{border-bottom:1px solid var(--line);background:#f9faf5;padding:14px max(20px,calc((100vw - 880px)/2));font-size:14px}
+    main{max-width:880px;margin:0 auto;padding:42px 22px 70px}
+    .eyebrow{margin:0 0 10px;color:var(--purple);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+    h1{font-size:clamp(29px,5vw,42px);line-height:1.2;margin:0 0 16px}
+    .intro{color:var(--muted);margin:0 0 25px;max-width:680px}
+    .contents{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px}
+    .contents a{border:1px solid var(--line);border-radius:6px;background:var(--paper);padding:6px 10px;text-decoration:none;font-size:13px}
+    .contents a:hover{text-decoration:underline}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;margin:0 0 17px;overflow:hidden;break-inside:avoid}
+    .section-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;background:#eef2e9;border-bottom:1px solid var(--line);padding:14px 21px}
+    time{font:700 13px ui-monospace,Consolas,monospace;color:var(--purple);white-space:nowrap}
+    h2{font-size:20px;line-height:1.3;margin:0}
+    .spoken{font-size:19px;line-height:1.75;margin:20px 21px;color:#263e33}
+    .spoken+.spoken{margin-top:-5px}
+    .cue{border-top:1px solid var(--line);background:#f5f6ef;color:var(--muted);padding:12px 21px;font-size:14px}
+    .cue strong{color:var(--accent)}
+    footer{color:var(--muted);font-size:13px;margin-top:28px}
+    @media(max-width:600px){main{padding:27px 14px 45px}.spoken{font-size:17px;margin:17px}.section-head,.cue{padding-left:17px;padding-right:17px}}
+    @media print{body{background:white}header,.contents{display:none}main{max-width:none;padding:0}.intro{margin-bottom:15px}section{border-radius:0;margin-bottom:10px}.section-head{padding:8px 12px}.spoken{font-size:12pt;line-height:1.5;margin:10px 12px}.cue{font-size:9pt;padding:7px 12px}footer{font-size:9pt}}
+  </style>
+</head>
+<body>
+  <header><a href="index.html">← Project docs</a> · <a href="../alphatensor_demo.ipynb">Open the notebook</a></header>
+  <main>
+    <p class="eyebrow">English speaking script · notebook demo</p>
+    <h1>AlphaTensor in three minutes</h1>
+    <p class="intro">About 250 spoken words. The time blocks leave room to run cells and point to the results. This script follows <a href="../alphatensor_demo.ipynb">alphatensor_demo.ipynb</a> from top to bottom.</p>
+    <nav class="contents" aria-label="Jump to a time block">
+      <a href="#opening">0:00 · Introduce</a><a href="#example">0:20 · 47 terms</a><a href="#proof">1:10 · Check</a><a href="#compare">1:35 · Compare</a><a href="#cost">2:00 · Cost</a><a href="#finish">2:40 · Finish</a>
+    </nav>
+
+    <section id="opening">
+      <div class="section-head"><time>0:00–0:20</time><h2>Introduce the task</h2></div>
+      <p class="spoken">Now let us test matrix multiplication in the notebook. We use two four-by-four matrices of zeros and ones. We work modulo two, so one plus one becomes zero.</p>
+      <div class="cue"><strong>On screen:</strong> Show the notebook title.</div>
+    </section>
+
+    <section id="example">
+      <div class="section-head"><time>0:20–1:10</time><h2>Run the 47-term example</h2></div>
+      <p class="spoken">First, we load AlphaTensor’s published forty-seven terms. Each term has three lists: u selects entries from A, v selects from B, and w selects output cells. We combine the selected inputs, multiply once, and update the outputs modulo two.</p>
+      <p class="spoken">Look at term two. Both input combinations give one, so the product is one. It updates two output cells, C one four and C two one. After all forty-seven terms, our result matches direct multiplication.</p>
+      <div class="cue"><strong>On screen:</strong> Run the first two code cells. Point to term 2 and the final matrix.</div>
+    </section>
+
+    <section id="proof">
+      <div class="section-head"><time>1:10–1:35</time><h2>Check correctness</h2></div>
+      <p class="spoken">One example is not proof. We therefore check all four thousand and ninety-six coefficients. The notebook reports zero mismatches, so this rule works for any binary four-by-four inputs.</p>
+      <div class="cue"><strong>On screen:</strong> Run the coefficient-check cell.</div>
+    </section>
+
+    <section id="compare">
+      <div class="section-head"><time>1:35–2:00</time><h2>Compare the methods</h2></div>
+      <p class="spoken">Next, we compare methods. Direct multiplication uses sixty-four products. Strassen uses seven for a two-by-two matrix and applies that rule at two levels to get forty-nine. AlphaTensor uses forty-seven. All three pass the same coefficient check.</p>
+      <div class="cue"><strong>On screen:</strong> Run the direct and Strassen comparison cell.</div>
+    </section>
+
+    <section id="cost">
+      <div class="section-head"><time>2:00–2:40</time><h2>Show the cost graph</h2></div>
+      <p class="spoken">But fewer products can need more additions. In this simple model, the addition counts are forty-eight, three hundred and eighteen, and three hundred and forty. The graph changes the assumed cost of one multiplication. If multiplication costs one unit, Direct is cheapest. At twenty units, AlphaTensor is cheapest. These are modeled costs, not measured running times.</p>
+      <div class="cue"><strong>On screen:</strong> Run the cost cell and point to the three lines.</div>
+    </section>
+
+    <section id="finish">
+      <div class="section-head"><time>2:40–3:00</time><h2>Finish with NumPy</h2></div>
+      <p class="spoken">Finally, one hundred random pairs all agree with NumPy. We have checked both the rule and our code. Still, only a real timing test can tell us which implementation runs faster.</p>
+      <div class="cue"><strong>On screen:</strong> Run the final cell.</div>
+    </section>
+
+    <footer>Timing assumes a speaking pace close to the English script for the main presentation. Rehearse once with the notebook open.</footer>
+  </main>
+</body>
+</html>
