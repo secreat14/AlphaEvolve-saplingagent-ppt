@@ -53,9 +53,13 @@ assert.ok(catalogue.notes[17].text.includes('292/17'));
 
 const generated = fs.readFileSync('dist/slides.html', 'utf8');
 assert.ok(generated.includes('<html lang="en">'));
+assert.ok(generated.includes('id="overview-button"'));
+assert.ok(generated.includes('id="overview-dialog"'));
+assert.ok(generated.includes('id="overview-grid"'));
 assert.ok(generated.includes('id="fullscreen-button"'));
-for (const removed of ['language-select', 'overview-button', 'notes-button', 'help-button',
-  'notes-panel', 'overview-dialog', 'help-dialog']) {
+assert.ok(!application.includes('<small>建议'), 'Contents entries must not show suggested durations');
+for (const removed of ['language-select', 'notes-button', 'help-button',
+  'notes-panel', 'help-dialog']) {
   assert.ok(!generated.includes(`id="${removed}"`), `Removed control remains: ${removed}`);
 }
 assert.ok(!generated.includes('matrix-presentation-language'), 'A saved language must not override English');

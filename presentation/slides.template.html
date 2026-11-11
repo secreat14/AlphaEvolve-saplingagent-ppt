@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f6ef"><meta name="description" content="Interactive presentation about matrix multiplication and AlphaTensor. Self-contained HTML for offline use."><title>How AI Discovers Faster Matrix Multiplication</title><style>/*__CSS__*/</style></head>
 <body>
-<header class="app-bar"><a class="app-brand" href="#slide=1">[·] Matrices &amp; AI</a><div class="app-tools"><button id="fullscreen-button" title="Full screen F">Full screen <kbd>F</kbd></button></div></header>
+<header class="app-bar"><a class="app-brand" href="#slide=1">[·] Matrices &amp; AI</a><div class="app-tools"><button id="overview-button" title="Contents O">Contents <kbd>O</kbd></button><button id="fullscreen-button" title="Full screen F">Full screen <kbd>F</kbd></button></div></header>
 <main id="viewport" aria-label="Presentation slides"><div id="stage">
 
 <section class="slide cover active" data-title="AI 如何发现更快的矩阵乘法" data-seconds="15">
@@ -181,6 +181,7 @@
 </div></main>
 <footer class="navigation"><button id="previous" aria-label="上一页">← 上一页</button><span id="slide-count">01 / 21</span><span id="slide-title">AI 如何发现更快的矩阵乘法</span><div class="nav-right"><button id="timer-button" title="开始或暂停计时 T">计时 <span id="elapsed">00:00</span></button><button id="timer-reset" title="重置计时" aria-label="重置演讲计时">↺</button><button id="next" aria-label="下一页">下一页 →</button></div></footer>
 <div class="deck-progress" aria-hidden="true"><span id="deck-progress"></span></div>
+<dialog id="overview-dialog" aria-labelledby="overview-heading"><div class="dialog-header"><h2 id="overview-heading">Contents</h2><button data-close="overview-dialog" aria-label="Close contents">×</button></div><p>Choose a slide.</p><div id="overview-grid"></div></dialog>
 <div id="blackout" hidden><span>按 B 或点击恢复</span></div><button id="exit-cinema" aria-label="退出全屏演示">退出全屏 F</button><div class="sr-only" id="announcement" aria-live="polite"></div>
 <script>/*__I18N__*/
 /*__DATA__*/

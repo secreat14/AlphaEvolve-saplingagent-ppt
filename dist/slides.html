@@ -521,9 +521,10 @@ html[lang="en"] .source-links li a b{font-size:21px}
 html[lang="en"] .source-links li a span{font-size:16px}
 @media(max-width:750px){.language-control{margin-right:3px}#language-select{font-size:10px;min-height:29px;padding:5px 14px 5px 5px}.app-tools{gap:1px}}
 .cover-team{margin:30px 0 0;font-size:25px;line-height:1.35;color:#687d5a}.cover-bottom{justify-content:flex-end}
+#overview-grid>button{min-height:86px}
 </style></head>
 <body>
-<header class="app-bar"><a class="app-brand" href="#slide=1">[·] Matrices &amp; AI</a><div class="app-tools"><button id="fullscreen-button" title="Full screen F">Full screen <kbd>F</kbd></button></div></header>
+<header class="app-bar"><a class="app-brand" href="#slide=1">[·] Matrices &amp; AI</a><div class="app-tools"><button id="overview-button" title="Contents O">Contents <kbd>O</kbd></button><button id="fullscreen-button" title="Full screen F">Full screen <kbd>F</kbd></button></div></header>
 <main id="viewport" aria-label="Presentation slides"><div id="stage">
 
 <section class="slide cover active" data-title="AI 如何发现更快的矩阵乘法" data-seconds="15">
@@ -702,6 +703,7 @@ html[lang="en"] .source-links li a span{font-size:16px}
 </div></main>
 <footer class="navigation"><button id="previous" aria-label="上一页">← 上一页</button><span id="slide-count">01 / 21</span><span id="slide-title">AI 如何发现更快的矩阵乘法</span><div class="nav-right"><button id="timer-button" title="开始或暂停计时 T">计时 <span id="elapsed">00:00</span></button><button id="timer-reset" title="重置计时" aria-label="重置演讲计时">↺</button><button id="next" aria-label="下一页">下一页 →</button></div></footer>
 <div class="deck-progress" aria-hidden="true"><span id="deck-progress"></span></div>
+<dialog id="overview-dialog" aria-labelledby="overview-heading"><div class="dialog-header"><h2 id="overview-heading">Contents</h2><button data-close="overview-dialog" aria-label="Close contents">×</button></div><p>Choose a slide.</p><div id="overview-grid"></div></dialog>
 <div id="blackout" hidden><span>按 B 或点击恢复</span></div><button id="exit-cinema" aria-label="退出全屏演示">退出全屏 F</button><div class="sr-only" id="announcement" aria-live="polite"></div>
 <script>"use strict";
 (() => {
@@ -1460,9 +1462,15 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
     $('#deck-progress').style.width=`${100*(current+1)/slides.length}%`;
     $('#previous').disabled=current===0;$('#next').disabled=current===slides.length-1;
     $('#announcement').textContent=`第 ${current+1} 页：${slides[current].dataset.title}`;
+    $$('#overview-grid>button').forEach((button,i)=>{button.classList.toggle('current',i===current);button.setAttribute('aria-current',i===current?'page':'false');});
     i18n.apply();if(updateHash&&location.hash!==`#slide=${current+1}`){try{history.replaceState(null,'',`#slide=${current+1}`);}catch{location.hash=`slide=${current+1}`;}}
   }
+  $('#overview-grid').innerHTML=slides.map((slide,i)=>`<button data-jump="${i}"><span>${String(i+1).padStart(2,'0')}</span><strong>${slide.dataset.title}</strong></button>`).join('');
+  $$('[data-jump]').forEach(button=>button.addEventListener('click',()=>{$('#overview-dialog').close();go(Number(button.dataset.jump));}));
   $('#previous').addEventListener('click',()=>go(current-1));$('#next').addEventListener('click',()=>go(current+1));
+  $('#overview-button').addEventListener('click',()=>$('#overview-dialog').showModal());
+  $$('[data-close]').forEach(button=>button.addEventListener('click',()=>$('#'+button.dataset.close).close()));
+  $('#overview-dialog').addEventListener('click',event=>{if(event.target!==event.currentTarget)return;const rect=event.currentTarget.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)event.currentTarget.close();});
   let nativeFullscreen=false;
   function setCinema(enabled){document.body.classList.toggle('cinema',enabled);resize();}
   async function fullscreen(){
@@ -1480,11 +1488,12 @@ globalThis.ALPHATENSOR_47={"source":"https://github.com/google-deepmind/alphaten
   $('#blackout').addEventListener('click',blackout);
   document.addEventListener('keydown',event=>{
     if(event.altKey||event.ctrlKey||event.metaKey||event.target.closest('input,select,textarea'))return;
+    if($('#overview-dialog').open)return;
     const key=event.key.toLowerCase();
     if(key==='b'){event.preventDefault();blackout();return;}
     if(!$('#blackout').hidden){if(key==='escape')blackout();return;}
     if(['arrowright','arrowdown','pagedown','arrowleft','arrowup','pageup','home','end'].includes(key)||(key===' '&&!event.target.closest('button,a,summary'))){event.preventDefault();if(['arrowright','arrowdown','pagedown',' '].includes(key))go(current+1);else if(['arrowleft','arrowup','pageup'].includes(key))go(current-1);else go(key==='home'?0:slides.length-1);return;}
-    if(key==='f'){event.preventDefault();fullscreen();}else if(key==='t'){event.preventDefault();toggleTimer();}else if(key==='r'){event.preventDefault();const button=slides[current].querySelector('[data-reset]');if(button)demos.get(button.dataset.reset).reset();}else if(key==='escape'&&document.body.classList.contains('cinema'))fullscreen();
+    if(key==='f'){event.preventDefault();fullscreen();}else if(key==='o'){event.preventDefault();$('#overview-dialog').showModal();}else if(key==='t'){event.preventDefault();toggleTimer();}else if(key==='r'){event.preventDefault();const button=slides[current].querySelector('[data-reset]');if(button)demos.get(button.dataset.reset).reset();}else if(key==='escape'&&document.body.classList.contains('cinema'))fullscreen();
   });
   let pointerStart=null;
   $('#viewport').addEventListener('pointerdown',event=>{if(event.pointerType==='touch'&&!event.target.closest('button,input,select,textarea,a'))pointerStart={x:event.clientX,y:event.clientY};});
