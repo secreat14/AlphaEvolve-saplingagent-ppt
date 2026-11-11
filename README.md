@@ -7,8 +7,8 @@
 ## 直接使用
 
 - GitHub 上可直接下载的三份课堂文件集中在 [classroom/](classroom/)，下载后放在同一个文件夹
-- 课堂演讲使用上一级 `演讲材料/矩阵与AI演讲.html`
-- 配音讲稿使用上一级 `演讲材料/15分钟中英对照演讲稿.html`
+- 课堂演讲使用上一级 `演讲材料/matrix_ai_presentation.html`
+- 配音讲稿使用上一级 `演讲材料/bilingual_speech_script.html`
 - Demo 使用上一级 `演讲材料/alphatensor_demo.ipynb`，来自 GitHub main 最新 Notebook，包含完整 47 项分解、逐步计算、正确性验证、三算法成本表与图及 NumPy 对照
 - 提交或换设备时，将两份 HTML 和 Notebook 放在同一个文件夹。HTML 用浏览器打开，动画、双语文字和 255 句配音均已内嵌，可离线使用
 - Notebook 用 Jupyter 或 VS Code 的 Notebook 功能打开，选择 Python 3。在所选环境运行 `python -m pip install numpy matplotlib` 安装依赖后，从上到下运行单元格。分解数据已经包含在 Notebook 内
@@ -71,8 +71,8 @@ node scripts/build-presentation.mjs
 ```bash
 node scripts/export-classroom.mjs
 node scripts/export-classroom.mjs classroom
-node scripts/verify-script-audio.mjs ../15分钟中英对照演讲稿.html
-node scripts/verify-script-audio.mjs classroom/15分钟中英对照演讲稿.html
+node scripts/verify-script-audio.mjs ../bilingual_speech_script.html
+node scripts/verify-script-audio.mjs classroom/bilingual_speech_script.html
 ```
 
 Notebook 的三分钟英文演示讲稿位于 [docs/3分钟Notebook演示讲稿.html](docs/3分钟Notebook演示讲稿.html)，包含六个时间段、操作提示和对应结果。

@@ -26,7 +26,7 @@ node scripts/export-classroom.mjs
 node scripts/export-classroom.mjs classroom
 ```
 
-The tracked `classroom/` directory is the downloadable GitHub copy of the same three files. `docs/3分钟Notebook演示讲稿.html` provides the companion six-part English demonstration transcript from upstream main.
+The tracked `classroom/` directory is the downloadable GitHub copy of the same three files, named `matrix_ai_presentation.html`, `bilingual_speech_script.html` and `alphatensor_demo.ipynb`. `docs/3分钟Notebook演示讲稿.html` provides the companion six-part English demonstration transcript from upstream main.
 
 For classroom use on another device, open the exported Notebook in Jupyter or VS Code, select a Python 3 kernel, install `numpy` and `matplotlib` in that kernel's environment and run all cells in order. The first algorithm cell defines the factor data used by later cells.
 

@@ -4,7 +4,7 @@
 
 完成一套可用于课堂展示的支持中英文切换的交互式演讲《AI 如何发现更快的矩阵乘法》：约 18 分钟、21 页，可离线单文件打开，也可在当前 Saplingagent 页面中展示和继续修改。
 
-课堂提交主目录为本项目上一级的 `演讲材料/`。顶层交付文件为 `矩阵与AI演讲.html`、`15分钟中英对照演讲稿.html` 和用于 Demo 的 `alphatensor_demo.ipynb`。文件间使用相对链接，HTML 的图形、样式、脚本和正文音频内嵌，Notebook 自带分解数据，可一起复制到其他设备。Notebook 使用 Python 3、NumPy 与 Matplotlib 运行。开发资料集中保留在 `AlphaTensor演讲/` 子目录。
+课堂提交主目录为本项目上一级的 `演讲材料/`。顶层交付文件使用英文名称，分别为 `matrix_ai_presentation.html`、`bilingual_speech_script.html` 和用于 Demo 的 `alphatensor_demo.ipynb`。文件间使用相对链接，HTML 的图形、样式、脚本和正文音频内嵌，Notebook 自带分解数据，可一起复制到其他设备。Notebook 使用 Python 3、NumPy 与 Matplotlib 运行。开发资料集中保留在 `AlphaTensor演讲/` 子目录。
 
 仓库内的 `classroom/` 保存相同的三份便携文件，供从 GitHub 下载。`docs/3分钟Notebook演示讲稿.html` 提供六个时间段的英文 Demo 演讲提示。
 
