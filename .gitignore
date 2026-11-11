@@ -25,6 +25,8 @@ logs/
 *.pfx
 node_modules/
 .venv/
+__pycache__/
+*.pyc
 docker-images/
 *.tar
 front/dist/

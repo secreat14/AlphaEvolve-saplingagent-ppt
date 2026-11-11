@@ -6,7 +6,15 @@
 
 ## 直接使用
 
-- 离线演讲：[矩阵与AI-20分钟演讲.html](矩阵与AI-20分钟演讲.html)（保留兼容文件名，当前内容约 18 分钟）
+- GitHub 上可直接下载的三份课堂文件集中在 [classroom/](classroom/)，下载后放在同一个文件夹
+- 课堂演讲使用上一级 `演讲材料/矩阵与AI演讲.html`
+- 配音讲稿使用上一级 `演讲材料/15分钟中英对照演讲稿.html`
+- Demo 使用上一级 `演讲材料/alphatensor_demo.ipynb`，来自 GitHub main 最新 Notebook，包含完整 47 项分解、逐步计算、正确性验证、三算法成本表与图及 NumPy 对照
+- 提交或换设备时，将两份 HTML 和 Notebook 放在同一个文件夹。HTML 用浏览器打开，动画、双语文字和 255 句配音均已内嵌，可离线使用
+- Notebook 用 Jupyter 或 VS Code 的 Notebook 功能打开，选择 Python 3。在所选环境运行 `python -m pip install numpy matplotlib` 安装依赖后，从上到下运行单元格。分解数据已经包含在 Notebook 内
+- 讲稿中的演讲入口、逐页链接、参考资料和 Notebook 入口均使用同目录相对地址
+- 本目录保留开发源码和本地环境，课堂提交使用上面三份文件
+- 开发构建副本为 [矩阵与AI-20分钟演讲.html](矩阵与AI-20分钟演讲.html)，保留兼容文件名，当前内容约 18 分钟
 - 应用内演讲：运行 `bash Saplingagent.sh`，演讲显示在主区域
 - 演讲源码：`presentation/`
 - 应用内静态副本：`front/public/presentation/index.html`
@@ -38,6 +46,10 @@
 
 打开 [15分钟中英对照演讲稿](docs/15分钟中英对照演讲稿.html)。全文对应当前 21 页，每段中文与简单英语逐段对照，附累计时间、演示提示和对应幻灯片链接。英文正文约 1,380 词，按每分钟约 105 词加演示与停顿安排约 15 分钟。页面支持离线阅读、手机阅读和打印。
 
+正文的 255 句均配有微软 Edge 神经语音，英文使用 Aria，中文使用晓晓。点击每句旁的 ▶ 可播放，顶部播放器支持英文全文、中文全文、中英对照连读、暂停继续、单句循环和速度调节。当前句会高亮显示。所有音频已嵌入 HTML，文件约 10.3 MiB，可离线使用。默认速度下英文音频约 12 分 8 秒，演讲时另加动画和停顿。
+
+配音生成与播放器源码位于 `presentation/speech-script/`，使用第三方 `edge-tts` 客户端调用微软在线语音服务。修改文字后按该目录 `SERVICE.md` 重新生成，再运行 `node scripts/verify-script-audio.mjs` 核对音频与正文。
+
 ## 中英文切换
 
 演讲页右上角的语言菜单可选择“中文”或“English”。页面、目录、快捷键说明、动画动态文字和逐页讲稿随所选语言切换。按 `N` 可查看对应语言的演讲备注。
@@ -53,6 +65,17 @@
 ```bash
 node scripts/build-presentation.mjs
 ```
+
+更新讲稿或演讲后，运行以下命令刷新上一级提交文件。第二个参数可指定相对于项目目录的其他输出目录。
+
+```bash
+node scripts/export-classroom.mjs
+node scripts/export-classroom.mjs classroom
+node scripts/verify-script-audio.mjs ../15分钟中英对照演讲稿.html
+node scripts/verify-script-audio.mjs classroom/15分钟中英对照演讲稿.html
+```
+
+Notebook 的三分钟英文演示讲稿位于 [docs/3分钟Notebook演示讲稿.html](docs/3分钟Notebook演示讲稿.html)，包含六个时间段、操作提示和对应结果。
 
 该命令会同步生成：
 

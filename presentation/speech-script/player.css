@@ -1,0 +1,253 @@
+.speech-controls {
+  position: sticky;
+  top: 70px;
+  z-index: 8;
+  margin: 0 0 25px;
+  padding: 17px 22px 14px;
+  border: 1px solid #cbd8c4;
+  border-radius: 12px;
+  background: #f4f7eef8;
+  box-shadow: 0 7px 24px #314b3020;
+  backdrop-filter: blur(12px);
+}
+
+.speech-controls-top {
+  display: flex;
+  align-items: center;
+  gap: 19px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.speech-player-title {
+  font-size: 15px;
+  font-weight: 650;
+  color: #486143;
+  margin-right: auto;
+}
+
+.speech-player-title span {
+  font-size: 11px;
+  color: #8c9c83;
+  font-weight: 450;
+  margin-left: 8px;
+}
+
+.speech-rate-label,.speech-repeat-label {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  font-size: 12px;
+  color: #738567;
+}
+
+.speech-rate-label select {
+  font: 12px var(--mono);
+  border: 1px solid #ced9c5;
+  border-radius: 6px;
+  color: #566c4b;
+  background: #fffef9;
+  padding: 5px;
+}
+
+.speech-repeat-label input {
+  accent-color: #79649d;
+}
+
+.speech-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.speech-actions button {
+  border: 1px solid #c9d7c1;
+  background: #fffef9;
+  color: #566e49;
+  border-radius: 7px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.speech-actions button[data-speech-mode="en"] {
+  background: #e9e3f2;
+  color: #695581;
+  border-color: #d4c6e1;
+}
+
+.speech-actions button:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
+#speech-time {
+  font: 11px var(--mono);
+  color: #8d9b82;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.speech-status {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #819074;
+  margin: 10px 0 0;
+}
+
+.speech-paragraph .speech-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  position: relative;
+  padding: 5px 6px 5px 0;
+  margin: 0 0 5px;
+  border-radius: 7px;
+  scroll-margin-top: 235px;
+}
+
+.speech-paragraph .line-text {
+  display: block;
+  min-width: 0;
+}
+
+.line-play {
+  flex: 0 0 26px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid #d7dfcd;
+  border-radius: 50%;
+  background: #f4f6ed;
+  color: #889b75;
+  font: 10px var(--mono);
+  cursor: pointer;
+  margin-top: 4px;
+  padding: 0;
+}
+
+.english .line-play {
+  color: #8a76a2;
+  border-color: #ded5e6;
+  background: #f5f1f9;
+}
+
+.line-play:hover {
+  background: #e2ead6;
+  color: #536f3e;
+}
+
+.line-play:focus-visible {
+  outline: 2px solid #927eac;
+  outline-offset: 3px;
+}
+
+.speech-line.is-active {
+  background: #e9e3f1;
+  box-shadow: 0 0 0 4px #e9e3f1;
+}
+
+.speech-line.is-active .line-play {
+  background: #8a75a4;
+  color: white;
+  border-color: #8a75a4;
+}
+
+.speech-line.is-active .line-text {
+  color: #544163;
+}
+
+.speech-line.is-active.is-paused {
+  background: #edf1e7;
+  box-shadow: 0 0 0 4px #edf1e7;
+}
+
+.speech-line.is-active.is-paused .line-text {
+  color: #627756;
+}
+
+.script-section {
+  scroll-margin-top: 240px;
+}
+
+@media(max-width:1100px) {
+  .speech-controls {
+    padding: 14px 17px;
+  }
+  .speech-player-title span {
+    display: none;
+  }
+  .speech-controls-top {
+    gap: 12px;
+  }
+  .speech-actions {
+    gap: 6px;
+  }
+  .speech-actions button {
+    padding: 7px 9px;
+  }
+}
+
+@media(max-width:800px) {
+  .speech-controls {
+    top: 59px;
+    padding: 12px 13px;
+    border-radius: 9px;
+  }
+  .speech-player-title {
+    font-size: 13px;
+  }
+  .speech-rate-label,.speech-repeat-label {
+    font-size: 11px;
+  }
+  .speech-controls-top {
+    gap: 9px;
+    margin-bottom: 9px;
+  }
+  .speech-actions button {
+    font-size: 11px;
+    padding: 7px 8px;
+  }
+  .speech-actions {
+    gap: 5px;
+  }
+  .speech-status {
+    font-size: 11px;
+  }
+  #speech-time {
+    font-size: 10px;
+    margin-left: 0;
+  }
+  .speech-paragraph .speech-line {
+    gap: 8px;
+    padding: 5px 1px;
+  }
+  .line-play {
+    flex-basis: 24px;
+    width: 24px;
+    height: 24px;
+  }
+  .script-section {
+    scroll-margin-top: 260px;
+  }
+}
+
+@media print {
+  .speech-controls,.line-play {
+    display: none!important;
+  }
+  .speech-paragraph .speech-line {
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
+  .speech-line.is-active,.speech-line.is-active.is-paused {
+    background: transparent;
+    box-shadow: none;
+  }
+  .speech-line.is-active .line-text {
+    color: inherit;
+  }
+}
