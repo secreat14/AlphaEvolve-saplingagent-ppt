@@ -10,8 +10,6 @@
   const originalAttributes = new WeakMap();
   const han = /[\u3400-\u9fff]/u;
   const attributes = ['title', 'aria-label', 'content'];
-  const storageKey = 'matrix-presentation-language';
-  let language = 'zh-CN';
 
   function translate(source) {
     if (messages.has(source)) return messages.get(source);
@@ -40,13 +38,12 @@
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     let node;
     while ((node = walker.nextNode())) {
-      if (node.parentElement.closest('script, style, #language-select')) continue;
+      if (node.parentElement.closest('script, style')) continue;
       const previous = originalText.get(node);
       if (!previous && !han.test(node.data)) continue;
       const record = localizedValue(node.data, previous);
       originalText.set(node, record);
-      const value = language === 'en' ? record.en : record.zh;
-      if (node.data !== value) node.data = value;
+      if (node.data !== record.en) node.data = record.en;
     }
     const elements = [root, ...root.querySelectorAll('[title], [aria-label], meta[content]')];
     for (const element of elements) {
@@ -60,20 +57,8 @@
         const value = element.getAttribute(attribute);
         const record = localizedValue(value, records.get(attribute));
         records.set(attribute, record);
-        element.setAttribute(attribute, language === 'en' ? record.en : record.zh);
+        element.setAttribute(attribute, record.en);
       }
-    }
-  }
-
-  function setLanguage(value) {
-    language = value === 'en' ? 'en' : 'zh-CN';
-    document.documentElement.lang = language;
-    document.querySelector('#language-select').value = language;
-    apply();
-    try {
-      localStorage.setItem(storageKey, language);
-    } catch {
-      // Offline file URLs and browser privacy settings may disable storage.
     }
   }
 
@@ -92,17 +77,9 @@
   }
 
   function start() {
-    let savedLanguage = 'zh-CN';
-    try {
-      savedLanguage = localStorage.getItem(storageKey) || savedLanguage;
-    } catch {
-      // The selector continues to work when persistence is unavailable.
-    }
-    document.querySelector('#language-select').addEventListener('change', event => {
-      setLanguage(event.target.value);
-    });
-    setLanguage(savedLanguage);
+    document.documentElement.lang = 'en';
+    apply();
   }
 
-  globalThis.PresentationI18n = {apply, registerNotes, setLanguage, start, translate};
+  globalThis.PresentationI18n = {apply, registerNotes, start, translate};
 })();

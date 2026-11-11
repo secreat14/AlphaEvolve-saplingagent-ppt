@@ -52,9 +52,15 @@ assert.ok(catalogue.notes[13].text.includes('39'));
 assert.ok(catalogue.notes[17].text.includes('292/17'));
 
 const generated = fs.readFileSync('dist/slides.html', 'utf8');
-assert.ok(generated.includes('id="language-select"'));
+assert.ok(generated.includes('<html lang="en">'));
+assert.ok(generated.includes('id="fullscreen-button"'));
+for (const removed of ['language-select', 'overview-button', 'notes-button', 'help-button',
+  'notes-panel', 'overview-dialog', 'help-dialog']) {
+  assert.ok(!generated.includes(`id="${removed}"`), `Removed control remains: ${removed}`);
+}
+assert.ok(!generated.includes('matrix-presentation-language'), 'A saved language must not override English');
 assert.ok(!/\/\*__(?:I18N|ENGLISH)__\*\//.test(generated));
 for (const file of ['矩阵与AI-20分钟演讲.html', 'front/public/presentation/index.html']) {
   assert.equal(fs.readFileSync(file, 'utf8'), generated);
 }
-console.log(`PASS: bilingual UI coverage, ${notes.length} English speaker notes, dynamic numeric messages, and identical offline/application HTML.`);
+console.log(`PASS: fixed English presentation, ${notes.length} translated note records, dynamic numeric messages, and identical offline/application HTML.`);

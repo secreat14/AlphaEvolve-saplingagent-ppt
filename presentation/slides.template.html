@@ -1,16 +1,17 @@
 <!doctype html>
-<html lang="zh-CN">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f6ef"><meta name="description" content="约18分钟中文HTML演示文稿：用过程动画理解矩阵乘法与AlphaTensor。独立文件，可离线打开。"><title>AI 如何发现更快的矩阵乘法｜18分钟演讲</title><style>/*__CSS__*/</style></head>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f6ef"><meta name="description" content="Interactive presentation about matrix multiplication and AlphaTensor. Self-contained HTML for offline use."><title>How AI Discovers Faster Matrix Multiplication</title><style>/*__CSS__*/</style></head>
 <body>
-<header class="app-bar"><a class="app-brand" href="#slide=1">[·] 矩阵与 AI</a><span class="app-description">18 分钟演讲版</span><div class="app-tools"><label class="language-control"><span class="sr-only">演讲语言</span><select id="language-select" aria-label="演讲语言"><option value="zh-CN" lang="zh-CN">中文</option><option value="en" lang="en">English</option></select></label><button id="overview-button" title="目录 O">目录 <kbd>O</kbd></button><button id="notes-button" aria-pressed="false" title="演讲备注 N">备注 <kbd>N</kbd></button><button id="fullscreen-button" title="全屏 F">全屏 <kbd>F</kbd></button><button id="help-button" aria-label="查看快捷键">?</button></div></header>
-<main id="viewport" aria-label="幻灯片演示区域"><div id="stage">
+<header class="app-bar"><a class="app-brand" href="#slide=1">[·] Matrices &amp; AI</a><div class="app-tools"><button id="fullscreen-button" title="Full screen F">Full screen <kbd>F</kbd></button></div></header>
+<main id="viewport" aria-label="Presentation slides"><div id="stage">
 
 <section class="slide cover active" data-title="AI 如何发现更快的矩阵乘法" data-seconds="15">
   <div class="cover-kicker">矩阵运算、硬件与算法发现</div>
   <h1>AI 如何发现<br><em>更快的矩阵乘法</em></h1>
   <p class="cover-subtitle">以 AI 算法为主线，实算比较同一组 4×4 矩阵</p>
   <div class="cover-numbers"><div><b>64</b><span>直接算法</span></div><span class="number-separator">/</span><div><b>49</b><span>Strassen</span></div><span class="number-separator">/</span><div><b>47</b><span>AlphaTensor · 模 2</span></div></div>
-  <div class="cover-bottom"><span>中文讲解 · 过程动画 · 约 18 分钟</span><span>按 → 开始</span></div>
+  <p class="cover-team">Team Member: Tianyu Xiang, Qizhuo Shen</p>
+  <div class="cover-bottom"><span>按 → 开始</span></div>
 </section>
 
 <section class="slide silicon-slide register-physics-slide" data-title="晶体管：电压控制的微型开关" data-seconds="30">
@@ -172,17 +173,14 @@
 </section>
 
 <section class="slide sources-slide" data-title="参考资料" data-seconds="25">
-  <div class="slide-header"><span class="chapter">参考资料</span><h2>论文与官方技术资料</h2><p>链接可点击，详细引用也保存在各页演讲备注中</p></div>
+  <div class="slide-header"><span class="chapter">参考资料</span><h2>论文与官方技术资料</h2><p>点击下方链接查看原始资料</p></div>
   <ol class="source-links"><li><a href="https://doi.org/10.1038/s41586-022-05172-4" target="_blank" rel="noopener noreferrer"><b>AlphaTensor · Nature 2022</b><span>Fawzi 等，Discovering faster matrix multiplication algorithms with reinforcement learning</span></a></li><li><a href="https://link.springer.com/article/10.1007/BF02165411" target="_blank" rel="noopener noreferrer"><b>Strassen · 1969</b><span>Gaussian elimination is not optimal</span></a></li><li><a href="https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/" target="_blank" rel="noopener noreferrer"><b>NVIDIA GPU 与矩阵乘法指南</b><span>矩阵分块、并行计算、计算与访存瓶颈</span></a></li><li><a href="https://arxiv.org/abs/2205.14135" target="_blank" rel="noopener noreferrer"><b>FlashAttention · 2022</b><span>Dao 等，Fast and Memory-Efficient Exact Attention with IO-Awareness</span></a></li><li><a href="https://homepage.cs.uiowa.edu/~dwjones/assem/summer18/notes/09muldiv.shtml" target="_blank" rel="noopener noreferrer"><b>硬件基础 · 大学课程与 CUDA 官方指南</b><span>晶体管、静态存储、寄存器、二进制运算与 GPU；各页备注附详细链接</span></a></li></ol>
   <div class="slide-source">AlphaTensor 47 次方案来自作者开源仓库，使用 Apache 2.0 许可。来源版本与许可全文嵌入此 HTML。</div>
 </section>
 
 </div></main>
-<aside id="notes-panel" hidden aria-label="演讲备注"><div class="notes-heading"><strong>演讲备注</strong><button id="notes-close" aria-label="关闭演讲备注">×</button></div><div id="notes-content"></div></aside>
 <footer class="navigation"><button id="previous" aria-label="上一页">← 上一页</button><span id="slide-count">01 / 21</span><span id="slide-title">AI 如何发现更快的矩阵乘法</span><div class="nav-right"><button id="timer-button" title="开始或暂停计时 T">计时 <span id="elapsed">00:00</span></button><button id="timer-reset" title="重置计时" aria-label="重置演讲计时">↺</button><button id="next" aria-label="下一页">下一页 →</button></div></footer>
 <div class="deck-progress" aria-hidden="true"><span id="deck-progress"></span></div>
-<dialog id="overview-dialog"><div class="dialog-header"><h2>演讲目录</h2><button data-close="overview-dialog" aria-label="关闭目录">×</button></div><p>21 页，建议讲解时间共 17 分 30 秒。点击任意一页跳转。</p><div id="overview-grid"></div></dialog>
-<dialog id="help-dialog"><div class="dialog-header"><h2>演示快捷键</h2><button data-close="help-dialog" aria-label="关闭快捷键">×</button></div><dl class="shortcut-list"><dt>→ / ↓ / 空格 / Page Down</dt><dd>下一页</dd><dt>← / ↑ / Page Up</dt><dd>上一页</dd><dt>Home / End</dt><dd>第一页 / 最后一页</dd><dt>F</dt><dd>进入或退出全屏</dd><dt>N</dt><dd>显示或隐藏本页演讲备注</dd><dt>O</dt><dd>打开目录</dd><dt>B</dt><dd>黑屏 / 恢复画面</dd><dt>T</dt><dd>开始或暂停演讲计时</dd><dt>R</dt><dd>重置当前页动画</dd></dl><p>动画由页面中的播放按钮控制。翻页会暂停动画。按 Esc 关闭目录或备注。备注会显示在当前屏幕上。</p></dialog>
 <div id="blackout" hidden><span>按 B 或点击恢复</span></div><button id="exit-cinema" aria-label="退出全屏演示">退出全屏 F</button><div class="sr-only" id="announcement" aria-live="polite"></div>
 <script>/*__I18N__*/
 /*__DATA__*/
