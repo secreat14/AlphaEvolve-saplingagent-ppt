@@ -230,8 +230,8 @@ async def main():
     args = parser.parse_args()
     source = DOCUMENT.read_text()
     paragraphs = ScriptParser(source).paragraphs
-    if not paragraphs or {paragraph.slide for paragraph in paragraphs} != set(range(1, 22)):
-        raise RuntimeError('Expected bilingual speech paragraphs for all 21 slides')
+    if not paragraphs or {paragraph.slide for paragraph in paragraphs} != set(range(1, 20)):
+        raise RuntimeError('Expected bilingual speech paragraphs for all 19 slides')
     lines = make_lines(paragraphs)
     if args.limit is not None:
         await generate(lines[:args.limit])

@@ -15,9 +15,9 @@ assert.equal(payload.provider, 'Microsoft Edge online neural TTS');
 const lines = payload.lines;
 const byId = new Map(lines.map(line => [line.id, line]));
 assert.equal(byId.size, lines.length, 'Duplicate audio IDs');
-assert.equal(lines.length, 255, 'Update sentence coverage after a deliberate script change');
-assert.equal(lines.filter(line => line.language === 'en').length, 144);
-assert.equal(lines.filter(line => line.language === 'zh-CN').length, 111);
+assert.equal(lines.length, 228, 'Update sentence coverage after a deliberate script change');
+assert.equal(lines.filter(line => line.language === 'en').length, 129);
+assert.equal(lines.filter(line => line.language === 'zh-CN').length, 99);
 
 const escape = text => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;')
   .replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#x27;');
@@ -40,7 +40,7 @@ for (const line of lines) {
 }
 
 const paragraphs = [...html.matchAll(/<p lang="([^"]+)" class="speech-paragraph" data-speech-original="([^"]*)">([\s\S]*?)<\/p>/g)];
-assert.equal(paragraphs.length, 92, 'Every spoken paragraph must retain its original text');
+assert.equal(paragraphs.length, 84, 'Every spoken paragraph must retain its original text');
 const covered = [];
 for (const [, language, original, content] of paragraphs) {
   const ids = [...content.matchAll(/data-speech-id="([^"]+)"/g)].map(match => match[1]);
@@ -51,7 +51,7 @@ for (const [, language, original, content] of paragraphs) {
   covered.push(...ids);
 }
 assert.deepEqual(covered, lines.map(line => line.id), 'Playback order must follow the script');
-assert.equal(new Set(lines.map(line => line.slide)).size, 21);
+assert.equal(new Set(lines.map(line => line.slide)).size, 19);
 
 for (const [name, filename, tag] of [['STYLE', 'player.css', 'style'], ['PLAYER', 'player.js', 'script']]) {
   const block = html.match(new RegExp(`<!--SPEECH_${name}:START--><${tag}>([\\s\\S]*?)<\\/${tag}><!--SPEECH_${name}:END-->`));
@@ -61,4 +61,4 @@ for (const [name, filename, tag] of [['STYLE', 'player.css', 'style'], ['PLAYER'
 }
 const controls = fs.readFileSync(path.join(resources, 'controls.html'), 'utf8');
 assert(html.includes(`<!--SPEECH_CONTROLS:START-->${controls}<!--SPEECH_CONTROLS:END-->`));
-console.log('PASS: 255 embedded Microsoft clips, 92 intact paragraphs, 21 slides, playback order and player resources.');
+console.log('PASS: 228 embedded Microsoft clips, 84 intact paragraphs, 19 slides, playback order and player resources.');

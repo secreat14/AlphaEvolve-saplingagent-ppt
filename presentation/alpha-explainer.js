@@ -15,13 +15,6 @@
       }).join('');
     }
     const second=terms[1],step=model.step(second,a,b);
-    grid('#ae-input-a',a,{mask:second.u,tone:'a'});
-    grid('#ae-input-b',b,{mask:second.v,tone:'b'});
-    $('#ae-sum-a').textContent=`(${model.support(second.u).map(i=>a[i]).join(' + ')}) mod 2 = ${step.left}`;
-    $('#ae-sum-b').textContent=`(${model.support(second.v).map(i=>b[i]).join(' + ')}) mod 2 = ${step.right}`;
-    grid('#ae-before',trace[0].accumulator);
-    grid('#ae-contribution',step.delta,{mask:second.w,tone:'c'});
-    grid('#ae-after',trace[1].accumulator,{mask:second.w,tone:'c',previous:trace[0].accumulator});
     const residuals=math.residualFrames(terms);
     for(const [id,index] of [['#ae-residual-start',0],['#ae-residual-mid',2],['#ae-residual-end',47]]){
       $(id).textContent=residuals[index].reduce((sum,value)=>sum+value,0);

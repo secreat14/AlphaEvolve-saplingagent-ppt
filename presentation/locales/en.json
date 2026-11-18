@@ -125,7 +125,6 @@
     "找到的算法可以处理适用范围内的新矩阵": "Apply the discovered algorithm to new matrices in its domain",
     "来源：Fawzi 等，Discovering faster matrix multiplication algorithms with reinforcement learning": "Source — Fawzi et al., Discovering faster matrix multiplication algorithms with reinforcement learning",
     "AlphaTensor 优化：先看完整计算路线": "AlphaTensor optimization overview",
-    "AlphaTensor 分步解释 · 1 / 7 · 全景": "AlphaTensor walkthrough · 1 / 7 · Overview",
     "把 64 次乘法，重新组织成 47 项": "Reorganize 64 multiplications into 47 terms",
     "同一组 4×4 输入，同一个模 2 结果；改变的是中间怎么算": "Use the same 4×4 inputs and compute the same product modulo 2",
     "输入组合、一次乘法、输出分配的三步流程": "Combine inputs, perform one multiplication, then distribute the result",
@@ -150,9 +149,6 @@
     "节省来自": "Savings from ",
     "重新组合与复用乘积": "recombination and product reuse",
     "输入组合、输出合并仍要做加法": "Combining inputs and outputs still costs additions",
-    "以下沿用 alphatensor_demo.ipynb 的输入和作者公开的 47 项模 2 分解；接下来只放大第 2 项。": "The inputs and published 47-term decomposition match alphatensor_demo.ipynb. Next, examine term 2.",
-    "AlphaTensor 第一步：选择并组合输入": "AlphaTensor step 1 — Combine the inputs",
-    "AlphaTensor 分步解释 · 2 / 7 · 放大第 2 项": "AlphaTensor walkthrough · 2 / 7 · Term 2",
     "先从 A、B 各取几格，组合成两个数": "Combine selected entries from A and B",
     "彩色格是被选中的位置；格子左上角标记“行、列”": "Colored cells are selected. Small labels give their row and column.",
     "输入 A": "Input A",
@@ -168,10 +164,7 @@
     "u、v 是固定的“取数清单”": "u and v are fixed selection rules",
     "系数 1 表示选取，0 表示不取；换一组输入，取数位置仍然不变。": "Coefficient 1 selects an entry. Coefficient 0 skips it. The positions also apply to new inputs.",
     "第 2 项：u 选 A₁₃、A₂₂、A₂₃；v 选 B₂₁、B₂₄、B₃₄。数值和位置由公开分解及 Notebook 输入生成。": "Term 2 selects A₁₃, A₂₂, A₂₃ and B₂₁, B₂₄, B₃₄. Values and positions come from the published factors and notebook inputs.",
-    "AlphaTensor 第二步：一次乘法可以复用": "AlphaTensor step 2 — Reuse one product",
-    "AlphaTensor 分步解释 · 3 / 7 · 计算中间乘积": "AlphaTensor walkthrough · 3 / 7 · Intermediate product",
     "两个组合数相乘，结果可以送到多处": "Reuse one product in multiple outputs",
-    "第 2 项只做一次标量乘法：p₂ = L₂ × R₂ = 1 × 1 = 1": "Term 2 computes p₂ = L₂ × R₂ = 1 × 1 = 1",
     "L2等于1和R2等于1相乘得到p2等于1，再沿两条箭头复用到C14和C21": "L2 and R2, both 1, are multiplied to give p2 equal to 1. Two arrows distribute it to C14 and C21.",
     "只做 1 次乘法": "1 scalar multiplication",
     "复用": "Reuse",
@@ -180,9 +173,6 @@
     "其余 14 个输出位置的系数为 0": "Coefficients for the other 14 outputs are 0",
     "一个 p 可以参与多个输出": "One product can serve several outputs",
     "无需为每个去向重新相乘": "Compute it once and distribute it",
-    "这是一项双线性计算：先组合输入，再相乘，最后线性合并输出。一次乘法的复用不代表没有额外加法成本。": "Each bilinear term combines inputs, multiplies them and contributes to outputs. Reusing the product still requires additions.",
-    "AlphaTensor 第三步：更新输出并对2取余": "AlphaTensor step 3 — Update outputs modulo 2",
-    "AlphaTensor 分步解释 · 4 / 7 · 累加第 2 项": "AlphaTensor walkthrough · 4 / 7 · Accumulate term 2",
     "收到一个 1，当前结果可能从 1 变回 0": "Adding 1 can change an output from 1 to 0",
     "第 1 项已经写入部分贡献；现在把 p₂ = 1 加到 C₁₄ 和 C₂₁": "After term 1, add p₂ = 1 to C₁₄ and C₂₁",
     "第 1 项后的累计": "Accumulated after term 1",
@@ -195,8 +185,6 @@
     "模 2 中，两个 1 相加会抵消": "Two 1s cancel under modulo-2 addition",
     "C₂₁ 更新为 (1 + 1) mod 2 = 0；当前累计值还不是最终答案。": "C₂₁ becomes (1 + 1) mod 2 = 0. Further terms will update the matrix.",
     "普通整数中的 1+1=2；这里运算定义在模 2 上，取余后得到 0。三个矩阵直接取自同一组输入的前两项真实轨迹。": "Ordinary addition gives 1+1=2. Reducing modulo 2 gives 0. These matrices show the actual first two terms for the same inputs.",
-    "AlphaTensor 第四步：走完47项合成答案": "AlphaTensor step 4 — Accumulate all 47 terms",
-    "AlphaTensor 分步解释 · 5 / 7 · 把所有贡献合起来": "AlphaTensor walkthrough · 5 / 7 · Combine every contribution",
     "重复同样的三步，直到第 47 项": "Repeat the three steps for all 47 terms",
     "每项的 u、v、w 不同；取数 → 乘一次 → 更新输出的流程相同": "Each term has its own u, v and w. The computation follows the same three steps.",
     "已完成的乘法项": "Completed product terms",
@@ -216,7 +204,6 @@
     "先看第 2 项，再跳到完整结果": "Inspect term 2, then jump to the full result",
     "完整结果的四行是 1111、1101、0010、0010。中间某格暂时与目标相同，不代表后续不会再改变。": "The final rows are 1111, 1101, 0010, 0010. A cell can match the target temporarily and change again later.",
     "AlphaTensor 正确性：验证全部4096个系数": "AlphaTensor correctness — All 4096 coefficients",
-    "AlphaTensor 分步解释 · 6 / 7 · 不只算对一个例子": "AlphaTensor walkthrough · 6 / 7 · Verify every input",
     "为什么换一组输入，这套规则仍然成立？": "Why does the rule work for new inputs?",
     "把 47 项公式展开，核对每个输出里每种 Aᵢⱼ × Bₖₗ 的系数": "Expand the 47 terms and check each Aᵢⱼ × Bₖₗ coefficient in every output",
     "16 个输出位置": "16 output positions",
@@ -241,7 +228,6 @@
     "全部一致 → 对任意二进制 4×4 输入，都得到相同的模 2 乘积。": "Every coefficient matches, so the identity holds for every binary 4×4 input pair.",
     "对应 Notebook 的 coefficient_errors：检查 Σᵣ wᵣₒ uᵣᵢ vᵣⱼ mod 2。这个 47 项分解不能原样用于普通整数矩阵乘法。": "The notebook's coefficient_errors checks Σᵣ wᵣₒ uᵣᵢ vᵣⱼ mod 2. Ordinary integer arithmetic requires a different factorization.",
     "AlphaTensor 搜索：AI怎样找到47项规则": "AlphaTensor search — Discovering the 47 terms",
-    "AlphaTensor 分步解释 · 7 / 7 · 从执行回到发现": "AlphaTensor walkthrough · 7 / 7 · Discover the rules",
     "AI 搜索的是整套计算规则": "AI searches for a complete computation rule",
     "把“还有哪些计算关系没匹配好”作为状态；每次尝试一组 u、v、w": "The state records unmatched coefficient relationships. Each move proposes u, v and w.",
     "起点": "Start",
@@ -355,7 +341,6 @@
     "下一页 →": "Next →",
     "演讲目录": "Presentation contents",
     "关闭目录": "Close contents",
-    "21 页，建议讲解时间共 17 分 30 秒。点击任意一页跳转。": "21 slides · Suggested total 17 minutes 30 seconds. Select a slide to jump to it.",
     "演示快捷键": "Keyboard shortcuts",
     "关闭快捷键": "Close keyboard shortcuts",
     "→ / ↓ / 空格 / Page Down": "→ / ↓ / Space / Page Down",
@@ -421,7 +406,18 @@
     "矩阵大小 N（N × N）": "Matrix size N (N × N)",
     "参考来源": "Sources",
     "演讲语言": "Presentation language",
-    "Strassen、AlphaTensor": "Strassen, AlphaTensor"
+    "Strassen、AlphaTensor": "Strassen, AlphaTensor",
+    "AlphaTensor 分步解释 · 1 / 5 · 全景": "AlphaTensor walkthrough · 1 / 5 · Overview",
+    "AlphaTensor 分步解释 · 2 / 5 · 计算中间乘积": "AlphaTensor walkthrough · 2 / 5 · Intermediate product",
+    "AlphaTensor 分步解释 · 3 / 5 · 把所有贡献合起来": "AlphaTensor walkthrough · 3 / 5 · Combine every contribution",
+    "AlphaTensor 分步解释 · 4 / 5 · 不只算对一个例子": "AlphaTensor walkthrough · 4 / 5 · Verify every input",
+    "AlphaTensor 分步解释 · 5 / 5 · 从执行回到发现": "AlphaTensor walkthrough · 5 / 5 · Discover the rules",
+    "AlphaTensor：一次乘法可以复用": "AlphaTensor — Reuse one product",
+    "AlphaTensor：走完47项合成答案": "AlphaTensor — Accumulate all 47 terms",
+    "以下沿用 alphatensor_demo.ipynb 的输入和作者公开的 47 项模 2 分解；下一页看第 2 项怎样复用一次乘法。": "The inputs and published 47-term decomposition match alphatensor_demo.ipynb. Next, see how term 2 reuses one product.",
+    "第 2 项分别从 A、B 组合得到 L₂ = 1、R₂ = 1；只做一次乘法：p₂ = 1 × 1 = 1": "Term 2 combines selected A and B entries to get L₂ = 1 and R₂ = 1, then computes p₂ = 1 × 1 = 1.",
+    "u 选 A₁₃、A₂₂、A₂₃，v 选 B₂₁、B₂₄、B₃₄；各自求和并对 2 取余后均为 1。w 决定乘积的输出位置；复用仍有加法成本。": "u selects A₁₃, A₂₂, A₂₃; v selects B₂₁, B₂₄, B₃₄. Each sum is 1 modulo 2. w selects the outputs; reusing the product still needs additions.",
+    "19 页，建议讲解时间共 15 分 40 秒。点击任意一页跳转。": "19 slides · Suggested total 15 minutes 40 seconds. Select a slide to jump to it."
   },
   "patterns": [
     [
@@ -643,34 +639,22 @@
       "sourceAction": "按从左到右的顺序解释三步，不需要介绍寄存器或神经网络结构。"
     },
     {
-      "text": "Each term selects entries from A, sums them modulo 2 to obtain L, and separately combines entries from B to obtain R. It then computes p=L×R. Finally it adds p to the chosen output positions, reducing every update modulo 2. The fixed coefficient vectors u, v and w specify these selections. Each of the 47 terms has its own vectors.\nModulo 2 keeps the remainder after division by 2, so 1+1 becomes 0. The resulting cancellations make the complete identity work. The algorithm reduces scalar products while also requiring input and output additions. Next we will inspect term 2 from the notebook.",
+      "text": "Each term selects entries from A, sums them modulo 2 to obtain L, and separately combines entries from B to obtain R. It then computes p=L×R. Finally it adds p to the chosen output positions, reducing every update modulo 2. The fixed coefficient vectors u, v and w specify these selections. Each of the 47 terms has its own vectors.\nModulo 2 keeps the remainder after division by 2, so 1+1 becomes 0. The resulting cancellations make the complete identity work. The algorithm reduces scalar products while also requiring input and output additions. Next we will see how term 2 reuses one product.",
       "action": "Follow the three-stage diagram, then demonstrate the modulo-2 addition example.",
-      "sourceText": "先建立完整路线：每项从 A 中选一些格相加对2取余，得到 L；从 B 中选一些格相加对2取余，得到 R；计算 p=L×R；最后把 p 按固定规则加到 C 的指定位置，每次更新再对2取余。u、v、w 就是这三张固定清单。47项各有不同的清单。注意 A 和 B 分别组合，并不是把两矩阵相加。\n模2只保留余数，因此1+1变成0。这种抵消是后面公式成立的关键。我们少做的是乘法，不能忽略组合输入和合并输出的加法。接下来放大与 Notebook 一致的第2项。",
+      "sourceText": "先建立完整路线：每项从 A 中选一些格相加对2取余，得到 L；从 B 中选一些格相加对2取余，得到 R；计算 p=L×R；最后把 p 按固定规则加到 C 的指定位置，每次更新再对2取余。u、v、w 就是这三张固定清单。47项各有不同的清单。注意 A 和 B 分别组合，并不是把两矩阵相加。\n模2只保留余数，因此1+1变成0。这种抵消是后面公式成立的关键。我们少做的是乘法，不能忽略组合输入和合并输出的加法。下一页直接看第2项如何复用一次乘法。",
       "sourceAction": "沿流程图从左讲到右，先读模2例子，暂不展示求和符号。"
     },
     {
-      "text": "A and B use the notebook inputs in row-major order. A small label 13 means row 1, column 3. In term 2, u selects A13, A22 and A23, giving L2=(1+1+1) mod 2=1. Vector v selects B21, B24 and B34, giving R2=(0+0+1) mod 2=1.\nTwo selected B entries contain 0. A coefficient of 1 selects a position regardless of the value stored there. These selection positions stay fixed when the algorithm processes a new pair of binary matrices.",
-      "action": "Point to the three purple cells in A, then the three green cells in B, including the two zeros.",
-      "sourceText": "本例 A 和 B 都来自 alphatensor_demo.ipynb，按行排列。小角标13表示第1行第3列，不是第13个元素。第2项的u在A13、A22、A23为1，其余为0，得到L2=(1+1+1) mod2=1。v在B21、B24、B34为1，得到R2=(0+0+1) mod2=1。\n绿色选中的两个0特别重要：系数为1只表示要读取那个位置，和位置上的数值是两回事。规则不因输入数值而改变。若换另一对二进制矩阵，这张取数清单仍然适用。",
-      "sourceAction": "先指出A的三个紫色格，再指出B的三个绿色格，明确选中位置可以存0。"
-    },
-    {
-      "text": "The previous slide formed two values. Now compute L2×R2=1×1=1. Vector w for term 2 selects C14 and C21, so the same product contributes to both positions. The multiplication is performed once.\nThis term provides a partial contribution to each output. All 47 terms together reconstruct the complete matrix. The fixed u and v vectors select input combinations, and w selects output destinations. Forming combinations and accumulating the contributions also cost work.",
+      "text": "Term 2 selects A13, A22 and A23, and B21, B24 and B34. Each sum gives 1 modulo 2, so L2×R2=1×1=1. Vector w for term 2 selects C14 and C21, so the same product contributes to both positions. The multiplication is performed once.\nThis term provides a partial contribution to each output. All 47 terms together reconstruct the complete matrix. The fixed u and v vectors select input combinations, and w selects output destinations. Forming combinations and accumulating the contributions also cost work.",
       "action": "Trace the arrows from L2 and R2 to p2, then follow the branch to the two outputs.",
-      "sourceText": "上一页把两组输入各组合成一个数，现在只需要L2×R2=1×1=1。第2项的w在C14和C21为1，其余为0，因此这个乘积会被复用到两个输出，而不是再计算两次同样的乘法。\n不应把复用理解成两次完整点积已经算好：一个项只是一些输出的部分贡献，整套47项才合成正确结果。u和v指定输入组合，w指定输出去向，三者都来自固定分解。输入组合、分配与合并仍然有成本。",
+      "sourceText": "第2项从A选A13、A22、A23，从B选B21、B24、B34；两组输入各自求和对2取余，得到L2=R2=1，所以只需要L2×R2=1×1=1。第2项的w在C14和C21为1，其余为0，因此这个乘积会被复用到两个输出，而不是再计算两次同样的乘法。\n不应把复用理解成两次完整点积已经算好：一个项只是一些输出的部分贡献，整套47项才合成正确结果。u和v指定输入组合，w指定输出去向，三者都来自固定分解。输入组合、分配与合并仍然有成本。",
       "sourceAction": "沿箭头从L2、R2指向p2，再用分叉说明一个乘积有两个去向。"
     },
     {
-      "text": "First inspect the actual accumulator after term 1. It multiplies A13 by B31. Both are 1, so its product 1 contributes to C11, C12 and C21. Term 2 then adds 1 to C14 and C21. C14 changes from 0 to 1. C21 changes from 1 to 0 because (1+1) mod 2=0. All other entries keep their previous values.\nOnly two terms have been evaluated. Intermediate entries can move away from the final target before later terms correct them. Modulo-2 addition lets contributions cancel as the complete factorization is accumulated.",
-      "action": "Compare the three matrices and explain the two orange entries C14 and C21.",
-      "sourceText": "为解释抵消，先看第1项的真实累计值。第1项取A13和B31，两者都是1，乘积1写入C11、C12和C21。然后第2项向C14和C21各加1。C14从0变1；C21从1变0，因为(1+1) mod2=0。其余格不变。\n此时只完成2项，矩阵仍是中间状态。不能要求每一步的输出都向最终数值单调靠近。模2加法允许后续项把前面贡献抵消，这是整套分解的代数作用。",
-      "sourceAction": "对照三个矩阵，只逐个解释C14与C21两个橙色位置。"
-    },
-    {
-      "text": "All 47 terms follow the same process, each with its own u, v and w. The numbered tiles show completed products. On the right, compare the current accumulator with the direct-method target. Jump to terms 1 and 2 to connect this view with the previous slide, then play or drag through the remaining terms.\nThe final rows are 1111, 1101, 0010 and 0010, matching the direct matrix product modulo 2. Orange identifies the current term's output positions. The fixed algorithm evaluates all 47 terms, including those whose product happens to be 0 for this input. The number of matching cells can decrease during accumulation.",
+      "text": "All 47 terms follow the same process, each with its own u, v and w. The numbered tiles show completed products. On the right, compare the current accumulator with the direct-method target. Jump to terms 1 and 2 to connect this view with the intermediate result, then play or drag through the remaining terms.\nThe final rows are 1111, 1101, 0010 and 0010, matching the direct matrix product modulo 2. Orange identifies the current term's output positions. The fixed algorithm evaluates all 47 terms, including those whose product happens to be 0 for this input. The number of matching cells can decrease during accumulation.",
       "action": "Select term 2, then show the full result. Play or drag through the sequence if time permits.",
-      "sourceText": "47项重复同一计算流程，但每项有各自的u、v、w。左侧47个编号每完成一项亮一个，右侧显示累计矩阵和直接法目标。可以先跳到第1项和第2项核对上一页，再播放或拖动到47项。\n最后四行是1111、1101、0010、0010，与直接矩阵乘法对2取余相同。每步橙色只表示本项会贡献到的位置；某项乘积为0时也会按固定规则计算，不能因为本例输入有0就改变算法的乘法计数。暂时匹配的格数不一定每步增加。",
-      "sourceAction": "点击第2项对照上一页，再点击完整结果；时间充足时播放或拖动47项轨迹。"
+      "sourceText": "47项重复同一计算流程，但每项有各自的u、v、w。左侧47个编号每完成一项亮一个，右侧显示累计矩阵和直接法目标。可以先跳到第1项和第2项观察中间累计，再播放或拖动到47项。\n最后四行是1111、1101、0010、0010，与直接矩阵乘法对2取余相同。每步橙色只表示本项会贡献到的位置；某项乘积为0时也会按固定规则计算，不能因为本例输入有0就改变算法的乘法计数。暂时匹配的格数不一定每步增加。",
+      "sourceAction": "点击第2项观察中间累计，再点击完整结果；时间充足时播放或拖动47项轨迹。"
     },
     {
       "text": "A fixed bilinear decomposition can be verified by expanding every output as a linear combination of a_i b_j products. There are 16 outputs, 16 entries of A and 16 entries of B, giving 4096 coefficient relationships. A target coefficient is 1 when the inner input indices match and the outer indices identify the current output. All other target coefficients are 0.\nFor a required term, C11 includes A12 B21 because both inner indices are 2. Term 39 contributes it once, so the actual and target coefficients are both 1. For a cancellation, C12 excludes A11 B31. Terms 7 and 13 each contribute it once, so (1+1) mod 2=0, matching the target. The notebook checks every sum Σ_r w_ro u_ri v_rj mod 2. All 4096 coefficients agree, proving the identity for every binary 4×4 input pair. In ordinary integer arithmetic, a coefficient of 2 survives, so these particular 47 factors require modulo-2 arithmetic.",

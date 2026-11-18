@@ -2,7 +2,7 @@
 
 ## Responsibility
 
-Generate Microsoft Edge online neural TTS for every spoken sentence in `docs/15分钟中英对照演讲稿.html`. The HTML embeds MP3 data and its player for offline use. The 21 slide sections and original bilingual paragraph text remain the script's source. Stage directions stay in the separate cue blocks.
+Generate Microsoft Edge online neural TTS for every spoken sentence in `docs/15分钟中英对照演讲稿.html`. The HTML embeds MP3 data and its player for offline use. The 19 slide sections and original bilingual paragraph text remain the script's source. Stage directions stay in the separate cue blocks.
 
 `build_audio.py` splits the paragraphs into sentences, synthesizes clips, then updates only the speech paragraph markup and four marked resource blocks. On reruns it recovers each paragraph from `data-speech-original`. To change a spoken paragraph, edit that attribute before regenerating, or replace that paragraph with a plain `<p lang="en">` or `<p lang="zh-CN">` containing the revised text. The generated `.line-text` spans mirror that source.
 
@@ -37,7 +37,7 @@ The first command initializes the project environment when absent. Existing inst
 
 ## Validation
 
-The static verifier checks embedded MP3 headers, sentence/button coverage, lossless paragraph splitting, playback order and embedded player resources. Expected counts represent the current 255-sentence, 92-paragraph, 21-slide script and should be reviewed after an intentional content change. Browser QA should additionally exercise real audio playback, pause/resume, queue transitions, repeat, speed, rapid selection, offline use and mobile/print layout.
+The static verifier checks embedded MP3 headers, sentence/button coverage, lossless paragraph splitting, playback order and embedded player resources. Expected counts represent the current 228-sentence, 84-paragraph, 19-slide script and should be reviewed after an intentional content change. Browser QA should additionally exercise real audio playback, pause/resume, queue transitions, repeat, speed, rapid selection, offline use and mobile/print layout.
 
 Source provenance is maintained in `REFERENCES.md`. This module does not expose an application service API.
 

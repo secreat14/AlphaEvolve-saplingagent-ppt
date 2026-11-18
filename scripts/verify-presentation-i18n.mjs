@@ -47,9 +47,9 @@ assert.equal(translate('第 9 页，建议 0:40，全场 17:30'),
 assert.ok(!han.test(translate('3 加 3，结果送入新的存储组。加法电路得到 6，把结果保存起来。原来的 A、B 仍在各自的寄存器里，读出来计算不会把它们清空。')));
 assert.equal(translate('1 × 1 = 1'), '1 × 1 = 1');
 assert.equal(translate('0 / 47'), '0 / 47');
-assert.ok(catalogue.notes[13].text.includes('4096'));
-assert.ok(catalogue.notes[13].text.includes('39'));
-assert.ok(catalogue.notes[17].text.includes('292/17'));
+assert.ok(catalogue.notes[11].text.includes('4096'));
+assert.ok(catalogue.notes[11].text.includes('39'));
+assert.ok(catalogue.notes[15].text.includes('292/17'));
 
 const generated = fs.readFileSync('dist/slides.html', 'utf8');
 assert.ok(generated.includes('<html lang="en">'));

@@ -15,7 +15,7 @@ if (!script.includes('id="speech-audio-data"')) {
 }
 
 script = script.replaceAll('../矩阵与AI-20分钟演讲.html', './matrix_ai_presentation.html')
-  .replace('href="references.html"', 'href="./matrix_ai_presentation.html#slide=21" target="presentation" rel="noopener"')
+  .replace('href="references.html"', 'href="./matrix_ai_presentation.html#slide=19" target="presentation" rel="noopener"')
   .replace('href="../alphatensor_demo.ipynb"', 'href="./alphatensor_demo.ipynb" download')
   .replace('</footer>',
     '<p>换设备时，将两份 HTML 和 alphatensor_demo.ipynb 放在同一个文件夹。正文音频已内嵌，可离线播放。</p>' +
